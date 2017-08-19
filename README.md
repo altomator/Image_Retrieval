@@ -1,6 +1,3 @@
-# Image Retrieval in Digital Libraries
-*A Multicollection Experimentation of Machine Learning techniques*
-
 ### Synopsis
 This work use an ETL (extract-transform-load) approach to help image retrieval in multicollection digital librairies.
 Specs are: 
