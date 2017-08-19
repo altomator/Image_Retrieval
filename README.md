@@ -10,7 +10,20 @@ That aims to:
 
 [Detailled presentation](http://altomator.github.io/EN-data_mining/)
 
-### Installation
+### Installation & misc.
+####Extract
+We've used Perl scripts. 
 
+These scripts have been designed for the BnF (Bibliotheque national de France) digital documents and digital repositories, but this can be easily fixed. The metadata are stored thanks to an in-house XML format.
+
+Sample documents are generally stored in the "DOCS" folder. 
+
+####Transform
+We've used Perl and Python scripts (for image classification). 
+
+####Load
+An XML database (BaseX.org) is used. Querying the metadata is done with XQuery.
+The web app uses IIIF API and Mansory JavaScript library for image display.
 
 ### Datasets
+Soon
