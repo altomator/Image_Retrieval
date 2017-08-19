@@ -22,7 +22,7 @@ Sample documents are generally stored in the "DOCS" folder.
 We've used Perl and Python scripts (for image classification). 
 
 ####Load
-An XML database (BaseX.org) is used. Querying the metadata is done with XQuery.
+An XML database (BaseX.org) is used. Querying the metadata is done with XQuery (see https://github.com/altomator/EN-data_mining for   details)
 The web app uses IIIF API and Mansory JavaScript library for image display.
 
 ### Datasets
