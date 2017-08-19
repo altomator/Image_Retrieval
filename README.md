@@ -1,5 +1,5 @@
 ### Synopsis
-This work use an ETL (extract-transform-load) approach to help image retrieval in multicollection digital librairies.
+This work uses an ETL (extract-transform-load) approach to help image retrieval in multicollection digital librairies.
 Specs are: 
 1. Identify and extract iconography wherever it may be found, in image collections but also in printed materials (newspapers, magazines, books); 
 2. Transform, harmonize and enrich the image descriptive metadata (in particular with machine learning classification tools: IBM Watson for Visual Recognition, Google TensorFlow Inception-V3 for image classification)
