@@ -9,7 +9,9 @@ Specs are:
 3. Load all the medatada into a web app dedicated to image retrieval. 
 
 ### Articles, blogs
-["Image Retrieval in Digital Libraries"](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_EN-final.pdf) (article), IFLA News Media section 2017 (Dresden, August 2017)
+["Image Retrieval in Digital Libraries"](www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_EN-final.pdf) (article), IFLA News Media section 2017 (Dresden, August 2017)
+
+http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_EN-final.pdf
 
 ### Datasets
 Soon
