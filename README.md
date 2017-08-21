@@ -5,7 +5,7 @@ Specs are:
 2. Transform, harmonize and enrich the image descriptive metadata (in particular with machine learning classification tools: IBM Watson for Visual Recognition, Google TensorFlow Inception-V3 for image classification)
 3. Load all the medatada into a web app dedicated to image retrieval. 
 
-A proof of concept has been implemented on the WW1 theme, using the Gallica collections (gallica.bnf.fr) of heritage materials (photos, drawings, engravings, maps, etc.).
+A proof of concept has been implemented on the WW1 theme, using the BnF (Bibliotheque national de France) digital collections (gallica.bnf.fr) of heritage materials (photos, drawings, engravings, maps, etc.).
 
 
 ### Articles, blogs
@@ -15,7 +15,7 @@ A proof of concept has been implemented on the WW1 theme, using the Gallica coll
 Soon
 
 ### Installation & misc.
-Note: the scripts have not been written by a professional coder. They have been designed for the BnF (Bibliotheque national de France) digital documents and digital repositories, but this can be easily fixed.
+<b>Note</b>: the scripts have not been written by a professional coder. They have been designed for the Gallica digital documents and digital repositories, but this can be easily fixed.
 
 The metadata are stored thanks to an in-house XML schema (IR_schema.xsd).
 
