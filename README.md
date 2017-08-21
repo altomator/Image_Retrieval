@@ -51,7 +51,7 @@ Usage:
 >perl extractARKs_SRU.pl OUT.txt
 
 ##### OCR
-OCRed documents can be analysed using extractMD.pl script. This script is the more BnF centered and it will be difficult to adapt to other context... It can handle various types of digital documents (books, newspapers) produced by the BnF or during the Europeana Newspapers.
+OCRed documents can be analysed using extractMD.pl script. This script is the more BnF centered of this github and it will be difficult to adapt to other context... It can handle various types of digital documents (books, newspapers) produced by the BnF or during the Europeana Newspapers.
 Regarding the newspapers type, the script can handle raw OCR production or OLR production (article recognition with METS/ALTO).
 
 Usage:
