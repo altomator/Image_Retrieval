@@ -51,9 +51,23 @@ Usage:
 >perl extractARKs_SRU.pl OUT.txt
 
 ##### OCR
-OCRed documents can be analysed using the 
+OCRed documents can be analysed using extractMD.pl script. This script is the more BnF centered and it will be difficult to adapt to other context... It can handle various types of digital documents (books, newspapers) produced by the BnF or during the Europeana Newspapers.
+Regarding the newspapers type, the script can handle raw OCR production or OLR production (article recognition with METS/ALTO).
+
+Usage:
+>perl extractMD.pl [-LI] mode title IN OUT format
+
+where:
+-L : extraction of illustrations is performed: dimensions, caption...
+-I : ark IDs are computed
+mode : types of BnF document: olren, ocren, olrbnf, ocrbnf
+title: some newspapers titles need to be identified by their title
+IN : input folder
+OUT : output folder
+format: XML only
 
 #### Transform
+
 ##### Image recognition
 We've used IBM Watson Visual Recognition API. 
 
