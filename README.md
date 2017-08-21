@@ -32,6 +32,7 @@ Perl script extractMD_OAI.pl can handled 2 methods:
 
 Usage: 
 > perl extractMD_OAI.pl gallica:corpus:1418 OUT xml 
+
 where "gallica:corpus:1418" is the set and xml the (only) output format
 
 This script also performs (using the available metadata):
