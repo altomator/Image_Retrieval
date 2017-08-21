@@ -15,7 +15,7 @@ A proof of concept has been implemented on the WW1 theme, using the BnF (Bibliot
 Soon
 
 ### Installation & misc.
-<b>Note</b>: the scripts have not been written by a professional coder. They have been designed for the Gallica digital documents and digital repositories, but this can be easily fixed.
+<b>Note</b>: the scripts have been written by an amateur coder. And they have been designed for the Gallica digital documents and digital repositories, but this can be easily fixed.
 
 The metadata are stored thanks to an in-house XML schema (IR_schema.xsd).
 
