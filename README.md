@@ -22,7 +22,7 @@ The metadata are stored thanks to an in-house XML schema (IR_schema.xsd).
 Sample documents are generally stored in the "DOCS" folder. Output samples are stored in OUT folders.
 
 #### Extract
-We've used Perl scripts. The extract step can be performed form OAI-PHM, SRU or OCR sources. 
+We've used Perl scripts. The extract step can be performed from OAI-PHM, SRU or OCR sources. 
 
 ##### OAI-PHM
 The OAI-PHM Gallica repository can be harvested for sets or documents.
@@ -40,6 +40,7 @@ This script also performs (using the available metadata):
 - image genres classification (photo/drawing/map...)
 
 It outputs one XML file per document, describing each page (and included illustrations) of the document.
+
 
 ##### SRU
 SRU requesting of Gallica digital library can be done with extractARKs_SRU.pl.
