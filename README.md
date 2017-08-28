@@ -1,16 +1,17 @@
 ### Synopsis
-This work uses an ETL (extract-transform-load) approach to help image retrieval in multicollection digital librairies.
+This work uses an ETL (extract-transform-load) approach and machine learning technics to help image retrieval in multicollection digital librairies.
+
 Specs are: 
 1. Identify and extract iconography wherever it may be found, in image collections but also in printed materials (newspapers, magazines, books); 
-2. Transform, harmonize and enrich the image descriptive metadata (in particular with machine learning classification tools: IBM Watson for Visual Recognition, Google TensorFlow Inception-V3 for image classification)
+2. Transform, harmonize and enrich the image descriptive metadata (in particular with machine learning classification tools: IBM Watson for Visual Recognition, Google TensorFlow Inception-V3 for Image Classification)
 3. Load all the medatada into a web app dedicated to image retrieval. 
 
-A proof of concept has been implemented on the WW1 theme, using the BnF (Bibliotheque national de France) digital collections (gallica.bnf.fr) of heritage materials (photos, drawings, engravings, maps, etc.).
+A proof of concept has been implemented on the World War 1 theme. All the contents have been harvested from the BnF (Bibliotheque national de France) digital collections (gallica.bnf.fr) of heritage materials (photos, drawings, engravings, maps, posters, etc.).
 
 
 ### Articles, blogs
 ["Image Retrieval in Digital Libraries"](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_EN-final.pdf) (EN article, [FR article](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_FR-final.pdf), [presentation](http://www.euklides.fr/blog/altomator/Image_Retrieval/MOREUX-CHIRON-presentation-final.pdf)), IFLA News Media section 2017 (Dresden, August 2017). 
-
+ 
 ### Datasets
 Soon
 
