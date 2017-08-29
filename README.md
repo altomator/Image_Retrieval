@@ -77,10 +77,10 @@ format: XML only
 #### B. Transform
 
 ##### Image recognition
-We've used IBM Watson [Visual Recognition] API(https://www.ibm.com/watson/developercloud/doc/visual-recognition/index.html). The script calls the API to perform visual recognition of content or human faces. 
+We've used IBM Watson [Visual Recognition API](https://www.ibm.com/watson/developercloud/doc/visual-recognition/index.html). The script calls the API to perform visual recognition of content or human faces. 
 
 ##### Image classification
-Inception-v3 model (Google's convolutional neural network) has been retrained on a 12 classes ground truth datasets (10k images). 3 Python scripts are used:
+[Inception-v3](https://www.tensorflow.org/tutorials/image_recognition) model (Google's convolutional neural network) has been retrained on a 12 classes ground truth datasets (10k images). 3 Python scripts are used:
 - split: the GT dataset is splited in a training set (2/3) and an evaluation set (1/3)  
 - retrain: the training set is used to train the last layer of the Inception-v3 model
 - label: the evaluation set is labeled by the model
