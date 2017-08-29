@@ -13,7 +13,7 @@ A proof of concept has been implemented on the World War 1 theme. All the conten
 ["Image Retrieval in Digital Libraries"](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_EN-final.pdf) (EN article, [FR article](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_FR-final.pdf), [presentation](http://www.euklides.fr/blog/altomator/Image_Retrieval/MOREUX-CHIRON-presentation-final.pdf)), IFLA News Media section 2017 (Dresden, August 2017). 
  
 ### Datasets (soon)
-The datasets are available as XML files (one file/document): 
+The datasets are available as metadata files (one XML file/document). Images can be extracted from the metadata files thanks to IIIF API: 
 - Complete dataset (300k illustrations)
 - Person dataset
 - Gender dataset
