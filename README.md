@@ -81,15 +81,18 @@ format: XML only
 ##### Image recognition
 We've used IBM Watson [Visual Recognition API](https://www.ibm.com/watson/developercloud/doc/visual-recognition/index.html). The script calls the API to perform visual recognition of content or human faces. 
 
-##### Image classification
-[Inception-v3](https://www.tensorflow.org/tutorials/image_recognition) model (Google's convolutional neural network) has been retrained on a 12 classes ground truth datasets (10k images). 3 Python scripts are used:
-- split: the GT dataset is splited in a training set (2/3) and an evaluation set (1/3)  
-- retrain: the training set is used to train the last layer of the Inception-v3 model
-- label: the evaluation set is labeled by the model
+##### Image genres classification
+[Inception-v3](https://www.tensorflow.org/tutorials/image_recognition) model (Google's convolutional neural network) has been retrained on a 12 classes (photos, drawings, maps, music scores, comics...) ground truth datasets (10k images). 3 Python scripts are used:
+- split.py: the GT dataset is splited in a training set (2/3) and an evaluation set (1/3)  
+- retrain.py: the training set is used to train the last layer of the Inception-v3 model
+- label.py: the evaluation set is labeled by the model
 
 
 ##### Image toolkit
-
+This script performs basic operations on the documents metadata files:
+- deletion
+- renumbering
+- ...
 
 #### C. Load
 An XML database (BaseX.org) is used. Querying the metadata is done with XQuery (see https://github.com/altomator/EN-data_mining for   details). The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](https://masonry.desandro.com/) grid layout JavaScript library for image display.
