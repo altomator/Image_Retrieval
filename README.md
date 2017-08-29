@@ -13,7 +13,7 @@ A proof of concept has been implemented on the World War 1 theme. All the conten
 ["Image Retrieval in Digital Libraries"](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_EN-final.pdf) (EN article, [FR article](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_FR-final.pdf), [presentation](http://www.euklides.fr/blog/altomator/Image_Retrieval/MOREUX-CHIRON-presentation-final.pdf)), IFLA News Media section 2017 (Dresden, August 2017). 
  
 ### Datasets (soon)
-The datasets are available as metadata files (one XML file/document). Images can be extracted from the metadata files thanks to IIIF API: 
+The datasets are available as metadata files (one XML file/document). Images can be extracted from the metadata files thanks to [IIIF Image API](http://iiif.io/api/image/2.0/): 
 - Complete dataset (300k illustrations)
 - Person dataset
 - Gender dataset
@@ -28,7 +28,7 @@ The metadata are stored thanks to an in-house XML schema (IR_schema.xsd).
 
 Sample documents are generally stored in the "DOCS" folder. Output samples are stored in OUT folders.
 
-#### Extract
+#### A. Extract
 We've used Perl scripts. The extract step can be performed from OAI-PHM, SRU or OCR sources. 
 
 ##### OAI-PHM
@@ -74,18 +74,22 @@ IN : input folder
 OUT : output folder
 format: XML only
 
-#### Transform
+#### B. Transform
 
 ##### Image recognition
 We've used IBM Watson [Visual Recognition] API(https://www.ibm.com/watson/developercloud/doc/visual-recognition/index.html). The script calls the API to perform visual recognition of content or human faces. 
 
 ##### Image classification
-Inception-v3 model (Google's convolutional neural network) has been retrained on a 12 classes datasets.
+Inception-v3 model (Google's convolutional neural network) has been retrained on a 12 classes ground truth datasets (10k images). 3 Python scripts are used:
+- split: the GT dataset is splited in a training set (2/3) and an evaluation set (1/3)  
+- retrain: the training set is used to train the last layer of the Inception-v3 model
+- label: the evaluation set is labeled by the model
+
 
 ##### Image toolkit
 
 
-#### Load
+#### C. Load
 An XML database (BaseX.org) is used. Querying the metadata is done with XQuery (see https://github.com/altomator/EN-data_mining for   details). The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](https://masonry.desandro.com/) grid layout JavaScript library for image display.
 
 
