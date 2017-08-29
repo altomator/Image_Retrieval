@@ -32,7 +32,7 @@ Sample documents are generally stored in the "DOCS" folder. Output samples are s
 We've used Perl scripts. The extract step can be performed from OAI-PHM, SRU or OCR sources. 
 
 ##### OAI-PHM
-The OAI-PHM Gallica repository can be harvested for sets or documents.
+The OAI-PMH Gallica ([endpoint](http://oai.bnf.fr/oai2/OAIHandler?verb=Identify)) repository can be harvested for sets or documents.
 Perl script extractMD_OAI.pl can handled 2 methods:
 - harvesting a complete OAI Set
 - harvesting a document from its ark (or a list of documents).
@@ -40,9 +40,9 @@ Perl script extractMD_OAI.pl can handled 2 methods:
 Usage: 
 >perl extractMD_OAI.pl gallica:corpus:1418 OUT xml 
 
-where 
-> "gallica:corpus:1418" is the set 
-> xml the (only) output format
+where: 
+- "gallica:corpus:1418" is the OAI set 
+- "xml" the (only) output format
 
 This script also performs (using the available metadata):
 - topic classification (considering the WW1 theme)
