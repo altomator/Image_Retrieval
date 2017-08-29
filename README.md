@@ -3,7 +3,7 @@ This work uses an ETL (extract-transform-load) approach and machine learning tec
 
 Specs are: 
 1. Identify and extract iconography wherever it may be found, in image collections but also in printed materials (newspapers, magazines, books); 
-2. Transform, harmonize and enrich the image descriptive metadata (in particular with machine learning classification tools: IBM Watson for Visual Recognition, Google TensorFlow Inception-V3 for Image Classification)
+2. Transform, harmonize and enrich the image descriptive metadata (in particular with machine learning classification tools: IBM Watson for visual recognition, Google TensorFlow Inception-V3 for image classification)
 3. Load all the medatada into a web app dedicated to image retrieval. 
 
 A proof of concept has been implemented on the World War 1 theme. All the contents have been harvested from the BnF (Bibliotheque national de France) digital collections (gallica.bnf.fr) of heritage materials (photos, drawings, engravings, maps, posters, etc.).
@@ -12,8 +12,14 @@ A proof of concept has been implemented on the World War 1 theme. All the conten
 ### Articles, blogs
 ["Image Retrieval in Digital Libraries"](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_EN-final.pdf) (EN article, [FR article](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_FR-final.pdf), [presentation](http://www.euklides.fr/blog/altomator/Image_Retrieval/MOREUX-CHIRON-presentation-final.pdf)), IFLA News Media section 2017 (Dresden, August 2017). 
  
-### Datasets
-Soon
+### Datasets (soon)
+The datasets are available as XML files (one file/document): 
+- Complete dataset (300k illustrations)
+- Person dataset
+- Gender dataset
+
+This dataset has been used for the image genres classification training: 
+- Image genres classification dataset (10k images) 
 
 ### Installation & misc.
 <b>Note</b>: the scripts have been written by an amateur coder. And they have been designed for the Gallica digital documents and digital repositories, but this can be easily fixed.
