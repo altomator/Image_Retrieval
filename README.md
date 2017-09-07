@@ -55,7 +55,7 @@ It outputs one XML metadata file per document, describing each page (and include
 SRU requesting of Gallica digital library can be done with extractARKs_SRU.pl.
 The SRU request must be copy/paste directly in the script.
 
-It outputs a text file (one ark ID per line). This output can then be used as the input of the OAI-PHM script.
+It outputs a text file (one ark ID per line). This output can then be used as the input of the OAI-PMH script.
 
 Usage:
 >perl extractARKs_SRU.pl OUT.txt
