@@ -8,6 +8,8 @@ Specs are:
 
 A proof of concept has been implemented on the World War 1 theme. All the contents have been harvested from the BnF (Bibliotheque national de France) digital collections (gallica.bnf.fr) of heritage materials (photos, drawings, engravings, maps, posters, etc.).
 
+### GitHub
+[Repository](https://github.com/altomator/Image_Retrieval/)
 
 ### Articles, blogs
 ["Image Retrieval in Digital Libraries"](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_EN-final.pdf) (EN article, [FR article](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_FR-final.pdf), [presentation](http://www.euklides.fr/blog/altomator/Image_Retrieval/MOREUX-CHIRON-presentation-final.pdf)), IFLA News Media section 2017 (Dresden, August 2017). 
