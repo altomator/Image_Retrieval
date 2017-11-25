@@ -73,13 +73,15 @@ Usage:
 >perl extractMD.pl [-LI] mode title IN OUT format
 
 where:
--L : extraction of illustrations is performed: dimensions, caption...
--I : BnF ark IDs are computed
-mode : types of BnF documents (olren, ocren, olrbnf, ocrbnf)
-title: some newspapers titles need to be identified by their title
-IN : input folder
-OUT : output folder
-format: XML only
+- -L : extraction of illustrations is performed: dimensions, caption...
+- -I : BnF ark IDs are computed
+- mode : types of BnF documents (olren, ocren, olrbnf, ocrbnf)
+- title: some newspapers titles need to be identified by their title
+- IN : documents input folder 
+- OUT : output folder
+- format: XML only
+
+Note: some mono-line XML documents may need to be reformatted (with prettyprint.pl script)
 
 #### B. Transform
 
