@@ -1,0 +1,1936 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<METS:mets TYPE="Newspaper" LABEL="Le Petit Journal illustré Supplément du dimanche no. 716 07.08.1904" PROFILE="ENMAP" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version191/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/mods.xsd http://www.loc.gov/mix/v20 http://www.loc.gov/standards/mix/mix20/mix20.xsd" xmlns:METS="http://www.loc.gov/METS/" xmlns:mix="http://www.loc.gov/mix/v20" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mets="http://www.loc.gov/METS/">
+	<mets:metsHdr CREATEDATE="2014-08-14T10:20:39" LASTMODDATE="2014-08-14T10:20:39">
+		<mets:agent ROLE="OTHER" OTHERROLE="OWNER">
+			<mets:name>BnF</mets:name>
+		</mets:agent>
+		<mets:agent ROLE="CREATOR" TYPE="OTHER" OTHERTYPE="SOFTWARE">
+			<mets:name>CCS docWorks/METAe Version 6.7-1</mets:name>
+			<mets:note>docWorks-ID: 674483</mets:note>
+		</mets:agent>
+	</mets:metsHdr>
+	<mets:dmdSec ID="MODSMD_PRINT">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of the printed version">
+			<mets:xmlData>
+				<mods>
+					<recordInfo>
+						<recordContentSource>BnF</recordContentSource>
+					</recordInfo>
+					<genre>newspaper issue</genre>
+					<titleInfo>
+						<title>Le Petit Journal illustré Supplément du dimanche</title>
+					</titleInfo>
+					<identifier type="ENP">BnF_00011</identifier>
+					<identifier type="CatalogueIdentifier">FRBNF32836564</identifier>
+					<accessCondition>6 - Snippet view (image server)</accessCondition>
+					<language>
+						<languageTerm>French</languageTerm>
+						<fontTerm>Antiqua</fontTerm>
+					</language>
+					<originInfo>
+						<dateCreated point="start" keyDate="yes"/>
+					</originInfo>
+				</mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ISSUE1">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of Issue">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ISSUE1_TI1" xml:lang="fr">
+						<mods:title>Le Petit Journal illustré Supplément du dimanche</mods:title>
+						<mods:partNumber>716</mods:partNumber>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+					<mods:originInfo>
+						<mods:dateIssued point="start" keyDate="yes" qualifier="approximate">07.08.1904</mods:dateIssued>
+					</mods:originInfo>
+					<mods:identifier type="local">BnF_00011</mods:identifier>
+					<mods:relatedItem ID="MODSMD_ISSUE1_RI1" type="host">
+						<mods:identifier type="local">15</mods:identifier>
+					</mods:relatedItem>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_PICT1">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of picture">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_PICT1_TI1" xml:lang="fr">
+						<mods:title>Untitled</mods:title>
+					</mods:titleInfo>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE1">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE1_TI1" xml:lang="fr">
+						<mods:nonSort>A</mods:nonSort>
+						<mods:title>SAINT-SÉBASTIEN</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE2">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE2_TI2" xml:lang="fr">
+						<mods:title>EXPLICATION DE NOS GRAÏIES</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE3">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE3_TI3" xml:lang="fr">
+						<mods:nonSort>LA</mods:nonSort>
+						<mods:title>PLUIE MANDCHOURIENNE</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE4">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE4_TI4" xml:lang="fr">
+						<mods:title>M. GUILLEMIN</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE5">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE5_TI5" xml:lang="fr">
+						<mods:title>POUR NOS RIVIÈRES</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE6">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE6_TI6" xml:lang="fr">
+						<mods:title>LA. PÈCHE A LA LIGNE</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE7">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE7_TI7" xml:lang="fr">
+						<mods:nonSort>LE</mods:nonSort>
+						<mods:title>VOYAGE ANNUEL</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE8">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE8_TI8" xml:lang="fr">
+						<mods:title>AVIS A NOS LECTRICES</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE9">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE9_TI9" xml:lang="fr">
+						<mods:title>L'HÉRITAGE</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_PICT2">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of picture">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_PICT2_TI2" xml:lang="fr">
+						<mods:nonSort>Le</mods:nonSort>
+						<mods:title>général de division F. de NÉGRIER</mods:title>
+					</mods:titleInfo>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE10">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE10_TI10" xml:lang="fr">
+						<mods:title>MOTS POUR RIRE</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE11">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE11_TI11" xml:lang="fr">
+						<mods:title>À la conquête de Paris</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_PICT3">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of picture">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_PICT3_TI3" xml:lang="fr">
+						<mods:title>M. -GUTL.LEMÎN Inspecteur général die la na"vigalion</mods:title>
+					</mods:titleInfo>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE12">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE12_TI12" xml:lang="fr">
+						<mods:nonSort>LES</mods:nonSort>
+						<mods:title>CONCOURS DE PÊCHE A LA LIGNE DU Petit Journal</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_PICT4">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of picture">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_PICT4_TI4" xml:lang="fr">
+						<mods:title>Photographies communiquées gracieusement par M. CU. ARAMBOURON</mods:title>
+					</mods:titleInfo>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE13">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE13_TI13" xml:lang="fr">
+						<mods:title>Côté «cLes HDames</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE14">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE14_TI14" xml:lang="fr">
+						<mods:nonSort>LA</mods:nonSort>
+						<mods:title>PIECE D'OR</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_PICT5">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of picture">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_PICT5_TI5" xml:lang="fr">
+						<mods:title>M, FORESTIER Conservateur du Bois de Boulogne</mods:title>
+					</mods:titleInfo>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE15">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE15_TI15" xml:lang="fr">
+						<mods:nonSort>LES</mods:nonSort>
+						<mods:title>CONCOURS DE PÊCHE A LA LIGNE DU Petit Journal</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_PICT6">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of picture">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_PICT6_TI6" xml:lang="fr">
+						<mods:title>Côté cl o s Hommes</mods:title>
+					</mods:titleInfo>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE16">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE16_TI16" xml:lang="fr">
+						<mods:nonSort>LE</mods:nonSort>
+						<mods:title>BILLET GAGNANT</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE17">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE17_TI17" xml:lang="fr">
+						<mods:title>CONSEILS PRATIQUES</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE18">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE18_TI18" xml:lang="fr">
+						<mods:title>CARRÉS JUMEAUX</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_PICT7">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of picture">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_PICT7_TI7" xml:lang="fr">
+						<mods:title>Untitled</mods:title>
+					</mods:titleInfo>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_ARTICLE19">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of article">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_ARTICLE19_TI19" xml:lang="fr">
+						<mods:nonSort>LA</mods:nonSort>
+						<mods:title>MANDGHOURIENNE</mods:title>
+					</mods:titleInfo>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_PICT8">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of picture">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:titleInfo ID="MODSMD_PICT8_TI8" xml:lang="fr">
+						<mods:title>Untitled</mods:title>
+					</mods:titleInfo>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:dmdSec ID="MODSMD_SECTION1">
+		<mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS" LABEL="Bibliographic meta-data of section 0">
+			<mets:xmlData>
+				<mods:mods>
+					<mods:language>
+						<mods:languageTerm type="code" authority="rfc3066">fr</mods:languageTerm>
+					</mods:language>
+				</mods:mods>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:amdSec ID="TECH_MD">
+		<mets:techMD ID="IMGPARAM00001TECHMD">
+			<mets:mdWrap MDTYPE="NISOIMG">
+				<mets:xmlData>
+					<mix:mix>
+						<mix:BasicDigitalObjectInformation>
+							<mix:Compression>
+								<mix:compressionScheme>34712</mix:compressionScheme>
+							</mix:Compression>
+						</mix:BasicDigitalObjectInformation>
+						<mix:BasicImageInformation>
+							<mix:BasicImageCharacteristics>
+								<mix:imageWidth>3430</mix:imageWidth>
+								<mix:imageHeight>5014</mix:imageHeight>
+							</mix:BasicImageCharacteristics>
+						</mix:BasicImageInformation>
+						<mix:ImageAssessmentMetadata>
+							<mix:SpatialMetrics>
+								<mix:samplingFrequencyPlane>object plane</mix:samplingFrequencyPlane>
+								<mix:samplingFrequencyUnit>in.</mix:samplingFrequencyUnit>
+								<mix:xSamplingFrequency>
+									<mix:numerator>300</mix:numerator>
+									<mix:denominator>1</mix:denominator>
+								</mix:xSamplingFrequency>
+								<mix:ySamplingFrequency>
+									<mix:numerator>300</mix:numerator>
+									<mix:denominator>1</mix:denominator>
+								</mix:ySamplingFrequency>
+							</mix:SpatialMetrics>
+							<mix:ImageColorEncoding>
+								<mix:BitsPerSample>
+									<mix:bitsPerSampleValue>8,8,8</mix:bitsPerSampleValue>
+									<mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+								</mix:BitsPerSample>
+								<mix:samplesPerPixel>3</mix:samplesPerPixel>
+							</mix:ImageColorEncoding>
+						</mix:ImageAssessmentMetadata>
+					</mix:mix>
+				</mets:xmlData>
+			</mets:mdWrap>
+		</mets:techMD>
+		<mets:techMD ID="IMGPARAM00002TECHMD">
+			<mets:mdWrap MDTYPE="NISOIMG">
+				<mets:xmlData>
+					<mix:mix>
+						<mix:BasicDigitalObjectInformation>
+							<mix:Compression>
+								<mix:compressionScheme>34712</mix:compressionScheme>
+							</mix:Compression>
+						</mix:BasicDigitalObjectInformation>
+						<mix:BasicImageInformation>
+							<mix:BasicImageCharacteristics>
+								<mix:imageWidth>3460</mix:imageWidth>
+								<mix:imageHeight>5046</mix:imageHeight>
+							</mix:BasicImageCharacteristics>
+						</mix:BasicImageInformation>
+						<mix:ImageAssessmentMetadata>
+							<mix:SpatialMetrics>
+								<mix:samplingFrequencyPlane>object plane</mix:samplingFrequencyPlane>
+								<mix:samplingFrequencyUnit>in.</mix:samplingFrequencyUnit>
+								<mix:xSamplingFrequency>
+									<mix:numerator>300</mix:numerator>
+									<mix:denominator>1</mix:denominator>
+								</mix:xSamplingFrequency>
+								<mix:ySamplingFrequency>
+									<mix:numerator>300</mix:numerator>
+									<mix:denominator>1</mix:denominator>
+								</mix:ySamplingFrequency>
+							</mix:SpatialMetrics>
+							<mix:ImageColorEncoding>
+								<mix:BitsPerSample>
+									<mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+									<mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+								</mix:BitsPerSample>
+								<mix:samplesPerPixel>1</mix:samplesPerPixel>
+							</mix:ImageColorEncoding>
+						</mix:ImageAssessmentMetadata>
+					</mix:mix>
+				</mets:xmlData>
+			</mets:mdWrap>
+		</mets:techMD>
+		<mets:techMD ID="IMGPARAM00003TECHMD">
+			<mets:mdWrap MDTYPE="NISOIMG">
+				<mets:xmlData>
+					<mix:mix>
+						<mix:BasicDigitalObjectInformation>
+							<mix:Compression>
+								<mix:compressionScheme>34712</mix:compressionScheme>
+							</mix:Compression>
+						</mix:BasicDigitalObjectInformation>
+						<mix:BasicImageInformation>
+							<mix:BasicImageCharacteristics>
+								<mix:imageWidth>3441</mix:imageWidth>
+								<mix:imageHeight>5027</mix:imageHeight>
+							</mix:BasicImageCharacteristics>
+						</mix:BasicImageInformation>
+						<mix:ImageAssessmentMetadata>
+							<mix:SpatialMetrics>
+								<mix:samplingFrequencyPlane>object plane</mix:samplingFrequencyPlane>
+								<mix:samplingFrequencyUnit>in.</mix:samplingFrequencyUnit>
+								<mix:xSamplingFrequency>
+									<mix:numerator>300</mix:numerator>
+									<mix:denominator>1</mix:denominator>
+								</mix:xSamplingFrequency>
+								<mix:ySamplingFrequency>
+									<mix:numerator>300</mix:numerator>
+									<mix:denominator>1</mix:denominator>
+								</mix:ySamplingFrequency>
+							</mix:SpatialMetrics>
+							<mix:ImageColorEncoding>
+								<mix:BitsPerSample>
+									<mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+									<mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+								</mix:BitsPerSample>
+								<mix:samplesPerPixel>1</mix:samplesPerPixel>
+							</mix:ImageColorEncoding>
+						</mix:ImageAssessmentMetadata>
+					</mix:mix>
+				</mets:xmlData>
+			</mets:mdWrap>
+		</mets:techMD>
+		<mets:techMD ID="IMGPARAM00004TECHMD">
+			<mets:mdWrap MDTYPE="NISOIMG">
+				<mets:xmlData>
+					<mix:mix>
+						<mix:BasicDigitalObjectInformation>
+							<mix:Compression>
+								<mix:compressionScheme>34712</mix:compressionScheme>
+							</mix:Compression>
+						</mix:BasicDigitalObjectInformation>
+						<mix:BasicImageInformation>
+							<mix:BasicImageCharacteristics>
+								<mix:imageWidth>3461</mix:imageWidth>
+								<mix:imageHeight>5046</mix:imageHeight>
+							</mix:BasicImageCharacteristics>
+						</mix:BasicImageInformation>
+						<mix:ImageAssessmentMetadata>
+							<mix:SpatialMetrics>
+								<mix:samplingFrequencyPlane>object plane</mix:samplingFrequencyPlane>
+								<mix:samplingFrequencyUnit>in.</mix:samplingFrequencyUnit>
+								<mix:xSamplingFrequency>
+									<mix:numerator>300</mix:numerator>
+									<mix:denominator>1</mix:denominator>
+								</mix:xSamplingFrequency>
+								<mix:ySamplingFrequency>
+									<mix:numerator>300</mix:numerator>
+									<mix:denominator>1</mix:denominator>
+								</mix:ySamplingFrequency>
+							</mix:SpatialMetrics>
+							<mix:ImageColorEncoding>
+								<mix:BitsPerSample>
+									<mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+									<mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+								</mix:BitsPerSample>
+								<mix:samplesPerPixel>1</mix:samplesPerPixel>
+							</mix:ImageColorEncoding>
+						</mix:ImageAssessmentMetadata>
+					</mix:mix>
+				</mets:xmlData>
+			</mets:mdWrap>
+		</mets:techMD>
+		<mets:techMD ID="IMGPARAM00005TECHMD">
+			<mets:mdWrap MDTYPE="NISOIMG">
+				<mets:xmlData>
+					<mix:mix>
+						<mix:BasicDigitalObjectInformation>
+							<mix:Compression>
+								<mix:compressionScheme>34712</mix:compressionScheme>
+							</mix:Compression>
+						</mix:BasicDigitalObjectInformation>
+						<mix:BasicImageInformation>
+							<mix:BasicImageCharacteristics>
+								<mix:imageWidth>3441</mix:imageWidth>
+								<mix:imageHeight>5027</mix:imageHeight>
+							</mix:BasicImageCharacteristics>
+						</mix:BasicImageInformation>
+						<mix:ImageAssessmentMetadata>
+							<mix:SpatialMetrics>
+								<mix:samplingFrequencyPlane>object plane</mix:samplingFrequencyPlane>
+								<mix:samplingFrequencyUnit>in.</mix:samplingFrequencyUnit>
+								<mix:xSamplingFrequency>
+									<mix:numerator>300</mix:numerator>
+									<mix:denominator>1</mix:denominator>
+								</mix:xSamplingFrequency>
+								<mix:ySamplingFrequency>
+									<mix:numerator>300</mix:numerator>
+									<mix:denominator>1</mix:denominator>
+								</mix:ySamplingFrequency>
+							</mix:SpatialMetrics>
+							<mix:ImageColorEncoding>
+								<mix:BitsPerSample>
+									<mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+									<mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+								</mix:BitsPerSample>
+								<mix:samplesPerPixel>1</mix:samplesPerPixel>
+							</mix:ImageColorEncoding>
+						</mix:ImageAssessmentMetadata>
+					</mix:mix>
+				</mets:xmlData>
+			</mets:mdWrap>
+		</mets:techMD>
+		<mets:techMD ID="IMGPARAM00006TECHMD">
+			<mets:mdWrap MDTYPE="NISOIMG">
+				<mets:xmlData>
+					<mix:mix>
+						<mix:BasicDigitalObjectInformation>
+							<mix:Compression>
+								<mix:compressionScheme>34712</mix:compressionScheme>
+							</mix:Compression>
+						</mix:BasicDigitalObjectInformation>
+						<mix:BasicImageInformation>
+							<mix:BasicImageCharacteristics>
+								<mix:imageWidth>3461</mix:imageWidth>
+								<mix:imageHeight>5046</mix:imageHeight>
+							</mix:BasicImageCharacteristics>
+						</mix:BasicImageInformation>
+						<mix:ImageAssessmentMetadata>
+							<mix:SpatialMetrics>
+								<mix:samplingFrequencyPlane>object plane</mix:samplingFrequencyPlane>
+								<mix:samplingFrequencyUnit>in.</mix:samplingFrequencyUnit>
+								<mix:xSamplingFrequency>
+									<mix:numerator>300</mix:numerator>
+									<mix:denominator>1</mix:denominator>
+								</mix:xSamplingFrequency>
+								<mix:ySamplingFrequency>
+									<mix:numerator>300</mix:numerator>
+									<mix:denominator>1</mix:denominator>
+								</mix:ySamplingFrequency>
+							</mix:SpatialMetrics>
+							<mix:ImageColorEncoding>
+								<mix:BitsPerSample>
+									<mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+									<mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+								</mix:BitsPerSample>
+								<mix:samplesPerPixel>1</mix:samplesPerPixel>
+							</mix:ImageColorEncoding>
+						</mix:ImageAssessmentMetadata>
+					</mix:mix>
+				</mets:xmlData>
+			</mets:mdWrap>
+		</mets:techMD>
+		<mets:techMD ID="IMGPARAM00007TECHMD">
+			<mets:mdWrap MDTYPE="NISOIMG">
+				<mets:xmlData>
+					<mix:mix>
+						<mix:BasicDigitalObjectInformation>
+							<mix:Compression>
+								<mix:compressionScheme>34712</mix:compressionScheme>
+							</mix:Compression>
+						</mix:BasicDigitalObjectInformation>
+						<mix:BasicImageInformation>
+							<mix:BasicImageCharacteristics>
+								<mix:imageWidth>3441</mix:imageWidth>
+								<mix:imageHeight>5027</mix:imageHeight>
+							</mix:BasicImageCharacteristics>
+						</mix:BasicImageInformation>
+						<mix:ImageAssessmentMetadata>
+							<mix:SpatialMetrics>
+								<mix:samplingFrequencyPlane>object plane</mix:samplingFrequencyPlane>
+								<mix:samplingFrequencyUnit>in.</mix:samplingFrequencyUnit>
+								<mix:xSamplingFrequency>
+									<mix:numerator>300</mix:numerator>
+									<mix:denominator>1</mix:denominator>
+								</mix:xSamplingFrequency>
+								<mix:ySamplingFrequency>
+									<mix:numerator>300</mix:numerator>
+									<mix:denominator>1</mix:denominator>
+								</mix:ySamplingFrequency>
+							</mix:SpatialMetrics>
+							<mix:ImageColorEncoding>
+								<mix:BitsPerSample>
+									<mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+									<mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+								</mix:BitsPerSample>
+								<mix:samplesPerPixel>1</mix:samplesPerPixel>
+							</mix:ImageColorEncoding>
+						</mix:ImageAssessmentMetadata>
+					</mix:mix>
+				</mets:xmlData>
+			</mets:mdWrap>
+		</mets:techMD>
+		<mets:techMD ID="IMGPARAM00008TECHMD">
+			<mets:mdWrap MDTYPE="NISOIMG">
+				<mets:xmlData>
+					<mix:mix>
+						<mix:BasicDigitalObjectInformation>
+							<mix:Compression>
+								<mix:compressionScheme>34712</mix:compressionScheme>
+							</mix:Compression>
+						</mix:BasicDigitalObjectInformation>
+						<mix:BasicImageInformation>
+							<mix:BasicImageCharacteristics>
+								<mix:imageWidth>5027</mix:imageWidth>
+								<mix:imageHeight>3471</mix:imageHeight>
+							</mix:BasicImageCharacteristics>
+						</mix:BasicImageInformation>
+						<mix:ImageAssessmentMetadata>
+							<mix:SpatialMetrics>
+								<mix:samplingFrequencyPlane>object plane</mix:samplingFrequencyPlane>
+								<mix:samplingFrequencyUnit>in.</mix:samplingFrequencyUnit>
+								<mix:xSamplingFrequency>
+									<mix:numerator>300</mix:numerator>
+									<mix:denominator>1</mix:denominator>
+								</mix:xSamplingFrequency>
+								<mix:ySamplingFrequency>
+									<mix:numerator>300</mix:numerator>
+									<mix:denominator>1</mix:denominator>
+								</mix:ySamplingFrequency>
+							</mix:SpatialMetrics>
+							<mix:ImageColorEncoding>
+								<mix:BitsPerSample>
+									<mix:bitsPerSampleValue>8,8,8</mix:bitsPerSampleValue>
+									<mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+								</mix:BitsPerSample>
+								<mix:samplesPerPixel>3</mix:samplesPerPixel>
+							</mix:ImageColorEncoding>
+						</mix:ImageAssessmentMetadata>
+					</mix:mix>
+				</mets:xmlData>
+			</mets:mdWrap>
+		</mets:techMD>
+	</mets:amdSec>
+	<mets:fileSec>
+		<mets:fileGrp ID="ViewingFiles" USE="VIEWING">
+			<mets:file ID="VIEWING00001" CREATED="2014-08-14T10:13:44" MIMETYPE="image/jp2" SEQ="1" CHECKSUM="c6836d55b801e9c2f130e9d9659ad9f9" CHECKSUMTYPE="MD5" SIZE="536672">
+				<mets:FLocat LOCTYPE="URL" xlink:href="file://./Viewing/19040807_1-0001.jp2"/>
+			</mets:file>
+			<mets:file ID="VIEWING00002" CREATED="2014-08-14T10:15:10" MIMETYPE="image/jp2" SEQ="2" CHECKSUM="97203c2ede3524f9baa48286413ce325" CHECKSUMTYPE="MD5" SIZE="544930">
+				<mets:FLocat LOCTYPE="URL" xlink:href="file://./Viewing/19040807_1-0002.jp2"/>
+			</mets:file>
+			<mets:file ID="VIEWING00003" CREATED="2014-08-14T10:16:11" MIMETYPE="image/jp2" SEQ="3" CHECKSUM="d7057e6be0043c637b4e0dc6aa15bdd7" CHECKSUMTYPE="MD5" SIZE="540405">
+				<mets:FLocat LOCTYPE="URL" xlink:href="file://./Viewing/19040807_1-0003.jp2"/>
+			</mets:file>
+			<mets:file ID="VIEWING00004" CREATED="2014-08-14T10:17:27" MIMETYPE="image/jp2" SEQ="4" CHECKSUM="d0a73cc7c3bf11d20e3371c272da383f" CHECKSUMTYPE="MD5" SIZE="545318">
+				<mets:FLocat LOCTYPE="URL" xlink:href="file://./Viewing/19040807_1-0004.jp2"/>
+			</mets:file>
+			<mets:file ID="VIEWING00005" CREATED="2014-08-14T10:18:22" MIMETYPE="image/jp2" SEQ="5" CHECKSUM="b46ce0c1121292e638fb11ae32100ce1" CHECKSUMTYPE="MD5" SIZE="540071">
+				<mets:FLocat LOCTYPE="URL" xlink:href="file://./Viewing/19040807_1-0005.jp2"/>
+			</mets:file>
+			<mets:file ID="VIEWING00006" CREATED="2014-08-14T10:19:10" MIMETYPE="image/jp2" SEQ="6" CHECKSUM="13dec230b3db8413a739fe6e1dc10e99" CHECKSUMTYPE="MD5" SIZE="544583">
+				<mets:FLocat LOCTYPE="URL" xlink:href="file://./Viewing/19040807_1-0006.jp2"/>
+			</mets:file>
+			<mets:file ID="VIEWING00007" CREATED="2014-08-14T10:19:45" MIMETYPE="image/jp2" SEQ="7" CHECKSUM="02f9288405b57839183194cd465c6d5d" CHECKSUMTYPE="MD5" SIZE="538324">
+				<mets:FLocat LOCTYPE="URL" xlink:href="file://./Viewing/19040807_1-0007.jp2"/>
+			</mets:file>
+			<mets:file ID="VIEWING00008" CREATED="2014-08-14T10:20:28" MIMETYPE="image/jp2" SEQ="8" CHECKSUM="7a286e757e479643db97141b8ac9d092" CHECKSUMTYPE="MD5" SIZE="544600">
+				<mets:FLocat LOCTYPE="URL" xlink:href="file://./Viewing/19040807_1-0008.jp2"/>
+			</mets:file>
+		</mets:fileGrp>
+		<mets:fileGrp ID="ImageGroup">
+			<mets:fileGrp ID="OCRMasterFiles" USE="Preservation">
+				<mets:file ID="IMG00001" CREATED="2014-08-14T10:13:44" ADMID="IMGPARAM00001TECHMD" MIMETYPE="image/jp2" SEQ="1" CHECKSUM="f1ebc94a20c7ded59f80a70dc4d31976" CHECKSUMTYPE="MD5" SIZE="34734400">
+					<mets:FLocat LOCTYPE="URL" xlink:href="file://./OCRmaster/19040807_1-0001.jp2"/>
+				</mets:file>
+				<mets:file ID="IMG00002" CREATED="2014-08-14T10:15:10" ADMID="IMGPARAM00002TECHMD" MIMETYPE="image/jp2" SEQ="2" CHECKSUM="b68fc9823101cd7363266940993c461d" CHECKSUMTYPE="MD5" SIZE="5166930">
+					<mets:FLocat LOCTYPE="URL" xlink:href="file://./OCRmaster/19040807_1-0002.jp2"/>
+				</mets:file>
+				<mets:file ID="IMG00003" CREATED="2014-08-14T10:16:11" ADMID="IMGPARAM00003TECHMD" MIMETYPE="image/jp2" SEQ="3" CHECKSUM="268f244ded8cdffd4f82fd00eba303b3" CHECKSUMTYPE="MD5" SIZE="4958093">
+					<mets:FLocat LOCTYPE="URL" xlink:href="file://./OCRmaster/19040807_1-0003.jp2"/>
+				</mets:file>
+				<mets:file ID="IMG00004" CREATED="2014-08-14T10:17:27" ADMID="IMGPARAM00004TECHMD" MIMETYPE="image/jp2" SEQ="4" CHECKSUM="8574c33a995096b7437b135cde2d4a9a" CHECKSUMTYPE="MD5" SIZE="5256811">
+					<mets:FLocat LOCTYPE="URL" xlink:href="file://./OCRmaster/19040807_1-0004.jp2"/>
+				</mets:file>
+				<mets:file ID="IMG00005" CREATED="2014-08-14T10:18:22" ADMID="IMGPARAM00005TECHMD" MIMETYPE="image/jp2" SEQ="5" CHECKSUM="625ae65e91ceb2216aa438cf649e94e3" CHECKSUMTYPE="MD5" SIZE="5320611">
+					<mets:FLocat LOCTYPE="URL" xlink:href="file://./OCRmaster/19040807_1-0005.jp2"/>
+				</mets:file>
+				<mets:file ID="IMG00006" CREATED="2014-08-14T10:19:10" ADMID="IMGPARAM00006TECHMD" MIMETYPE="image/jp2" SEQ="6" CHECKSUM="e5e83c1e37eacf895ef11be60bc786f6" CHECKSUMTYPE="MD5" SIZE="5184518">
+					<mets:FLocat LOCTYPE="URL" xlink:href="file://./OCRmaster/19040807_1-0006.jp2"/>
+				</mets:file>
+				<mets:file ID="IMG00007" CREATED="2014-08-14T10:19:45" ADMID="IMGPARAM00007TECHMD" MIMETYPE="image/jp2" SEQ="7" CHECKSUM="a6a6fc5b48eea868ead9d97db52a1e94" CHECKSUMTYPE="MD5" SIZE="5433364">
+					<mets:FLocat LOCTYPE="URL" xlink:href="file://./OCRmaster/19040807_1-0007.jp2"/>
+				</mets:file>
+				<mets:file ID="IMG00008" CREATED="2014-08-14T10:20:28" ADMID="IMGPARAM00008TECHMD" MIMETYPE="image/jp2" SEQ="8" CHECKSUM="03c955395b0e02951a9170826cc0d856" CHECKSUMTYPE="MD5" SIZE="32735043">
+					<mets:FLocat LOCTYPE="URL" xlink:href="file://./OCRmaster/19040807_1-0008.jp2"/>
+				</mets:file>
+			</mets:fileGrp>
+		</mets:fileGrp>
+		<mets:fileGrp ID="TextGroup">
+			<mets:fileGrp ID="ALTOFiles" USE="content">
+				<mets:file ID="ALTO00001" CREATED="2014-08-14T10:20:35" MIMETYPE="text/xml" CHECKSUM="5120621cc09d26c7a757499cfc1a68f0" CHECKSUMTYPE="MD5" SIZE="25415">
+					<mets:FLocat LOCTYPE="URL" xlink:href="file://./ALTO/19040807_1-0001.xml"/>
+				</mets:file>
+				<mets:file ID="ALTO00002" CREATED="2014-08-14T10:20:35" MIMETYPE="text/xml" CHECKSUM="87de1dc2b2c9dab927abc4bfcd6ab8e8" CHECKSUMTYPE="MD5" SIZE="662998">
+					<mets:FLocat LOCTYPE="URL" xlink:href="file://./ALTO/19040807_1-0002.xml"/>
+				</mets:file>
+				<mets:file ID="ALTO00003" CREATED="2014-08-14T10:20:36" MIMETYPE="text/xml" CHECKSUM="982e02767c31da06ffd9ef858bed2eba" CHECKSUMTYPE="MD5" SIZE="507130">
+					<mets:FLocat LOCTYPE="URL" xlink:href="file://./ALTO/19040807_1-0003.xml"/>
+				</mets:file>
+				<mets:file ID="ALTO00004" CREATED="2014-08-14T10:20:37" MIMETYPE="text/xml" CHECKSUM="19e1a3478219eaed97b34533b7208a54" CHECKSUMTYPE="MD5" SIZE="471716">
+					<mets:FLocat LOCTYPE="URL" xlink:href="file://./ALTO/19040807_1-0004.xml"/>
+				</mets:file>
+				<mets:file ID="ALTO00005" CREATED="2014-08-14T10:20:38" MIMETYPE="text/xml" CHECKSUM="61f7f253a26eeba741b01f3f21f54192" CHECKSUMTYPE="MD5" SIZE="466899">
+					<mets:FLocat LOCTYPE="URL" xlink:href="file://./ALTO/19040807_1-0005.xml"/>
+				</mets:file>
+				<mets:file ID="ALTO00006" CREATED="2014-08-14T10:20:38" MIMETYPE="text/xml" CHECKSUM="9a43f6c509595e828b1a49ae0154a78a" CHECKSUMTYPE="MD5" SIZE="568981">
+					<mets:FLocat LOCTYPE="URL" xlink:href="file://./ALTO/19040807_1-0006.xml"/>
+				</mets:file>
+				<mets:file ID="ALTO00007" CREATED="2014-08-14T10:20:39" MIMETYPE="text/xml" CHECKSUM="8e400331e25243b65d202babc499e45f" CHECKSUMTYPE="MD5" SIZE="330070">
+					<mets:FLocat LOCTYPE="URL" xlink:href="file://./ALTO/19040807_1-0007.xml"/>
+				</mets:file>
+				<mets:file ID="ALTO00008" CREATED="2014-08-14T10:20:39" MIMETYPE="text/xml" CHECKSUM="f17426b03cd986006876eb4d8abb0dd2" CHECKSUMTYPE="MD5" SIZE="4263">
+					<mets:FLocat LOCTYPE="URL" xlink:href="file://./ALTO/19040807_1-0008.xml"/>
+				</mets:file>
+			</mets:fileGrp>
+		</mets:fileGrp>
+	</mets:fileSec>
+	<mets:structMap LABEL="Physical Structure" TYPE="PHYSICAL">
+		<mets:div ID="DIVP1" LABEL="Le Petit Journal illustré Supplément du dimanche" TYPE="Newspaper" DMDID="MODSMD_PRINT MODSMD_ELEC">
+			<mets:div ID="DIVP2" ORDER="1" TYPE="TITLE_PAGE">
+				<mets:fptr>
+					<mets:par>
+						<mets:area FILEID="IMG00001"/>
+						<mets:area FILEID="ALTO00001" BETYPE="IDREF" BEGIN="P1"/>
+					</mets:par>
+				</mets:fptr>
+			</mets:div>
+			<mets:div ID="DIVP3" ORDER="2" TYPE="CONTENT_PAGE">
+				<mets:fptr>
+					<mets:par>
+						<mets:area FILEID="IMG00002"/>
+						<mets:area FILEID="ALTO00002" BETYPE="IDREF" BEGIN="P2"/>
+					</mets:par>
+				</mets:fptr>
+			</mets:div>
+			<mets:div ID="DIVP4" ORDER="3" ORDERLABEL="351" LABEL="351" TYPE="ILLUSTRATION_PAGE">
+				<mets:fptr>
+					<mets:par>
+						<mets:area FILEID="IMG00003"/>
+						<mets:area FILEID="ALTO00003" BETYPE="IDREF" BEGIN="P3"/>
+					</mets:par>
+				</mets:fptr>
+			</mets:div>
+			<mets:div ID="DIVP5" ORDER="4" ORDERLABEL="353" LABEL="353" TYPE="ILLUSTRATION_PAGE">
+				<mets:fptr>
+					<mets:par>
+						<mets:area FILEID="IMG00004"/>
+						<mets:area FILEID="ALTO00004" BETYPE="IDREF" BEGIN="P4"/>
+					</mets:par>
+				</mets:fptr>
+			</mets:div>
+			<mets:div ID="DIVP6" ORDER="5" LABEL="■353" TYPE="ILLUSTRATION_PAGE">
+				<mets:fptr>
+					<mets:par>
+						<mets:area FILEID="IMG00005"/>
+						<mets:area FILEID="ALTO00005" BETYPE="IDREF" BEGIN="P5"/>
+					</mets:par>
+				</mets:fptr>
+			</mets:div>
+			<mets:div ID="DIVP7" ORDER="6" ORDERLABEL="854" LABEL="854" TYPE="ILLUSTRATION_PAGE">
+				<mets:fptr>
+					<mets:par>
+						<mets:area FILEID="IMG00006"/>
+						<mets:area FILEID="ALTO00006" BETYPE="IDREF" BEGIN="P6"/>
+					</mets:par>
+				</mets:fptr>
+			</mets:div>
+			<mets:div ID="DIVP8" ORDER="7" ORDERLABEL="355" LABEL="355" TYPE="ADVERTISEMENT_PAGE">
+				<mets:fptr>
+					<mets:par>
+						<mets:area FILEID="IMG00007"/>
+						<mets:area FILEID="ALTO00007" BETYPE="IDREF" BEGIN="P7"/>
+					</mets:par>
+				</mets:fptr>
+			</mets:div>
+			<mets:div ID="DIVP9" ORDER="8" ORDERLABEL="356" LABEL="356" TYPE="ILLUSTRATION_PAGE">
+				<mets:fptr>
+					<mets:par>
+						<mets:area FILEID="IMG00008"/>
+						<mets:area FILEID="ALTO00008" BETYPE="IDREF" BEGIN="P8"/>
+					</mets:par>
+				</mets:fptr>
+			</mets:div>
+		</mets:div>
+	</mets:structMap>
+	<mets:structMap LABEL="Logical Structure" TYPE="LOGICAL">
+		<mets:div ID="DIVL1" TYPE="Newspaper" LABEL="Le Petit Journal illustré Supplément du dimanche no. 716 07.08.1904">
+			<mets:div ID="DIVL2" TYPE="VOLUME" DMDID="MODSMD_PRINT MODSMD_ELEC" LABEL="Le Petit Journal illustré Supplément du dimanche no. 716 07.08.1904">
+				<mets:div ID="DIVL3" TYPE="ISSUE" DMDID="MODSMD_ISSUE1" LABEL="Le Petit Journal illustré Supplément du dimanche no. 716 07.08.1904">
+					<mets:div ID="DIVL4" TYPE="TITLE_SECTION">
+						<mets:div ID="DIVL5" TYPE="HEADLINE" ORDER="1">
+							<mets:fptr>
+								<mets:area BETYPE="IDREF" FILEID="ALTO00001" BEGIN="P1_TB00001"/>
+							</mets:fptr>
+						</mets:div>
+						<mets:div ID="DIVL6" TYPE="TEXTBLOCK" ORDER="2">
+							<mets:fptr>
+								<mets:area BETYPE="IDREF" FILEID="ALTO00001" BEGIN="P1_TB00002"/>
+							</mets:fptr>
+						</mets:div>
+						<mets:div ID="DIVL7" TYPE="TEXTBLOCK" ORDER="3">
+							<mets:fptr>
+								<mets:area BETYPE="IDREF" FILEID="ALTO00001" BEGIN="P1_TB00003"/>
+							</mets:fptr>
+						</mets:div>
+						<mets:div ID="DIVL8" TYPE="TEXTBLOCK" ORDER="4">
+							<mets:fptr>
+								<mets:area BETYPE="IDREF" FILEID="ALTO00001" BEGIN="P1_TB00004"/>
+							</mets:fptr>
+						</mets:div>
+						<mets:div ID="DIVL9" TYPE="TEXTBLOCK" ORDER="5">
+							<mets:fptr>
+								<mets:area BETYPE="IDREF" FILEID="ALTO00001" BEGIN="P1_TB00005"/>
+							</mets:fptr>
+						</mets:div>
+						<mets:div ID="DIVL10" TYPE="TEXTBLOCK" ORDER="6">
+							<mets:fptr>
+								<mets:area BETYPE="IDREF" FILEID="ALTO00001" BEGIN="P1_TB00006"/>
+							</mets:fptr>
+						</mets:div>
+						<mets:div ID="DIVL11" TYPE="TEXTBLOCK" ORDER="7">
+							<mets:fptr>
+								<mets:area BETYPE="IDREF" FILEID="ALTO00001" BEGIN="P1_TB00007"/>
+							</mets:fptr>
+						</mets:div>
+						<mets:div ID="DIVL12" TYPE="TEXTBLOCK" ORDER="8">
+							<mets:fptr>
+								<mets:area BETYPE="IDREF" FILEID="ALTO00001" BEGIN="P1_TB00008"/>
+							</mets:fptr>
+						</mets:div>
+						<mets:div ID="DIVL13" TYPE="TEXTBLOCK" ORDER="9">
+							<mets:fptr>
+								<mets:area BETYPE="IDREF" FILEID="ALTO00001" BEGIN="P1_TB00009"/>
+							</mets:fptr>
+						</mets:div>
+						<mets:div ID="DIVL14" TYPE="TEXTBLOCK" ORDER="10">
+							<mets:fptr>
+								<mets:area BETYPE="IDREF" FILEID="ALTO00001" BEGIN="P1_TB00010"/>
+							</mets:fptr>
+						</mets:div>
+						<mets:div ID="DIVL15" TYPE="TEXTBLOCK" ORDER="11">
+							<mets:fptr>
+								<mets:area BETYPE="IDREF" FILEID="ALTO00001" BEGIN="P1_TB00011"/>
+							</mets:fptr>
+						</mets:div>
+						<mets:div ID="DIVL16" TYPE="TEXTBLOCK" ORDER="12">
+							<mets:fptr>
+								<mets:area BETYPE="IDREF" FILEID="ALTO00001" BEGIN="P1_TB00012"/>
+							</mets:fptr>
+						</mets:div>
+						<mets:div ID="DIVL17" TYPE="ILLUSTRATION" ORDER="13" DMDID="MODSMD_PICT1" LABEL="Untitled">
+							<mets:div ID="DIVL18" TYPE="IMAGE">
+								<mets:fptr>
+									<mets:area BETYPE="IDREF" FILEID="ALTO00001" BEGIN="P1_CB00001"/>
+								</mets:fptr>
+							</mets:div>
+						</mets:div>
+					</mets:div>
+					<mets:div ID="DIVL19" TYPE="CONTENT">
+						<mets:div ID="DIVL20" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE1" LABEL="A SAINT-SÉBASTIEN">
+							<mets:div ID="DIVL21" TYPE="HEADING">
+								<mets:div ID="DIVL22" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00001" BEGIN="P1_TB00013"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL23" TYPE="BODY">
+								<mets:div ID="DIVL24" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL25" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL26" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00001" BEGIN="P1_TB00014"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL27" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE2" LABEL="EXPLICATION DE NOS GRAÏIES">
+							<mets:div ID="DIVL28" TYPE="HEADING">
+								<mets:div ID="DIVL29" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00001"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL30" TYPE="BODY">
+								<mets:div ID="DIVL31" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL32" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL33" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00002"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL34" TYPE="PARAGRAPH" ORDER="2">
+										<mets:div ID="DIVL35" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00003"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL36" TYPE="PARAGRAPH" ORDER="3">
+										<mets:div ID="DIVL37" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00004"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL38" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE3" LABEL="LA PLUIE MANDCHOURIENNE">
+							<mets:div ID="DIVL39" TYPE="HEADING">
+								<mets:div ID="DIVL40" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00005"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL41" TYPE="BODY">
+								<mets:div ID="DIVL42" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL43" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL44" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00006"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL45" TYPE="PARAGRAPH" ORDER="2">
+										<mets:div ID="DIVL46" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00007"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL47" TYPE="PARAGRAPH" ORDER="3">
+										<mets:div ID="DIVL48" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00008"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL49" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE4" LABEL="M. GUILLEMIN">
+							<mets:div ID="DIVL50" TYPE="HEADING">
+								<mets:div ID="DIVL51" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00009"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL52" TYPE="BODY">
+								<mets:div ID="DIVL53" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL54" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL55" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00010"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL56" TYPE="PARAGRAPH" ORDER="2">
+										<mets:div ID="DIVL57" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00011"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL58" TYPE="PARAGRAPH" ORDER="3">
+										<mets:div ID="DIVL59" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00012"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL60" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE5" LABEL="POUR NOS RIVIÈRES">
+							<mets:div ID="DIVL61" TYPE="HEADING">
+								<mets:div ID="DIVL62" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00013"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL63" TYPE="BODY">
+								<mets:div ID="DIVL64" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL65" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL66" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00014"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL67" TYPE="PARAGRAPH" ORDER="2">
+										<mets:div ID="DIVL68" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00015"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL69" TYPE="PARAGRAPH" ORDER="3">
+										<mets:div ID="DIVL70" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00016"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL71" TYPE="PARAGRAPH" ORDER="4">
+										<mets:div ID="DIVL72" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00017"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL73" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE6" LABEL="LA. PÈCHE A LA LIGNE">
+							<mets:div ID="DIVL74" TYPE="HEADING">
+								<mets:div ID="DIVL75" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00018"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL76" TYPE="BODY">
+								<mets:div ID="DIVL77" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL78" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL79" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00019"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL80" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE7" LABEL="LE VOYAGE ANNUEL">
+							<mets:div ID="DIVL81" TYPE="HEADING">
+								<mets:div ID="DIVL82" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00020"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL83" TYPE="BODY">
+								<mets:div ID="DIVL84" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL85" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL86" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00021"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL87" TYPE="PARAGRAPH" ORDER="2">
+										<mets:div ID="DIVL88" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00022"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL89" TYPE="PARAGRAPH" ORDER="3">
+										<mets:div ID="DIVL90" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00002" BEGIN="P2_TB00023"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL91" TYPE="PARAGRAPH" ORDER="4">
+										<mets:div ID="DIVL92" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00001"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL93" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE8" LABEL="AVIS A NOS LECTRICES">
+							<mets:div ID="DIVL94" TYPE="HEADING">
+								<mets:div ID="DIVL95" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00002"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL96" TYPE="BODY">
+								<mets:div ID="DIVL97" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL98" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL99" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00003"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL100" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE9" LABEL="L'HÉRITAGE">
+							<mets:div ID="DIVL101" TYPE="HEADING">
+								<mets:div ID="DIVL102" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00004"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL103" TYPE="BODY">
+								<mets:div ID="DIVL104" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL105" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL106" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00005"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL107" TYPE="PARAGRAPH" ORDER="2">
+										<mets:div ID="DIVL108" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00006"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL109" TYPE="PARAGRAPH" ORDER="3">
+										<mets:div ID="DIVL110" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00007"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL111" TYPE="PARAGRAPH" ORDER="4">
+										<mets:div ID="DIVL112" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00008"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL113" TYPE="PARAGRAPH" ORDER="5">
+										<mets:div ID="DIVL114" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00009"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL115" TYPE="PARAGRAPH" ORDER="6">
+										<mets:div ID="DIVL116" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00010"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL117" TYPE="PARAGRAPH" ORDER="7">
+										<mets:div ID="DIVL118" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00011"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL119" TYPE="PARAGRAPH" ORDER="8">
+										<mets:div ID="DIVL120" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00012"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL121" TYPE="PARAGRAPH" ORDER="9">
+										<mets:div ID="DIVL122" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00013"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL123" TYPE="PARAGRAPH" ORDER="10">
+										<mets:div ID="DIVL124" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00014"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+								<mets:div ID="DIVL125" TYPE="ILLUSTRATION" ORDER="1" DMDID="MODSMD_PICT2" LABEL="Le général de division F. de NÉGRIER">
+									<mets:div ID="DIVL126" TYPE="IMAGE">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_CB00001"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL127" TYPE="CAPTION">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00015"/>
+										</mets:fptr>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL128" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE10" LABEL="MOTS POUR RIRE">
+							<mets:div ID="DIVL129" TYPE="HEADING">
+								<mets:div ID="DIVL130" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00016"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL131" TYPE="BODY">
+								<mets:div ID="DIVL132" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL133" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL134" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00017"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL135" TYPE="PARAGRAPH" ORDER="2">
+										<mets:div ID="DIVL136" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00018"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL137" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE11" LABEL="À la conquête de Paris">
+							<mets:div ID="DIVL138" TYPE="HEADING">
+								<mets:div ID="DIVL139" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00019"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL140" TYPE="BODY">
+								<mets:div ID="DIVL141" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL142" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL143" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_TB00020"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL144" TYPE="PARAGRAPH" ORDER="2">
+										<mets:div ID="DIVL145" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00004" BEGIN="P4_TB00001"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL146" TYPE="PARAGRAPH" ORDER="3">
+										<mets:div ID="DIVL147" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00004" BEGIN="P4_TB00002"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL148" TYPE="PARAGRAPH" ORDER="4">
+										<mets:div ID="DIVL149" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00004" BEGIN="P4_TB00003"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL150" TYPE="PARAGRAPH" ORDER="5">
+										<mets:div ID="DIVL151" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00004" BEGIN="P4_TB00004"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+								<mets:div ID="DIVL152" TYPE="ILLUSTRATION" ORDER="1" DMDID="MODSMD_PICT3" LABEL='M. -GUTL.LEMÎN Inspecteur général die la na"vigalion'>
+									<mets:div ID="DIVL153" TYPE="IMAGE">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00004" BEGIN="P4_CB00001"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL154" TYPE="CAPTION">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00004" BEGIN="P4_TB00005"/>
+										</mets:fptr>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL155" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE12" LABEL="LES CONCOURS DE PÊCHE A LA LIGNE DU Petit Journal">
+							<mets:div ID="DIVL156" TYPE="HEADING">
+								<mets:div ID="DIVL157" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00004" BEGIN="P4_TB00006"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL158" TYPE="BODY">
+								<mets:div ID="DIVL159" TYPE="ILLUSTRATION" ORDER="1" DMDID="MODSMD_PICT4" LABEL="Photographies communiquées gracieusement par M. CU. ARAMBOURON">
+									<mets:div ID="DIVL160" TYPE="IMAGE">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00004" BEGIN="P4_CB00002"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL161" TYPE="CAPTION">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00004" BEGIN="P4_TB00007"/>
+										</mets:fptr>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL162" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE13" LABEL="Côté «cLes HDames">
+							<mets:div ID="DIVL163" TYPE="HEADING">
+								<mets:div ID="DIVL164" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00004" BEGIN="P4_TB00008"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL165" TYPE="BODY">
+								<mets:div ID="DIVL166" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL167" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL168" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00004" BEGIN="P4_TB00009"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL169" TYPE="PARAGRAPH" ORDER="2">
+										<mets:div ID="DIVL170" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00004" BEGIN="P4_TB00010"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL171" TYPE="PARAGRAPH" ORDER="3">
+										<mets:div ID="DIVL172" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00004" BEGIN="P4_TB00011"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL173" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE14" LABEL="LA PIECE D'OR">
+							<mets:div ID="DIVL174" TYPE="HEADING">
+								<mets:div ID="DIVL175" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00004" BEGIN="P4_TB00012"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL176" TYPE="BODY">
+								<mets:div ID="DIVL177" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL178" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL179" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00004" BEGIN="P4_TB00013"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL180" TYPE="PARAGRAPH" ORDER="2">
+										<mets:div ID="DIVL181" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00004" BEGIN="P4_TB00014"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL182" TYPE="PARAGRAPH" ORDER="3">
+										<mets:div ID="DIVL183" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00005" BEGIN="P5_TB00001"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL184" TYPE="PARAGRAPH" ORDER="4">
+										<mets:div ID="DIVL185" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00005" BEGIN="P5_TB00002"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL186" TYPE="PARAGRAPH" ORDER="5">
+										<mets:div ID="DIVL187" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00005" BEGIN="P5_TB00003"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL188" TYPE="PARAGRAPH" ORDER="6">
+										<mets:div ID="DIVL189" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00005" BEGIN="P5_TB00004"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL190" TYPE="PARAGRAPH" ORDER="7">
+										<mets:div ID="DIVL191" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00005" BEGIN="P5_TB00005"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL192" TYPE="PARAGRAPH" ORDER="8">
+										<mets:div ID="DIVL193" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00005" BEGIN="P5_TB00006"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL194" TYPE="PARAGRAPH" ORDER="9">
+										<mets:div ID="DIVL195" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00005" BEGIN="P5_TB00007"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+								<mets:div ID="DIVL196" TYPE="ILLUSTRATION" ORDER="1" DMDID="MODSMD_PICT5" LABEL="M, FORESTIER Conservateur du Bois de Boulogne">
+									<mets:div ID="DIVL197" TYPE="IMAGE">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00005" BEGIN="P5_CB00001"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL198" TYPE="CAPTION">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00005" BEGIN="P5_TB00008"/>
+										</mets:fptr>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL199" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE15" LABEL="LES CONCOURS DE PÊCHE A LA LIGNE DU Petit Journal">
+							<mets:div ID="DIVL200" TYPE="HEADING">
+								<mets:div ID="DIVL201" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00005" BEGIN="P5_TB00009"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL202" TYPE="BODY">
+								<mets:div ID="DIVL203" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL204" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL205" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00005" BEGIN="P5_TB00010"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL206" TYPE="PARAGRAPH" ORDER="2">
+										<mets:div ID="DIVL207" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00005" BEGIN="P5_TB00011"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+								<mets:div ID="DIVL208" TYPE="ILLUSTRATION" ORDER="1" DMDID="MODSMD_PICT6" LABEL="Côté cl o s Hommes">
+									<mets:div ID="DIVL209" TYPE="IMAGE">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00005" BEGIN="P5_CB00002"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL210" TYPE="CAPTION">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00005" BEGIN="P5_TB00012"/>
+										</mets:fptr>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL211" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE16" LABEL="LE BILLET GAGNANT">
+							<mets:div ID="DIVL212" TYPE="HEADING">
+								<mets:div ID="DIVL213" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00005" BEGIN="P5_TB00013"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL214" TYPE="BODY">
+								<mets:div ID="DIVL215" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL216" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL217" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00005" BEGIN="P5_TB00014"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL218" TYPE="PARAGRAPH" ORDER="2">
+										<mets:div ID="DIVL219" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_TB00001"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL220" TYPE="PARAGRAPH" ORDER="3">
+										<mets:div ID="DIVL221" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_TB00002"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL222" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE17" LABEL="CONSEILS PRATIQUES">
+							<mets:div ID="DIVL223" TYPE="HEADING">
+								<mets:div ID="DIVL224" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_TB00003"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL225" TYPE="BODY">
+								<mets:div ID="DIVL226" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL227" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL228" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_TB00004"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL229" TYPE="PARAGRAPH" ORDER="2">
+										<mets:div ID="DIVL230" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_TB00005"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL231" TYPE="PARAGRAPH" ORDER="3">
+										<mets:div ID="DIVL232" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_TB00006"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL233" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE18" LABEL="CARRÉS JUMEAUX">
+							<mets:div ID="DIVL234" TYPE="HEADING">
+								<mets:div ID="DIVL235" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_TB00007"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL236" TYPE="BODY">
+								<mets:div ID="DIVL237" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL238" TYPE="PARAGRAPH" ORDER="1">
+										<mets:div ID="DIVL239" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_TB00008"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL240" TYPE="PARAGRAPH" ORDER="2">
+										<mets:div ID="DIVL241" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_TB00009"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL242" TYPE="PARAGRAPH" ORDER="3">
+										<mets:div ID="DIVL243" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_TB00010"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+									<mets:div ID="DIVL244" TYPE="PARAGRAPH" ORDER="4">
+										<mets:div ID="DIVL245" TYPE="TEXT">
+											<mets:fptr>
+												<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_TB00011"/>
+											</mets:fptr>
+										</mets:div>
+									</mets:div>
+								</mets:div>
+								<mets:div ID="DIVL246" TYPE="ILLUSTRATION" ORDER="1" DMDID="MODSMD_PICT7" LABEL="Untitled">
+									<mets:div ID="DIVL247" TYPE="IMAGE">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00001"/>
+										</mets:fptr>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL248" TYPE="ARTICLE" DMDID="MODSMD_ARTICLE19" LABEL="LA MANDGHOURIENNE">
+							<mets:div ID="DIVL249" TYPE="HEADING">
+								<mets:div ID="DIVL250" TYPE="TITLE">
+									<mets:fptr>
+										<mets:area BETYPE="IDREF" FILEID="ALTO00008" BEGIN="P8_TB00001"/>
+									</mets:fptr>
+								</mets:div>
+							</mets:div>
+							<mets:div ID="DIVL251" TYPE="BODY">
+								<mets:div ID="DIVL252" TYPE="ILLUSTRATION" ORDER="1" DMDID="MODSMD_PICT8" LABEL="Untitled">
+									<mets:div ID="DIVL253" TYPE="IMAGE">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00008" BEGIN="P8_CB00001"/>
+										</mets:fptr>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+						<mets:div ID="DIVL254" TYPE="SECTION" DMDID="MODSMD_SECTION1">
+							<mets:div ID="DIVL255" TYPE="BODY">
+								<mets:div ID="DIVL256" TYPE="BODY_CONTENT">
+									<mets:div ID="DIVL257" TYPE="ADVERTISEMENT" ORDER="1" LABEL="Adv. 1 Page 3">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_CB00002"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL258" TYPE="ADVERTISEMENT" ORDER="2" LABEL="Adv. 2 Page 3">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00003" BEGIN="P3_CB00003"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL259" TYPE="ADVERTISEMENT" ORDER="3" LABEL="Adv. 3 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00002"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL260" TYPE="ADVERTISEMENT" ORDER="4" LABEL="Adv. 4 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00003"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL261" TYPE="ADVERTISEMENT" ORDER="5" LABEL="Adv. 5 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00004"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL262" TYPE="ADVERTISEMENT" ORDER="6" LABEL="Adv. 6 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00005"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL263" TYPE="ADVERTISEMENT" ORDER="7" LABEL="Adv. 7 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00006"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL264" TYPE="ADVERTISEMENT" ORDER="8" LABEL="Adv. 8 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00007"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL265" TYPE="ADVERTISEMENT" ORDER="9" LABEL="Adv. 9 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00008"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL266" TYPE="ADVERTISEMENT" ORDER="10" LABEL="Adv. 10 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00009"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL267" TYPE="ADVERTISEMENT" ORDER="11" LABEL="Adv. 11 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00010"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL268" TYPE="ADVERTISEMENT" ORDER="12" LABEL="Adv. 12 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00011"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL269" TYPE="ADVERTISEMENT" ORDER="13" LABEL="Adv. 13 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00012"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL270" TYPE="ADVERTISEMENT" ORDER="14" LABEL="Adv. 14 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00013"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL271" TYPE="ADVERTISEMENT" ORDER="15" LABEL="Adv. 15 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00014"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL272" TYPE="ADVERTISEMENT" ORDER="16" LABEL="Adv. 16 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00015"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL273" TYPE="ADVERTISEMENT" ORDER="17" LABEL="Adv. 17 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00016"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL274" TYPE="ADVERTISEMENT" ORDER="18" LABEL="Adv. 18 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00017"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL275" TYPE="ADVERTISEMENT" ORDER="19" LABEL="Adv. 19 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00018"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL276" TYPE="ADVERTISEMENT" ORDER="20" LABEL="Adv. 20 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00019"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL277" TYPE="ADVERTISEMENT" ORDER="21" LABEL="Adv. 21 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00020"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL278" TYPE="ADVERTISEMENT" ORDER="22" LABEL="Adv. 22 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00021"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL279" TYPE="ADVERTISEMENT" ORDER="23" LABEL="Adv. 23 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00022"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL280" TYPE="ADVERTISEMENT" ORDER="24" LABEL="Adv. 24 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00023"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL281" TYPE="ADVERTISEMENT" ORDER="25" LABEL="Adv. 25 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00024"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL282" TYPE="ADVERTISEMENT" ORDER="26" LABEL="Adv. 26 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00025"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL283" TYPE="ADVERTISEMENT" ORDER="27" LABEL="Adv. 27 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00026"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL284" TYPE="ADVERTISEMENT" ORDER="28" LABEL="Adv. 28 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00027"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL285" TYPE="ADVERTISEMENT" ORDER="29" LABEL="Adv. 29 Page 6">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00006" BEGIN="P6_CB00028"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL286" TYPE="ADVERTISEMENT" ORDER="30" LABEL="Adv. 30 Page 7">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00007" BEGIN="P7_CB00001"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL287" TYPE="ADVERTISEMENT" ORDER="31" LABEL="Adv. 31 Page 7">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00007" BEGIN="P7_CB00002"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL288" TYPE="ADVERTISEMENT" ORDER="32" LABEL="Adv. 32 Page 7">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00007" BEGIN="P7_CB00003"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL289" TYPE="ADVERTISEMENT" ORDER="33" LABEL="Adv. 33 Page 7">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00007" BEGIN="P7_CB00004"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL290" TYPE="ADVERTISEMENT" ORDER="34" LABEL="Adv. 34 Page 7">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00007" BEGIN="P7_CB00005"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL291" TYPE="ADVERTISEMENT" ORDER="35" LABEL="Adv. 35 Page 7">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00007" BEGIN="P7_CB00006"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL292" TYPE="ADVERTISEMENT" ORDER="36" LABEL="Adv. 36 Page 7">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00007" BEGIN="P7_CB00007"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL293" TYPE="ADVERTISEMENT" ORDER="37" LABEL="Adv. 37 Page 7">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00007" BEGIN="P7_CB00008"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL294" TYPE="ADVERTISEMENT" ORDER="38" LABEL="Adv. 38 Page 7">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00007" BEGIN="P7_CB00009"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL295" TYPE="ADVERTISEMENT" ORDER="39" LABEL="Adv. 39 Page 7">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00007" BEGIN="P7_CB00010"/>
+										</mets:fptr>
+									</mets:div>
+									<mets:div ID="DIVL296" TYPE="ADVERTISEMENT" ORDER="40" LABEL="Adv. 40 Page 7">
+										<mets:fptr>
+											<mets:area BETYPE="IDREF" FILEID="ALTO00007" BEGIN="P7_CB00011"/>
+										</mets:fptr>
+									</mets:div>
+								</mets:div>
+							</mets:div>
+						</mets:div>
+					</mets:div>
+				</mets:div>
+			</mets:div>
+		</mets:div>
+	</mets:structMap>
+</METS:mets>

@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<METS:mets TYPE="Newspaper" PROFILE="ENMAP" OBJID="SBB_00006_19300101_F_078_001_0" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version191/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/mods.xsd http://www.loc.gov/mix/v20 http://www.loc.gov/standards/mix/mix20/mix20.xsd" xmlns:METS="http://www.loc.gov/METS/" xmlns:mix="http://www.loc.gov/mix/v20" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mets="http://www.loc.gov/METS/">
+  <mets:metsHdr CREATEDATE="2014-12-19T10:19:26" LASTMODDATE="2014-12-19T10:19:26" RECORDSTATUS="SUBMITTED">
+    <mets:agent ROLE="OTHER" OTHERROLE="OWNER">
+      <mets:name>SBB</mets:name>
+    </mets:agent>
+    <mets:agent ROLE="CREATOR" TYPE="ORGANIZATION">
+      <mets:name>UIBK</mets:name>
+    </mets:agent>
+    <mets:agent ROLE="CREATOR" TYPE="OTHER" OTHERTYPE="SOFTWARE">
+      <mets:name>DEA METS Engine</mets:name>
+    </mets:agent>
+  </mets:metsHdr>
+  <mets:dmdSec ID="MODS_ISSUE_19300101_F_078_001_0">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>Volkszeitung (1890-1904) /Berliner Volkszeitung (1904-1930)</mods:title>
+          </mods:titleInfo>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:genre>Newspaper Issue</mods:genre>
+          <mods:originInfo>
+            <mods:dateIssued encoding="w3cdtf" keyDate="yes">1930-01-01</mods:dateIssued>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm type="code" authority="iso639-2b">ger</mods:languageTerm>
+            <mods:scriptTerm type="code" authority="iso15924">Goth</mods:scriptTerm>
+            <mods:scriptTerm type="code" authority="iso15924">Latn</mods:scriptTerm>
+          </mods:language>
+          <mods:identifier type="ENP">SBB_00006</mods:identifier>
+          <mods:identifier type="CatalogueIdentifier">unknown</mods:identifier>
+          <mods:accessCondition type="Europeana viewer">1 - Full page view</mods:accessCondition>
+          <mods:recordInfo>
+            <mods:recordContentSource>SBB</mods:recordContentSource>
+          </mods:recordInfo>
+          <mods:relatedItem type="host">
+            <mods:part>
+              <mods:detail type="volume">
+                <mods:caption>Jahrgang</mods:caption>
+                <mods:number>078</mods:number>
+              </mods:detail>
+              <mods:detail type="issue">
+                <mods:caption>Nr.</mods:caption>
+                <mods:number>001</mods:number>
+              </mods:detail>
+            </mods:part>
+          </mods:relatedItem>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:amdSec ID="TECH_MD">
+    <mets:techMD ID="FID-F_SBB_00009_19300101_078_001_0_001-OCRMASTER-TECHMD">
+      <mets:mdWrap MDTYPE="NISOIMG">
+        <mets:xmlData>
+          <mix:mix>
+            <mix:BasicDigitalObjectInformation>
+              <mix:Compression>
+                <mix:compressionScheme>COMPRESSION_LZW</mix:compressionScheme>
+              </mix:Compression>
+            </mix:BasicDigitalObjectInformation>
+            <mix:BasicImageInformation>
+              <mix:BasicImageCharacteristics>
+                <mix:imageWidth>4139</mix:imageWidth>
+                <mix:imageHeight>6035</mix:imageHeight>
+              </mix:BasicImageCharacteristics>
+            </mix:BasicImageInformation>
+            <mix:ImageAssessmentMetadata>
+              <mix:SpatialMetrics>
+                <mix:samplingFrequencyPlane>source object plane</mix:samplingFrequencyPlane>
+                <mix:samplingFrequencyUnit>in.</mix:samplingFrequencyUnit>
+                <mix:xSamplingFrequency>
+                  <mix:numerator>300</mix:numerator>
+                  <mix:denominator>1</mix:denominator>
+                </mix:xSamplingFrequency>
+                <mix:ySamplingFrequency>
+                  <mix:numerator>300</mix:numerator>
+                  <mix:denominator>1</mix:denominator>
+                </mix:ySamplingFrequency>
+              </mix:SpatialMetrics>
+              <mix:ImageColorEncoding>
+                <mix:BitsPerSample>
+                  <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                  <mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+                </mix:BitsPerSample>
+                <mix:samplesPerPixel>1</mix:samplesPerPixel>
+              </mix:ImageColorEncoding>
+            </mix:ImageAssessmentMetadata>
+          </mix:mix>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:techMD>
+    <mets:techMD ID="FID-F_SBB_00009_19300101_078_001_0_002-OCRMASTER-TECHMD">
+      <mets:mdWrap MDTYPE="NISOIMG">
+        <mets:xmlData>
+          <mix:mix>
+            <mix:BasicDigitalObjectInformation>
+              <mix:Compression>
+                <mix:compressionScheme>COMPRESSION_LZW</mix:compressionScheme>
+              </mix:Compression>
+            </mix:BasicDigitalObjectInformation>
+            <mix:BasicImageInformation>
+              <mix:BasicImageCharacteristics>
+                <mix:imageWidth>4316</mix:imageWidth>
+                <mix:imageHeight>6043</mix:imageHeight>
+              </mix:BasicImageCharacteristics>
+            </mix:BasicImageInformation>
+            <mix:ImageAssessmentMetadata>
+              <mix:SpatialMetrics>
+                <mix:samplingFrequencyPlane>source object plane</mix:samplingFrequencyPlane>
+                <mix:samplingFrequencyUnit>in.</mix:samplingFrequencyUnit>
+                <mix:xSamplingFrequency>
+                  <mix:numerator>300</mix:numerator>
+                  <mix:denominator>1</mix:denominator>
+                </mix:xSamplingFrequency>
+                <mix:ySamplingFrequency>
+                  <mix:numerator>300</mix:numerator>
+                  <mix:denominator>1</mix:denominator>
+                </mix:ySamplingFrequency>
+              </mix:SpatialMetrics>
+              <mix:ImageColorEncoding>
+                <mix:BitsPerSample>
+                  <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                  <mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+                </mix:BitsPerSample>
+                <mix:samplesPerPixel>1</mix:samplesPerPixel>
+              </mix:ImageColorEncoding>
+            </mix:ImageAssessmentMetadata>
+          </mix:mix>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:techMD>
+    <mets:techMD ID="FID-F_SBB_00009_19300101_078_001_0_003-OCRMASTER-TECHMD">
+      <mets:mdWrap MDTYPE="NISOIMG">
+        <mets:xmlData>
+          <mix:mix>
+            <mix:BasicDigitalObjectInformation>
+              <mix:Compression>
+                <mix:compressionScheme>COMPRESSION_LZW</mix:compressionScheme>
+              </mix:Compression>
+            </mix:BasicDigitalObjectInformation>
+            <mix:BasicImageInformation>
+              <mix:BasicImageCharacteristics>
+                <mix:imageWidth>4067</mix:imageWidth>
+                <mix:imageHeight>6035</mix:imageHeight>
+              </mix:BasicImageCharacteristics>
+            </mix:BasicImageInformation>
+            <mix:ImageAssessmentMetadata>
+              <mix:SpatialMetrics>
+                <mix:samplingFrequencyPlane>source object plane</mix:samplingFrequencyPlane>
+                <mix:samplingFrequencyUnit>in.</mix:samplingFrequencyUnit>
+                <mix:xSamplingFrequency>
+                  <mix:numerator>300</mix:numerator>
+                  <mix:denominator>1</mix:denominator>
+                </mix:xSamplingFrequency>
+                <mix:ySamplingFrequency>
+                  <mix:numerator>300</mix:numerator>
+                  <mix:denominator>1</mix:denominator>
+                </mix:ySamplingFrequency>
+              </mix:SpatialMetrics>
+              <mix:ImageColorEncoding>
+                <mix:BitsPerSample>
+                  <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                  <mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+                </mix:BitsPerSample>
+                <mix:samplesPerPixel>1</mix:samplesPerPixel>
+              </mix:ImageColorEncoding>
+            </mix:ImageAssessmentMetadata>
+          </mix:mix>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:techMD>
+    <mets:techMD ID="FID-F_SBB_00009_19300101_078_001_0_004-OCRMASTER-TECHMD">
+      <mets:mdWrap MDTYPE="NISOIMG">
+        <mets:xmlData>
+          <mix:mix>
+            <mix:BasicDigitalObjectInformation>
+              <mix:Compression>
+                <mix:compressionScheme>COMPRESSION_LZW</mix:compressionScheme>
+              </mix:Compression>
+            </mix:BasicDigitalObjectInformation>
+            <mix:BasicImageInformation>
+              <mix:BasicImageCharacteristics>
+                <mix:imageWidth>4263</mix:imageWidth>
+                <mix:imageHeight>6043</mix:imageHeight>
+              </mix:BasicImageCharacteristics>
+            </mix:BasicImageInformation>
+            <mix:ImageAssessmentMetadata>
+              <mix:SpatialMetrics>
+                <mix:samplingFrequencyPlane>source object plane</mix:samplingFrequencyPlane>
+                <mix:samplingFrequencyUnit>in.</mix:samplingFrequencyUnit>
+                <mix:xSamplingFrequency>
+                  <mix:numerator>300</mix:numerator>
+                  <mix:denominator>1</mix:denominator>
+                </mix:xSamplingFrequency>
+                <mix:ySamplingFrequency>
+                  <mix:numerator>300</mix:numerator>
+                  <mix:denominator>1</mix:denominator>
+                </mix:ySamplingFrequency>
+              </mix:SpatialMetrics>
+              <mix:ImageColorEncoding>
+                <mix:BitsPerSample>
+                  <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                  <mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+                </mix:BitsPerSample>
+                <mix:samplesPerPixel>1</mix:samplesPerPixel>
+              </mix:ImageColorEncoding>
+            </mix:ImageAssessmentMetadata>
+          </mix:mix>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:techMD>
+  </mets:amdSec>
+  <mets:fileSec>
+    <mets:fileGrp ID="ImageGroup">
+      <mets:fileGrp ID="OCRMasterFiles" USE="Preservation">
+        <mets:file ID="FID-F_SBB_00009_19300101_078_001_0_001-OCRMASTER" ADMID="FID-F_SBB_00009_19300101_078_001_0_001-OCRMASTER-TECHMD" MIMETYPE="image/tiff" SEQ="1" CHECKSUMTYPE="MD5" CHECKSUM="DE-FD-00-FD-35-3E-E7-B2-43-BC-4F-2A-4D-46-0C-30">
+          <mets:FLocat LOCTYPE="URL" xlink:href="file:///./OCRmaster/F_SBB_00009_19300101_078_001_0_001.tif" />
+        </mets:file>
+        <mets:file ID="FID-F_SBB_00009_19300101_078_001_0_002-OCRMASTER" ADMID="FID-F_SBB_00009_19300101_078_001_0_002-OCRMASTER-TECHMD" MIMETYPE="image/tiff" SEQ="2" CHECKSUMTYPE="MD5" CHECKSUM="01-98-C6-CA-23-45-23-3B-81-79-B5-0B-16-EF-FC-26">
+          <mets:FLocat LOCTYPE="URL" xlink:href="file:///./OCRmaster/F_SBB_00009_19300101_078_001_0_002.tif" />
+        </mets:file>
+        <mets:file ID="FID-F_SBB_00009_19300101_078_001_0_003-OCRMASTER" ADMID="FID-F_SBB_00009_19300101_078_001_0_003-OCRMASTER-TECHMD" MIMETYPE="image/tiff" SEQ="3" CHECKSUMTYPE="MD5" CHECKSUM="CE-FC-D0-3F-65-59-B8-15-B5-02-8C-DD-63-6C-A6-DF">
+          <mets:FLocat LOCTYPE="URL" xlink:href="file:///./OCRmaster/F_SBB_00009_19300101_078_001_0_003.tif" />
+        </mets:file>
+        <mets:file ID="FID-F_SBB_00009_19300101_078_001_0_004-OCRMASTER" ADMID="FID-F_SBB_00009_19300101_078_001_0_004-OCRMASTER-TECHMD" MIMETYPE="image/tiff" SEQ="4" CHECKSUMTYPE="MD5" CHECKSUM="7E-86-E3-87-64-A5-4A-D5-16-79-1E-9D-B4-E8-CB-CD">
+          <mets:FLocat LOCTYPE="URL" xlink:href="file:///./OCRmaster/F_SBB_00009_19300101_078_001_0_004.tif" />
+        </mets:file>
+      </mets:fileGrp>
+      <mets:fileGrp ID="ViewingFiles" USE="Viewing">
+        <mets:file ID="FID-F_SBB_00009_19300101_078_001_0_001-VIEWINGCOPY" SEQ="1" CHECKSUMTYPE="MD5" CHECKSUM="">
+          <mets:FLocat LOCTYPE="URL" xlink:href="file:///./viewing/F_SBB_00009_19300101_078_001_0_001.jp2" />
+        </mets:file>
+        <mets:file ID="FID-F_SBB_00009_19300101_078_001_0_002-VIEWINGCOPY" SEQ="2" CHECKSUMTYPE="MD5" CHECKSUM="">
+          <mets:FLocat LOCTYPE="URL" xlink:href="file:///./viewing/F_SBB_00009_19300101_078_001_0_002.jp2" />
+        </mets:file>
+        <mets:file ID="FID-F_SBB_00009_19300101_078_001_0_003-VIEWINGCOPY" SEQ="3" CHECKSUMTYPE="MD5" CHECKSUM="">
+          <mets:FLocat LOCTYPE="URL" xlink:href="file:///./viewing/F_SBB_00009_19300101_078_001_0_003.jp2" />
+        </mets:file>
+        <mets:file ID="FID-F_SBB_00009_19300101_078_001_0_004-VIEWINGCOPY" SEQ="4" CHECKSUMTYPE="MD5" CHECKSUM="">
+          <mets:FLocat LOCTYPE="URL" xlink:href="file:///./viewing/F_SBB_00009_19300101_078_001_0_004.jp2" />
+        </mets:file>
+      </mets:fileGrp>
+    </mets:fileGrp>
+    <mets:fileGrp ID="TextGroup">
+      <mets:fileGrp ID="ALTOFiles" USE="Content">
+        <mets:file ID="FID-F_SBB_00009_19300101_078_001_0_001-ALTO" SEQ="1" CHECKSUMTYPE="MD5" CHECKSUM="44-24-D4-AF-CC-BF-14-F5-BB-07-51-FE-EB-3A-AA-D0">
+          <mets:FLocat LOCTYPE="URL" xlink:href="file:///./alto/F_SBB_00009_19300101_078_001_0_001.xml" />
+        </mets:file>
+        <mets:file ID="FID-F_SBB_00009_19300101_078_001_0_002-ALTO" SEQ="2" CHECKSUMTYPE="MD5" CHECKSUM="CE-AA-24-E9-00-7B-A8-84-F6-3C-F7-F6-93-76-C7-28">
+          <mets:FLocat LOCTYPE="URL" xlink:href="file:///./alto/F_SBB_00009_19300101_078_001_0_002.xml" />
+        </mets:file>
+        <mets:file ID="FID-F_SBB_00009_19300101_078_001_0_003-ALTO" SEQ="3" CHECKSUMTYPE="MD5" CHECKSUM="BA-56-C1-A4-4E-E2-50-35-45-0D-F5-6D-C8-CD-6E-F4">
+          <mets:FLocat LOCTYPE="URL" xlink:href="file:///./alto/F_SBB_00009_19300101_078_001_0_003.xml" />
+        </mets:file>
+        <mets:file ID="FID-F_SBB_00009_19300101_078_001_0_004-ALTO" SEQ="4" CHECKSUMTYPE="MD5" CHECKSUM="78-B6-31-A3-25-05-D7-2F-9F-36-C4-7E-E6-B1-72-C4">
+          <mets:FLocat LOCTYPE="URL" xlink:href="file:///./alto/F_SBB_00009_19300101_078_001_0_004.xml" />
+        </mets:file>
+      </mets:fileGrp>
+    </mets:fileGrp>
+  </mets:fileSec>
+  <mets:structMap LABEL="Physical Structure" TYPE="PHYSICAL">
+    <mets:div ID="phys0" LABEL="19300101_F_078_001_0" TYPE="physSequence" DMDID="MODS_ISSUE_19300101_F_078_001_0">
+      <mets:div ID="phys1" ORDER="1" ORDERLABEL="1" TYPE="page">
+        <mets:fptr FILEID="FID-F_SBB_00009_19300101_078_001_0_001-OCRMASTER" />
+        <mets:fptr FILEID="FID-F_SBB_00009_19300101_078_001_0_001-ALTO" />
+        <mets:fptr FILEID="FID-F_SBB_00009_19300101_078_001_0_001-VIEWINGCOPY" />
+      </mets:div>
+      <mets:div ID="phys2" ORDER="2" ORDERLABEL="2" TYPE="page">
+        <mets:fptr FILEID="FID-F_SBB_00009_19300101_078_001_0_002-OCRMASTER" />
+        <mets:fptr FILEID="FID-F_SBB_00009_19300101_078_001_0_002-ALTO" />
+        <mets:fptr FILEID="FID-F_SBB_00009_19300101_078_001_0_002-VIEWINGCOPY" />
+      </mets:div>
+      <mets:div ID="phys3" ORDER="3" ORDERLABEL="3" TYPE="page">
+        <mets:fptr FILEID="FID-F_SBB_00009_19300101_078_001_0_003-OCRMASTER" />
+        <mets:fptr FILEID="FID-F_SBB_00009_19300101_078_001_0_003-ALTO" />
+        <mets:fptr FILEID="FID-F_SBB_00009_19300101_078_001_0_003-VIEWINGCOPY" />
+      </mets:div>
+      <mets:div ID="phys4" ORDER="4" ORDERLABEL="4" TYPE="page">
+        <mets:fptr FILEID="FID-F_SBB_00009_19300101_078_001_0_004-OCRMASTER" />
+        <mets:fptr FILEID="FID-F_SBB_00009_19300101_078_001_0_004-ALTO" />
+        <mets:fptr FILEID="FID-F_SBB_00009_19300101_078_001_0_004-VIEWINGCOPY" />
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+</METS:mets>

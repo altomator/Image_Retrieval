@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<analyseAlto>
+	<metad>
+<type>A</type>
+<ID>bpt6k924228r</ID>
+<titre>Douaumont, marche héroïque de la 5e division, pour harmonie, avec tambours, clairons et trompettes de cavalerie</titre>
+<dateEdition>1924</dateEdition>
+<nbPage>72</nbPage>
+<descr>Fanfare, Musique de</descr>
+</metad>
+<contenus ><largeur>150</largeur>
+<hauteur>216</hauteur>
+	<pages>
+<page  ordre="2"><blocIllustration>1</blocIllustration>
+	<ills>
+<ill  x="1" taille="8" y="1" n="2-1" couleur="coul" w="3488" h="5114"><genre  CS="1">photo</genre>
+<genre  CS="0.95">partition</genre>
+<theme  CS="0.8">01</theme>
+<titraille>Douaumont, marche héroïque de la 5e division, pour harmonie, avec tambours, clairons et trompettes de cavalerie</titraille>
+</ill>
+</ills>
+</page>
+</pages>
+</contenus>
+</analyseAlto>

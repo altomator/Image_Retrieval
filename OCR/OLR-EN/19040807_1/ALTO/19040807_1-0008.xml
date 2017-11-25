@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<alto xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://schema.ccs-gmbh.com/docworks/version20/alto-1-4.xsd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<Description>
+		<MeasurementUnit>pixel</MeasurementUnit>
+		<sourceImageInformation>
+			<fileName>//PROC2-NAS1/IN2/EU-NPO_BNF/BnF_00011/1904/19040807/T0000008.tif</fileName>
+		</sourceImageInformation>
+		<OCRProcessing ID="OCRPROCESSING_1">
+			<preProcessingStep>
+				<processingSoftware>
+					<softwareCreator>CCS Content Conversion Specialists GmbH, Germany</softwareCreator>
+					<softwareName>CCS docWorks</softwareName>
+					<softwareVersion>6.7-1.32</softwareVersion>
+				</processingSoftware>
+			</preProcessingStep>
+			<ocrProcessingStep>
+				<processingSoftware>
+					<softwareCreator>ABBYY (BIT Software), Russia</softwareCreator>
+					<softwareName>FineReader</softwareName>
+					<softwareVersion>10.0</softwareVersion>
+				</processingSoftware>
+			</ocrProcessingStep>
+		</OCRProcessing>
+	</Description>
+	<Styles>
+		<TextStyle ID="TXT_0" FONTSIZE="18" FONTFAMILY="Unknown"/>
+		<TextStyle ID="TXT_1" FONTSIZE="9" FONTFAMILY="Times New Roman"/>
+		<TextStyle ID="TXT_2" FONTSIZE="10" FONTFAMILY="Times New Roman"/>
+		<TextStyle ID="TXT_3" FONTSIZE="131" FONTFAMILY="Times New Roman"/>
+		<ParagraphStyle ID="PAR_RIGHT" ALIGN="Right"/>
+		<ParagraphStyle ID="PAR_LEFT" ALIGN="Left"/>
+	</Styles>
+	<Layout>
+		<Page ID="P8" PHYSICAL_IMG_NR="8" HEIGHT="3471" WIDTH="5027" PRINTED_IMG_NR="356" PC="0.706">
+			<TopMargin ID="P8_TM00001" HPOS="0" VPOS="0" WIDTH="5027" HEIGHT="41"/>
+			<LeftMargin ID="P8_LM00001" HPOS="0" VPOS="41" WIDTH="174" HEIGHT="3157"/>
+			<RightMargin ID="P8_RM00001" HPOS="4698" VPOS="41" WIDTH="328" HEIGHT="3157"/>
+			<BottomMargin ID="P8_BM00001" HPOS="0" VPOS="3198" WIDTH="5027" HEIGHT="273"/>
+			<PrintSpace ID="P8_PS00001" HPOS="174" VPOS="41" WIDTH="4525" HEIGHT="3158">
+				<TextBlock ID="P8_TB00001" HPOS="1320" VPOS="3116" WIDTH="2426" HEIGHT="83" STYLEREFS="TXT_0 PAR_RIGHT">
+					<TextLine ID="P8_TL00001" HPOS="1324" VPOS="3130" WIDTH="2384" HEIGHT="66">
+						<String ID="P8_ST00001" HPOS="1324" VPOS="3130" WIDTH="208" HEIGHT="56" CONTENT="LA" WC="0.45" CC="46"/>
+						<SP ID="P8_SP00001" HPOS="1532" VPOS="3185" WIDTH="670"/>
+						<String ID="P8_ST00002" HPOS="2202" VPOS="3133" WIDTH="1506" HEIGHT="63" CONTENT="MANDGHOURIENNE" WC="0.39" CC="46577605557776"/>
+					</TextLine>
+				</TextBlock>
+				<TextBlock ID="P8_TB00002" HPOS="180" VPOS="3017" WIDTH="30" HEIGHT="100" ROTATION="90.00" STYLEREFS="TXT_1 PAR_LEFT">
+					<TextLine ID="P8_TL00002" HPOS="180" VPOS="3019" WIDTH="30" HEIGHT="98">
+						<String ID="P8_ST00003" HPOS="180" VPOS="3019" WIDTH="30" HEIGHT="98" CONTENT="356" WC="0.21" CC="787"/>
+					</TextLine>
+				</TextBlock>
+				<TextBlock ID="P8_TB00003" HPOS="174" VPOS="1254" WIDTH="52" HEIGHT="653" ROTATION="90.00" STYLEREFS="TXT_2 PAR_LEFT">
+					<TextLine ID="P8_TL00003" HPOS="176" VPOS="1257" WIDTH="48" HEIGHT="650">
+						<String ID="P8_ST00004" HPOS="176" VPOS="1704" WIDTH="48" HEIGHT="202" CONTENT="Supplément" WC="0.99" CC="1165360006"/>
+						<SP ID="P8_SP00002" HPOS="224" VPOS="1906" WIDTH="-46"/>
+						<String ID="P8_ST00005" HPOS="177" VPOS="1559" WIDTH="34" HEIGHT="129" CONTENT="illustré" WC="0.98" CC="03366576"/>
+						<SP ID="P8_SP00003" HPOS="224" VPOS="1906" WIDTH="-45"/>
+						<String ID="P8_ST00006" HPOS="178" VPOS="1505" WIDTH="33" HEIGHT="39" CONTENT="du" WC="0.69" CC="60"/>
+						<SP ID="P8_SP00004" HPOS="224" VPOS="1906" WIDTH="-47"/>
+						<String ID="P8_ST00007" HPOS="176" VPOS="1403" WIDTH="35" HEIGHT="83" CONTENT="Petit" WC="0.96" CC="62556"/>
+						<SP ID="P8_SP00005" HPOS="224" VPOS="1906" WIDTH="-45"/>
+						<String ID="P8_ST00008" HPOS="178" VPOS="1257" WIDTH="33" HEIGHT="133" CONTENT="Journal" WC="0.98" CC="1668232"/>
+					</TextLine>
+				</TextBlock>
+				<ComposedBlock ID="P8_CB00001" HPOS="353" VPOS="41" WIDTH="4345" HEIGHT="3054" STYLEREFS="TXT_3 PAR_LEFT" TYPE="Illustration">
+					<GraphicalElement ID="P8_CB00001_SUB" HPOS="353" VPOS="41" WIDTH="4345" HEIGHT="3054"/>
+				</ComposedBlock>
+			</PrintSpace>
+		</Page>
+	</Layout>
+</alto>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<analyseAlto>
+	<metad>
+<type>P</type>
+<titre>Volkszeitung (1890-1904) /Berliner Volkszeitung (1904-1930)</titre>
+<dateEdition>1930-01-01</dateEdition>
+<descr>00000000</descr>
+<nbPage>4</nbPage>
+</metad>
+<contenus ><largeur>4263</largeur>
+<hauteur>6043</hauteur>
+	<pages>
+<page  ordre="1"><nbMot>1374</nbMot>
+<blocTexte>16</blocTexte>
+<blocTab>0</blocTab>
+<blocPub>0</blocPub>
+<blocIll>8</blocIll>
+</page>
+<page  ordre="2"><nbMot>2438</nbMot>
+<blocTexte>5</blocTexte>
+<blocTab>0</blocTab>
+<blocPub>0</blocPub>
+<blocIll>1</blocIll>
+</page>
+<page  ordre="3"><nbMot>1931</nbMot>
+<blocTexte>27</blocTexte>
+<blocTab>0</blocTab>
+<blocPub>0</blocPub>
+<blocIll>4</blocIll>
+</page>
+<page  ordre="4"><nbMot>1158</nbMot>
+<blocTexte>62</blocTexte>
+<blocTab>0</blocTab>
+<blocPub>0</blocPub>
+<blocIll>3</blocIll>
+</page>
+</pages>
+</contenus>
+</analyseAlto>
