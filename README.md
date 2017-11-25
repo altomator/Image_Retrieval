@@ -43,7 +43,8 @@ Usage:
 >perl extractMD_OAI.pl gallica:corpus:1418 OUT xml 
 
 where: 
-- "gallica:corpus:1418" is the OAI set 
+- "gallica:corpus:1418" is the OAI set name
+- "OUT" the output folder
 - "xml" the (only) output format
 
 This script also performs (using the available metadata):
