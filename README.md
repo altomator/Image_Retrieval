@@ -85,21 +85,51 @@ Note: some mono-line XML documents may need to be reformatted (with prettyprint.
 
 #### B. Transform
 
+##### Image toolkit
+The toolbox.pl script performs basic operations on the documents metadata files:
+- deletion
+- renumbering
+- extraction of images
+- classification
+- ...
+
 ##### Image recognition
 We've used IBM Watson [Visual Recognition API](https://www.ibm.com/watson/developercloud/doc/visual-recognition/index.html). The script calls the API to perform visual recognition of content or human faces. 
 
+Usage:
+>perl toolbox.pl -CC IN 
+
 ##### Image genres classification
-[Inception-v3](https://www.tensorflow.org/tutorials/image_recognition) model (Google's convolutional neural network) has been retrained on a 12 classes (photos, drawings, maps, music scores, comics...) ground truth datasets (10k images). 3 Python scripts are used:
+[Inception-v3](https://www.tensorflow.org/tutorials/image_recognition) model (Google's convolutional neural network) has been retrained on a 12 classes (photos, drawings, maps, music scores, comics...) ground truth datasets (10k images). Three Python scripts are used to train (and evaluate) a model:
 - split.py: the GT dataset is splited in a training set (2/3) and an evaluation set (1/3)  
 - retrain.py: the training set is used to train the last layer of the Inception-v3 model
-- label.py: the evaluation set is labeled by the model
+- label_image.py: the evaluation set is labeled by the model
 
+>python3 split.py # the GT dataset path must be defined in the script
+>python3 retrain.py 
+>python3 label_image.py 
 
-##### Image toolkit
-This script performs basic operations on the documents metadata files:
-- deletion
-- renumbering
-- ...
+To classify a set of images, this process must be used:
+
+1. Extract the images from a documents dataset folder (using IIIF):
+>perl toolbox.pl -extr DOCS
+(mind to set a reduction factor in the "facteurIIIF" parameter, eg: $facteurIIIF=50;)
+
+2. Classify the images with the pretrained model:
+>python3 label_image.py > results-img.csv
+
+This will output a line per classified image:
+bd	carte	dessin	filtrecouv	filtretxt	gravure	photo	foundClass	realClass	success	imgTest
+0.01	0.00	0.96	0.00	0.00	0.03	0.00	dessin	OUT_img	0	./imInput/OUT_img/btv1b10100491m-1-1.jpg
+0.09	0.10	0.34	0.03	0.01	0.40	0.03	gravure	OUT_img	0	./imInput/OUT_img/btv1b10100495d-1-1.jpg
+...
+Each line describes the best classified class (according to its probability) and also the probability for all the classes.
+
+3. The classification data must then be reinjected in the metadata files:
+- Copy the results-img.csv in the parent folder of the DOCS folder
+- Use the toolbox.pl script:
+>perl toolbox.pl -TF DOCS 
+
 
 #### C. Load
 An XML database (BaseX.org) is used. Querying the metadata is done with XQuery (see https://github.com/altomator/EN-data_mining for   details). The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](https://masonry.desandro.com/) grid layout JavaScript library for image display.
