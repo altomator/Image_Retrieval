@@ -34,8 +34,9 @@ Sample documents are generally stored in the "DOCS" folder. Output samples are s
 #### A. Extract
 We've used Perl scripts (some Perl packages may need to be installed first). The extract step can be performed from OAI-PHM, SRU or OCR sources. 
 
-##### OAI-PHM
-The OAI-PMH Gallica repository ([endpoint](http://oai.bnf.fr/oai2/OAIHandler?verb=Identify)) can be harvested for sets or documents.
+##### OAI-PMH
+The OAI-PMH Gallica repository ([endpoint](http://oai.bnf.fr/oai2/OAIHandler?verb=Identify)) can be harvested for sets or documents. Note: this script needs an internet connection (for BnF OAI-PMH and BnF APIs)
+
 Perl script extractMD_OAI.pl can handled 2 methods:
 - harvesting a complete OAI Set
 - harvesting a document from its ark (or a list of documents).
@@ -45,7 +46,7 @@ Usage:
 
 where: 
 - "gallica:corpus:1418" is the OAI set
-- OUT the output folder
+- "OUT" the output folder
 - "xml" the (only) output format
 
 This script also performs (using the available metadata):
