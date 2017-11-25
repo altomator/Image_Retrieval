@@ -93,6 +93,8 @@ The toolbox.pl script performs basic operations on the documents metadata files:
 - classification
 - ...
 
+A dataset of 9,000 illustrations metadata is available (Set_1418.zip).
+
 ##### Image recognition
 We've used IBM Watson [Visual Recognition API](https://www.ibm.com/watson/developercloud/doc/visual-recognition/index.html). The script calls the API to perform visual recognition of content or human faces. 
 
