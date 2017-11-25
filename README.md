@@ -8,6 +8,7 @@ Specs are:
 
 A proof of concept has been implemented on the World War 1 theme. All the contents have been harvested from the BnF (Bibliotheque national de France) digital collections (gallica.bnf.fr) of heritage materials (photos, drawings, engravings, maps, posters, etc.).
 
+
 ### GitHub
 [Repository](https://github.com/altomator/Image_Retrieval/)
 
@@ -31,7 +32,7 @@ The metadata are stored thanks to an in-house XML schema (IR_schema.xsd).
 Sample documents are generally stored in the "DOCS" folder. Output samples are stored in OUT folders.
 
 #### A. Extract
-We've used Perl scripts. The extract step can be performed from OAI-PHM, SRU or OCR sources. 
+We've used Perl scripts (some Perl packages may need to be installed first). The extract step can be performed from OAI-PHM, SRU or OCR sources. 
 
 ##### OAI-PHM
 The OAI-PMH Gallica repository ([endpoint](http://oai.bnf.fr/oai2/OAIHandler?verb=Identify)) can be harvested for sets or documents.
@@ -43,7 +44,8 @@ Usage:
 >perl extractMD_OAI.pl gallica:corpus:1418 OUT xml 
 
 where: 
-- "gallica:corpus:1418" is the OAI set 
+- "gallica:corpus:1418" is the OAI set
+- OUT the output folder
 - "xml" the (only) output format
 
 This script also performs (using the available metadata):
@@ -63,7 +65,7 @@ Usage:
 >perl extractARKs_SRU.pl OUT.txt
 
 ##### OCR
-OCRed documents can be analysed using extractMD.pl script. This script is the more BnF centered of this github and it will be difficult to adapt to other context... It can handle various types of digital documents (books, newspapers) produced by the BnF or during the Europeana Newspapers.
+OCRed documents can be analysed using extractMD.pl script. This script is the more BnF centered of this github and it will be difficult to adapt to other context... It can handle various types of digital documents (books, newspapers) produced by the BnF or during the Europeana Newspapers project.
 Regarding the newspapers type, the script can handle raw OCR production or OLR production (article recognition with METS/ALTO).
 
 Usage:
