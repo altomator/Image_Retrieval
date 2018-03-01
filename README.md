@@ -8,7 +8,7 @@ Specs are:
 
 A proof of concept has been implemented on the World War 1 theme. All the contents have been harvested from the BnF (Bibliotheque national de France) digital collections (gallica.bnf.fr) of heritage materials (photos, drawings, engravings, maps, posters, etc.).
 
-https://altomator.files.wordpress.com/2016/01/3.png
+![gallica.pix](http://gallicastudio.bnf.fr/sites/default/files/clemenceau_gallicastudio.JPG)
 
 ### GitHub
 [Repository](https://github.com/altomator/Image_Retrieval/)
