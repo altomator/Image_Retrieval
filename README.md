@@ -3,7 +3,7 @@ This work uses an ETL (extract-transform-load) approach and machine learning tec
 
 Specs are: 
 1. Identify and extract iconography wherever it may be found, in image collections but also in printed materials (newspapers, magazines, books); 
-2. Transform, harmonize and enrich the image descriptive metadata (in particular with machine learning classification tools: IBM Watson for visual recognition, Google TensorFlow Inception-V3 for image classification)
+2. Transform, harmonize and enrich the image descriptive metadata (in particular with deep learning classification tools: IBM Watson for visual recognition, Google TensorFlow Inception-V3 for image classification)
 3. Load all the medatada into a web app dedicated to image retrieval. 
 
 A proof of concept, [Gallica.pix](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-form.xq) has been implemented on the World War 1 theme. All the contents have been harvested from the BnF (Bibliotheque national de France) digital collections [Gallica](gallica.bnf.fr) of heritage materials (photos, drawings, engravings, maps, posters, etc.). This PoC is referenced on [Gallica Studio](http://gallicastudio.bnf.fr/), the Gallica online participative platform dedicated to the creative uses that can be made from Gallica. 
