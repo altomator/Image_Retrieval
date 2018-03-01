@@ -11,7 +11,7 @@ A proof of concept, [Gallica.pix](http://demo14-18.bnf.fr:8984/rest?run=findIllu
 
 
 ![gallica.pix](http://gallicastudio.bnf.fr/sites/default/files/clemenceau_gallicastudio.JPG)
-*Looking for George Clemenceau iconography*
+*Looking for Georges Clemenceau iconography*
 
 ### GitHub
 [Repository](https://github.com/altomator/Image_Retrieval/)
