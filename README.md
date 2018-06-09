@@ -18,30 +18,30 @@ A proof of concept, [Gallica.pix](http://demo14-18.bnf.fr:8984/rest?run=findIllu
 
 ### Articles, blogs
 - ["Image Retrieval in Digital Libraries"](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_EN-final.pdf) (EN article, [FR article](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_FR-final.pdf), [presentation](http://www.euklides.fr/blog/altomator/Image_Retrieval/MOREUX-CHIRON-presentation-final.pdf)), IFLA News Media section 2017 (Dresden, August 2017). 
+- ["Hybrid Image Retrieval in Digital Libraries"](https://fr.slideshare.net/Europeana/hybrid-image-retrieval-in-digital-libraries-by-jeanphilippe-moreux-europeanatech-conference-2018), EuropeanaTech 2018 (Rotterdam, May 2018). 
 - ["Plongez dans les images de 14-18 avec notre nouveau moteur de recherche iconographique GallicaPix"](http://gallicastudio.bnf.fr/bo%C3%AEte-%C3%A0-outils/plongez-dans-les-images-de-14-18-en-testant-un-nouveau-moteur-de-recherche) (FR blog post)
 - ["Towards new uses of cultural heritage online: Gallica Studio"](http://pro.europeana.eu/post/towards-new-uses-of-cultural-heritage-online-gallica-studio) (EN blog post)
  
-### Datasets (soon)
-The datasets are available as metadata files (one XML file/document). Images can be extracted from the metadata files thanks to [IIIF Image API](http://iiif.io/api/image/2.0/): 
-- Complete dataset (300k illustrations)
-- Person dataset
-- Gender dataset
-
-This dataset has been used for the image genres classification training: 
-- Image genres classification dataset (10k images) 
+### Datasets
+The datasets are available as metadata files (one XML file/document) or JSON dumps. Images can be extracted from the metadata files thanks to [IIIF Image API](http://iiif.io/api/image/2.0/): 
+- Complete dataset (200k illustrations)
+- Illustrated ads dataset (65k illustrations)
+- Persons ground truth (4k illustrations)
 
 ### Installation & misc.
-<b>Note</b>: All the scripts have been written by an amateur coder. They have been designed for the Gallica BnF digital documents and digital repositories, but this can be easily fixed.
+<b>Note</b>: All the scripts have been written by an amateur developer. They have been designed for the Gallica digital documents and repositories.
 
-The metadata are stored thanks to an in-house XML schema (IR_schema.xsd).
-
-Sample documents are generally stored in the "DOCS" folder. Output samples are stored in OUT folders.
+Sample documents are generally stored in a "DOCS" folder and output samples in a "OUT" folder.
 
 #### A. Extract
-We've used Perl scripts (some Perl packages may need to be installed first). The extract step can be performed from OAI-PHM, SRU or OCR sources. 
+The global workflow is detailled bellow.
+
+![Workflow: extract](http://www.euklides.fr/blog/altomator/Image_Retrieval/wf1.png)
+
+Perl scripts have been used (some Perl packages may need to be installed first). The extract step can be performed from OAI-PHM, SRU or OCR sources. 
 
 ##### OAI-PMH
-The OAI-PMH Gallica repository ([endpoint](http://oai.bnf.fr/oai2/OAIHandler?verb=Identify)) can be harvested for sets or documents. Note: this script needs an internet connection (for BnF OAI-PMH and BnF APIs)
+The OAI-PMH Gallica repository ([endpoint](http://oai.bnf.fr/oai2/OAIHandler?verb=Identify)) can be leverage to extract still images documents (drawings, photos, posters...) The extractMD_OAI.pl script can harvest sets of documents or documents. Note: this script needs an internet connection (for BnF OAI-PMH and BnF APIs)
 
 Perl script extractMD_OAI.pl can handled 2 methods:
 - harvesting a complete OAI Set
@@ -51,20 +51,24 @@ Usage:
 >perl extractMD_OAI.pl gallica:corpus:1418 OUT xml 
 
 where: 
-- "gallica:corpus:1418" is the OAI set
+- "gallica:corpus:1418" is the OAI set title
 - "OUT" the output folder
 - "xml" the (only) output format
 
 This script also performs (using the available metadata):
-- topic classification (considering the WW1 theme)
+- IPTC topic classification (considering the WW1 theme)
 - image genres classification (photo/drawing/map...)
 
-It outputs one XML metadata file per document, describing each page (and included illustrations) of the document.
+It outputs one XML metadata file per document, describing each page (and its included illustrations) of the document.
 
 
 ##### SRU
-SRU requesting of Gallica digital library can be done with extractARKs_SRU.pl.
-The SRU request must be copy/paste directly in the script.
+SRU requesting of Gallica digital library can be done with the extractARKs_SRU.pl script.
+The SRU request can be tested on gallica.bnf.fr and then copy/paste directly in the script:
+
+```perl
+$req="%28gallica%20all%20%22tank%22%29&lang=fr&suggest=0"
+```
 
 It outputs a text file (one ark ID per line). This output can then be used as the input of the OAI-PMH script.
 
@@ -72,7 +76,7 @@ Usage:
 >perl extractARKs_SRU.pl OUT.txt
 
 ##### OCR
-OCRed documents can be analysed using extractMD.pl script. This script is the more BnF centered of this github and it will be difficult to adapt to other context... It can handle various types of digital documents (books, newspapers) produced by the BnF or during the Europeana Newspapers project.
+Printed collections (with OCR) can be analysed using extractMD.pl script. This script is the more BnF centered and it will be difficult to adapt to other context... It can handle various types of digital documents (books, newspapers) produced by the BnF or during the Europeana Newspapers project.
 Regarding the newspapers type, the script can handle raw OCR production or OLR production (article recognition with METS/ALTO).
 
 Usage:
