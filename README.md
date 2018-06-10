@@ -1,9 +1,9 @@
 ### Synopsis
-This work uses an ETL (extract-transform-load) approach and deep learning technics to help image retrieval in multicollection digital librairies.
+This work uses an ETL (extract-transform-load) approach and deep learning technics to implement an image retrieval functionality in multicollection digital librairies.
 
 Specs are: 
-1. Identify and extract iconography wherever it may be found, in image collections but also in printed materials (newspapers, magazines, books); 
-2. Transform, harmonize and enrich the image descriptive metadata (in particular with deep learning classification tools: IBM Watson for visual recognition, Google TensorFlow Inception-V3 for image classification)
+1. Identify and extract iconography wherever it may be found, in the still images collection but also in printed materials (newspapers, magazines, books).
+2. Transform, harmonize and enrich the image descriptive metadata (in particular with deep learning classification tools: IBM Watson for visual recognition, Google TensorFlow Inception-V3 for image types classification).
 3. Load all the medatada into a web app dedicated to image retrieval. 
 
 A proof of concept, [Gallica.pix](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-form.xq) has been implemented on the World War 1 theme. All the contents have been harvested from the BnF (Bibliotheque national de France) digital collections [Gallica](gallica.bnf.fr) of heritage materials (photos, drawings, engravings, maps, posters, etc.). This PoC is referenced on [Gallica Studio](http://gallicastudio.bnf.fr/), the Gallica online participative platform dedicated to the creative uses that can be made from Gallica. 
@@ -23,29 +23,43 @@ A proof of concept, [Gallica.pix](http://demo14-18.bnf.fr:8984/rest?run=findIllu
 - ["Towards new uses of cultural heritage online: Gallica Studio"](http://pro.europeana.eu/post/towards-new-uses-of-cultural-heritage-online-gallica-studio) (EN blog post)
  
 ### Datasets
-The datasets are available as metadata files (one XML file/document) or JSON dumps. Images can be extracted from the metadata files thanks to [IIIF Image API](http://iiif.io/api/image/2.0/): 
+The datasets are available as metadata files (one XML file/document) or JSON dumps of the BaseX DB. Images can be extracted from the metadata files thanks to [IIIF Image API](http://iiif.io/api/image/2.0/): 
 - Complete dataset (200k illustrations)
 - Illustrated ads dataset (65k illustrations)
 - Persons ground truth (4k illustrations)
 
+The complete dataset can be leverage to produce other ground truths.
+
 ### Installation & misc.
-<b>Note</b>: All the scripts have been written by an amateur developer. They have been designed for the Gallica digital documents and repositories.
+<b>Note</b>: All the scripts have been written by an amateur developer. They have been designed for the Gallica digital documents and repositories but could be adapted to other contexts.
+
+Some Perl or Python packages may need to be installed first.
 
 Sample documents are generally stored in a "DOCS" folder and output samples in a "OUT" folder.
 
-#### A. Extract
+### A. Extract
 The global workflow is detailled bellow.
 
 ![Workflow: extract](http://www.euklides.fr/blog/altomator/Image_Retrieval/wf1.png)
 
-Perl scripts have been used (some Perl packages may need to be installed first). The extract step can be performed from OAI-PHM, SRU or OCR sources. 
+The extract step can be performed from the catalog metada (using OAI-PMH and SRU protocols) or directly from the digital documents files (and their OCR). 
 
-##### OAI-PMH
-The OAI-PMH Gallica repository ([endpoint](http://oai.bnf.fr/oai2/OAIHandler?verb=Identify)) can be leverage to extract still images documents (drawings, photos, posters...) The extractMD_OAI.pl script can harvest sets of documents or documents. Note: this script needs an internet connection (for BnF OAI-PMH and BnF APIs)
+#### OAI-PMH
+The OAI-PMH Gallica repository ([endpoint](http://oai.bnf.fr/oai2/OAIHandler?verb=Identify)) can be used to extract still image documents (drawings, photos, posters...) The extractMD_OAI.pl script harvests sets of documents or documents. Note: this script needs a Web connection (for Gallica OAI-PMH and Gallica APIs)
 
-Perl script extractMD_OAI.pl can handled 2 methods:
-- harvesting a complete OAI Set
-- harvesting a document from its ark (or a list of documents).
+Perl script extractMD_OAI.pl can handled 3 methods:
+- harvesting a complete OAI Set, from its name:
+```perl
+getOAI($set);
+```
+- harvesting a document from its ID:
+```perl
+getRecordOAI("ark:/12148/bpt6k10732244");
+```
+- harvesting a list of documents from a file of IDs:
+```perl
+require "arks.pl";
+```
 
 Usage: 
 >perl extractMD_OAI.pl gallica:corpus:1418 OUT xml 
@@ -59,8 +73,40 @@ This script also performs (using the available metadata):
 - IPTC topic classification (considering the WW1 theme)
 - image genres classification (photo/drawing/map...)
 
-It outputs one XML metadata file per document, describing each page (and its included illustrations) of the document.
+It outputs one XML metadata file per document, describing the document (title, date...), each page of the document and the included illustrations.
 
+```xml
+<analyseAlto>
+  <metad>
+    <type>I</type>
+    <ID>btv1b53115853z</ID>
+    <titre>23-12-15, Invalides passage des troupes sur l’Esplanade au milieu de la foule : photographie de presse / Agence Rol</titre>
+    <dateEdition>1915</dateEdition>
+    <nbPage>1</nbPage>
+    <descr>Guerre mondiale (1914-1918) Rites et cérémonies militaires -- France -- Paris (France) Paris (France) -- Esplanade des Invalides France. Armée Photographie de presse -- 1900-1945</descr>
+  </metad>
+  <contenus ocr="false" toc="false">
+    <largeur>358</largeur>
+    <hauteur>258</hauteur>
+    <pages>
+      <page ordre="1">
+        <blocIllustration>1</blocIllustration>
+        <ills>
+          <ill couleur="gris" databnf="http://data.bnf.fr/11883856/france_armee/studies" h="6105" n="1-1" taille="24" w="8462" x="1" y="1">
+            <txt source="google">"BELVEDA DE VED - E&amp;09 H - ML 46033. KISE 061. - ",</txt>
+            <genre source="final">photo</genre>
+            <theme source="final">16</theme>
+            <genre CS="0.92" source="TensorFlow">photo</genre>
+            <genre CS="0.95" source="md">photo</genre>
+            <theme CS="0.95" source="md">16</theme>
+            <titraille>23-12-15, Invalides passage des troupes sur l’Esplanade au milieu de la foule : photographie de presse / Agence Rol</titraille>
+          </ill>
+        </ills>
+      </page>
+    </pages>
+  </contenus>
+</analyseAlto>
+```
 
 ##### SRU
 SRU requesting of Gallica digital library can be done with the extractARKs_SRU.pl script.
@@ -77,7 +123,7 @@ Usage:
 
 ##### OCR
 Printed collections (with OCR) can be analysed using extractMD.pl script. This script is the more BnF centered and it will be difficult to adapt to other context... It can handle various types of digital documents (books, newspapers) produced by the BnF or during the Europeana Newspapers project.
-Regarding the newspapers type, the script can handle raw OCR production or OLR production (article recognition with METS/ALTO).
+Regarding the newspapers type, the script can handle raw OCR production or OLR production (articles recognition described with a METS/ALTO format).
 
 Usage:
 >perl extractMD.pl [-LI] mode title IN OUT format
@@ -89,6 +135,7 @@ where:
 - title: some newspapers titles need to be identified by their title
 - IN : documents input folder 
 - OUT : output folder
+- title : 
 - format: XML only
 
 Note: some mono-line XML documents may need to be reformatted (with prettyprint.pl script)
