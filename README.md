@@ -76,39 +76,34 @@ This script also performs (using the available metadata):
 It outputs one XML metadata file per document, describing the document (title, date...), each page of the document and the included illustrations.
 
 ```xml
-<analyseAlto>
-  <metad>
-    <type>I</type>
-    <ID>btv1b53115853z</ID>
-    <titre>23-12-15, Invalides passage des troupes sur l’Esplanade au milieu de la foule : photographie de presse / Agence Rol</titre>
-    <dateEdition>1915</dateEdition>
-    <nbPage>1</nbPage>
-    <descr>Guerre mondiale (1914-1918) Rites et cérémonies militaires -- France -- Paris (France) Paris (France) -- Esplanade des Invalides France. Armée Photographie de presse -- 1900-1945</descr>
-  </metad>
-  <contenus ocr="false" toc="false">
-    <largeur>358</largeur>
-    <hauteur>258</hauteur>
-    <pages>
-      <page ordre="1">
-        <blocIllustration>1</blocIllustration>
-        <ills>
-          <ill couleur="gris" databnf="http://data.bnf.fr/11883856/france_armee/studies" h="6105" n="1-1" taille="24" w="8462" x="1" y="1">
-            <txt source="google">"BELVEDA DE VED - E&amp;09 H - ML 46033. KISE 061. - ",</txt>
-            <genre source="final">photo</genre>
-            <theme source="final">16</theme>
-            <genre CS="0.92" source="TensorFlow">photo</genre>
-            <genre CS="0.95" source="md">photo</genre>
-            <theme CS="0.95" source="md">16</theme>
-            <titraille>23-12-15, Invalides passage des troupes sur l’Esplanade au milieu de la foule : photographie de presse / Agence Rol</titraille>
-          </ill>
-        </ills>
-      </page>
-    </pages>
-  </contenus>
+<?xml version="1.0" encoding="UTF-8"?>
+	<analyseAlto>
+	<metad>
+<type>I</type>
+<ID>bpt6k3850489</ID>
+<titre>Nos alliés du ciel : cantique-offertoire : solo &amp; choeur à l_unisson avec accompagnement d'orgue / paroles du chanoine S. Coubé   musique de F. Laurent-Rolandez</titre>
+<dateEdition>1916</dateEdition>
+<nbPage>10</nbPage>
+<descr>Chants sacrés acc. d_orgue -- 20e siècle -- Partitions et parties</descr>
+</metad>
+<contenus  ocr="false" toc="false"><largeur>135</largeur>
+<hauteur>173</hauteur>
+	<pages>
+<page  ordre="1"><blocIllustration>1</blocIllustration>
+	<ills>
+<ill  h="4110" taille="6" couleur="gris" y="1" w="3204" n="1-1" x="1"><genre  CS="1">photo</genre>
+<genre  CS="0.95">partition</genre>
+<theme  CS="0.8">01</theme>
+<titraille>Nos alliés du ciel : cantique-offertoire : solo &amp; choeur à l_unisson avec accompagnement d'orgue / paroles du chanoine S. Coubé   musique de F. Laurent-Rolandez</titraille>
+</ill>
+</ills>
+</page>
+</pages>
+</contenus>
 </analyseAlto>
 ```
 
-##### SRU
+#### SRU
 SRU requesting of Gallica digital library can be done with the extractARKs_SRU.pl script.
 The SRU request can be tested on gallica.bnf.fr and then copy/paste directly in the script:
 
@@ -121,7 +116,7 @@ It outputs a text file (one ark ID per line). This output can then be used as th
 Usage:
 >perl extractARKs_SRU.pl OUT.txt
 
-##### OCR
+#### OCR
 Printed collections (with OCR) can be analysed using extractMD.pl script. This script is the more BnF centered and it will be difficult to adapt to other context... It can handle various types of digital documents (books, newspapers) produced by the BnF or during the Europeana Newspapers project.
 Regarding the newspapers type, the script can handle raw OCR production or OLR production (articles recognition described with a METS/ALTO format).
 
@@ -140,7 +135,7 @@ where:
 
 Note: some mono-line XML documents may need to be reformatted (with prettyprint.pl script)
 
-#### B. Transform
+### B. Transform
 
 ##### Image toolkit
 The toolbox.pl script performs basic operations on the documents metadata files:
