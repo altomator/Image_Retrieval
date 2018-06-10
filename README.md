@@ -73,7 +73,7 @@ This script also performs (using the available metadata):
 - IPTC topic classification (considering the WW1 theme)
 - image genres classification (photo/drawing/map...)
 
-It outputs one XML metadata file per document, describing the document (title, date...), each page of the document and the included illustrations.
+It outputs one XML metadata file per document, describing the document (title, date...), each page of the document and the included illustrations. Some illustrations are "filtered" due to their nature (empty page, bindings).
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -104,6 +104,9 @@ It outputs one XML metadata file per document, describing the document (title, d
 </analyseAlto>
 ```
 
+
+
+
 #### SRU (Search/Retrieve via URL)
 SRU requesting of Gallica digital library can be done with the extractARKs_SRU.pl script.
 The SRU request can be tested within gallica.bnf.fr and then copy/paste directly in the script:
@@ -126,7 +129,9 @@ Regarding the newspapers type, the script can handle raw ALTO OCR mode or OLR mo
 - ocren: to be used with Europeana Newspapers serials described with a METS manifest
 - olren: to be used with Europeana Newspapers serials described with a METS manifest and an OLR mode (&copy;CCS METS profil)
 
-Some parameters must be set in the Perl script, other via the command line options.
+The script can handle various dialects of ALTO (ALTO BnF, ALTO LoC...) which may have different ways to markup the illustrations and to express the blocks IDs.
+
+Some parameters must be set in the Perl script, the remaining via the command line options.
 
 Usage:
 >perl extractMD.pl [-LI] mode title IN OUT format
@@ -140,12 +145,21 @@ where:
 - OUT : output folder
 - format: XML only
 
+Example for the Europeana Newspapers subdataset *L'Humanité*, with ark IDs computation and illustrations extraction:
+>perl extractMD.pl -LI ocren Humanite OCR-EN OUT-OCR-EN xml
+
+
 Note: some monoline OCR documents may need to be reformatted before running the extraction script, as it does not parse the XML content (for efficiency reason) but use grep patterns at the line level.
 Usage:
 >perl prettyprint.pl IN
 
-Example for the Europeana Newspapers subdataset *L'Humanité*, with ark IDs computation and illustrations extraction:
->perl extractMD.pl -LI ocren Humanite OCR-EN OUT-OCR-EN xml
+The script exports the same metadata than before but also text extracted from the OCR: 
+```xml
+<ill  w="4774" n="4-5" couleur="gris" filtre="1" y="3357" taille="0" x="114" derniere="true" h="157"><leg> </leg>
+<txt>Fans— Imprimerie de» Arts et Manulàctures» S.ruedaSeatier. (M. Bau nagaud, imp.) </txt>
+```
+
+After this extraction step, the metadata can be enriched (see next section, B.) or directly be used as the input of the BaseX XML database (see. section C.).
 
 
 
@@ -199,7 +213,7 @@ Each line describes the best classified class (according to its probability) and
 >perl toolbox.pl -TF DOCS 
 
 
-#### C. Load
+### C. Load
 An XML database (BaseX.org) is used. Querying the metadata is done with XQuery (see https://github.com/altomator/EN-data_mining for   details). The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](https://masonry.desandro.com/) grid layout JavaScript library for image display.
 
 
