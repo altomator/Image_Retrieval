@@ -122,9 +122,9 @@ Printed collections (with OCR) can be analysed using extractMD.pl script. This s
 
 Regarding the newspapers type, the script can handle raw ALTO OCR mode or OLR mode (articles recognition described with a METS/ALTO format):
 - ocrbnf: to be used with BnF documents (monographies, serials) described with a refNum manifest
-- olrbnf: to be used with BnF serials described with a METS manifest and an OLR mode 
+- olrbnf: to be used with BnF serials described with a METS manifest and an OLR mode (BnF METS profil) 
 - ocren: to be used with Europeana Newspapers serials described with a METS manifest
-- olren: to be used with Europeana Newspapers serials described with a METS manifest and an OLR mode
+- olren: to be used with Europeana Newspapers serials described with a METS manifest and an OLR mode (&copy;CCS METS profil)
 
 Some parameters must be set in the Perl script, other via the command line options.
 
@@ -140,12 +140,13 @@ where:
 - OUT : output folder
 - format: XML only
 
-Note: some monoline OCR documents may need to be reformatted before running the extraction script, as it does not parse the XML content but use grep patterns (for efficiency reason).
+Note: some monoline OCR documents may need to be reformatted before running the extraction script, as it does not parse the XML content (for efficiency reason) but use grep patterns at the line level.
 Usage:
 >perl prettyprint.pl IN
 
-Example for the Europeana Newspapers subdataset *L'Humanité*, with ID computation and illustrations extraction:
+Example for the Europeana Newspapers subdataset *L'Humanité*, with ark IDs computation and illustrations extraction:
 >perl extractMD.pl -LI ocren Humanite OCR-EN OUT-OCR-EN xml
+
 
 
 ### B. Transform
