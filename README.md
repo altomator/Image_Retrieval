@@ -77,35 +77,36 @@ It outputs one XML metadata file per document, describing the document (title, d
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-	<analyseAlto>
-	<metad>
-<type>I</type>
-<ID>bpt6k3850489</ID>
-<titre>Nos alliés du ciel : cantique-offertoire : solo &amp; choeur à l_unisson avec accompagnement d'orgue / paroles du chanoine S. Coubé   musique de F. Laurent-Rolandez</titre>
-<dateEdition>1916</dateEdition>
-<nbPage>10</nbPage>
-<descr>Chants sacrés acc. d_orgue -- 20e siècle -- Partitions et parties</descr>
+<analyseAlto>
+<metad>
+	<type>I</type>
+	<ID>bpt6k3850489</ID>
+	<titre>Nos alliés du ciel : cantique-offertoire : solo &amp; choeur à l_unisson avec accompagnement d'orgue / paroles du chanoine S. Coubé   musique de F. Laurent-Rolandez</titre>
+	<dateEdition>1916</dateEdition>
+	<nbPage>10</nbPage>
+	<descr>Chants sacrés acc. d_orgue -- 20e siècle -- Partitions et parties</descr>
 </metad>
-<contenus  ocr="false" toc="false"><largeur>135</largeur>
-<hauteur>173</hauteur>
+<contenus  ocr="false" toc="false">
+	<largeur>135</largeur>
+	<hauteur>173</hauteur>
 	<pages>
-<page  ordre="1"><blocIllustration>1</blocIllustration>
-	<ills>
-<ill  h="4110" taille="6" couleur="gris" y="1" w="3204" n="1-1" x="1"><genre  CS="1">photo</genre>
-<genre  CS="0.95">partition</genre>
-<theme  CS="0.8">01</theme>
-<titraille>Nos alliés du ciel : cantique-offertoire : solo &amp; choeur à l_unisson avec accompagnement d'orgue / paroles du chanoine S. Coubé   musique de F. Laurent-Rolandez</titraille>
-</ill>
-</ills>
-</page>
-</pages>
+		<page  ordre="1"><blocIllustration>1</blocIllustration>
+			<ills>
+				<ill  h="4110" taille="6" couleur="gris" y="1" w="3204" n="1-1" x="1"><genre  CS="1">photo</genre>
+				<genre  CS="0.95">partition</genre>
+				<theme  CS="0.8">01</theme>
+				<titraille>Nos alliés du ciel : cantique-offertoire : solo &amp; choeur à l_unisson avec accompagnement d'orgue / paroles du chanoine S. Coubé   musique de F. Laurent-Rolandez</titraille>
+				</ill>
+			</ills>
+		</page>
+	</pages>
 </contenus>
 </analyseAlto>
 ```
 
-#### SRU
+#### SRU (Search/Retrieve via URL)
 SRU requesting of Gallica digital library can be done with the extractARKs_SRU.pl script.
-The SRU request can be tested on gallica.bnf.fr and then copy/paste directly in the script:
+The SRU request can be tested within gallica.bnf.fr and then copy/paste directly in the script:
 
 ```perl
 $req="%28gallica%20all%20%22tank%22%29&lang=fr&suggest=0"
@@ -117,23 +118,35 @@ Usage:
 >perl extractARKs_SRU.pl OUT.txt
 
 #### OCR
-Printed collections (with OCR) can be analysed using extractMD.pl script. This script is the more BnF centered and it will be difficult to adapt to other context... It can handle various types of digital documents (books, newspapers) produced by the BnF or during the Europeana Newspapers project.
-Regarding the newspapers type, the script can handle raw OCR production or OLR production (articles recognition described with a METS/ALTO format).
+Printed collections (with OCR) can be analysed using extractMD.pl script. This script is the more BnF centered and it will be tricky to adapt to other context... It can handle various types of digital documents (books, newspapers) produced by the BnF or during the Europeana Newspapers project.
+
+Regarding the newspapers type, the script can handle raw ALTO OCR mode or OLR mode (articles recognition described with a METS/ALTO format):
+- ocrbnf: to be used with BnF documents (monographies, serials) described with a refNum manifest
+- olrbnf: to be used with BnF serials described with a METS manifest and an OLR mode 
+- ocren: to be used with Europeana Newspapers serials described with a METS manifest
+- olren: to be used with Europeana Newspapers serials described with a METS manifest and an OLR mode
+
+Some parameters must be set in the Perl script, other via the command line options.
 
 Usage:
 >perl extractMD.pl [-LI] mode title IN OUT format
 
 where:
 - -L : extraction of illustrations is performed: dimensions, caption...
-- -I : BnF ark IDs are computed
-- mode : types of BnF documents (olren, ocren, olrbnf, ocrbnf)
+- -I : BnF ARK IDs are computed
+- mode : types of BnF documents (ocren, olren, ocrbnf, olrbnf)
 - title: some newspapers titles need to be identified by their title
-- IN : documents input folder 
+- IN : digital documents input folder 
 - OUT : output folder
-- title : 
 - format: XML only
 
-Note: some mono-line XML documents may need to be reformatted (with prettyprint.pl script)
+Note: some monoline OCR documents may need to be reformatted before running the extraction script, as it does not parse the XML content but use grep patterns (for efficiency reason).
+Usage:
+>perl prettyprint.pl IN
+
+Example for the Europeana Newspapers subdataset *L'Humanité*, with ID computation and illustrations extraction:
+>perl extractMD.pl -LI ocren Humanite OCR-EN OUT-OCR-EN xml
+
 
 ### B. Transform
 
