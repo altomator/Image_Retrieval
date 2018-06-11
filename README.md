@@ -26,9 +26,8 @@ A proof of concept, [Gallica.pix](http://demo14-18.bnf.fr:8984/rest?run=findIllu
 The datasets are available as metadata files (one XML file/document) or JSON dumps of the BaseX DB. Images can be extracted from the metadata files thanks to [IIIF Image API](http://iiif.io/api/image/2.0/): 
 - Complete dataset (200k illustrations)
 - Illustrated ads dataset (65k illustrations)
-- Persons ground truth (4k illustrations)
-
-The complete dataset can be leverage to produce other ground truths.
+- [Persons ground truth](http://www.euklides.fr/blog/altomator/Image_Retrieval/GT-Personnes.zip) (4k illustrations)
+One can leverage the complete dataset to produce other ground truths.
 
 ### Installation & misc.
 <b>Note</b>: All the scripts have been written by an amateur developer. They have been designed for the Gallica digital documents and repositories but could be adapted to other contexts.
@@ -153,11 +152,13 @@ Note: some monoline OCR documents may need to be reformatted before running the 
 Usage:
 >perl prettyprint.pl IN
 
-The script exports the same metadata than before but also text extracted from the OCR: 
+The script exports the same metadata than before but also texts and captions surrounding illustrations: 
 ```xml
 <ill  w="4774" n="4-5" couleur="gris" filtre="1" y="3357" taille="0" x="114" derniere="true" h="157"><leg> </leg>
-<txt>Fans— Imprimerie de» Arts et Manulàctures» S.ruedaSeatier. (M. Bau nagaud, imp.) </txt>
+<txt>Fans— Imprimerie des Arts et Manufactures» S.rue du Sentier. (M. Baunagaud, imp.) </txt>
 ```
+
+Some illustrations are filtered according to their characteristics (size, form). In such cases, the illustrations are exported but they are reported with the "filtre" attribute.
 
 After this extraction step, the metadata can be enriched (see next section, B.) or directly be used as the input of the BaseX XML database (see. section C.).
 
@@ -165,7 +166,7 @@ After this extraction step, the metadata can be enriched (see next section, B.) 
 
 ### B. Transform
 
-##### Image toolkit
+#### Image toolkit
 The toolbox.pl script performs basic operations on the documents metadata files:
 - deletion
 - renumbering
@@ -175,13 +176,13 @@ The toolbox.pl script performs basic operations on the documents metadata files:
 
 A dataset of 9,000 illustrations metadata is available (Set_1418.zip).
 
-##### Image recognition
+#### Image recognition
 We've used IBM Watson [Visual Recognition API](https://www.ibm.com/watson/developercloud/doc/visual-recognition/index.html). The script calls the API to perform visual recognition of content or human faces. 
 
 Usage:
 >perl toolbox.pl -CC IN 
 
-##### Image genres classification
+#### Image genres classification
 [Inception-v3](https://www.tensorflow.org/tutorials/image_recognition) model (Google's convolutional neural network) has been retrained on a 12 classes (photos, drawings, maps, music scores, comics...) ground truth datasets (10k images). Three Python scripts are used to train (and evaluate) a model:
 - split.py: the GT dataset is splited in a training set (2/3) and an evaluation set (1/3)  
 - retrain.py: the training set is used to train the last layer of the Inception-v3 model
