@@ -25,8 +25,8 @@ A proof of concept, [Gallica.pix](http://demo14-18.bnf.fr:8984/rest?run=findIllu
 ### Datasets
 The datasets are available as metadata files (one XML file/document) or JSON dumps of the BaseX DB. Images can be extracted from the metadata files thanks to [IIIF Image API](http://iiif.io/api/image/2.0/): 
 - Complete dataset (200k illustrations)
-- Illustrated ads dataset (65k illustrations)
-- [Persons ground truth](http://www.euklides.fr/blog/altomator/Image_Retrieval/GT-Personnes.zip) (4k illustrations)
+- [Illustrated ads dataset](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418-Ads_xml.zip) (63k illustrations)
+- [Persons ground truth](http://www.euklides.fr/blog/altomator/Image_Retrieval/GT-Persons_xml.zip) (4k illustrations)
 One can leverage the complete dataset to produce other ground truths.
 
 ### Installation & misc.
