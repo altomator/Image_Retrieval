@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<analyseAlto>
+	<metad>
+<type>I</type>
+<ID>btv1b10336859m</ID>
+<titre>Recueil. Portraits de Georges Clemenceau</titre>
+<dateEdition>inconnu</dateEdition>
+<nbPage>1</nbPage>
+<descr>Clemenceau, Georges (1841-1929) -- Portraits Portraits</descr>
+</metad>
+<contenus  ocr="false" toc="false"><largeur>282</largeur>
+<hauteur>368</hauteur>
+	<pages>
+<page  ordre="1"><blocIllustration>1</blocIllustration>
+	<ills>
+<ill  y="1" couleur="inconnu" taille="26" h="8711" x="1" w="6671" n="1-1"><genre  CS="1">photo</genre>
+<theme  CS="0.8">16</theme>
+<titraille>Recueil. Portraits de Georges Clemenceau</titraille>
+</ill>
+</ills>
+</page>
+</pages>
+</contenus>
+</analyseAlto>

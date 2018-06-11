@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<alto xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/TR/xlink" xmlns="http://bibnum.bnf.fr/ns/alto_prod" ID="alto.6216870" xsi:schemaLocation="http://bibnum.bnf.fr/ns/alto_prod http://bibnum.bnf.fr/ns/alto_prod.xsd">
+  <Description>
+    <MeasurementUnit>pixel</MeasurementUnit>
+    <sourceImageInformation>
+      <fileName>00000005.tif</fileName>
+    </sourceImageInformation>
+    <OCRProcessing ID="OCR_1">
+      <ocrProcessingStep>
+        <processingDateTime>2012-06-15</processingDateTime>
+        <processingStepDescription>[001_OCR_BRUT]OCR BRUT 99.170 %</processingStepDescription>
+        <processingStepDescription>[002_TOTAL_CHARS]{147}</processingStepDescription>
+        <processingStepDescription>[003_TOTAL_CHARS_USED]{116}</processingStepDescription>
+        <processingStepDescription>[004_TOTAL_CHARS_SUSPECTS_USED]{0}</processingStepDescription>
+        <processingStepDescription>[005_TOTAL_CHARS_UNUSED]{31}</processingStepDescription>
+        <processingStepDescription>[006_TOTAL_CHARS_SUSPECTS_UNUSED]{2}</processingStepDescription>
+        <processingStepDescription>[007_TOTAL_STRINGS]{23}</processingStepDescription>
+        <processingStepDescription>[011_CHARS_PUNCTUATION]{7}</processingStepDescription>
+        <processingStepDescription>[012_CHARS_DIGITS]{14}</processingStepDescription>
+        <processingStepDescription>[013_CHARS_SUSPECT]{2}</processingStepDescription>
+        <processingStepDescription>[022_CHARS_UNUSED_BY_BLOCK]{0}</processingStepDescription>
+        <processingStepDescription>[111_LIGS_DETECTED_CURV]{0}</processingStepDescription>
+        <processingStepSettings>OCR 99.990 %</processingStepSettings>
+      </ocrProcessingStep>
+    </OCRProcessing>
+  </Description>
+  <Styles>
+    <TextStyle ID="TXT_1" FONTFAMILY="Times" FONTSIZE="12"/>
+  </Styles>
+  <Layout>
+    <Page ID="PAG_00000005" HEIGHT="3331" WIDTH="2126" PHYSICAL_IMG_NR="1" QUALITY="OK">
+    <PrintSpace ID="PAG_00000005_PrintSpace" HPOS="74" VPOS="57" HEIGHT="3085" WIDTH="1971">
+    <ComposedBlock ID="PAG_00000005_CB000001" HPOS="74" VPOS="57" HEIGHT="3085" WIDTH="1971">
+    <GraphicalElement ID="PAG_00000005_GE000001" HPOS="74" VPOS="57" HEIGHT="169" WIDTH="671" TYPE="manuscript"/>
+    <Illustration ID="PAG_00000005_IL000001" HPOS="273" VPOS="60" HEIGHT="3082" WIDTH="1772"/>
+    <TextBlock ID="PAG_00000005_TB000001" STYLEREFS="TXT_1" HPOS="928" VPOS="357" HEIGHT="93" WIDTH="225" language="fr">
+      <TextLine ID="PAG_00000005_TL000001" STYLEREFS="TXT_1" HPOS="928" VPOS="357" HEIGHT="37" WIDTH="225">
+        <String ID="PAG_00000005_ST000001" STYLEREFS="TXT_1" HPOS="928" VPOS="357" HEIGHT="37" WIDTH="225" WC="0.99" CONTENT="HONNEUR"/>
+      </TextLine>
+      <TextLine ID="PAG_00000005_TL000002" STYLEREFS="TXT_1" HPOS="1024" VPOS="426" HEIGHT="24" WIDTH="42">
+        <String ID="PAG_00000005_ST000002" STYLEREFS="TXT_1" HPOS="1024" VPOS="426" HEIGHT="24" WIDTH="42" WC="0.12" TYPE="illegible" CONTENT="il"/>
+      </TextLine>
+    </TextBlock>
+    <TextBlock ID="PAG_00000005_TB000002" STYLEREFS="TXT_1" HPOS="965" VPOS="482" HEIGHT="36" WIDTH="161" language="fr">
+      <TextLine ID="PAG_00000005_TL000003" STYLEREFS="TXT_1" HPOS="965" VPOS="482" HEIGHT="36" WIDTH="161">
+        <String ID="PAG_00000005_ST000003" STYLEREFS="TXT_1" HPOS="965" VPOS="482" HEIGHT="36" WIDTH="161" WC="0.99" CONTENT="PATRIE"/>
+      </TextLine>
+    </TextBlock>
+    <TextBlock ID="PAG_00000005_TB000003" STYLEREFS="TXT_1" HPOS="679" VPOS="699" HEIGHT="124" WIDTH="729" language="fr">
+      <TextLine ID="PAG_00000005_TL000004" STYLEREFS="TXT_1" HPOS="679" VPOS="699" HEIGHT="42" WIDTH="729">
+        <String ID="PAG_00000005_ST000004" STYLEREFS="TXT_1" HPOS="679" VPOS="699" HEIGHT="42" WIDTH="297" WC="0.97" CONTENT="ARMÉE"/>
+        <SP ID="PAG_00000005_SP000001" HPOS="976" VPOS="704" WIDTH="47"/>
+        <String ID="PAG_00000005_ST000005" STYLEREFS="TXT_1" HPOS="1023" VPOS="704" HEIGHT="36" WIDTH="385" WC="0.99" CONTENT="D'ORIENT"/>
+      </TextLine>
+      <TextLine ID="PAG_00000005_TL000005" STYLEREFS="TXT_1" HPOS="993" VPOS="787" HEIGHT="36" WIDTH="109">
+        <String ID="PAG_00000005_ST000006" STYLEREFS="TXT_1" HPOS="993" VPOS="787" HEIGHT="36" WIDTH="109" WC="0.81" CONTENT="1918"/>
+      </TextLine>
+    </TextBlock>
+    <TextBlock ID="PAG_00000005_TB000004" STYLEREFS="TXT_1" HPOS="738" VPOS="1070" HEIGHT="84" WIDTH="597" language="fr">
+      <TextLine ID="PAG_00000005_TL000006" STYLEREFS="TXT_1" HPOS="738" VPOS="1070" HEIGHT="84" WIDTH="597">
+        <String ID="PAG_00000005_ST000007" STYLEREFS="TXT_1" HPOS="738" VPOS="1070" HEIGHT="84" WIDTH="597" WC="0.99" CONTENT="HISTORIQUE"/>
+      </TextLine>
+    </TextBlock>
+    <TextBlock ID="PAG_00000005_TB000005" STYLEREFS="TXT_1" HPOS="1014" VPOS="1255" HEIGHT="29" WIDTH="61" language="fr">
+      <TextLine ID="PAG_00000005_TL000007" STYLEREFS="TXT_1" HPOS="1014" VPOS="1255" HEIGHT="29" WIDTH="61">
+        <String ID="PAG_00000005_ST000008" STYLEREFS="TXT_1" HPOS="1014" VPOS="1255" HEIGHT="29" WIDTH="61" WC="1" CONTENT="DU"/>
+      </TextLine>
+    </TextBlock>
+    <TextBlock ID="PAG_00000005_TB000006" STYLEREFS="TXT_1" HPOS="436" VPOS="1360" HEIGHT="556" WIDTH="1216" language="fr">
+      <TextLine ID="PAG_00000005_TL000008" STYLEREFS="TXT_1" HPOS="436" VPOS="1360" HEIGHT="147" WIDTH="1215">
+        <String ID="PAG_00000005_ST000009" STYLEREFS="TXT_1" HPOS="436" VPOS="1376" HEIGHT="112" WIDTH="210" WC="0.97" CONTENT="13'"/>
+        <SP ID="PAG_00000005_SP000002" HPOS="646" VPOS="1360" WIDTH="106"/>
+        <String ID="PAG_00000005_ST000010" STYLEREFS="TXT_1" HPOS="752" VPOS="1360" HEIGHT="147" WIDTH="899" WC="0.99" CONTENT="RÉGIMENT"/>
+      </TextLine>
+      <TextLine ID="PAG_00000005_TL000009" STYLEREFS="TXT_1" HPOS="460" VPOS="1592" HEIGHT="114" WIDTH="1192">
+        <String ID="PAG_00000005_ST000011" STYLEREFS="TXT_1" HPOS="460" VPOS="1592" HEIGHT="114" WIDTH="1192" WC="0.99" CONTENT="D'ARTILLERIE"/>
+      </TextLine>
+      <TextLine ID="PAG_00000005_TL000010" STYLEREFS="TXT_1" HPOS="620" VPOS="1812" HEIGHT="104" WIDTH="839">
+        <String ID="PAG_00000005_ST000012" STYLEREFS="TXT_1" HPOS="620" VPOS="1812" HEIGHT="104" WIDTH="839" WC="1" CONTENT="COLONIALE"/>
+      </TextLine>
+    </TextBlock>
+    <TextBlock ID="PAG_00000005_TB000007" STYLEREFS="TXT_1" HPOS="915" VPOS="2090" HEIGHT="42" WIDTH="258" language="fr">
+      <TextLine ID="PAG_00000005_TL000011" STYLEREFS="TXT_1" HPOS="915" VPOS="2090" HEIGHT="42" WIDTH="258">
+        <String ID="PAG_00000005_ST000013" STYLEREFS="TXT_1" HPOS="915" VPOS="2090" HEIGHT="42" WIDTH="258" WC="0.99" CONTENT="PENDANT"/>
+      </TextLine>
+    </TextBlock>
+    <TextBlock ID="PAG_00000005_TB000008" STYLEREFS="TXT_1" HPOS="588" VPOS="2248" HEIGHT="70" WIDTH="914" TYPE="textStamped" language="fr">
+      <TextLine ID="PAG_00000005_TL000012" STYLEREFS="TXT_1" HPOS="588" VPOS="2248" HEIGHT="70" WIDTH="914">
+        <String ID="PAG_00000005_ST000014" STYLEREFS="TXT_1" HPOS="588" VPOS="2250" HEIGHT="58" WIDTH="103" WC="1" CONTENT="LA"/>
+        <SP ID="PAG_00000005_SP000003" HPOS="691" VPOS="2250" WIDTH="55"/>
+        <String ID="PAG_00000005_ST000015" STYLEREFS="TXT_1" HPOS="746" VPOS="2250" HEIGHT="59" WIDTH="346" WC="0.99" CONTENT="GUERRE"/>
+        <SP ID="PAG_00000005_SP000004" HPOS="1092" VPOS="2248" WIDTH="44"/>
+        <String ID="PAG_00000005_ST000016" STYLEREFS="TXT_1" HPOS="1136" VPOS="2248" HEIGHT="70" WIDTH="366" WC="0.99" CONTENT="1914-1918"/>
+      </TextLine>
+    </TextBlock>
+    <GraphicalElement ID="PAG_00000005_GE000002" HPOS="1116" VPOS="2089" HEIGHT="516" WIDTH="520"/>
+    <GraphicalElement ID="PAG_00000005_GE000003" HPOS="928" VPOS="2521" HEIGHT="33" WIDTH="229"/>
+    <TextBlock ID="PAG_00000005_TB000009" STYLEREFS="TXT_1" HPOS="549" VPOS="2864" HEIGHT="133" WIDTH="982" language="fr">
+      <TextLine ID="PAG_00000005_TL000013" STYLEREFS="TXT_1" HPOS="549" VPOS="2864" HEIGHT="52" WIDTH="982">
+        <String ID="PAG_00000005_ST000017" STYLEREFS="TXT_1" HPOS="549" VPOS="2864" HEIGHT="48" WIDTH="363" WC="0.99" CONTENT="IMPRIMERIE"/>
+        <SP ID="PAG_00000005_SP000005" HPOS="912" VPOS="2867" WIDTH="31"/>
+        <String ID="PAG_00000005_ST000018" STYLEREFS="TXT_1" HPOS="943" VPOS="2867" HEIGHT="49" WIDTH="588" WC="0.99" CONTENT="BERGER-LEVRAULT"/>
+      </TextLine>
+      <TextLine ID="PAG_00000005_TL000014" STYLEREFS="TXT_1" HPOS="723" VPOS="2960" HEIGHT="37" WIDTH="643">
+        <String ID="PAG_00000005_ST000019" STYLEREFS="TXT_1" HPOS="723" VPOS="2960" WIDTH="124" HEIGHT="34" WC="0.98" CONTENT="NANCY"/>
+        <SP ID="PAG_00000005_SP000006" HPOS="847" VPOS="2960" WIDTH="24"/>
+        <String ID="PAG_00000005_ST000020" STYLEREFS="TXT_1" HPOS="871" VPOS="2960" WIDTH="26" HEIGHT="34" WC="0.98" CONTENT="-"/>
+        <SP ID="PAG_00000005_SP000007" HPOS="897" VPOS="2962" WIDTH="10"/>
+        <String ID="PAG_00000005_ST000021" STYLEREFS="TXT_1" HPOS="907" VPOS="2962" WIDTH="110" HEIGHT="33" WC="0.99" CONTENT="PARIS"/>
+        <SP ID="PAG_00000005_SP000008" HPOS="1017" VPOS="2962" WIDTH="22"/>
+        <String ID="PAG_00000005_ST000022" STYLEREFS="TXT_1" HPOS="1039" VPOS="2962" WIDTH="23" HEIGHT="33" WC="0.99" CONTENT="-"/>
+        <SP ID="PAG_00000005_SP000009" HPOS="1062" VPOS="2963" WIDTH="9"/>
+        <String ID="PAG_00000005_ST000023" STYLEREFS="TXT_1" HPOS="1071" VPOS="2963" HEIGHT="34" WIDTH="295" WC="0.99" CONTENT="STRASBOURG"/>
+      </TextLine>
+    </TextBlock>
+    </ComposedBlock>
+    </PrintSpace>
+    </Page>
+  </Layout>
+</alto>

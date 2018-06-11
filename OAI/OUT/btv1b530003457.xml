@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<analyseAlto>
+	<metad>
+<type>I</type>
+<ID>btv1b530003457</ID>
+<titre>Général Dubail à la caserne des Célestins : photographie de presse / Agence Rol</titre>
+<dateEdition>1917</dateEdition>
+<nbPage>1</nbPage>
+<descr>Dubail, Edmond (1851-1934) Rites et cérémonies militaires -- France -- Paris (France) Paris (France) France. Garde républicaine</descr>
+</metad>
+<contenus  ocr="false" toc="false"><largeur>181</largeur>
+<hauteur>131</hauteur>
+	<pages>
+<page  ordre="1"><blocIllustration>1</blocIllustration>
+	<ills>
+<ill  y="1" couleur="gris" taille="6" h="3098" x="1" w="4284" n="1-1"><genre  CS="1">photo</genre>
+<genre  CS="0.95">photo</genre>
+<theme  CS="0.8">12</theme>
+<titraille>Général Dubail à la caserne des Célestins : photographie de presse / Agence Rol</titraille>
+</ill>
+</ills>
+</page>
+</pages>
+</contenus>
+</analyseAlto>

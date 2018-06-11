@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<analyseAlto>
+	<metad>
+<type>I</type>
+<ID>btv1b530027497</ID>
+<titre>Carruzo chanteur = Enrico Caruso le ténor ? : photographie de presse / Agence Rol</titre>
+<dateEdition>1917</dateEdition>
+<nbPage>1</nbPage>
+<descr>Caruso, Enrico (1873-1921) Artistes lyriques</descr>
+</metad>
+<contenus  ocr="false" toc="false"><largeur>131</largeur>
+<hauteur>180</hauteur>
+	<pages>
+<page  ordre="1"><blocIllustration>1</blocIllustration>
+	<ills>
+<ill  taille="6" h="4266" couleur="gris" y="1" n="1-1" w="3098" x="1"><genre  CS="1">photo</genre>
+<genre  CS="0.95">photo</genre>
+<theme  CS="0.8">01</theme>
+<titraille>Carruzo chanteur = Enrico Caruso le ténor ? : photographie de presse / Agence Rol</titraille>
+</ill>
+</ills>
+</page>
+</pages>
+</contenus>
+</analyseAlto>

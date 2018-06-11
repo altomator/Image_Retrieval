@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<alto xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/TR/xlink" xmlns="http://bibnum.bnf.fr/ns/alto_prod" ID="alto.6519971" xsi:schemaLocation="http://bibnum.bnf.fr/ns/alto_prod http://bibnum.bnf.fr/ns/alto_prod.xsd">
+  <Description>
+    <MeasurementUnit>pixel</MeasurementUnit>
+    <sourceImageInformation>
+      <fileName>00000029.tif</fileName>
+    </sourceImageInformation>
+    <OCRProcessing ID="OCR_1">
+      <ocrProcessingStep>
+        <processingDateTime>2013-04-09</processingDateTime>
+        <processingStepDescription>[001_OCR_BRUT]OCR BRUT 93.030 %</processingStepDescription>
+        <processingStepDescription>[002_TOTAL_CHARS]{54}</processingStepDescription>
+        <processingStepDescription>[003_TOTAL_CHARS_USED]{39}</processingStepDescription>
+        <processingStepDescription>[004_TOTAL_CHARS_SUSPECTS_USED]{0}</processingStepDescription>
+        <processingStepDescription>[005_TOTAL_CHARS_UNUSED]{15}</processingStepDescription>
+        <processingStepDescription>[006_TOTAL_CHARS_SUSPECTS_UNUSED]{0}</processingStepDescription>
+        <processingStepDescription>[007_TOTAL_STRINGS]{13}</processingStepDescription>
+        <processingStepDescription>[011_CHARS_PUNCTUATION]{7}</processingStepDescription>
+        <processingStepDescription>[012_CHARS_DIGITS]{8}</processingStepDescription>
+        <processingStepDescription>[013_CHARS_SUSPECT]{0}</processingStepDescription>
+        <processingStepDescription>[022_CHARS_UNUSED_BY_BLOCK]{0}</processingStepDescription>
+        <processingStepDescription>[111_LIGS_DETECTED_CURV]{0}</processingStepDescription>
+        <processingStepSettings>OCR 99.980 %</processingStepSettings>
+      </ocrProcessingStep>
+    </OCRProcessing>
+  </Description>
+  <Styles>
+    <TextStyle ID="TXT_1" FONTFAMILY="Times" FONTSIZE="12"/>
+  </Styles>
+  <Layout>
+    <Page ID="PAG_00000029" HEIGHT="3865" WIDTH="2440" PHYSICAL_IMG_NR="1" QUALITY="OK">
+    <TopMargin ID="PAG_00000029_TopMargin" HPOS="0" VPOS="0" HEIGHT="647" WIDTH="2440">
+    <TextBlock ID="PAG_00000029_TB000001" STYLEREFS="TXT_1" HPOS="667" VPOS="425" HEIGHT="52" WIDTH="1287" language="en">
+      <TextLine ID="PAG_00000029_TL000001" STYLEREFS="TXT_1" HPOS="667" VPOS="425" HEIGHT="52" WIDTH="1287">
+        <String ID="PAG_00000029_ST000001" STYLEREFS="TXT_1" HPOS="667" VPOS="447" HEIGHT="28" WIDTH="28" WC="1" CONTENT="A"/>
+        <SP ID="PAG_00000029_SP000001" HPOS="695" VPOS="448" WIDTH="28"/>
+        <String ID="PAG_00000029_ST000002" STYLEREFS="TXT_1" HPOS="723" VPOS="448" HEIGHT="29" WIDTH="172" WC="1" CONTENT="CENTRE"/>
+        <SP ID="PAG_00000029_SP000002" HPOS="895" VPOS="446" WIDTH="29"/>
+        <String ID="PAG_00000029_ST000003" STYLEREFS="TXT_1" HPOS="924" VPOS="446" HEIGHT="29" WIDTH="85" WC="1" CONTENT="FOR"/>
+        <SP ID="PAG_00000029_SP000003" HPOS="1009" VPOS="443" WIDTH="29"/>
+        <String ID="PAG_00000029_ST000004" STYLEREFS="TXT_1" HPOS="1038" VPOS="443" HEIGHT="30" WIDTH="153" WC="1" CONTENT="FACIAL"/>
+        <SP ID="PAG_00000029_SP000004" HPOS="1191" VPOS="439" WIDTH="30"/>
+        <String ID="PAG_00000029_ST000005" STYLEREFS="TXT_1" HPOS="1221" VPOS="439" HEIGHT="30" WIDTH="389" WC="1" CONTENT="RECONSTRUCTION"/>
+        <SP ID="PAG_00000029_SP000005" HPOS="1610" VPOS="425" WIDTH="295"/>
+        <String ID="PAG_00000029_ST000006" STYLEREFS="TXT_1" HPOS="1905" VPOS="425" HEIGHT="52" WIDTH="49" WC="1" CONTENT="89"/>
+      </TextLine>
+    </TextBlock>
+    </TopMargin>
+    <PrintSpace ID="PAG_00000029_PrintSpace" HPOS="260" VPOS="647" HEIGHT="2655" WIDTH="1773">
+    <Illustration ID="PAG_00000029_IL000001" HPOS="260" VPOS="734" HEIGHT="1030" WIDTH="839"/>
+    <TextBlock ID="PAG_00000029_TB000002" STYLEREFS="TXT_1" HPOS="622" VPOS="1840" HEIGHT="35" WIDTH="140" language="en">
+      <TextLine ID="PAG_00000029_TL000002" STYLEREFS="TXT_1" HPOS="622" VPOS="1840" HEIGHT="35" WIDTH="140">
+        <String ID="PAG_00000029_ST000007" STYLEREFS="TXT_1" HPOS="622" VPOS="1840" HEIGHT="35" WIDTH="77" WC="0.99" CONTENT="FIG."/>
+        <SP ID="PAG_00000029_SP000006" HPOS="699" VPOS="1840" WIDTH="1"/>
+        <String ID="PAG_00000029_ST000008" STYLEREFS="TXT_1" HPOS="699" VPOS="1840" HEIGHT="35" WIDTH="63" WC="0.99" CONTENT="18."/>
+      </TextLine>
+    </TextBlock>
+    <Illustration ID="PAG_00000029_IL000002" HPOS="1207" VPOS="647" HEIGHT="1104" WIDTH="826"/>
+    <TextBlock ID="PAG_00000029_TB000003" STYLEREFS="TXT_1" HPOS="1572" VPOS="1835" HEIGHT="39" WIDTH="140" language="en">
+      <TextLine ID="PAG_00000029_TL000003" STYLEREFS="TXT_1" HPOS="1572" VPOS="1835" HEIGHT="39" WIDTH="140">
+        <String ID="PAG_00000029_ST000009" STYLEREFS="TXT_1" HPOS="1572" VPOS="1835" HEIGHT="39" WIDTH="77" WC="0.87" CONTENT="FIG."/>
+        <SP ID="PAG_00000029_SP000007" HPOS="1649" VPOS="1835" WIDTH="1"/>
+        <String ID="PAG_00000029_ST000010" STYLEREFS="TXT_1" HPOS="1649" VPOS="1835" HEIGHT="39" WIDTH="63" WC="0.87" CONTENT="19."/>
+      </TextLine>
+    </TextBlock>
+    <Illustration ID="PAG_00000029_IL000003" HPOS="755" VPOS="2079" HEIGHT="1109" WIDTH="817"/>
+    <TextBlock ID="PAG_00000029_TB000004" STYLEREFS="TXT_1" HPOS="1105" VPOS="3268" HEIGHT="34" WIDTH="279" language="en">
+      <TextLine ID="PAG_00000029_TL000004" STYLEREFS="TXT_1" HPOS="1105" VPOS="3268" HEIGHT="34" WIDTH="279">
+        <String ID="PAG_00000029_ST000011" STYLEREFS="TXT_1" HPOS="1105" VPOS="3268" HEIGHT="34" WIDTH="126" WC="0.93" CONTENT="FIG."/>
+        <SP ID="PAG_00000029_SP000008" HPOS="1231" VPOS="3268" WIDTH="1"/>
+        <String ID="PAG_00000029_ST000012" STYLEREFS="TXT_1" HPOS="1231" VPOS="3268" HEIGHT="34" WIDTH="101" WC="0.93" CONTENT="20."/>
+        <SP ID="PAG_00000029_SP000009" HPOS="1332" VPOS="3268" WIDTH="1"/>
+        <String ID="PAG_00000029_ST000013" STYLEREFS="TXT_1" HPOS="1332" VPOS="3268" HEIGHT="34" WIDTH="52" WC="0.93" CONTENT=","/>
+      </TextLine>
+    </TextBlock>
+    </PrintSpace>
+    </Page>
+  </Layout>
+</alto>

@@ -1,13 +1,14 @@
 #!/usr/bin/perl -w
 
 # dezippe ou detare tous les fichiers d'une arborescence
+# unzip all archives from a folder and its subfolders
 
 # use strict;
-use warnings; 
+use warnings;
 use 5.010;
 
 
-use Data::Dumper; 
+use Data::Dumper;
 use Path::Class;
 use Parallel::ForkManager;
 
@@ -15,34 +16,27 @@ use Parallel::ForkManager;
 binmode(STDOUT, ":utf8");
 
 
+# INPUT folder
+my $DOCS = "DOCS"; # repertoire de stockage des documents
 
-
-
-# repertoire de stockage des documents
-my $DOCS = "DOCS";
-
-# nbre de documents traités
-my $nbDoc=0;
-	
-
-   
-
+# n° of documents analysed
+my $nbDoc=0; # nbre de documents traités
 
 
 if(scalar(@ARGV)!=1){
-	die "Usage : perl unzip.pl IN
-	IN : dossier des documents a traiter
-	
+	die "Usage: perl unzip.pl IN
+	IN: input folder
+
 	";
 }
 while(@ARGV){
 	$DOCS=shift;
-	
+
 	if(-e $DOCS){
-		print "Lecture de $DOCS...\n";
+		print "Reading $DOCS...\n";
 	}
 	else{
-		die "$DOCS n'existe pas !\n";
+		die "## $DOCS does not exist!\n";
 	}
 }
 
@@ -55,22 +49,22 @@ $dir->recurse(depthfirst => 1, callback => sub {
 	my $obj = shift;
 	#say $obj;
 	my $cmd;
-	
+
 	if (not ($obj->is_dir)) {
-	    my $file = $obj->basename; 
+	    my $file = $obj->basename;
 	    print "\n".$file."... ";
-	    if  (index($file, ".zip") != -1) {		   	   
+	    if  (index($file, ".zip") != -1) {
 		     $cmd =  "\n unzip ".$obj." -d ".$DOCS."/".(substr $file,0,length($file)-4 );}
-		 elsif  (index($obj->basename, ".gz") != -1) {	
-		 	  $cmd =  "\n gunzip ".$obj;}	
-		 else {return} 	 	 	
+		 elsif  (index($obj->basename, ".gz") != -1) {
+		 	  $cmd =  "\n gunzip ".$obj;}
+		 else {return}
 		 say $cmd;
 		 $pm->start and next; # do the fork
 		 system $cmd;
 		 $pm->finish; # do the exit
-		 $nbDoc++;	   
-		} 
-	      
+		 $nbDoc++;
+		}
+
 	});
 
 $pm->wait_all_children;
@@ -80,6 +74,3 @@ print "$nbDoc documents :\n";
 
 print "=============================\n";
 # FIN
-
-
-  	                          

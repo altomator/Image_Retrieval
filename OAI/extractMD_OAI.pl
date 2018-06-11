@@ -29,7 +29,7 @@ use Image::Info qw(image_info dim);
 # global variables #
 ######################
 %hash = ();	   	# hash table of metadata/value  pairs
-$calculARK = 1;  #  ark IDs to be computed? (used in bib-XML.pl)
+$calculARK = 1;  #  ark IDs must be exported? (used in bib-XML.pl)
 my $couleur;  	# color mode
 my $genre;    	# illustration genre
 my $theme;    	# illustration IPTC theme
@@ -40,31 +40,31 @@ my $pageExt;  	# page number to be extracted  -> see getRecordOAI_page()
 
 #########################
 ### parameters to be set  ##
-$DPI_photo = 600; # default value for photos
-$DPI_imp = 400; # default value for print
-$facteur_imp= 25.4/$DPI_imp;
+$DPI_photo = 600; # default DPI value for photos
+$DPI_imp = 400; # default DPI value for print content
+$facteur_imp= 25.4/$DPI_imp; # converting pixels to mm
 $facteur_photo = 25.4/$DPI_photo;
-$A8 = 3848; # A8 surface (mm2) 
+$A8 = 3848; # A8 surface (mm2)
 
-### uncomment these variables to set a default value
+### uncomment the following parameters to set a default value
 my $genreDefaut = "photo";    #  illustrations default genre
-my $typeDefaut = "A";  # default source type  :  presse : P, revue : R, monograph = M, image = I, manuscrit = A
+my $typeDefaut = "I";  # default source type  :  newspapers : P, magazine : R, monograph = M, image = I, manuscript = A, music scores = PA
 #my $IPTCDefaut = "01";   # default IPTC theme
-#my $couleurDefaut ="coul";  # default color mode
+#my $couleurDefaut ="coul";  # default color mode: coul / gris / monochrome
 
-
-$DEBUG = 0;
+# debugging mode
+$DEBUG = 1;
 ########################
 
 
-## import of XML macros for output ##
+## import of XML output macros ##
 require "../bib-XML.pl";
 
 
 # API Pagination and Gallica
-$urlAPI = "http://gallica.bnf.fr/services/Pagination?ark=";
-$urlGallica = "http://gallica.bnf.fr/ark:/12148/";
-$urlOAI = "http://oai.bnf.fr/oai2/OAIHandler";  # Gallica OAINUM
+$urlAPI = "http://gallica.bnf.fr/services/Pagination?ark="; # Gallica Pagination API
+$urlGallica = "http://gallica.bnf.fr/ark:/12148/"; # Gallica URL prefix
+$urlOAI = "http://oai.bnf.fr/oai2/OAIHandler";  # Gallica OAINUM endpoint
 
 # patterns for XML extraction
 $motifOrdre = "\<ordre\>(\\d+)\<\/ordre\>" ;
@@ -262,7 +262,6 @@ my $harvester = Net::OAI::Harvester->new(
 );
 
 
-
 ####################################
 # get one record
 sub getRecordOAI {my $ark=shift;
@@ -412,7 +411,7 @@ $format = shift @ARGV;
 getOAI($set);
 
 # to get one document #
-#getRecordOAI("ark:/12148/bpt6k10732244");
+#getRecordOAI("ark:/12148/btv1b8432784m");
 #getRecordOAI("ark:/12148/btv1b10528666v");
 #getRecordOAI("ark:/12148/btv1b53148749t");
 #getRecordOAI("ark:/12148/btv1b55002885z");
@@ -422,11 +421,7 @@ getOAI($set);
 #getRecordOAI_page("ark:/12148/btv1b7100627v/f761.image");
 
 # to load a list of arks in a external .pl file:
-#getRecordOAI("ark:/12148/btv1b10510693p");
-#getRecordOAI("ark:/12148/btv1b105106927");
-#getRecordOAI("ark:/12148/btv1b10510646z");
-#####
-#require "arks-2empire.pl";
+#require "arks.pl";
 
 #####################################
 
@@ -583,6 +578,7 @@ sub getMD {my $metadata=shift;
     	if ( $format  =~  m/.+coul\..+/) {
     	   $couleur = "coul";
     	  }
+			$couleur ||= "inconnu";
     	if ($DEBUG) {say " color mode --> $couleur";}
 
     	# looking for theme
@@ -668,7 +664,7 @@ sub extractIPTC {my $chaine=shift;
     	my @mots = split(' |\'|’',$chaine);
     	# lemmatise
     	my @motsLem  = $stemmer->stem(@mots);
-    	if ($DEBUG) {say "lemmes: ".Dumper(\@motsLem);}
+    	#if ($DEBUG) {say "lemmes: ".Dumper(\@motsLem);}
     	# llok for a match in the IPCT hash
     	foreach my $m  (@motsLem) {
     	 	if ((length($m) > 2) && ($m =~ /^[a-zA-Zéèêëàâôïîç-]+$/))  {	# if word > 3 characters and alphanumeric
@@ -719,17 +715,17 @@ sub extractProperties {my $id=shift;
     my @lines;
     my $ok;
 
-    say " calling the pagination service: $url";
+    say " ... calling the pagination service: $url";
     my $reponseAPI = get($url); # get is in LWP::Simple
     if ($reponseAPI)  {
      	# test if ToC
-     	#(my $toc) = do { local $/; $reponseAPI =~ m/$motifToc/s };
-     	#$hash{"toc"} = $toc;
-     	#if ($DEBUG) {say "** ToC : ".$toc;}
+     	(my $toc) = do { local $/; $reponseAPI =~ m/$motifToc/s };
+     	$hash{"toc"} = $toc;
+     	if ($DEBUG) {say "** ToC: ".$toc;}
       # test if OCR
-     	#(my $ocr) = do { local $/; $reponseAPI =~ m/$motifOcr/s };
-     	#$hash{"ocr"} = $ocr;
-     	#if ($DEBUG) {say "** OCR : ".$ocr;}
+     	(my $ocr) = do { local $/; $reponseAPI =~ m/$motifOcr/s };
+     	$hash{"ocr"} = $ocr;
+     	if ($DEBUG) {say "** OCR: ".$ocr;}
 
      	# look for the opening page
      	($pageOuv) = do { local $/; $reponseAPI =~ m/$motifFirst/s };
@@ -770,7 +766,7 @@ sub extractProperties {my $id=shift;
      			 undef $legCourant;undef $numCourant}
      		}
 
-      if ($DEBUG) {say "captions: ".Dumper(\@legendes);}
+      if ($DEBUG) {say "\ncaptions: ".Dumper(\@legendes);}
 
       # common case where we only have one caption (one first page)
      	if (scalar @legendes == 1) {
@@ -794,8 +790,10 @@ sub extractProperties {my $id=shift;
   	        }
   	  else{ # std case: we have one illustration per page
      		   for (my $i = 1; $i <= $nbPages; $i++) {
-     		   	  # we have to throw away the binding pages: "plat" keyword
-     		      if ((index($numeros[$i-1], "plat") == -1)) {
+     		   	  # we have to throw away the binding pages: "plat", "dos" keyword
+     		      if ((index($numeros[$i-1], "plat ") == -1)
+							  and (index($numeros[$i-1], "garde ") == -1)
+								and $numeros[$i-1] ne "dos") {
      		  	    $hash{$i."_ill_1_w"} = $largeurs[$i-1]; # en pixels
      		        $hash{$i."_ill_1_h"} = $hauteurs[$i-1];
      		        $ok = 1;
@@ -873,11 +871,11 @@ sub getColor {my $id=shift;
 #  export the metadata for a page
 sub exportPage {my $id=shift;
 	            	my $p=shift;        # page number
-								my $format=shift;   # format : xml, json
+								my $format=shift;   # format : xml
 	            	my $fh=shift;       # file handler
 
 	if (exists $hash{$p."_ill_1_w"})  {  # don't export pages with no illustration
-	  if ($DEBUG) {say "ExportPage : $p"; }
+	  if ($DEBUG) {say "ExportPage n°$p"; }
 
 	  $nbTotIlls++;
 	  %atts = ("ordre"=> $p);
@@ -924,5 +922,5 @@ sub exportPage {my $id=shift;
   	 writeEndElt("ills",$fh);
   	 writeEndElt("page",$fh);
   	}
-  	else {if ($DEBUG) {say "ExportPage $p : pas d'illustration";}}
+  	else {if ($DEBUG) {say "ExportPage n°$p: filtered illustration";}}
  }

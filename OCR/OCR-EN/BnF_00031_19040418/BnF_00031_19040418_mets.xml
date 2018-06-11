@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<METS:mets TYPE="Newspaper" PROFILE="ENMAP" OBJID="BnF_00031_19040418" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version191/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/mods.xsd http://www.loc.gov/mix/v20 http://www.loc.gov/standards/mix/mix20/mix20.xsd" xmlns:METS="http://www.loc.gov/METS/" xmlns:mix="http://www.loc.gov/mix/v20" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mets="http://www.loc.gov/METS/">
+  <mets:metsHdr CREATEDATE="2013-07-02T07:57:53" LASTMODDATE="2013-07-02T07:57:53" RECORDSTATUS="SUBMITTED">
+    <mets:agent ROLE="OTHER" OTHERROLE="OWNER">
+      <mets:name>BnF</mets:name>
+    </mets:agent>
+    <mets:agent ROLE="CREATOR" TYPE="ORGANIZATION">
+      <mets:name>UIBK</mets:name>
+    </mets:agent>
+    <mets:agent ROLE="CREATOR" TYPE="OTHER" OTHERTYPE="SOFTWARE">
+      <mets:name>DEA METS Engine</mets:name>
+    </mets:agent>
+  </mets:metsHdr>
+  <mets:dmdSec ID="MODS_ISSUE_19040418">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>L'Humanité</mods:title>
+          </mods:titleInfo>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:genre>Newspaper Issue</mods:genre>
+          <mods:originInfo>
+            <mods:dateIssued encoding="w3cdtf" keyDate="yes">1904-04-18</mods:dateIssued>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm type="code" authority="iso639-2b">fre</mods:languageTerm>
+            <mods:scriptTerm type="code" authority="iso15924">Latn</mods:scriptTerm>
+          </mods:language>
+          <mods:identifier type="ENP">BnF_00031</mods:identifier>
+          <mods:identifier type="CatalogueIdentifier">FRBNF32787730</mods:identifier>
+          <mods:accessCondition type="Europeana viewer">6 - Snippet view (image server)</mods:accessCondition>
+          <mods:recordInfo>
+            <mods:recordContentSource>BnF</mods:recordContentSource>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:fileSec>
+    <mets:fileGrp ID="TextGroup">
+      <mets:fileGrp ID="ALTOFiles" USE="Content">
+        <mets:file ID="FID-00000001-ALTO" SEQ="1" CHECKSUMTYPE="MD5" CHECKSUM="D1-25-30-E0-C4-73-28-74-C9-07-92-EB-1C-EF-D5-4F">
+          <mets:FLocat LOCTYPE="URL" xlink:href="file:///./alto/00000001.xml" />
+        </mets:file>
+        <mets:file ID="FID-00000002-ALTO" SEQ="2" CHECKSUMTYPE="MD5" CHECKSUM="F0-DD-85-81-11-4E-71-6C-B6-09-88-C9-2B-3A-6B-BE">
+          <mets:FLocat LOCTYPE="URL" xlink:href="file:///./alto/00000002.xml" />
+        </mets:file>
+        <mets:file ID="FID-00000003-ALTO" SEQ="3" CHECKSUMTYPE="MD5" CHECKSUM="1D-D8-9D-7E-7D-94-D9-8D-89-ED-88-C6-0C-FC-8D-E1">
+          <mets:FLocat LOCTYPE="URL" xlink:href="file:///./alto/00000003.xml" />
+        </mets:file>
+        <mets:file ID="FID-00000004-ALTO" SEQ="4" CHECKSUMTYPE="MD5" CHECKSUM="94-10-E8-12-DC-3E-E3-91-F7-FA-27-2C-5C-D6-2D-E7">
+          <mets:FLocat LOCTYPE="URL" xlink:href="file:///./alto/00000004.xml" />
+        </mets:file>
+      </mets:fileGrp>
+    </mets:fileGrp>
+  </mets:fileSec>
+  <mets:structMap LABEL="Physical Structure" TYPE="PHYSICAL">
+    <mets:div ID="phys0" LABEL="19040418" TYPE="physSequence" DMDID="MODS_ISSUE_19040418">
+      <mets:div ID="phys1" ORDER="1" ORDERLABEL="1" TYPE="page">
+        <mets:fptr FILEID="FID-00000001-ALTO" />
+      </mets:div>
+      <mets:div ID="phys2" ORDER="2" ORDERLABEL="2" TYPE="page">
+        <mets:fptr FILEID="FID-00000002-ALTO" />
+      </mets:div>
+      <mets:div ID="phys3" ORDER="3" ORDERLABEL="3" TYPE="page">
+        <mets:fptr FILEID="FID-00000003-ALTO" />
+      </mets:div>
+      <mets:div ID="phys4" ORDER="4" ORDERLABEL="4" TYPE="page">
+        <mets:fptr FILEID="FID-00000004-ALTO" />
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+</METS:mets>

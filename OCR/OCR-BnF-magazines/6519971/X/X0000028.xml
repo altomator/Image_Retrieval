@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<alto xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/TR/xlink" xmlns="http://bibnum.bnf.fr/ns/alto_prod" ID="alto.6519971" xsi:schemaLocation="http://bibnum.bnf.fr/ns/alto_prod http://bibnum.bnf.fr/ns/alto_prod.xsd">
+  <Description>
+    <MeasurementUnit>pixel</MeasurementUnit>
+    <sourceImageInformation>
+      <fileName>00000028.tif</fileName>
+    </sourceImageInformation>
+    <OCRProcessing ID="OCR_1">
+      <ocrProcessingStep>
+        <processingDateTime>2013-04-09</processingDateTime>
+        <processingStepDescription>[001_OCR_BRUT]OCR BRUT 96.740 %</processingStepDescription>
+        <processingStepDescription>[002_TOTAL_CHARS]{60}</processingStepDescription>
+        <processingStepDescription>[003_TOTAL_CHARS_USED]{42}</processingStepDescription>
+        <processingStepDescription>[004_TOTAL_CHARS_SUSPECTS_USED]{0}</processingStepDescription>
+        <processingStepDescription>[005_TOTAL_CHARS_UNUSED]{18}</processingStepDescription>
+        <processingStepDescription>[006_TOTAL_CHARS_SUSPECTS_UNUSED]{1}</processingStepDescription>
+        <processingStepDescription>[007_TOTAL_STRINGS]{13}</processingStepDescription>
+        <processingStepDescription>[011_CHARS_PUNCTUATION]{10}</processingStepDescription>
+        <processingStepDescription>[012_CHARS_DIGITS]{8}</processingStepDescription>
+        <processingStepDescription>[013_CHARS_SUSPECT]{1}</processingStepDescription>
+        <processingStepDescription>[022_CHARS_UNUSED_BY_BLOCK]{0}</processingStepDescription>
+        <processingStepDescription>[111_LIGS_DETECTED_CURV]{0}</processingStepDescription>
+        <processingStepSettings>OCR 99.990 %</processingStepSettings>
+      </ocrProcessingStep>
+    </OCRProcessing>
+  </Description>
+  <Styles>
+    <TextStyle ID="TXT_1" FONTFAMILY="Times" FONTSIZE="12"/>
+  </Styles>
+  <Layout>
+    <Page ID="PAG_00000028" HEIGHT="3873" WIDTH="2348" PHYSICAL_IMG_NR="1" QUALITY="OK">
+    <TopMargin ID="PAG_00000028_TopMargin" HPOS="0" VPOS="0" HEIGHT="636" WIDTH="2348">
+    <TextBlock ID="PAG_00000028_TB000001" STYLEREFS="TXT_1" HPOS="479" VPOS="425" HEIGHT="49" WIDTH="1238" language="en">
+      <TextLine ID="PAG_00000028_TL000001" STYLEREFS="TXT_1" HPOS="479" VPOS="425" HEIGHT="49" WIDTH="1238">
+        <String ID="PAG_00000028_ST000001" STYLEREFS="TXT_1" HPOS="479" VPOS="425" HEIGHT="39" WIDTH="50" WC="1" CONTENT="88"/>
+        <SP ID="PAG_00000028_SP000001" HPOS="529" VPOS="443" WIDTH="72"/>
+        <String ID="PAG_00000028_ST000002" STYLEREFS="TXT_1" HPOS="601" VPOS="443" HEIGHT="7" WIDTH="11" WC="0.16" TYPE="illegible" CONTENT="-"/>
+        <SP ID="PAG_00000028_SP000002" HPOS="612" VPOS="438" WIDTH="256"/>
+        <String ID="PAG_00000028_ST000003" STYLEREFS="TXT_1" HPOS="868" VPOS="438" HEIGHT="28" WIDTH="55" WC="1" CONTENT="LA"/>
+        <SP ID="PAG_00000028_SP000003" HPOS="923" VPOS="439" WIDTH="29"/>
+        <String ID="PAG_00000028_ST000004" STYLEREFS="TXT_1" HPOS="952" VPOS="439" HEIGHT="32" WIDTH="334" WC="1" CONTENT="RESTAURATION"/>
+        <SP ID="PAG_00000028_SP000004" HPOS="1286" VPOS="443" WIDTH="29"/>
+        <String ID="PAG_00000028_ST000005" STYLEREFS="TXT_1" HPOS="1315" VPOS="443" HEIGHT="31" WIDTH="402" WC="1" CONTENT="MAXILLO-FACIALE"/>
+      </TextLine>
+    </TextBlock>
+    </TopMargin>
+    <PrintSpace ID="PAG_00000028_PrintSpace" HPOS="387" VPOS="636" HEIGHT="2672" WIDTH="1786">
+    <Illustration ID="PAG_00000028_IL000001" HPOS="399" VPOS="640" HEIGHT="1123" WIDTH="816"/>
+    <TextBlock ID="PAG_00000028_TB000002" STYLEREFS="TXT_1" HPOS="726" VPOS="1820" HEIGHT="39" WIDTH="138" language="en">
+      <TextLine ID="PAG_00000028_TL000002" STYLEREFS="TXT_1" HPOS="726" VPOS="1820" HEIGHT="39" WIDTH="138">
+        <String ID="PAG_00000028_ST000006" STYLEREFS="TXT_1" HPOS="726" VPOS="1820" HEIGHT="39" WIDTH="76" WC="1" CONTENT="FIG."/>
+        <SP ID="PAG_00000028_SP000005" HPOS="802" VPOS="1820" WIDTH="1"/>
+        <String ID="PAG_00000028_ST000007" STYLEREFS="TXT_1" HPOS="802" VPOS="1820" HEIGHT="39" WIDTH="62" WC="1" CONTENT="14."/>
+      </TextLine>
+    </TextBlock>
+    <Illustration ID="PAG_00000028_IL000002" HPOS="1365" VPOS="636" HEIGHT="1132" WIDTH="808"/>
+    <TextBlock ID="PAG_00000028_TB000003" STYLEREFS="TXT_1" HPOS="1694" VPOS="1830" HEIGHT="40" WIDTH="140" language="en">
+      <TextLine ID="PAG_00000028_TL000003" STYLEREFS="TXT_1" HPOS="1694" VPOS="1830" HEIGHT="40" WIDTH="140">
+        <String ID="PAG_00000028_ST000008" STYLEREFS="TXT_1" HPOS="1694" VPOS="1830" HEIGHT="40" WIDTH="77" WC="0.93" CONTENT="FIG."/>
+        <SP ID="PAG_00000028_SP000006" HPOS="1771" VPOS="1830" WIDTH="1"/>
+        <String ID="PAG_00000028_ST000009" STYLEREFS="TXT_1" HPOS="1771" VPOS="1830" HEIGHT="40" WIDTH="63" WC="0.93" CONTENT="IJ."/>
+      </TextLine>
+    </TextBlock>
+    <Illustration ID="PAG_00000028_IL000003" HPOS="387" VPOS="2005" HEIGHT="1194" WIDTH="803"/>
+    <TextBlock ID="PAG_00000028_TB000004" STYLEREFS="TXT_1" HPOS="707" VPOS="3252" HEIGHT="33" WIDTH="138" language="en">
+      <TextLine ID="PAG_00000028_TL000004" STYLEREFS="TXT_1" HPOS="707" VPOS="3252" HEIGHT="33" WIDTH="138">
+        <String ID="PAG_00000028_ST000010" STYLEREFS="TXT_1" HPOS="707" VPOS="3252" HEIGHT="33" WIDTH="76" WC="0.96" CONTENT="FIG."/>
+        <SP ID="PAG_00000028_SP000007" HPOS="783" VPOS="3252" WIDTH="1"/>
+        <String ID="PAG_00000028_ST000011" STYLEREFS="TXT_1" HPOS="783" VPOS="3252" HEIGHT="33" WIDTH="62" WC="0.96" CONTENT="16."/>
+      </TextLine>
+    </TextBlock>
+    <Illustration ID="PAG_00000028_IL000004" HPOS="1332" VPOS="2092" HEIGHT="1111" WIDTH="836"/>
+    <TextBlock ID="PAG_00000028_TB000005" STYLEREFS="TXT_1" HPOS="1683" VPOS="3268" HEIGHT="40" WIDTH="140" language="en">
+      <TextLine ID="PAG_00000028_TL000005" STYLEREFS="TXT_1" HPOS="1683" VPOS="3268" HEIGHT="40" WIDTH="140">
+        <String ID="PAG_00000028_ST000012" STYLEREFS="TXT_1" HPOS="1683" VPOS="3268" HEIGHT="40" WIDTH="77" WC="1" CONTENT="FIG."/>
+        <SP ID="PAG_00000028_SP000008" HPOS="1760" VPOS="3268" WIDTH="1"/>
+        <String ID="PAG_00000028_ST000013" STYLEREFS="TXT_1" HPOS="1760" VPOS="3268" HEIGHT="40" WIDTH="63" WC="1" CONTENT="17."/>
+      </TextLine>
+    </TextBlock>
+    </PrintSpace>
+    </Page>
+  </Layout>
+</alto>

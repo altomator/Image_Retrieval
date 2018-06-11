@@ -8,13 +8,14 @@
 #######################
 # Generates metadata from METS/ALTO digitized newspapers (Europeana Newspapers) :
 # usage : perl extractMD.pl [-LI] olren|ocren|olrbnf|ocrbnf titre IN OUT xml|json|csv
-# mode :  documents type :  olren, ocren, olrbnf, ocrbnf
 # -L : extraction of illustrations metadata  : captions, dimensions...
 # -I : compute ARK identifiants (BnF only)
+# mode :  documents type :  olren, ocren, olrbnf, ocrbnf
+# title: newspaper title for the Europeana Newspapers corpus (otherwise, use "generic")
 # IN : documents folder
 # OUT : metadata folder
-# title: newspaper title (BnF: JDPL, PJI, Parisien, Matin, Gaulois, Rennes, Nantes, Caen...)
-# for non-BnF title: use "generic"
+# format : xml|json|csv
+
 
 # use strict;
 use warnings;
@@ -31,7 +32,6 @@ use Try::Tiny;
 use Switch;
 use List::MoreUtils 'first_index';
 
-
 $t0 = Benchmark->new;
 
 # Pour avoir un affichage correct sur STDOUT
@@ -39,62 +39,76 @@ binmode(STDOUT, ":utf8");
 
 #################
 #  debug mode
-$DEBUG=1;
+$DEBUG = 0;
 #################
 
 
 
 #######################################
 ####### parameters to be defined ##########
-# Images
-$DPIdefaut=300;	# default resolution (dpi) of digitized documents
-$couleurDefaut = "mono"; # placer en commentaire pour analyser le mode de couleur dans le manifeste
-# sinon :  "gris" / "mono" (monochrome) / "coul"
+# IMAGES
+# ------
+# COMMENT this line to look for the DPI (resolution) in the manisfeste
+$DPIdefaut=400;	#  placer en commentaire pour analyser la résolution dans le manifeste
+# COMMENT this line to analyse the color mode in the manifest
+$couleurDefaut = "gris"; # placer en commentaire pour analyser le mode de couleur dans le manifeste
+# sinon :  "gris" / "mono" (sepia, etc.)  / "coul"
+# Image resolution
+$facteurDPI=25.4; # for DPI conversion to mm
+# A8 surface (mm2). The illustrations size is expressed as a multiple of A8 size
+$A8 = 3848; # surface d'un A8 en mm2 (= format d'une carte de jeu). La taille des ill. est exprimée en multiple de A8
 
-#$themeDefaut = "16"; # theme IPTC
-$typeDoc="P"; # documents presse : P, revue : R, mono = M, image = I
+# DOCUMENTS
+# ---------
+# UNCOMMENT this line to set a default IPTC theme
+# $themeDefaut = "16"; #  IPTC theme
+# The collection type
+$typeDoc="P"; # documents type :  P (newspapers) /  R (magazine) / M (monograph) / I (image)
+# UNCOMMENT this line to se a default image type (picture, drawing, map...)
 #$genreDefaut="gravure"; # photo, gravure, dessin...
+# For Europeana newspapers: the document title/bibliographic record are not listed in the manifest
+$titreDefaut = "generic";
+# max length of OCR texts to be extrated (in characters)
+$maxTxt=2500; # longueur max des textes OCR extraits (en caracteres)
 
-# For BnF OLR
-$titreDefaut = "Excelsior";
-
+# FILTERING
+# ---------
 #$seuilLargeur=300; # tailles minimales d'une illustration en pixels
 #$seuilHauteur=200;
-$seuilTaille = 0.001; # ratio de taille minimum de l'illustration en % de la page
+# minimum ratio size of the illustration (% of the page surface, 0.01=1%))
+$seuilTaille = 0.01; # ratio de taille minimum de l'illustration en % de la page (0,01=1%)
+# for newspapers, upper margin of the front page to be excluded
 $ratioOurs = 5; # pour filtrer les illustrations de la zone supérieure (1/5 a 1/8) de la page de une
-$ratioBandeau = 8; # ratio L/H, pour filtrer les illustrations étroites de la presse (bandeau, cul-de-lampe)
-
-# longueur max des textes OCR extraits (en caracteres)
-$maxTxt=1500;
-
-# image resolution
-$facteurDPI=25.4; # for DPI conversion  to mm
-$A8 = 3848; # surface of A8 using mm2 (= format d'une carte de jeu)
+# maximum width/height ratio to filter ribon-like illustrations
+$ratioBandeau = 8; # ratio L/H, pour filtrer les illustrations étroites (bandeau, cul-de-lampe)
 ######################################
 
-
-# table de hashage metadonnees/valeurs
-%hash = ();
+#######################################
+### variables globales / global var ###
+# hash table for the metadata
+%hash = (); # table de hashage metadonnees/valeurs
+# liste des pages ALTO analysées
+$hash{"lpages"}=" "; # ALTO pages analysed
+# reversed hash
 %rhash = (); # hash inversé
 
-###########################################
-## for BnF monographies : ark IDs importation  ##
-#  require "arks-mono.pl";
+## including the library to output XML or JSON ##
+require "../bib-XML.pl"; ## importation macros d'export XML ou JSON ##
 
-## importation macros d'export XML ##
-require "../bib-XML.pl";
-
-## classification des genres des illustrations en fonction des typages présents dans l'OCR
-%genres = (
-	"carte map TAG_map"  => "carte",
-	"formula TAG_formula" => "formule" ,
-	"manuscript TAG_manuscript" => "manuscrit",
-	"music musicScore TAG_musicScore" => "partition");
+## classification of illustrations genres from the OCR types
+%genres = (  ## classification des genres des illustrations en fonction des typages présents dans l'OCR
+	"carte map TAG_map"  => "carte", # map
+	"formula TAG_formula" => "formule" , # math formula
+	"manuscript TAG_manuscript" => "manuscrit", # manuscript
+	"music musicScore TAG_musicScore" => "partition");  # music score
 
 
-##################
-# PARAMETRES de parsing XML
-# motifs de recherche dans le manifeste METS : OCR Europeana Newspapers et OLR Europeana Newspapers
+##########################################################
+# PARAMETRES pour les motifs GREP / GREP patterns parameters
+
+## motifs de recherche dans le manifeste METS           ##
+## patterns to analysed the METS manifest               ##
+## OCR Europeana Newspapers + OLR Europeana Newspapers ##
 $paramMotifNbPagesALTO_OCREN = "FILEID=\"FID(.+)ALTO";
 $paramMotifNbPagesALTO_OLREN = "area FILEID=\"ALTO" ;
 $paramMotifTitre_OCREN = "\<mods:title\>(.+)\<\/mods:title\>" ;
@@ -104,7 +118,8 @@ $paramMotifDate_OLREN = $paramMotifDate_OCREN;
 $paramMotifCouleur_OLREN = "\>(.+)\<\/mix:bitsPerSampleValue";
 #$paramMotifCouleur_OCREN = $paramMotifCouleur_OCREN;
 
-# motifs de recherche dans la structure logique OLR METS
+## motifs de recherche dans la structure logique OLR METS ##
+## patterns to analysed the METS OLR structMap            ##
 $motifArticle = "TYPE=\"ARTICLE\"";
 $motifIllustration = "TYPE=\"ILLUSTRATION\"";
 #$motifTitreArticle = "TYPE=\"ARTICLE\"";
@@ -116,18 +131,24 @@ $motifDMDID = "DMDID\=\"(.+)\" ";
 $motifParagraphe = "BEGIN=\"P.+_TB.+\"";  # P1_TB00003
 $motifIDblock = "BEGIN\=\"(.+)\"/>";
 
-# spécifiques OLR Europeana Newspapers
+## spécifiques à OLR Europeana Newspapers  ##
+## specific to OLR Europeana Newspapers    ##
 $motifNumAlto_OLREN = "FILEID\=\"ALTO(.+)\" BEGIN"; # FILEID="ALTO00008"
 
-# motifs de recherche dans le manifeste RefNum BnF
+## motifs de recherche dans le manifeste RefNum BnF ##
+## patterns to analysed the BnF refNum manifest     ##
 $paramMotifNbPagesALTO_OCRBNF = "\<nombrePages\>(\\d+)\<\/nombrePages";
+$paramMotifNbVuesALTO_OCRBNF = "\<nombreVueObjets\>(\\d+)\<\/nombreVueObjets";
 $paramMotifTitre_OCRBNF = "\<titre\>(.+)\<\/titre\>" ;
 $paramMotifDate_OCRBNF = "\>(.+)\<\/dateEdition\>";
-$paramMotifNotice_OCRBNF = "12148\/(.*?)\<\/reference\>"; # non greedy
+# $paramMotifNotice_OCRBNF = "12148\/(.*?)\<\/reference\>"; # non greedy
+# <reference type="NOTICEBIBLIOGRAPHIQUE">ark:/12148/cb42568994f</reference>
+$paramMotifNotice_OCRBNF = "BIBLIOGRAPHIQUE\"\>(.*?)\<\/reference\>";
 $paramMotifCouleur_OCRBNF = "profondeur=\"(\\d+)\"";
 $paramMotifDPI_OCRBNF = "resolution=\"(\\d+),";
 
-# motifs de recherche dans le manifeste METS OLR BnF
+## motifs de recherche dans le manifeste METS OLR BnF ##
+## patterns to analysed the BnF OLR METS manifest     ##
 #$paramMotifNbPagesALTO_OLRBNF = "paginationA\"\>(\\d+)\<\/dc:title\>"; # par_dc:paginationA">2</dc:title>
 $paramMotifNbPagesALTO_OLRBNF = "FILEID=\"ocr";
 #$paramMotifTitre_OLRBNF = "\<titre\>(.+)\<\/titre\>" ;
@@ -136,14 +157,16 @@ $paramMotifNotice_OLRBNF = "12148\/(.*?)\<\/dc:relation"; # non greedy
 $paramMotifCouleur_OLRBNF = "bitsPerSampleValue\>(.*?)\<\/mix:bitsPerSampleValue";
 $paramMotifDPI_OLRBNF = "numerator\>(\\d+)<\/mix:numerator";
 
-# motifs de recherche dans la structure logique OLR BnF
+## motifs de recherche dans la structure logique METS OLR BnF ##
+## patterns to analysed the BnF METS OLR structMap       ##
 #$motifParagraphe_OLRBNF = "BEGIN=\"PAG_._TB.+\"";  # PAG_1_TB000017
 $motifNumAlto_OLRBNF = "FILEID\=\"ocr\.(.+)\" BEGIN"; # FILEID="ocr.1"
 #$motifIDill_OLRBNF = "BEGIN=\"PAG_._IL.+\"";  # PAG_1_IL000017
 $motifSurtitreArticle = "TYPE=\"TOPHEADING\"";
 
 
-# motifs de recherche ALTO communs
+## motifs de recherche OCR ALTO communs 		 ##
+## commun patterns to analysed ALTO OCR      ##
 $motifTxtALTO = "<TextBlock";
 $motifIllustrationALTO = "\<Illustration";
 $motifTableALTO = "TYPE=\"table";
@@ -156,24 +179,28 @@ $motifALTOy = "VPOS=\"-?(\\d+)\"";
 $motifALTORotation = "ROTATION=\"-?(\\d+)\""; # rotation aussi
 #$motifALTORotation = "ROTATION=\"-?(\\d+).+\""; # rotation aussi
 $motifTypeIllALTO = "TYPE=\"(\\w+)\"";
-$motifIDTxtBlock = "TB"; # "PAG_00000017_TB000011"
+#$motifIDTxtBlock = "TB"; # "PAG_00000017_TB000011"
 $motifIDIllBlock = "IL"; # "PAG_00000017_IL000011"
 
-##### motifs spécifiques ALTO #######
-# EN
-#$motifIDBlockOCREN = "Page1_Block";  # "Page1_Block38"
+########## motifs spécifiques ALTO ############
+########## specific ALTO patterns  ############
+# Europeana Newspapers
+$paramMotifIDBlockOCREN = "Page1_Block";  # Example: "Page1_Block38"
 $paramMotifPubALTO_OCREN = "TYPE=\"Advertisement";
 $paramMotifPubALTO_OLREN = $paramMotifPubALTO_OCREN ;
 $paramMotifTableALTO_OCREN = "TYPE=\"Table";
 $paramMotifTableALTO_OLREN = $paramMotifTableALTO_OCREN;
 $paramMotifIllustrationALTO_OLREN = "TYPE=\"Illustration";
-# BNF
+# BnF
 $paramMotifPubALTO_OLRBNF = "TAGREFS=\"TAG_advertisement"; # TAGREFS="TAG_advertisement"
 $paramMotifTypeIllALTO_OLRBNF = "TAGREFS=\"(\\w+)\"";  # ALTO v2 : avec tags
 $paramMotifIllustrationALTO_OLRBNF = "\<Illustration|\<GraphicalElement";
+$paramMotifIDTxtBlockOCRBNF = "TB"; # "PAG_00000017_TB000011"
 
-############ Autres parametres ######################
-# nom des dossiers intra document
+############### Autres parametres ######################
+############### Other parameters  ######################
+# nom des dossiers intra document numérique
+# folder names within the digital document package
 $paramRepALTO_OCREN="alto";
 $paramRepALTO_OLREN="ALTO";
 $paramRepALTO_OCRBNF="X";
@@ -182,6 +209,7 @@ $paramRepTOC_OLRBNF="moc";
 $repTOC="";
 
 # nommage des manifestes METS et refNum
+# name of the manifests
 $paramSuffixe_OCREN="_mets.xml";
 $paramSuffixe_OLREN="-METS.xml";
 $paramSuffixe_OCRBNF=".xml";
@@ -189,6 +217,7 @@ $paramPrefixe_OCRBNF="X";
 $paramPrefixe_OLRBNF="manifest";
 
 # detection des supplements sur la longueur des noms de fichier Europeana
+# detecting newspapers supplements for Europeana
 $paramSupplements_OCREN=18;
 $paramSupplements_OLREN=10;
 ##################################
@@ -198,12 +227,14 @@ $paramSupplements_OLREN=10;
 # API Gallica Issues
 $urlAPI = "http://gallica.bnf.fr/services/Issues?ark=";
 # motifs de recherche API
+# patterns to analyse the API results
 $motifArk = "ark\=\"(.+)\" ";
 $motifJour = "dayOfYear\=\"(.+)\"";
 
 
-###### Gallica ######
+###### Notices / Records ######
 # ID ark des notices des titres de presse
+# ark IDs of the bibliographic record for newspapers titres
 %hashNotices = ();
 $hashNotices{"Nantes"} = "cb41193663x";
 $hashNotices{"Rennes"}= "cb32830550k";
@@ -225,67 +256,76 @@ $hashNotices{"Presse"}="cb34448033b";
 $hashNotices{"Croix"}="cb343631418";
 $hashNotices{"MiroirSports"}="cb38728672j";
 $hashNotices{"Vie"}="cb32888628n";
-$hashNotices{"generic"}="00000000";
+#$hashNotices{"generic"}="00000000";
 ######################
 
-# divers
+# Divers / Misc.
+# ID of the bibliographic record
 my $noticeEN; # id de notice
-my @couleurs; # mode de couleur des pages numérisées
+# color mode of the pages (extracted from the manifest)
+my @couleurs; # modes de couleur des pages numérisées, extrait du manifeste
 
-# Hash des dates/arks
-@dateARKs = ();
+# Hash for publication date/ark ID
+@dateARKs = ();  # Hash des dates/arks
 #$dateARKs{"20.10.1895"} = "ark:/12148/bpt6k716144h";
-
 ##################
 
 
-### ligne de commande ###
-# formats en entr�e : ocren, olren, ocrbnf...
-$MODE="";
+#### ligne de commande ####
+#### parsing the command line ####
+# documents mode: ocren, olren, ocrbnf...
+$MODE=""; # mode : ocren, olren, ocrbnf...
 
-# formats de sortie
-@FORMATS = ();
+# output formats
+@FORMATS = (); # formats de sortie
 @FORMATS_OK = ("xml", "json", "csv", "txt");
 
 # options
+# extraction of illustrations metadata
 $extractILL=0; # extraire les MD sur les illustrations
+# computing the ark IDs
 $calculARK=0;  # calculer les identifiants ark
 
-
-# nbre de documents traites
-$nbDoc=0;
-# nbre d'illustrations trouvees
-$nbTotIll=0;
-# nbre d'illustrations filtrées (taille trop petite)
-$nbTotIllFiltrees=0;
-# nbre d'illustrations filtree OLR
-$nbTotIllFiltreesOLR=0;
-
-# METS absents
-$noMETS="";
-# ALTO absents
-$noALTO="";
-# Arks inconnus
-$noArk="";
-# Arks avec probleme
-$bugsArk="";
-# page ALTO en cours
-$numPageALTO=1;
+#######################################
+### variables globales / global var ###
+# error code
+my $codeErreur = 0;
+# document ID currently analysed
+my $id; # id du document en cours
+# total number of documents
+$nbDoc=0; # nbre de documents traites
+# total number of illustrations
+$nbTotIll=0; # nbre d'illustrations trouvees
+# total number of illustrations which have been filtered
+$nbTotIllFiltrees=0; # nbre d'illustrations filtrées
+# OLR: total number of illustrations which have been filtered
+$nbTotIllFiltreesOLR=0; # nbre d'illustrations filtree OLR
+# missing METSs
+$noMETS=""; # METS absents
+# missing ALTOs
+$noALTO=""; # ALTO absents
+# unknown arks
+$noArk=""; # Arks inconnus
+# Arks with problem
+$bugsArk=""; # Arks avec probleme
+# ALTO page currently analysed
+$numPageALTO=1; # page ALTO en cours
 # nombre d'illustrations dans la page
 #$numIll=0;
 # nombre d'illustrations decrites (on filtre les plus petites)
 #$numIllDecrites=0;
-# ID du bloc ALTO en cours
-$idBlocAlto ="";
-# ID des blocs ALTO de texte a associer aux images : tableau (page) de tableaux (illustration)
-@listeIDsTxt = ();
+# ID of the ALTO block currently analysed
+$idBlocAlto =""; # ID du bloc ALTO en cours
+# IDs of the ALTO text blocks which are related to the illustrations
+# this structure is a table (page level) of table (illustration level)
+@listeIDsTxt = (); # ID des blocs ALTO de texte a associer aux illustrations : # tableau (page) de tableaux (illustration)
+# same for the captions
 @listeIDsLeg = ();
 # ID des DMDID des articles
-@listeDMDIDs = ();
+@listeDMDIDs = (); # list of IDs of the DMDID articles
 
 
-
-### Parsing XML ####
+### Parsing XML (XML::Twig) ####
 # à laisser avant le code d'appel si ne marche pas #
 $handlerALTO = {
 	'/alto/Layout/Page/PrintSpace' => \&getALTO,
@@ -293,7 +333,10 @@ $handlerALTO = {
 };
 
 
-# lecture ALTO : $elt contient le PrintSpace
+# parsing XML du ALTO pour extraire les textes requis : $elt contient le <PrintSpace>
+# les ID des blocs sont dans $listeIDsTxt et $listeIDsLeg
+# XML ALTO parsing to extract the texts we are looking for: $elt contains the <PrintSpace>
+# the blocks IDs are stored in $listeIDsTxt and $listeIDsLeg
 sub getALTO {my ($t, $elt) = @_;
 
 	  my $tmp;
@@ -301,7 +344,8 @@ sub getALTO {my ($t, $elt) = @_;
 	  my $scal;
 
 	  #say Dumper \@listeIDsTxt ;
-	  say "getALTO / elt : ".$elt->name();
+
+	  say "getALTO / elt: ".$elt->name();
 
 	  # $numPageALTO : var globale, page en cours
 	  if (defined ($listeIDsTxt[$numPageALTO])) {
@@ -313,7 +357,7 @@ sub getALTO {my ($t, $elt) = @_;
 	  	 $idTmp = $listeIDsTxt[$numPageALTO][$i];
 	  	 #say $idTmp;
 	  	 if (defined($idTmp)) {
-	  	   if ($DEBUG) {say "ID txt a chercher : ".$idTmp;}
+	  	   if ($DEBUG) {say "txt ID to look for: ".$idTmp;}
 	  	   # récupérer le contenu texte du bloc
 	  	   $scal = getALTOtxt($elt,$idTmp);
 
@@ -333,7 +377,7 @@ sub getALTO {my ($t, $elt) = @_;
 	   for ($i=0; $i<=@$aref-1; $i++) {
 	  	 $idTmp = $listeIDsLeg[$numPageALTO][$i];
 	  	 if (defined($idTmp)) {
-	  	   if ($DEBUG) {say "ID legende a chercher : ".$idTmp;}
+	  	   if ($DEBUG) {say "caption ID to look for: ".$idTmp;}
 	  	   $scal = getALTOtxt($elt,$idTmp);
 
 	  	   # on essaye aussi de prendre le bloc de txt suivant si la légende est courte
@@ -349,7 +393,7 @@ sub getALTO {my ($t, $elt) = @_;
 
 ####################################
 ####################################
-############# DEBUT ################
+############# MAIN ################
 ####################################
 ####################################
 
@@ -357,15 +401,22 @@ $MODE=shift @ARGV;
 
 if ((not (defined($MODE)) or (substr ($MODE,0,1) eq "-") && (scalar(@ARGV)<5)) or (scalar(@ARGV)<4))  {
 	die "\nUsage : perl extractMD.pl [-options]  ocren|ocrbnf|olren|olrbnf titre IN OUT csv|json|xml
-[L] : include the illustrations description
-[I] : compute ARK IDs (BnF only)
-ocren, olren, ocrbnf, olrbnf :  documents origin
-title : JDPL, PJI, Parisien, Matin, Gaulois, Rennes, Nantes, Caen...
-IN : input folder
-OUT :  output folder
+[L]: include the illustrations description
+[I]: compute ARK IDs (BnF only)
+ocren, olren, ocrbnf, olrbnf:  documents origin
+title: document title if needed for olrbnf mode (otherwise, use 'generic')
+IN: input folder of the digital documents
+OUT:  output folder for the metadata
 csv,json,xml : export format for the metadata
-
 	";
+}
+
+if (not defined $typeDoc) {
+	say " \n## unknown documents type! Must be set in typeDoc var";
+	die
+}
+else {
+	say " \n... WARNING: Running the script for '$typeDoc' documents \n  P (newspaper) /  R (magazine) / M (monograph) / I (image)";
 }
 
 # gestion des options :
@@ -383,7 +434,7 @@ elsif (($MODE eq "-LI") or ($MODE eq "-IL")){
 
 
 if ($MODE eq "ocren"){
-	$ratioBandeau = 7; # on est plus severe pour filtrer plus
+	$ratioBandeau = 7; # on est plus severe pour filtrer plus / more filtering for newspapers
 	$repALTO=$paramRepALTO_OCREN;
 	$suffixeManif =$paramSuffixe_OCREN;
 	$prefixeManif ="";
@@ -396,7 +447,7 @@ if ($MODE eq "ocren"){
 	$motifPubALTO =$paramMotifPubALTO_OCREN;
 	$motifTableALTO =$paramMotifTableALTO_OCREN;
 	#$motifIllustrationALTO =$paramMotifIllustrationALTO_OCREN;
-	#$motifIDTxtBlock = $motifIDBlockOCREN;
+	$motifIDTxtBlock = $paramMotifIDBlockOCREN;
   #$motifIDIllBlock = $motifIDBlockOCREN;
 
 } elsif ($MODE eq "olren") {
@@ -424,12 +475,13 @@ if ($MODE eq "ocren"){
   $motifCouleur = $paramMotifCouleur_OCRBNF;
   $motifDPI = $paramMotifDPI_OCRBNF;
   $motifNbPagesALTO = $paramMotifNbPagesALTO_OCRBNF;
+  $motifNbVuesALTO = $paramMotifNbVuesALTO_OCRBNF;
   $motifNotice = $paramMotifNotice_OCRBNF;
   # structure logique
   #$motifPubALTO =$paramMotifPubALTO_OCRBNF;
   #$motifTable =$paramMotifTable_OCR;
   #$motifIllustrationALTO =$paramMotifIllustrationALTO_OCR;
-  #$motifIDTxtBlock = $motifIDTxtBlockOCRBNF;
+  $motifIDTxtBlock = $paramMotifIDTxtBlockOCRBNF;
   #$motifIDIllBlock = $motifIDIllBlockOCRBNF;
 
 } elsif ($MODE eq "olrbnf") {
@@ -456,42 +508,54 @@ if ($MODE eq "ocren"){
   $motifIllustrationALTO=$paramMotifIllustrationALTO_OLRBNF;
   }
 else {
-  die "##  $MODE : mode inconnu !\n";}
+  die "##  $MODE:  unknown mode!\n";}
 
-# titre de periodique (pour le calcul des arks)
+# titre du document (pour le calcul des arks)
+# document title (for ark computing)
 $titre=shift @ARGV;
-#if ($calculARK==1) {
-# il faut trouver l'ID de notice dans le hash : cas des corpus EN
-if (index($MODE, "en") != -1) {
-		 print "titre : ".$titre."\n";
+if ($calculARK==1) {
+	#################################################
+	## for BnF monographies : ark IDs importation  / set a %arksMono hash ##
+	if ($typeDoc eq "M")
+	   {require "arks-mono.pl"}	## pour les BnF monographies, il faut fournir une liste d'ark ID --> %arksMono ##
+
+  # for Europeana corpus, we need to find the ID in the hash
+  if (index($MODE, "en") != -1) {  # il faut trouver l'ID de notice dans le hash : cas des corpus EN
+		 say "  title: ".$titre."\n";
 		 if ($hashNotices{$titre}) {
 		   $noticeEN = $hashNotices{$titre};}
 	   else
-	    {die "##  Titre \"$titre\" inconnu : notice inconnue !\n";}
-	  } # sinon ne rien faire, la notice sera extraite du manifeste BnF
-
+	    {
+				say "##  Unknown bibliographic record for title \"$titre\"!";
+				say "##  You must choose the title as:";
+				foreach my $key ( keys %hashNotices ) {
+				 print $key." - ";}
+				 say "\n";
+				die
+		}
+	  } # otherwise, the ID will be extrated from the manifest
+		# sinon ne rien faire, la notice sera extraite du manifeste BnF
+}
 
 #$noticeEN = $hashNotices{$titre};
-
-#say $noticeEN;
 
 $DOCS=shift @ARGV;
 # repertoire de stockage des documents a traiter
 if(-d $DOCS){
-		say "Lecture de $DOCS...";
+		say "\nReading $DOCS...";
 	}
 	else{
-		die "##  $DOCS n'existe pas !\n";
+		die "##  $DOCS doesn't exist!\n";
 	}
 
 # dossier de stockage des metadonnees extraites
 $OUT=shift @ARGV;
 if(-d $OUT){
-		say "Ecriture dans $OUT...";
+		say "Writing in $OUT...";
 	}
 	else{
-		mkdir ($OUT) || die ("##  Erreur creation du dossier : $OUT\n");
-    say "Creation de $OUT...";
+		mkdir ($OUT) || die ("##  Error while creating folder: $OUT\n");
+    say "Creating $OUT...";
 	}
 
 # extraction des formats de sortie
@@ -499,17 +563,14 @@ while(@ARGV){
 	$f =	shift @ARGV;
 	if($f ~~ @FORMATS_OK) {
 	   push @FORMATS, $f;
-  } else {die "##  Format \"$f\" inconnu !\n";
+  } else {die "##  Format \"$f\" unknown !\n";
   }
 }
 
-## var globales ##
-my $codeErreur = 0;
-my $id; # id du document en cours
+# analyse récursive du dossier
+# recurse analysis of the folder
 my $dir = dir($DOCS);
-say "--- documents : ".$dir->children(no_hidden => 1);
-
-
+say "--- documents: ".$dir->children(no_hidden => 1)."\n";
 
 $dir->recurse(depthfirst => 1, preorder => 1, callback => sub {
 	my $obj = shift;
@@ -517,49 +578,50 @@ $dir->recurse(depthfirst => 1, preorder => 1, callback => sub {
 
 	#say $obj->basename;
 	#say $DOCS;
-
+	# jump the toplevel folder
 	if ($obj->basename ne $DOCS)  { # sauter le dossier courant
 	if (($obj->is_dir) ){
 		say "\n".$obj->basename;
-
+		# we are on a document folder
 		if (($obj->basename ne $repALTO) and ($obj->basename ne $repTOC)) { # on est sur un dossier de document
 		   $id = $obj->basename;
 		   #undef $codeOLR;
 		   print "\n*************************************\n".$id."... ";
 		   $codeErreur = genererMD($obj,$id); # analyser le manifeste
 		   if ($codeErreur == -1) {
-		    say "\n##  Manifeste absent !\n";}
+		    say "\n##  The manifest is missing!\n";}
 		   else {$nbDoc++;}
 
 		 }
+		 # we have a METS OLR structure in a distinct file
 		 elsif ($obj->basename eq $repTOC) { # cas de l'OLR BnF avec une table logique METS distincte
   			#say "\n".$obj->basename;
-		   	say "\n------------------------ Table de structure OLR : ".$id."... ";
-		   	say "nbTotIllFiltrees : ".$nbTotIllFiltrees;
+		   	say "\n------------------------  OLR structure table: ".$id."... ";
+		   	say "  filtered illustrations: ".$nbTotIllFiltrees;
 		   	#say "M".$id.$suffixeManif;
 		   	my $toc = $obj->file("M".$id.$suffixeManif);
 		   	if (-e $toc) {
 		      #return lireMD($manifeste,$idDoc);
-		      open my $fh, '<:encoding(UTF-8)', $toc or die "Impossible d'ouvrir : $toc !";
+		      open my $fh, '<:encoding(UTF-8)', $toc or die "Can't open: $toc !";
 		      extraireIll($fh);
 		      #$codeOLR=1;
 		      #ecrireMD($id);
 	      }
 	      else{
-		       say "## $toc n'existe pas !";
+		       say "## $toc is missing!";
 		       $noMETS=$noMETS.$id." ";}
 		    }
 		 elsif ($obj->basename eq $repALTO)
-		  { # analyser les ALTO
-		 	if  (($codeErreur != -1)) {
+		  { # we are on an ALTOs folder
+		 	if  (($codeErreur != -1)) { # analyser les ALTO
 		 	  my $nbrePages = genererMDALTO($obj,$obj->parent->basename);
 		 	  #$hash{"pages"} = $numPageALTO-1;
 		      if ($nbrePages == 1) {
-		  	    say "\n## ALTO absents !";
+		  	    say "\n## ALTO are missing!";
 		  	    $noALTO = $noALTO.$id." ";
 		      }
 		      if (($nbrePages) != $hash{"pages"}) { # pages lues / pages annoncées dans le manifeste
-		  	    say "\n## ALTO incoherents ! Attendus : ".$hash{"pages"}." / lus : ".$nbrePages ;
+		  	    say "\n## ALTO unconsistent! expected: ".$hash{"pages"}." / found: ".$nbrePages ;
 		  	    $hash{"pages"} = $nbrePages; # corriger le nbre de pages réelles
 		  	    $noALTO = $noALTO.$id." ";
 		      }
@@ -570,7 +632,7 @@ $dir->recurse(depthfirst => 1, preorder => 1, callback => sub {
   		         ecrireMD($id);
   		     }
   		     else {$nbDoc--;
-  		     	say "????????? ERREUR FATALE ???????";
+  		     	say "????????? Fatal ERROR ???????";
   		     	die}
   		   #}
   		} # fin analyser ALTO
@@ -583,16 +645,16 @@ $dir->recurse(depthfirst => 1, preorder => 1, callback => sub {
 
 
 say "\n\n=============================";
-say "$nbDoc documents traites sur ".$dir->children(no_hidden => 1);
+say "$nbDoc documents analysed on ".$dir->children(no_hidden => 1);
 say "$nbTotIll illustrations";
-say "$nbTotIllFiltrees ill. filtrees sur la taille; $nbTotIllFiltreesOLR filtrees sur OLR";
+say "$nbTotIllFiltrees ill. filtered on the form / $nbTotIllFiltreesOLR filtered thanks to the OLR";
 if ($MODE eq "olrbnf") {
-say "solde : ".($nbTotIll - $nbTotIllFiltreesOLR - $nbTotIllFiltrees)}
-else {say "solde : ".($nbTotIll - $nbTotIllFiltrees)}
-say " METS absents : ".$noMETS;
-say " ALTO absents ou partiels : ".$noALTO;
-say " Identifiants Ark inconnus : ".$noArk;
-say " Erreurs fatales : ".$bugsArk;
+say "  remaining: ".($nbTotIll - $nbTotIllFiltreesOLR - $nbTotIllFiltrees)}
+else {say "  remaining: ".($nbTotIll - $nbTotIllFiltrees)}
+say "missing METS: ".$noMETS;
+say "missing ALTO: ".$noALTO;
+say "Ark IDs unknown: ".$noArk;
+say "Fatal errors: ".$bugsArk;
 say "=============================";
 
 $t1 = Benchmark->new;
@@ -641,20 +703,25 @@ sub lireMD {
 
     # RAZ des structures de donnees
 	%hash = ();
-	undef %rhash ;
-	if (defined $typeDoc) {$hash{"type"}=$typeDoc;}
+	undef %rhash;
 	undef @listeIDsTxt;
 	undef @listeIDsLeg;
 
+  $hash{"type"}=$typeDoc;
 
-	print "chargement du manifeste : $ficMETS...\n--------------------------\n";
+	print "chargement du manifeste: $ficMETS...\n--------------------------\n";
 
   # extraire par regexp (plus rapide que XML
-  open my $fh, '<:encoding(UTF-8)', $ficMETS or die "Impossible d'ouvrir : $ficMETS !"; # manifeste refNum ou METS en utf8
+  open my $fh, '<:encoding(UTF-8)', $ficMETS or die "Can't open: $ficMETS!"; # manifeste refNum ou METS en utf8
 
   if ($MODE eq "ocrbnf") { # certaines MD sont dans le refNum
     ( $junk, $titre , $junk, $date, $junk, $nbPages, $junk, $notice ) = do { local $/; <$fh> =~ m/($motifTitre).*($motifDate).*($motifNbPagesALTO).*($motifNotice)/s }; # $/ : lire tout le fichier
-    # tout est dans le manifeste
+    # a priori tout est dans le manifeste
+    # cas possible : utiliser le nombre de vues
+    if (not $nbPages) {
+    	seek $fh, 0, 0;
+    	( $junk, $titre , $junk, $date, $junk, $notice,$junk,$nbPages,) = do { local $/; <$fh> =~ m/($motifTitre).*($motifDate).*($motifNotice).*($motifNbVuesALTO)/s };
+    	}
   }
   elsif ($MODE eq "olrbnf") { # cas OLR BnF
     ( $junk,  $date, $junk, $notice, $junk) = do { local $/; <$fh> =~ m/($motifDate).*($motifNotice)/s };
@@ -687,47 +754,80 @@ sub lireMD {
   $hash{"pages"} = $nbPages ;
 
   if (defined ($date))
-    { $date = join "-", reverse split /\./, $date; # reformatter en date ISO
-    	$date =~ tr/\//-/;
-      $hash{"date"} = $date;}
-  else {say "  ## date absente (motif $motifDate ) ##"; }
-  $hash{"date"} ||= "inconnu";
+    {   #$dateISO = Date::Simple->new($date);
+    	# <dateEdition>1944/09/27</dateEdition>
+			say " date: $date";
+			my $tmp = $date;
+    	$tmp =~ tr/\//-/; # transformer le / du refNum en -
+			#say $tmp;
+    	if (($tmp =~ m/^(\d{4})-(\d\d)-(\d\d)$/) or # yyyymmdd
+    	 	($tmp =~ m/^(\d{4})-(\d\d)$/) or						# yyyymm
+    	  ($tmp =~ m/^(\d{4})$/) ) {								# yyyy
+    		say "... ISO date OK: ".$tmp;
+    		$date=$tmp;
+       }
+			 elsif ($tmp =~ m/^(\d\d)-(\d\d)-(\d{4})$/) { # ddmmyyyy
+				 $date = join "-", reverse split /\-/, $tmp; # reformatter en date ISO
+				 say ".. ISO date OK: ".$date;
+			 }
+			 else {
+       	   say "  ## non-ISO date: ".$tmp;}
+     }
+  else {say "  ## date is missing! (pattern:$motifDate)";
+        $date = "inconnue"}
 
-  if ( index($MODE, "en") !=-1) { # cas Europeana
+  $hash{"date"} ||= $date;
+
+  if (index($MODE, "en") !=-1) { # cas Europeana
     if (length($idDoc)>$supplements) { # les supplements ont une extension _02_1
 		  $hash{"supplement"}="TRUE";}
 		else {$hash{"supplement"}="FALSE";}}
 	else {	$hash{"supplement"}="FALSE";}
 
 	if ($DEBUG) {
-  	say " titre : ".$titre;
-  	say " date : ".$date;
-  	say " pages : ".$nbPages;
-  	say " notice : ".$notice;
+  	say " title: ".$titre;
+  	say " date: ".$date;
+  	say " pages: ".$nbPages;
+  	say " bibliographic record: ".$notice;
   	}
 
-  # on cherche des illustrations (si demandé)
-  if ($extractILL==1) {
-   if ((not defined ($couleurDefaut)) and (defined ($motifCouleur))) {
-   	# trouver la profondeur de couleur de la numérisation
+  # looking for illustrations
+  if ($extractILL==1) { # on cherche des illustrations (si demandé)
+	 # looking for the color mode
+   if ((not defined ($couleurDefaut)) and (defined ($motifCouleur))) { # trouver la profondeur de couleur de la numérisation
    	seek $fh, 0, 0;  # on revient au debut du fichier
    	#say $motifCouleur;
-   	(@couleurs ) = do { local $/; <$fh> =~ m/$motifCouleur/g};
+   	(@couleurs) = do { local $/; <$fh> =~ m/$motifCouleur/g};
    	#say Dumper (@couleurs);
-   	#if ($DEBUG) {say " couleurs : ".scalar (@couleurs);}
-    }
-    # trouver la résolution
-    #say "motif : ".$motifDPI;
-   if (not (defined ($DPIdefaut))) {
+		if (not @couleurs) {
+			say " ## color mode can't be found! (pattern: $motifCouleur)";
+			die}
+		} elsif (not (defined ($couleurDefaut)) and not defined($motifCouleur)) {
+ 		 say " \n## unknown default color mode! (must be set in couleurDefaut var)";
+ 		 say "## and no pattern for searching in the manifest (motifCouleur var)";
+ 		 die
+	 }
+	 say " color mode (page 1): ".$couleurs[0];
+
+   # looking for the DPI
+   if (not (defined ($DPIdefaut)) and defined($motifDPI)) { #trouver la résolution
    	# trouver la profondeur de couleur de la numérisation dans le manifeste
    	seek $fh, 0, 0;  # on revient au debut du fichier
    	(my $DPI) = do { local $/; <$fh> =~ m/$motifDPI/s};
    	if (defined ($DPI)) {
-   	  if ($MODE eq "olrbnf") {$DPIdefaut = $DPI/10000; }
-   	    else {$DPIdefaut = $DPI}
-    } else {say "** DPI non connu (motif $motifDPI) **"}
-   }
-   if ($DEBUG) {say " DPI : ".$DPIdefaut;}
+   	  if ($MODE eq "olrbnf") {
+				$DPIdefaut = $DPI/10000; }
+   	  else {$DPIdefaut = $DPI}
+    } else {
+			say " ## DPI can't be found! (pattern: $motifDPI)";
+			die}
+   } elsif (not (defined ($DPIdefaut)) and not defined($motifDPI)) {
+		 say " \n## unknown default DPI! (must be set in DPIdefaut var)";
+		 say "## and no pattern for searching in the manifest (motifDPI var)";
+		 die
+	 }
+
+   say " DPI: ".$DPIdefaut;
 
    # cas OLR : on cherche illustrations+legendes dans le manifeste
    if ($MODE eq "olren") { # la structure logique est dans le manifeste
@@ -892,7 +992,6 @@ sub incIdBlocALTO {
 	my $increment=shift;
 	my $motif=shift;
 
-
 	my @tmp = split($motif,$id);
   my $res = $tmp[1];
   if (not  $res) {
@@ -928,13 +1027,18 @@ sub genererMDALTO {
   # traiter tous les ALTO
   while (my $fichier = $rep->next) {
 			if ((substr $fichier, -4) eq ".xml") {
-		    $numPageALTO = int(substr $fichier,-6,3); # SBB
-				#$numPageALTO = int(substr $fichier,-8,4);  #recup du num de page dans le nom de fichier : X0000002.xml
+		    #$numPageALTO = int(substr $fichier,-6,3); # SBB
+				$numPageALTO = int(substr $fichier,-8,4);  #recup du num de page dans le nom de fichier : X0000002.xml
 		    say "num alto : ". int($numPageALTO);
 
 		    $codeErreur=lireMDALTO($fichier,$idDoc); #,$handler
 		    if ($codeErreur == -1) {say "\n##  Probleme d'analyse ALTO : $fichier\n";}
-		    else { $nbrePagesALTO++}
+		    else {
+					$nbrePagesALTO++;
+					if ($hash{"lpages"}) {
+						$hash{"lpages"} = $hash{"lpages"}.$numPageALTO.","}  # liste des num de pages ALTO
+					else {$hash{"lpages"} = $numPageALTO.","}
+			}
 		  }
     }
    say "\n nbre de pages ALTO lues : ".$nbrePagesALTO;
@@ -996,7 +1100,7 @@ sub lireMDALTO {
     }
     #$largeurPage = $largeurPage;
     #$hauteurPage = $hauteurPage;
-    $hash{"largeur"} = $largeurPage; #en pixels
+    $hash{"largeur"} = $largeurPage; # pixels
     $hash{"hauteur"} = $hauteurPage;
   }
   #if ($DEBUG) {say "L : ". $largeurPage." x H : ".$hauteurPage} ;
@@ -1036,7 +1140,7 @@ sub lireMDALTO {
     	my ( $typeIll ) = $ligne =~ m/$motifTypeIllALTO/;
     	my ( $x ) = $ligne =~ m/$motifALTOx/;
     	my ( $y ) = $ligne =~ m/$motifALTOy/;
-    	my ( $hauteur ) = $ligne =~ m/$motifALTOhaut/;  # en pixels
+    	my ( $hauteur ) = $ligne =~ m/$motifALTOhaut/;  #  pixels
     	my ( $largeur ) = $ligne =~ m/$motifALTOlarg/;
     	#$largeur = int($largeur);
     	#$largeur = int($largeur);
@@ -1108,7 +1212,7 @@ sub lireMDALTO {
 
     	 # mode OCR : on cherche du texte dans l'OCR
     	 if ( index($MODE,"ocr") !=  -1) {
-    	   #  on stocke pour plus tard le numero de l'ID du bloc texte ALTO avant l'illustration
+    	   #  on stocke pour plus tard l'ID du bloc texte ALTO avant l'illustration
     	   # ($listeIDtxt = tableau de tableaux)
     	   ( $IDtxt ) = $ligneTxtAvant =~ m/$motifIDALTO/;
     	   #say "IDtxt : ".$IDtxt;
@@ -1168,9 +1272,9 @@ sub getNumIllHash {my $IDalto=shift;
 
   if ($DEBUG) {say "getNumIllHash : $IDill";}
 
-	if (not defined %rhash) { %rhash = reverse %hash;} # inverser le hash
+	if (not %rhash) { %rhash = reverse %hash;} # inverser le hash
 	my $key = $rhash{$IDill}; # chercher la clé qui correspond à l'ID du bloc
-	if (defined $key) {
+	if ($key) {
 		  if ($DEBUG) {say " cle : ".$key;}
 		  my $motif = $IDalto."_ill_(\\d+)id"; # la clé est de la forme '2_ill_1id'
 		  ( my $num ) = $key =~ m/$motif/;		# extraire le numéro de l'illustration
@@ -1212,29 +1316,7 @@ sub lireTexteALTO {
 
 
 
-# recuperation des textes ALTO a partir des ID contenus dans @listeIDsTxt (liste de listes)
-sub getALTOold {my ($t, $elt) = @_;
 
-	   say "elt : ".$elt->name();
-	   my $idCB = $elt->att(ID);
-	   say "getALTO : ".$idCB;
-	   # on est sur le bloc de l'illustration
-	   #my @tmp = $elt->get_xpath('ComposedBlock[@ID="'.$idBlocAlto.'"]');
-	   #return unless @tmp;
-	   # on cherche un bloc texte avant l'illustration
- 	   my @tmp = $elt->prev_sibling;
- 	   #say Dumper (@tmp);
-	   if ($tmp[0]->name() eq "TextBlock") {
-	   	    print " *txt* : ".$tmp[0]->att(ID)."\n";
-	   	    my @array = map { $_ -> att('CONTENT') } $tmp[0] -> get_xpath('TextLine/String');
-	        $scal = join(" ", @array);
-	        #print $scal;
-	        say "txt : ". substr $scal, 0, 30  ;
-	        $hash{$numPageALTO."_ill_".$idCB."txt"} = $scal;
-	    }
-
-	   #$t -> purge();
-}
 
 
 # raccourcir les textes
@@ -1249,8 +1331,9 @@ sub getALTOtxt {
 		my $elt=shift;
 	  my $id=shift;
 
+				#say $elt->name();
 	       say "-> getTxt : ".$id;
-	       my $xpath = 'TextBlock[@ID="'.$id.'"]';
+	       my $xpath = '//TextBlock[@ID="'.$id.'"]';
 	  	   my @bloc = $elt->get_xpath($xpath);
 	  	   if ( scalar(@bloc) == 0)
 	  	    { if ($DEBUG) {say "** bloc $id absent ou non texte ! **";}
@@ -1267,117 +1350,13 @@ sub getALTOtxt {
 }
 
 
-#### ne sert plus
-sub getALTOold {my ($t, $elt) = @_;
 
-	  my $tmp;
-	  my $idTB = $elt->att(ID);
-
-	  $aref = $listeIDsTxt[$numPageALTO];
-      $n = @$aref - 1;
-	  for ($i=0; $i<=$n; $i++) {
-	   $tmp = $listeIDsTxt[$numPageALTO][$i];
-
-       if ((defined($tmp)) && ($idTB eq $tmp))  # version OLR : ((int(substr $idTB,-5))==$tmp))
-       {
-       	print "id TB : ".$idTB;
- 	      #say Dumper (@tmp);
-	      if ($elt->name() eq "TextBlock") {
-	         #print " *txt suivant* : ".$tmp[0]->att(ID)."\n";
-           my @array = map { $_ -> att('CONTENT') } $elt -> get_xpath('TextLine/String');
-	       my $scal = join(" ", @array);
-	       #print $scal;
-	       print "    txt : ". (substr $scal, 0, 50) . " ...\n" ;
-	       $hash{$numPageALTO."_ill_".$i."txt"} = substr $scal, 0, $maxTxt;  # raccourcir les textes
-           last;}  # interrompre la boucle
-       }
-      }
-      if ($MODE=="ocren"){
-      $aref = $listeIDsLeg[$numPageALTO];
-      $n = @$aref - 1;
-      say "nb legendes : ".$n;
-	  for ($i=0; $i<=$n; $i++) {
-	   $tmp = $listeIDsLeg[$numPageALTO][$i];
-
-       if ((defined($tmp)) && ($idTB eq $tmp))
-       {
-       	print "id TB : ".$idTB;
-	      if ($elt->name() eq "TextBlock") {
-           my @array = map { $_ -> att('CONTENT') } $elt -> get_xpath('TextLine/String');
-	       my $scal = join(" ", @array);
-	       #print $scal;
-	       print "    leg : ". (substr $scal, 0, 50) . " ...\n" ;
-	       $hash{$numPageALTO."_ill_".$i."leg"} = substr $scal, 0, $maxTxt;  # raccourcir les textes
-           last;}  # interrompre la boucle
-       }
-      }
-    }
-
-	 #$t -> purge();
-}
-
-# ----------------------
-# r�cup�ration des m�tadonn�es biblio : # pas utilis�, parsing XML trop lent
-#sub getMD {my ($t, $elt) = @_;
-	   #my $id = $elt->att('id');
-#	   $hash{"titre"} = $elt->child(0)->child(0)->child(0)->child(0)->child(0)->text();
-#	   $hash{"date"} = $elt->child(0)->child(0)->child(0)->child(2)->child(0)->text();
-#	   $t -> purge();
-#	}
-
-# r�cup�ration des pages
-#sub getNbPages {my ($t, $elt) = @_;
-#	   $hash{"pages"} = scalar($elt->child(0)->children);
-#	   say  "      PAGES :     ",    $hash{"pages"};
-#	   $t -> purge();
-#	}
-
-
-# r�cup�ration des articles
-#sub getNbArticles {my ($t, $elt) = @_;
-#	   $hash{"articles"} = scalar($elt->get_xpath('//mets:div[@TYPE="ARTICLE"]'));
-#	   say  "      ARTICLES :     ",    $hash{"articles"};
-#	   $t -> purge();
-#	}
-
-# r�cup�ration des infos ALTO
-#sub getALTO {my ($t, $elt) = @_;
-
-	   #my $page = $elt->child(0)->att(PHYSICAL_IMG_NR);
-	#   if ($numPageALTO == 1) {
-	 #    $hash{"largeur"} = int($elt->child(0)->att(WIDTH)*25.4/$DPI);
-	  #   $hash{"hauteur"} = int($elt->child(0)->att(HEIGHT)*25.4/$DPI);
-	   #  }
-
-	   #$hash{$page."_mots"} = scalar($elt->get_xpath('//String'));
-	   #$hash{$page."_blocsTexte"} = scalar($elt->get_xpath('//TextBlock'));
-	   #$hash{$page."_blocsPub"} = scalar($elt->get_xpath('//ComposedBlock[(@TYPE="Advertisement")]'));
-	   #$hash{$numPageALTO."_blocsTab"} = scalar($elt->get_xpath('//ComposedBlock[(@TYPE="Table")]'));
-	   #$hash{$numPageALTO."_illustrations"} = scalar($elt->get_xpath('//Illustration'));
-
-#	   $t -> purge();
-#	}
-
-# pas utilise, parsing XML trop lent
-# filtrer sur les sections  du METS
-#$handlerMETS = {
-	#'mets:dmdSec[@ID="MODSMD_ISSUE1"]'  => \&getMD,   # m�tadonn�es biblio
- # 'mets:structMap[@TYPE="PHYSICAL"]'  => \&getNbPages,
- # 'mets:structMap[@TYPE="LOGICAL"]'  => \&getNbArticles,  # nombre d'articles
-#};
-
-
-# filtrer sur les ALTO : blocs de texte
-#$handlerALTOold = {
-	##'/alto/Layout/Page/PrintSpace' => \&getALTO,
-	#'ComposedBlock[@TYPE="Illustration"]'  => \&getALTO,
-#};
 
 ###################
 sub calculerARK {my $id=shift;
 
 	if ($calculARK == 1) {
-		  if ($typeDoc eq "M") {calculerARKmono($id)} # cas des arks listés
+		  if ($typeDoc eq "M") {calculerARKmono($id)} # cas des arks listés dans un fichier
 		  else
 		    {calculerARKperio($id)} # cas des arks de periodiques
 	}
@@ -1407,13 +1386,16 @@ sub exportPage {my $id=shift; # id document
 	my $format=shift;  # format d'export
 	my $fh=shift;  # file handler
 
-	    my $coeffDPI = $facteurDPI/$DPIdefaut;
+			my $coeffDPI;
+	    if (defined $DPIdefaut) {
+				$coeffDPI = $facteurDPI/$DPIdefaut;}
 	    my $filtre;
 	    my $une;
 	    my $derniere;
-	    my $couleur;
+	    my $couleur="";
 
 	    if ($DEBUG) {say "ExportPage : $p"; }
+      #say Dumper %hash;
 
       %atts = ("ordre"=> $p);
   	  writeEltAtts("page",\%atts,$fh);
@@ -1423,17 +1405,16 @@ sub exportPage {my $id=shift; # id document
   	  writeElt("blocPub",$hash{$p."_blocsPub"},$fh);
 
       $nbIll =  $hash{$p."_blocsIllustration"};
+      if ($nbIll) {
       writeElt("blocIll",$nbIll,$fh);
       if (($nbIll != 0) && ($extractILL==1)) {
       	writeOpenElt("ills",$fh);
       	# boucler sur les illustrations de la page
         for($i = 1; $i <= $nbIll; $i++) {
        	 say "   +illustration : ".$i;
-
-
        	 my $idill =  $hash{$p."_ill_".$i."id"};
        	 if (not defined $idill) {
-       	 	say " !!!!!!!!!!!!!!!!!!! ERREUR FATALE  :  illustration $i inconnue !!!!!!!!!!!!!!!!!!!";
+       	 	say " #### ERREUR FATALE  :  illustration $i inconnue ####";
        	 	$bugsArk=$bugsArk.$id." ";
        	 	}
        	 else {
@@ -1442,10 +1423,10 @@ sub exportPage {my $id=shift; # id document
        	 my $h = $hash{$p."_ill_".$i."h"};
        	 my $larg = $w*$coeffDPI; # en mm
        	 my $haut = $h*$coeffDPI;
-       	 my $taille = ($larg*$haut/$A8); # taille en nombre de A8
+       	 my $taille = int($larg*$haut/$A8); # taille en nombre de A8
        	 #if ($DEBUG) { say "largeur : $larg (mm) / hauteur : $haut (mm) / taille : $taille";}
 
-       	 # couleur de la page numérisée
+       	 # digitization color mode
        	 if (defined $couleurDefaut) { # utiliser la couleur par défaut
        	   	     $couleur = $couleurDefaut}
        	 else {
@@ -1453,13 +1434,12 @@ sub exportPage {my $id=shift; # id document
        	   	  	if (@couleurs) {
        	   	  		my $tmp = $couleurs[$p-1];
        	   	  		#say " -> couleur : ".$tmp;
-       	   	  		if ($DEBUG) {say " couleur : ".$tmp} ;
-       	   				if ($tmp eq "1") {$couleur = "nb"}
-	           			 elsif ($tmp eq "8") {$couleur = "gris"}
-	           			 else {$couleur = "coul"}}
-           			else {say " ## couleurDefaut et motifCouleur inconnus ##"}
+       	   				if ($tmp eq "1") {$couleur = "gris"}  # n&b
+	           			 elsif ($tmp eq "8") {$couleur = "gris"} # gris
+	           			 else {$couleur = "coul"}} # couleur
+           			else {say " ## color mode unknown!"}
            		}
-           #if (defined $couleur) {print {$fh} "couleur=\"".$couleur."\" ";}
+					 if ($DEBUG) {say "   color: $couleur"} ;
 
        	   if ($p==1) {  # illustration en une
        	   	    $une = "true";
@@ -1495,13 +1475,13 @@ sub exportPage {my $id=shift; # id document
        	   	  $tmp = $genreDefaut;
        	      }
        	   if ($tmp) {
-       	     %atts = ("CS"=>$CS);
+       	     %atts = ("CS"=>$CS,"source"=>"md");  # d'après métadonnées : md
        	     writeEltAtts("genre",\%atts,$fh,$tmp); }
 
        	   if (defined $themeDefaut) {
        	   	# CS =0.8
-       	   	%atts = ("CS"=>0.8);
-       	   	writeEltAtts("theme",\%atts,$themeDefaut,$fh);  # sujet IPTC
+       	   	%atts = ("CS"=>0.8,,"source"=>"md");
+       	   	writeEltAtts("theme",\%atts,$fh,$themeDefaut);  # sujet IPTC
 
        	   	}
 
@@ -1525,7 +1505,8 @@ sub exportPage {my $id=shift; # id document
          	 }
       } # fin for
       writeEndElt("ills",$fh);
-    } # fin if
+      } # fin if
+    }
     writeEndElt("page",$fh);
     }
 
@@ -1561,20 +1542,21 @@ sub definirGenre {my $genre=shift;
  }
 
 # ----------------------
-# calcul d'un ark de monographie
+# calcul d'un ark de monographie à partir de la liste des ID
+# computing a monography ark ID from file
 sub calculerARKmono {my $id=shift;
 
-	say "\ncalculer ARK : ".$id;
-	#say Dumper (%arksMono);
+	say "\n...computing ARK from IDs file: ".$id;
+	#if ($DEBUG) {say Dumper (%arksMono);}
 
 	($match) = grep {$_ =~ /$id/} keys %arksMono;
   if ($match) {
-    say "-> match : $match";
+    say " -> match from IDs file: $match";
     $hash{"id"} = $match;
     return 0;
   }
   else {
-  say "\n   ## identifiant $id absent de la liste ##";
+  say "\n ## ID $id is missing in the IDs file! ##";
    $noArk=$noArk.$id." ";
     return -1  }
 }
@@ -1582,6 +1564,7 @@ sub calculerARKmono {my $id=shift;
 
 # ----------------------
 # calcul d'un ark a partir d'un ID et d'une date de periodique
+# computing a ark ID for a serial, based on the date
 sub calculerARKperio {my $id=shift;
 
     	my $ark;
@@ -1593,10 +1576,10 @@ sub calculerARKperio {my $id=shift;
     	my $i=0;
     	my $notice= $hash{"notice"};
 
-    	say "\ncalculer ARK : ".$date;
+    	say "\n...computing ARK: ".$date;
 
     	if (not defined ($notice)) {
-    		say " ## notice inconnue, calcul de l'ark impossible ##";
+    		say " ## unknown bibliographic record, can't process the ark computing!";
     	  return -1}
 
       if ($supp eq "TRUE") {
@@ -1620,7 +1603,7 @@ sub calculerARKperio {my $id=shift;
       } else { # pas trouve dans le hash : il faut appeler l'API date
       	 # appeler l'API avec notice et annee
       	 $annee = substr $date,0,4; # format YYYY-MM-DD
-         print "API : ".$annee." -> ";
+         print "API: ".$annee." -> ";
          #  http://gallica.bnf.fr/services/Issues?ark=cb32830550k/date&date=1900
          $urlDate = $urlAPI.$notice."/date&date=".$annee;
          say $urlDate;
@@ -1678,18 +1661,152 @@ sub calculerARKperio {my $id=shift;
          }
 
          if ($ark) {
-      	     say  "--> ark : ".$ark;
+      	     say  " --> match ark: ".$ark;
       	     $hash{"id"} = $ark;
       	     return 0;
           } else {
-          	say "\n   *** date ".$date." absente dans l'API Gallica Issues ***";
+          	say "\n   ## date ".$date." is missing in the API Gallica Issues!";
           	$noArk=$noArk.$id." ";
           	return -1
             }
          }
         else {
-          say "\n   *** API Gallica Issues : pas de reponse ***";
+          say "\n   ## API Gallica Issues : no response!";
           $noArk=$noArk.$id." ";
           return -1}
     }
   }
+
+
+
+=BEGIN
+	# recuperation des textes ALTO a partir des ID contenus dans @listeIDsTxt (liste de listes)
+
+	sub getALTOold {my ($t, $elt) = @_;
+
+		   say "elt : ".$elt->name();
+		   my $idCB = $elt->att(ID);
+		   say "getALTO : ".$idCB;
+		   # on est sur le bloc de l'illustration
+		   #my @tmp = $elt->get_xpath('ComposedBlock[@ID="'.$idBlocAlto.'"]');
+		   #return unless @tmp;
+		   # on cherche un bloc texte avant l'illustration
+	 	   my @tmp = $elt->prev_sibling;
+	 	   #say Dumper (@tmp);
+		   if ($tmp[0]->name() eq "TextBlock") {
+		   	    print " *txt* : ".$tmp[0]->att(ID)."\n";
+		   	    my @array = map { $_ -> att('CONTENT') } $tmp[0] -> get_xpath('TextLine/String');
+		        $scal = join(" ", @array);
+		        #print $scal;
+		        say "txt : ". substr $scal, 0, 30  ;
+		        $hash{$numPageALTO."_ill_".$idCB."txt"} = $scal;
+		    }
+		   #$t -> purge();
+	}
+
+	#### ne sert plus
+	sub getALTOold {my ($t, $elt) = @_;
+
+		  my $tmp;
+		  my $idTB = $elt->att(ID);
+
+		  $aref = $listeIDsTxt[$numPageALTO];
+	      $n = @$aref - 1;
+		  for ($i=0; $i<=$n; $i++) {
+		   $tmp = $listeIDsTxt[$numPageALTO][$i];
+
+	       if ((defined($tmp)) && ($idTB eq $tmp))  # version OLR : ((int(substr $idTB,-5))==$tmp))
+	       {
+	       	print "id TB : ".$idTB;
+	 	      #say Dumper (@tmp);
+		      if ($elt->name() eq "TextBlock") {
+		         #print " *txt suivant* : ".$tmp[0]->att(ID)."\n";
+	           my @array = map { $_ -> att('CONTENT') } $elt -> get_xpath('TextLine/String');
+		       my $scal = join(" ", @array);
+		       #print $scal;
+		       print "    txt : ". (substr $scal, 0, 50) . " ...\n" ;
+		       $hash{$numPageALTO."_ill_".$i."txt"} = substr $scal, 0, $maxTxt;  # raccourcir les textes
+	           last;}  # interrompre la boucle
+	       }
+	      }
+	      if ($MODE=="ocren"){
+	      $aref = $listeIDsLeg[$numPageALTO];
+	      $n = @$aref - 1;
+	      say "nb legendes : ".$n;
+		  for ($i=0; $i<=$n; $i++) {
+		   $tmp = $listeIDsLeg[$numPageALTO][$i];
+
+	       if ((defined($tmp)) && ($idTB eq $tmp))
+	       {
+	       	print "id TB : ".$idTB;
+		      if ($elt->name() eq "TextBlock") {
+	           my @array = map { $_ -> att('CONTENT') } $elt -> get_xpath('TextLine/String');
+		       my $scal = join(" ", @array);
+		       #print $scal;
+		       print "    leg : ". (substr $scal, 0, 50) . " ...\n" ;
+		       $hash{$numPageALTO."_ill_".$i."leg"} = substr $scal, 0, $maxTxt;  # raccourcir les textes
+	           last;}  # interrompre la boucle
+	       }
+	      }
+	    }
+
+		 #$t -> purge();
+	}
+
+	# ----------------------
+	# r�cup�ration des m�tadonn�es biblio : # pas utilis�, parsing XML trop lent
+	#sub getMD {my ($t, $elt) = @_;
+		   #my $id = $elt->att('id');
+	#	   $hash{"titre"} = $elt->child(0)->child(0)->child(0)->child(0)->child(0)->text();
+	#	   $hash{"date"} = $elt->child(0)->child(0)->child(0)->child(2)->child(0)->text();
+	#	   $t -> purge();
+	#	}
+
+	# r�cup�ration des pages
+	#sub getNbPages {my ($t, $elt) = @_;
+	#	   $hash{"pages"} = scalar($elt->child(0)->children);
+	#	   say  "      PAGES :     ",    $hash{"pages"};
+	#	   $t -> purge();
+	#	}
+
+
+	# r�cup�ration des articles
+	#sub getNbArticles {my ($t, $elt) = @_;
+	#	   $hash{"articles"} = scalar($elt->get_xpath('//mets:div[@TYPE="ARTICLE"]'));
+	#	   say  "      ARTICLES :     ",    $hash{"articles"};
+	#	   $t -> purge();
+	#	}
+
+	# r�cup�ration des infos ALTO
+	#sub getALTO {my ($t, $elt) = @_;
+
+		   #my $page = $elt->child(0)->att(PHYSICAL_IMG_NR);
+		#   if ($numPageALTO == 1) {
+		 #    $hash{"largeur"} = int($elt->child(0)->att(WIDTH)*25.4/$DPI);
+		  #   $hash{"hauteur"} = int($elt->child(0)->att(HEIGHT)*25.4/$DPI);
+		   #  }
+
+		   #$hash{$page."_mots"} = scalar($elt->get_xpath('//String'));
+		   #$hash{$page."_blocsTexte"} = scalar($elt->get_xpath('//TextBlock'));
+		   #$hash{$page."_blocsPub"} = scalar($elt->get_xpath('//ComposedBlock[(@TYPE="Advertisement")]'));
+		   #$hash{$numPageALTO."_blocsTab"} = scalar($elt->get_xpath('//ComposedBlock[(@TYPE="Table")]'));
+		   #$hash{$numPageALTO."_illustrations"} = scalar($elt->get_xpath('//Illustration'));
+
+	#	   $t -> purge();
+	#	}
+
+	# pas utilise, parsing XML trop lent
+	# filtrer sur les sections  du METS
+	#$handlerMETS = {
+		#'mets:dmdSec[@ID="MODSMD_ISSUE1"]'  => \&getMD,   # m�tadonn�es biblio
+	 # 'mets:structMap[@TYPE="PHYSICAL"]'  => \&getNbPages,
+	 # 'mets:structMap[@TYPE="LOGICAL"]'  => \&getNbArticles,  # nombre d'articles
+	#};
+
+
+	# filtrer sur les ALTO : blocs de texte
+	#$handlerALTOold = {
+		##'/alto/Layout/Page/PrintSpace' => \&getALTO,
+		#'ComposedBlock[@TYPE="Illustration"]'  => \&getALTO,
+	#};
+	=END

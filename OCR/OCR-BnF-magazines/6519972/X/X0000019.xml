@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<alto xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/TR/xlink" xmlns="http://bibnum.bnf.fr/ns/alto_prod" ID="alto.6519972" xsi:schemaLocation="http://bibnum.bnf.fr/ns/alto_prod http://bibnum.bnf.fr/ns/alto_prod.xsd">
+  <Description>
+    <MeasurementUnit>pixel</MeasurementUnit>
+    <sourceImageInformation>
+      <fileName>00000019.tif</fileName>
+    </sourceImageInformation>
+    <OCRProcessing ID="OCR_1">
+      <ocrProcessingStep>
+        <processingDateTime>2013-04-09</processingDateTime>
+        <processingStepDescription>[001_OCR_BRUT]OCR BRUT 100 %</processingStepDescription>
+        <processingStepDescription>[002_TOTAL_CHARS]{21}</processingStepDescription>
+        <processingStepDescription>[003_TOTAL_CHARS_USED]{0}</processingStepDescription>
+        <processingStepDescription>[004_TOTAL_CHARS_SUSPECTS_USED]{0}</processingStepDescription>
+        <processingStepDescription>[005_TOTAL_CHARS_UNUSED]{21}</processingStepDescription>
+        <processingStepDescription>[006_TOTAL_CHARS_SUSPECTS_UNUSED]{19}</processingStepDescription>
+        <processingStepDescription>[007_TOTAL_STRINGS]{9}</processingStepDescription>
+        <processingStepDescription>[011_CHARS_PUNCTUATION]{5}</processingStepDescription>
+        <processingStepDescription>[012_CHARS_DIGITS]{4}</processingStepDescription>
+        <processingStepDescription>[013_CHARS_SUSPECT]{19}</processingStepDescription>
+        <processingStepDescription>[022_CHARS_UNUSED_BY_BLOCK]{0}</processingStepDescription>
+        <processingStepDescription>[111_LIGS_DETECTED_CURV]{1}</processingStepDescription>
+        <processingStepSettings>OCR 100 %</processingStepSettings>
+      </ocrProcessingStep>
+    </OCRProcessing>
+  </Description>
+  <Styles>
+    <TextStyle ID="TXT_1" FONTFAMILY="Times" FONTSIZE="12"/>
+  </Styles>
+  <Layout>
+    <Page ID="PAG_00000019" HEIGHT="3868" WIDTH="2503" PHYSICAL_IMG_NR="1" QUALITY="OK">
+    <PrintSpace ID="PAG_00000019_PrintSpace" HPOS="318" VPOS="324" HEIGHT="3098" WIDTH="2127">
+    <TextBlock ID="PAG_00000019_TB000001" STYLEREFS="TXT_1" HPOS="318" VPOS="324" HEIGHT="92" WIDTH="373" language="fr">
+      <TextLine ID="PAG_00000019_TL000001" STYLEREFS="TXT_1" HPOS="319" VPOS="324" HEIGHT="87" WIDTH="367">
+        <String ID="PAG_00000019_ST000001" STYLEREFS="TXT_1" HPOS="319" VPOS="324" HEIGHT="58" WIDTH="19" WC="0.00" TYPE="illegible" CONTENT="Te"/>
+        <SP ID="PAG_00000019_SP000001" HPOS="338" VPOS="324" WIDTH="18"/>
+        <String ID="PAG_00000019_ST000002" STYLEREFS="TXT_1" HPOS="376" VPOS="333" HEIGHT="50" WIDTH="56" WC="1" CONTENT="1"/>
+        <SP ID="PAG_00000019_SP000002" HPOS="432" VPOS="364" WIDTH="20"/>
+        <String ID="PAG_00000019_ST000003" STYLEREFS="TXT_1" HPOS="452" VPOS="364" HEIGHT="27" WIDTH="74" WC="0.00" TYPE="illegible" CONTENT="TI'"/>
+        <SP ID="PAG_00000019_SP000003" HPOS="526" VPOS="345" WIDTH="15"/>
+        <String ID="PAG_00000019_ST000004" STYLEREFS="TXT_1" HPOS="541" VPOS="345" HEIGHT="61" WIDTH="11" WC="1" CONTENT="}"/>
+        <SP ID="PAG_00000019_SP000004" HPOS="552" VPOS="376" WIDTH="31"/>
+        <String ID="PAG_00000019_ST000005" STYLEREFS="TXT_1" HPOS="592" VPOS="376" HEIGHT="35" WIDTH="27" WC="0.00" TYPE="illegible" CONTENT="l'"/>
+        <SP ID="PAG_00000019_SP000005" HPOS="619" VPOS="355" WIDTH="33"/>
+        <String ID="PAG_00000019_ST000006" STYLEREFS="TXT_1" HPOS="652" VPOS="355" HEIGHT="30" WIDTH="34" WC="0.00" TYPE="illegible" CONTENT="'l"/>
+      </TextLine>
+      <TextLine ID="PAG_00000019_TL000002" STYLEREFS="TXT_1" HPOS="318" VPOS="324" HEIGHT="92" WIDTH="373">
+        <String ID="PAG_00000019_ST000007" STYLEREFS="TXT_1" HPOS="318" VPOS="324" HEIGHT="92" WIDTH="114" WC="0.15" TYPE="illegible" CONTENT="1,1"/>
+        <SP ID="PAG_00000019_SP000006" HPOS="432" VPOS="324" WIDTH="1"/>
+        <String ID="PAG_00000019_ST000008" STYLEREFS="TXT_1" HPOS="432" VPOS="324" HEIGHT="92" WIDTH="200" WC="0.15" TYPE="illegible" CONTENT="lùnchc"/>
+        <SP ID="PAG_00000019_SP000007" HPOS="632" VPOS="324" WIDTH="1"/>
+        <String ID="PAG_00000019_ST000009" STYLEREFS="TXT_1" HPOS="632" VPOS="324" HEIGHT="92" WIDTH="59" WC="0.15" TYPE="illegible" CONTENT="3"/>
+      </TextLine>
+    </TextBlock>
+    <Illustration ID="PAG_00000019_IL000001" HPOS="359" VPOS="493" HEIGHT="2929" WIDTH="2086"/>
+    </PrintSpace>
+    </Page>
+  </Layout>
+</alto>

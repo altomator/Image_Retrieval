@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<alto xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/TR/xlink" xmlns="http://bibnum.bnf.fr/ns/alto_prod" ID="alto.6519972" xsi:schemaLocation="http://bibnum.bnf.fr/ns/alto_prod http://bibnum.bnf.fr/ns/alto_prod.xsd">
+  <Description>
+    <MeasurementUnit>pixel</MeasurementUnit>
+    <sourceImageInformation>
+      <fileName>00000015.tif</fileName>
+    </sourceImageInformation>
+    <OCRProcessing ID="OCR_1">
+      <ocrProcessingStep>
+        <processingDateTime>2013-04-09</processingDateTime>
+        <processingStepDescription>[001_OCR_BRUT]OCR BRUT 100 %</processingStepDescription>
+        <processingStepDescription>[002_TOTAL_CHARS]{7}</processingStepDescription>
+        <processingStepDescription>[003_TOTAL_CHARS_USED]{0}</processingStepDescription>
+        <processingStepDescription>[004_TOTAL_CHARS_SUSPECTS_USED]{0}</processingStepDescription>
+        <processingStepDescription>[005_TOTAL_CHARS_UNUSED]{7}</processingStepDescription>
+        <processingStepDescription>[006_TOTAL_CHARS_SUSPECTS_UNUSED]{7}</processingStepDescription>
+        <processingStepDescription>[007_TOTAL_STRINGS]{2}</processingStepDescription>
+        <processingStepDescription>[011_CHARS_PUNCTUATION]{2}</processingStepDescription>
+        <processingStepDescription>[012_CHARS_DIGITS]{1}</processingStepDescription>
+        <processingStepDescription>[013_CHARS_SUSPECT]{7}</processingStepDescription>
+        <processingStepDescription>[022_CHARS_UNUSED_BY_BLOCK]{0}</processingStepDescription>
+        <processingStepDescription>[111_LIGS_DETECTED_CURV]{0}</processingStepDescription>
+        <processingStepSettings>OCR 100 %</processingStepSettings>
+      </ocrProcessingStep>
+    </OCRProcessing>
+  </Description>
+  <Styles>
+    <TextStyle ID="TXT_1" FONTFAMILY="Times" FONTSIZE="12"/>
+  </Styles>
+  <Layout>
+    <Page ID="PAG_00000015" HEIGHT="3871" WIDTH="2509" PHYSICAL_IMG_NR="1" QUALITY="OK">
+    <PrintSpace ID="PAG_00000015_PrintSpace" HPOS="218" VPOS="225" HEIGHT="3276" WIDTH="2233">
+    <TextBlock ID="PAG_00000015_TB000001" STYLEREFS="TXT_1" HPOS="218" VPOS="225" HEIGHT="105" WIDTH="330" language="fr">
+      <TextLine ID="PAG_00000015_TL000001" STYLEREFS="TXT_1" HPOS="218" VPOS="225" HEIGHT="105" WIDTH="330">
+        <String ID="PAG_00000015_ST000001" STYLEREFS="TXT_1" HPOS="318" VPOS="225" HEIGHT="105" WIDTH="177" WC="0.23" TYPE="illegible" CONTENT="^ïu-Ke"/>
+        <SP ID="PAG_00000015_SP000001" HPOS="495" VPOS="225" WIDTH="1"/>
+        <String ID="PAG_00000015_ST000002" STYLEREFS="TXT_1" HPOS="495" VPOS="225" HEIGHT="105" WIDTH="53" WC="0.23" TYPE="illegible" CONTENT="1"/>
+      </TextLine>
+    </TextBlock>
+    <Illustration ID="PAG_00000015_IL000001" HPOS="259" VPOS="580" HEIGHT="2921" WIDTH="2192"/>
+    </PrintSpace>
+    </Page>
+  </Layout>
+</alto>
