@@ -23,7 +23,7 @@ A proof of concept, [Gallica.pix](http://demo14-18.bnf.fr:8984/rest?run=findIllu
 - ["Towards new uses of cultural heritage online: Gallica Studio"](http://pro.europeana.eu/post/towards-new-uses-of-cultural-heritage-online-gallica-studio) (EN blog post)
  
 ### Datasets
-The datasets are available as metadata files (one XML file/document) or JsonML dumps of the BaseX DB. Images can be extracted from the metadata files thanks to [IIIF Image API](http://iiif.io/api/image/2.0/): 
+The datasets are available as metadata files (one XML file/document) or JsonML dumps of the BaseX database. Images can be extracted from the metadata files thanks to [IIIF Image API](http://iiif.io/api/image/2.0/): 
 - Complete dataset (200k illustrations): [XML](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418_xml.zip), [JSON](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418_json.zip)
 - Illustrated ads dataset (63k illustrations): [XML](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418-Ads_xml.zip), [JSON](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418-Ads_json.zip)
 - Persons ground truth (4k illustrations): [XML](http://www.euklides.fr/blog/altomator/Image_Retrieval/GT-Persons_xml.zip), [JSON](http://www.euklides.fr/blog/altomator/Image_Retrieval/GT-Persons_json.zip)
@@ -216,6 +216,12 @@ Each line describes the best classified class (according to its probability) and
 
 
 ### C. Load
-An XML database (BaseX.org) is used. Querying the metadata is done with XQuery (see https://github.com/altomator/EN-data_mining for   details). The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](https://masonry.desandro.com/) grid layout JavaScript library for image display.
+An XML database (BaseX.org) is used. Querying the metadata is done with XQuery (setting up the HTTP BaseX server is explained here: https://github.com/altomator/EN-data_mining). All the XQuery files and the other support files (.css, .jpg) must be stored in the $RESTPATH folder.
+
+The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](https://masonry.desandro.com/) grid layout JavaScript library for image display. The web app is builded around 2 files, a form and a results list page. The algorithmic is performed with JavaScript and XQuery.
+
+![gallica.pix](http://www.euklides.fr/blog/altomator/Image_Retrieval/form.png)
+*The form*
+
 
 
