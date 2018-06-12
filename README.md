@@ -23,10 +23,11 @@ A proof of concept, [Gallica.pix](http://demo14-18.bnf.fr:8984/rest?run=findIllu
 - ["Towards new uses of cultural heritage online: Gallica Studio"](http://pro.europeana.eu/post/towards-new-uses-of-cultural-heritage-online-gallica-studio) (EN blog post)
  
 ### Datasets
-The datasets are available as metadata files (one XML file/document) or JSON dumps of the BaseX DB. Images can be extracted from the metadata files thanks to [IIIF Image API](http://iiif.io/api/image/2.0/): 
-- Complete dataset (200k illustrations)
-- [Illustrated ads dataset](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418-Ads_xml.zip) (63k illustrations)
-- [Persons ground truth](http://www.euklides.fr/blog/altomator/Image_Retrieval/GT-Persons_xml.zip) (4k illustrations)
+The datasets are available as metadata files (one XML file/document) or JsonML dumps of the BaseX DB. Images can be extracted from the metadata files thanks to [IIIF Image API](http://iiif.io/api/image/2.0/): 
+- Complete dataset (200k illustrations): [XML](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418_xml.zip), [JSON](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418_json.zip)
+- Illustrated ads dataset (63k illustrations): [XML](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418-Ads_xml.zip), [JSON](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418-Ads_json.zip)
+- Persons ground truth (4k illustrations): [XML](http://www.euklides.fr/blog/altomator/Image_Retrieval/GT-Persons_xml.zip), [JSON](http://www.euklides.fr/blog/altomator/Image_Retrieval/GT-Persons_json.zip)
+
 One can leverage the complete dataset to produce other ground truths.
 
 ### Installation & misc.
