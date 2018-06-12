@@ -224,6 +224,7 @@ The form (findIllustrations-form.xq) exposes 2 databases to users: general illus
 
 
 ![gallica.pix](http://www.euklides.fr/blog/altomator/Image_Retrieval/form.png)
+
 *The form*
 
 
