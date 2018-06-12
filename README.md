@@ -220,8 +220,14 @@ An XML database (BaseX.org) is used. Querying the metadata is done with XQuery (
 
 The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](https://masonry.desandro.com/) grid layout JavaScript library for image display. The web app is builded around 2 files, a form and a results list page. The algorithmic is performed with JavaScript and XQuery.
 
+The form (findIllustrations-form.xq) exposes 2 databases to users: general illustrations and illustrated ads. It can be set in DEBUG mode to access more databases and ads feature, which can be helpful when a complete database is implemented (mixing illustrations and ads).
+
+
 ![gallica.pix](http://www.euklides.fr/blog/altomator/Image_Retrieval/form.png)
 *The form*
+
+
+The results list (findIllustrations-app.xq) also has a DEBUG mode which implements a filtering functionality (for ads and filtered illustrations) and some more minor stuff. 
 
 
 
