@@ -40,7 +40,7 @@ Sample documents are generally stored in a "DOCS" folder and output samples in a
 ### A. Extract
 The global workflow is detailled bellow.
 
-![Workflow: extract](http://www.euklides.fr/blog/altomator/Image_Retrieval/wf1.png | width=600)
+![Workflow: extract](http://www.euklides.fr/blog/altomator/Image_Retrieval/wf1.png = 600x)
 
 The extract step can be performed from the catalog metada (using OAI-PMH and SRU protocols) or directly from the digital documents files (and their OCR). 
 
@@ -223,7 +223,7 @@ The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](h
 The form (findIllustrations-form.xq) exposes 2 databases to users: general illustrations and illustrated ads. It can be set in DEBUG mode to access more databases and ads feature, which can be helpful when a complete database is implemented (mixing illustrations and ads).
 
 
-![gallica.pix](http://www.euklides.fr/blog/altomator/Image_Retrieval/form.png | width=500)
+![gallica.pix](http://www.euklides.fr/blog/altomator/Image_Retrieval/form.png = 500x)
 *The form*
 
 
