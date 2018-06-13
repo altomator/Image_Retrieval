@@ -6,12 +6,12 @@ Specs are:
 2. Transform, harmonize and enrich the image descriptive metadata (in particular with deep learning classification tools: IBM Watson for visual recognition, Google TensorFlow Inception-V3 for image types classification).
 3. Load all the medatada into a web app dedicated to image retrieval. 
 
-A proof of concept, [Gallica.pix](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-form.xq) has been implemented on the World War 1 theme. All the contents have been harvested from the BnF (Bibliotheque national de France) digital collections [Gallica](gallica.bnf.fr) of heritage materials (photos, drawings, engravings, maps, posters, etc.). This PoC is referenced on [Gallica Studio](http://gallicastudio.bnf.fr/), the Gallica online participative platform dedicated to the creative uses that can be made from Gallica. 
+A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-form.xq) has been implemented on the World War 1 theme. All the contents have been harvested from the BnF (Bibliotheque national de France) digital collections [Gallica](gallica.bnf.fr) of heritage materials (photos, drawings, engravings, maps, posters, etc.). This PoC is referenced on [Gallica Studio](http://gallicastudio.bnf.fr/), the Gallica online participative platform dedicated to the creative uses that can be made from Gallica. 
 
 
 
-![gallica.pix](http://gallicastudio.bnf.fr/sites/default/files/clemenceau_gallicastudio.JPG)
-*Looking for Georges Clemenceau iconography*
+![GallicaPix](http://gallicastudio.bnf.fr/sites/default/files/clemenceau_gallicastudio.JPG)
+*Looking for Georges Clemenceau iconography in GallicaPix*
 
 ### GitHub
 [Repository](https://github.com/altomator/Image_Retrieval/)
@@ -33,9 +33,7 @@ One can leverage the complete dataset to produce other ground truths.
 ### Installation & misc.
 <b>Note</b>: All the scripts have been written by an amateur developer. They have been designed for the Gallica digital documents and repositories but could be adapted to other contexts.
 
-Some Perl or Python packages may need to be installed first.
-
-Sample documents are generally stored in a "DOCS" folder and output samples in a "OUT" folder.
+Some Perl or Python packages may need to be installed first. Sample documents are generally stored in a "DOCS" folder and output samples in a "OUT" folder.
 
 ### A. Extract
 The global workflow is detailled bellow.
@@ -161,21 +159,50 @@ The script exports the same metadata than before but also texts and captions sur
 
 Some illustrations are filtered according to their characteristics (size, form). In such cases, the illustrations are exported but they are reported with the "filtre" attribute.
 
-After this extraction step, the metadata can be enriched (see next section, B.) or directly be used as the input of the BaseX XML database (see. section C.).
+After this extraction step, the metadata can be enriched (see next section, B.) or directly be used as the input of BaseX XML databases (see. section C.).
 
 
 
-### B. Transform
+### B. Transform & Enrich
 
-#### Image toolkit
-The toolbox.pl script performs basic operations on the documents metadata files:
-- deletion
-- renumbering
-- extraction of images
-- classification
-- ...
 
-A dataset of 9,000 illustrations metadata is available (Set_1418.zip).
+The toolbox.pl Perl script performs basic operations on the illustrations metadata files and the enrichment processing itself. This script supports the enrichment workflow as detailled bellow.
+
+![Workflow: extract](http://www.euklides.fr/blog/altomator/Image_Retrieval/wf2.png)
+
+
+#### Image genres classification
+[Inception-v3](https://www.tensorflow.org/tutorials/image_recognition) model (Google's convolutional neural network, CNN) has been retrained on a multiclass ground truth datasets (photos, drawings, maps, music scores, comics... 12k images). Three Python scripts (within the Tensorflow framework) are used to train (and evaluate) a model:
+- split.py: the GT dataset is splited in a training set (e.g. 2/3) and an evaluation set (1/3)  
+- retrain.py: the training set is used to train the last layer of the Inception-v3 model
+- label_image.py: the evaluation set is labeled by the model
+
+>python3 split.py # the GT dataset path and the training/evaluation ratio must be defined in the script
+>python3 retrain.py # the training dataset path and the generated model path must be defined in the script
+>python3 label_image.py # the model path and the input images path must be defined in the script
+
+To classify a set of images, these steps must be chained:
+
+1. Extract the images from a documents metadata folder thanks to the IIIF protocol:
+>perl toolbox.pl -extr IN_md
+Mind to set a reduction factor in the "facteurIIIF" parameter (eg: $facteurIIIF=50) as the CNN resizes all images to a 299x299 matrix.
+
+2. Move the OUT_img folder to a place where it will be found by the next script.
+
+3. Classify the images with the CNN trained model:
+>python3 label_image.py > data.csv
+
+This will output a line per classified image:
+bd	carte	dessin	filtrecouv	filtretxt	gravure	photo	foundClass	realClass	success	imgTest
+0.01	0.00	0.96	0.00	0.00	0.03	0.00	dessin	OUT_img	0	./imInput/OUT_img/btv1b10100491m-1-1.jpg
+0.09	0.10	0.34	0.03	0.01	0.40	0.03	gravure	OUT_img	0	./imInput/OUT_img/btv1b10100495d-1-1.jpg
+...
+Each line describes the best classified class (according to its probability) and also the probability for all the other classes.
+
+4. The classification data must then be reinjected in the metadata files:
+- Copy the data.csv file at the same level than the toolbox.pl script (or set a path in the $dataFile var)
+- Use the toolbox.pl script to import the CNN classification data in the illustrations metadata:
+>perl toolbox.pl -TF IN_md 
 
 #### Image recognition
 We've used IBM Watson [Visual Recognition API](https://www.ibm.com/watson/developercloud/doc/visual-recognition/index.html). The script calls the API to perform visual recognition of content or human faces. 
@@ -183,42 +210,15 @@ We've used IBM Watson [Visual Recognition API](https://www.ibm.com/watson/develo
 Usage:
 >perl toolbox.pl -CC IN 
 
-#### Image genres classification
-[Inception-v3](https://www.tensorflow.org/tutorials/image_recognition) model (Google's convolutional neural network) has been retrained on a 12 classes (photos, drawings, maps, music scores, comics...) ground truth datasets (10k images). Three Python scripts are used to train (and evaluate) a model:
-- split.py: the GT dataset is splited in a training set (2/3) and an evaluation set (1/3)  
-- retrain.py: the training set is used to train the last layer of the Inception-v3 model
-- label_image.py: the evaluation set is labeled by the model
 
->python3 split.py # the GT dataset path must be defined in the script
->python3 retrain.py 
->python3 label_image.py 
-
-To classify a set of images, this process must be used:
-
-1. Extract the images from a documents dataset folder (using IIIF):
->perl toolbox.pl -extr DOCS
-(mind to set a reduction factor in the "facteurIIIF" parameter, eg: $facteurIIIF=50;)
-
-2. Classify the images with the pretrained model:
->python3 label_image.py > results-img.csv
-
-This will output a line per classified image:
-bd	carte	dessin	filtrecouv	filtretxt	gravure	photo	foundClass	realClass	success	imgTest
-0.01	0.00	0.96	0.00	0.00	0.03	0.00	dessin	OUT_img	0	./imInput/OUT_img/btv1b10100491m-1-1.jpg
-0.09	0.10	0.34	0.03	0.01	0.40	0.03	gravure	OUT_img	0	./imInput/OUT_img/btv1b10100495d-1-1.jpg
-...
-Each line describes the best classified class (according to its probability) and also the probability for all the classes.
-
-3. The classification data must then be reinjected in the metadata files:
-- Copy the results-img.csv in the parent folder of the DOCS folder
-- Use the toolbox.pl script:
->perl toolbox.pl -TF DOCS 
 
 
 ### C. Load
-An XML database (BaseX.org) is used. Querying the metadata is done with XQuery (setting up the HTTP BaseX server is detailled here: https://github.com/altomator/EN-data_mining). All the XQuery files and the other support files (.css, .jpg) must be stored in a $RESTPATH folder.
+An XML database (BaseX.org) is the back-end. Querying the metadata is done with XQuery (setting up the HTTP BaseX server is detailled here: https://github.com/altomator/EN-data_mining). All the XQuery files and the other support files (.css, .jpg) must be stored in a $RESTPATH folder.
 
-The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](https://masonry.desandro.com/) grid layout JavaScript library for image display. The web app is builded around 2 files, a HTML form and a results list page. The algorithmic is performed with JavaScript and XQuery.
+Note: the web app is minimalist and BaseX is not an effective choice for searching in large databases.
+
+The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](https://masonry.desandro.com/) grid layout JavaScript library for image display. The web app is builded around 2 files, a HTML form and a results list page. The business logic is implemented with JavaScript and XQuery FLOWR.
 
 The form (findIllustrations-form.xq) exposes 2 databases to users: general illustrations and illustrated ads. It can be switch in DEBUG mode to access more databases and to add filtering features, which can be helpful when a complete database is implemented (mixing illustrations and illustrated ads).
 
