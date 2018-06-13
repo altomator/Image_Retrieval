@@ -199,7 +199,9 @@ All the treatments described in the following sections enrich the  metadata illu
 - label_image.py: the evaluation set is labeled by the model. The model path and the input images path must be defined.
 
 >python3 split.py 
+
 >python3 retrain.py 
+
 >python3 label_image.py 
 
 To classify a set of images, the following steps must be chained:
@@ -228,11 +230,12 @@ Each line describes the best classified class (according to its probability) and
 4. The classification data must then be reinjected in the metadata files:
 - Copy the data.csv file at the same level than the toolbox.pl script (or set a path in the `$dataFile` var)
 - Set some parameters in toolbox.pl: 
- - `$TFthreshold`: minimal confidence score for a classification to be used
- - `$lookForAds`: for newspapers, say if the ads class must be used 
+  - `$TFthreshold`: minimal confidence score for a classification to be used
+  - `$lookForAds`: for newspapers, say if the ads class must be used 
 
 - Use the toolbox.pl script to import the CNN classification data in the illustrations metadata files:
 >perl toolbox.pl -importTF IN_md 
+
 >perl toolbox.pl -importTF IN_md -p # for newspapers
 
 After running the script, a new `genre` metadata is created:
