@@ -246,6 +246,25 @@ After running the script, a new `genre` metadata is created:
 
 The filtering classes (text, blank pages, cover...) are handled later (see section "Wrapping up the metadata").
 
+#### Wrapping up the metadata 
+The illustrations may have been processed by multiple enrichment technics and/or described by catalogs metadata. For some metadata like topic and image genre, a "final" metadata is computed from these different sources and is described as the "final" data to be queried by the web app.
+
+For image genre, first, a parameter must be set:
+- `$forceTFgenre`: force TF classifications to supersed the metadata classifications
+
+Usage:
+>perl toolbox.pl -unify IN 
+
+The same approach can be used on the topic metadata (`unifyTheme` option).
+
+All the sources are preserved but a new "final" metadata is generated, via a rules-based system. In the following example, the Inception CNN found a photo but this result has been superseded by a human correction. E.g. for image genres:
+```xml
+<genre source="final">drawing</genre>
+<genre CS="0.88" source="TensorFlow">photo</genre>
+<genre CS="0.95" source="hm">drawing</genre>
+```
+
+The noise classes for genres classification are also handled during the unify processing. If an illustration is noise, the `filtre` attribute is set to true.
 
 #### Image recognition
 
@@ -300,25 +319,6 @@ An object_detection.py script performs in a similar way to make content classifi
 >python object_detection.py --prototxt MobileNetSSD_deploy.prototxt.txt --model MobileNetSSD_deploy.caffemodel --dir IN_img
 
 
-#### Wrapping up the metadata 
-The illustrations may have been processed by multiple enrichment technics and/or described by catalogs metadata. For some metadata like topic and image genre, a "final" metadata is computed from these different sources and is described as the "final" data to be queried by the web app.
-
-First, a parameter must be set:
-- `$forceTFgenre`: force TF classifications to supersed the metadata classifications
-
-Usage:
->perl toolbox.pl -unify IN 
-
-All the sources are preserved but a new "final" metadata is generated, via a rules-based system. In the following example, the Inception CNN found a photo but this result has been superseded by a human correction. E.g. for image genres:
-```xml
-<genre source="final">drawing</genre>
-<genre CS="0.88" source="TensorFlow">photo</genre>
-<genre CS="0.95" source="hm">drawing</genre>
-```
-
-The noise classes for genres classification are also handled during the unify processing. If an illustration is noise, the `filtre` attribute is set to true.
-
-
 ### C. Load
 An XML database (BaseX.org) is the back-end. Querying the metadata is done with XQuery (setting up the HTTP BaseX server is detailled [here](https://github.com/altomator/EN-data_mining)). All the XQuery files and the other support files (.css, .jpg) must be stored in a `$RESTPATH` folder.
 
@@ -337,5 +337,6 @@ The results list (`findIllustrations-app.xq`) also has a DEBUG mode which implem
 The results list page also call some XQuery scripts which perform updates on the database (thanks to the XQuery Update Facility).
 
 ![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/boat.png)
+
 *Looking for boats*
 
