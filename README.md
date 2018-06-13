@@ -137,7 +137,7 @@ Usage:
 where:
 - -L : extraction of illustrations is performed: dimensions, caption...
 - -I : BnF ARK IDs are computed
-- mode : types of BnF documents (ocren, olren, ocrbnf, olrbnf)
+- mode : types of documents (ocren, olren, ocrbnf, olrbnf)
 - title: some newspapers titles need to be identified by their title
 - IN : digital documents input folder 
 - OUT : output folder
@@ -198,14 +198,18 @@ All the treatments described in the following sections enrich the  metadata illu
 - retrain.py: the training set is used to train the last layer of the Inception-v3 model
 - label_image.py: the evaluation set is labeled by the model
 
->python3 split.py # the GT dataset path and the training/evaluation ratio must be defined in the script
->python3 retrain.py # the training dataset path and the generated model path must be defined in the script
->python3 label_image.py # the model path and the input images path must be defined in the script
+>python3 split.py 
+# the GT dataset path and the training/evaluation ratio must be defined in the script
+>python3 retrain.py 
+# the training dataset path and the generated model path must be defined in the script
+>python3 label_image.py 
+# the model path and the input images path must be defined in the script
 
 To classify a set of images, the following steps must be chained:
 
 1. Extract the image files from a documents metadata folder thanks to the IIIF protocol:
 >perl toolbox.pl -extr IN_md
+
 Mind to set a reduction factor in the "facteurIIIF" parameter (eg: $factIIIF=50) as the CNN resizes all images to a 299x299 matrix.
 
 2. Move the OUT_img folder to a place where it will be found by the next script.
@@ -214,10 +218,14 @@ Mind to set a reduction factor in the "facteurIIIF" parameter (eg: $factIIIF=50)
 >python3 label_image.py > data.csv
 
 This will output a line per classified image:
+
+```csv
 bd	carte	dessin	filtrecouv	filtretxt	gravure	photo	foundClass	realClass	success	imgTest
 0.01	0.00	0.96	0.00	0.00	0.03	0.00	dessin	OUT_img	0	./imInput/OUT_img/btv1b10100491m-1-1.jpg
 0.09	0.10	0.34	0.03	0.01	0.40	0.03	gravure	OUT_img	0	./imInput/OUT_img/btv1b10100495d-1-1.jpg
 ...
+```
+
 Each line describes the best classified class (according to its probability) and also the probability for all the other classes.
 
 4. The classification data must then be reinjected in the metadata files:
