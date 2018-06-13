@@ -1,5 +1,5 @@
 ### Synopsis
-This work uses an ETL (extract-transform-load) approach and deep learning technics to implement an image retrieval functionality in multicollection digital librairies.
+This work uses an ETL (extract-transform-load) approach and deep learning technics to implement image retrieval functionalities in digital librairies.
 
 Specs are: 
 1. Identify and extract iconography wherever it may be found, in the still images collection but also in printed materials (newspapers, magazines, books).
@@ -147,7 +147,7 @@ Example for the Europeana Newspapers subdataset *L'Humanité*, with ark IDs comp
 >perl extractMD.pl -LI ocren Humanite OCR-EN OUT-OCR-EN xml
 
 
-Note: some monoline OCR documents may need to be reformatted before running the extraction script, as it does not parse the XML content (for efficiency reason) but use grep patterns at the line level.
+Note: some monoline OCR documents may need to be reformatted before running the extraction script, as it does not parse the XML content (for efficiency reasons) but use grep patterns at the line level.
 Usage:
 >perl prettyprint.pl IN
 
@@ -157,18 +157,39 @@ The script exports the same metadata than before but also texts and captions sur
 <txt>Fans— Imprimerie des Arts et Manufactures» S.rue du Sentier. (M. Baunagaud, imp.) </txt>
 ```
 
-Some illustrations are filtered according to their characteristics (size, form). In such cases, the illustrations are exported but they are reported with the "filtre" attribute.
+Some illustrations are filtered according to their characteristics (size, form). In such cases, the illustrations are exported but they are reported with a "filtre" attribute set to true.
 
 After this extraction step, the metadata can be enriched (see next section, B.) or directly be used as the input of BaseX XML databases (see. section C.).
 
+For newspapers and magazines collections, another kind of content should be identified (and eventually filtered), the illustrated ads (reported with a "pub" attribute set to true). 
 
 
 ### B. Transform & Enrich
 
-
 The toolbox.pl Perl script performs basic operations on the illustrations metadata files and the enrichment processing itself. This script supports the enrichment workflow as detailled bellow.
 
 ![Workflow: extract](http://www.euklides.fr/blog/altomator/Image_Retrieval/wf2.png)
+
+All the treatments described in the following sections enrich the  metadata illustrations and set some attributes on these new metadata: 
+- `classif`: the processing applied (CC: content classification, DF: face detection)
+- `source`: the source of the processing (IBM Watson, Google Cloud Vision, OpenCV/dnn, Tensorflow/Inception-v3)
+- `CS`: the metadata confidence score
+
+```xml
+<ill classif="CCibm CCgoogle" ... >
+            <contenuImg CS="0.8137588" source="google">black and white</contenuImg>
+            <contenuImg CS="0.8162437" source="google">weapon</contenuImg>
+            <contenuImg CS="0.85856307" source="google">churchill tank</contenuImg>
+            <contenuImg CS="0.9450831" source="google">vehicle</contenuImg>
+            <contenuImg CS="0.94837654" h="2560" l="3534" source="google" x="466.6" y="352.8">combat vehicle</contenuImg>
+            <contenuImg CS="0.9654834" h="2560" l="3534" source="google" x="466.6" y="352.8">motor vehicle</contenuImg>
+            <contenuImg CS="0.98043555" h="2560" l="3534" source="google" x="466.6" y="352.8">tank</contenuImg>
+            <contenuImg CS="1.0" source="ibm">gray color</contenuImg>
+            <contenuImg CS="0.53" source="ibm">tracked vehicle</contenuImg>
+            <contenuImg CS="0.812" source="ibm">vehicle</contenuImg>
+            <contenuImg CS="0.592" source="ibm">amphibious vehicle</contenuImg>
+	    <genre CS="0.88" source="TensorFlow">photo</genre>
+```
 
 
 #### Image genres classification
@@ -181,11 +202,11 @@ The toolbox.pl Perl script performs basic operations on the illustrations metada
 >python3 retrain.py # the training dataset path and the generated model path must be defined in the script
 >python3 label_image.py # the model path and the input images path must be defined in the script
 
-To classify a set of images, these steps must be chained:
+To classify a set of images, the following steps must be chained:
 
-1. Extract the images from a documents metadata folder thanks to the IIIF protocol:
+1. Extract the image files from a documents metadata folder thanks to the IIIF protocol:
 >perl toolbox.pl -extr IN_md
-Mind to set a reduction factor in the "facteurIIIF" parameter (eg: $facteurIIIF=50) as the CNN resizes all images to a 299x299 matrix.
+Mind to set a reduction factor in the "facteurIIIF" parameter (eg: $factIIIF=50) as the CNN resizes all images to a 299x299 matrix.
 
 2. Move the OUT_img folder to a place where it will be found by the next script.
 
@@ -201,8 +222,17 @@ Each line describes the best classified class (according to its probability) and
 
 4. The classification data must then be reinjected in the metadata files:
 - Copy the data.csv file at the same level than the toolbox.pl script (or set a path in the $dataFile var)
-- Use the toolbox.pl script to import the CNN classification data in the illustrations metadata:
->perl toolbox.pl -TF IN_md 
+- Set some parameters in toolbox.pl: 
+$TFthreshold: minimal confidence score for a classification to be used
+$lookForAds: for newspapers, say if the ads class must be used 
+- Use the toolbox.pl script to import the CNN classification data in the illustrations metadata files:
+>perl toolbox.pl -importTF IN_md 
+>perl toolbox.pl -importTF IN_md -p # for newspapers
+
+After running the script, a new `genre` metadata is created:
+```xml
+	<genre CS="0.52" source="TensorFlow">gravure</genre>
+```
 
 #### Image recognition
 We've used IBM Watson [Visual Recognition API](https://www.ibm.com/watson/developercloud/doc/visual-recognition/index.html). The script calls the API to perform visual recognition of content or human faces. 
@@ -211,6 +241,23 @@ Usage:
 >perl toolbox.pl -CC IN 
 
 
+
+#### Wrapping up the metadata 
+The illustrations may have been processed by multiple enrichment technics and/or described by catalogs metadata. For some metadata like topic and image genre, a "final" metadata is computed from these different sources and is described as the "final" data to be queried by the web app.
+
+First, some parameters must be set:
+$forceTFgenre: force TF classifications to supersed the metadata classifications
+
+Usage:
+>perl toolbox.pl -unify IN 
+
+All the sources are preserved but a new "final" metadata is generated, via a rules-based system. In the following example, the Inception CNN found a photo but this result has been superseded by a human correction:
+E.g. for image genres:
+```xml
+  	<genre source="final">drawing</genre>
+        <genre CS="0.88" source="TensorFlow">photo</genre>
+        <genre CS="0.95" source="hm">drawing</genre>
+```
 
 
 ### C. Load
