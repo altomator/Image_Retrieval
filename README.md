@@ -216,19 +216,20 @@ Each line describes the best classified class (according to its probability) and
 
 
 ### C. Load
-An XML database (BaseX.org) is used. Querying the metadata is done with XQuery (setting up the HTTP BaseX server is explained here: https://github.com/altomator/EN-data_mining). All the XQuery files and the other support files (.css, .jpg) must be stored in the $RESTPATH folder.
+An XML database (BaseX.org) is used. Querying the metadata is done with XQuery (setting up the HTTP BaseX server is detailled here: https://github.com/altomator/EN-data_mining). All the XQuery files and the other support files (.css, .jpg) must be stored in a $RESTPATH folder.
 
 The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](https://masonry.desandro.com/) grid layout JavaScript library for image display. The web app is builded around 2 files, a form and a results list page. The algorithmic is performed with JavaScript and XQuery.
 
-The form (findIllustrations-form.xq) exposes 2 databases to users: general illustrations and illustrated ads. It can be set in DEBUG mode to access more databases and ads feature, which can be helpful when a complete database is implemented (mixing illustrations and ads).
+The form (findIllustrations-form.xq) exposes 2 databases to users: general illustrations and illustrated ads. It can be switch in DEBUG mode to access more databases and to add filtering features, which can be helpful when a complete database is implemented (mixing illustrations and illustrated ads).
 
 
-![gallica.pix](http://www.euklides.fr/blog/altomator/Image_Retrieval/form.png)
-
-*The form*
+![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/form.png)
 
 
-The results list (findIllustrations-app.xq) also has a DEBUG mode which implements a filtering functionality (for ads and filtered illustrations) and some more minor stuff. 
+The results list (findIllustrations-app.xq) also has a DEBUG mode which implements a filtering functionality (for ads and filtered illustrations) and some more minor tools (display, edit). 
 
+The results list page also call some XQuery scripts which perform updates on the database (thanks to the XQuery Update Facility).
+
+![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/boat.png)
 
 
