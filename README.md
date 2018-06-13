@@ -287,6 +287,8 @@ Usage for content recognition:
 Usage for face detection:
 >perl toolbox.pl -DF IN 
 
+Note: the image content is sent to Watson as an IIIF URL.
+
 The face detection Watson API also outputs cropping and genre detection:
 ```xml
 <contenuImg CS="0.96" h="2055" l="1232" sexe="M" source="ibm" x="1900" y="1785">face</contenuImg>
@@ -295,6 +297,11 @@ The face detection Watson API also outputs cropping and genre detection:
 ##### Google Cloud Vision
 The very same visual content indexing can be performed with the Google Cloud Vision API.
 Just mind to set the `$classifCBIR` var to "google" and to set your key in `$apiKeyGoogle`.
+
+###### OCR 
+The Google Vision OCR can be applied to illustrations for which no textual metadata are available.
+
+>perl toolbox.pl -OCR -IN_md
 
 
 ##### OpenCV/dnn module
@@ -307,6 +314,8 @@ The detect_faces.py script performs face detection based on a ResNet network (se
 
 2. Process the images:
 >python detect_faces.py --prototxt deploy.prototxt.txt --model res10_300x300_ssd_iter_140000.caffemodel --dir IN_img
+
+Note: the minimum confidence probability for a classification to be exported can be set via the command line.
 
 It outputs a CSV file per input image, what can be merged in one file:
 >cat OUT_csv/*.csv > ./data.csv
