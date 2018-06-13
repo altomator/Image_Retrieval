@@ -887,28 +887,28 @@ sub exportPage {my $id=shift;
   	  "taille"=>$hash{"taille"}, "couleur"=>$hash{$p."_ill_1_coul"}); # n has this format : n° page-n° ill  (here n° ill = 1)
   	  writeEltAtts("ill",\%atts,$fh);
   	  if (defined $genreDefaut) {
-    		      %atts = ("CS"=> "1");    # confidence value = 1
+    		      %atts = ("CS"=> "1", "source"=>"md");    # confidence value = 1, source= metadata
   	  	  	  writeEltAtts("genre",\%atts,$fh);
   	  	  	  print {$fh} $genreDefaut;
   	  	  	  writeEndElt("genre",$fh); }
   	  if ($genre ne "inconnu") {
-  	  	  	  %atts = ("CS"=> "0.95");  # confidence = 0.95 (based on the document metadata)
+  	  	  	  %atts = ("CS"=> "0.95", "source"=>"md");  # confidence = 0.95 (based on the document metadata)
   	  	  	  writeEltAtts("genre",\%atts,$fh);
   	  	  	  print {$fh} $genre;
   	  	  	  writeEndElt("genre",$fh);
   	  	      }
   	  if (defined ($IPTCDefaut)) {
-  	  	    %atts = ("CS"=> "1");
+  	  	    %atts = ("CS"=> "1", "source"=>"md");
   	  	  	writeEltAtts("theme",\%atts,$fh);
   	  	    print {$fh} $IPTCDefaut;
   	  	  	writeEndElt("theme",$fh)}
   	  elsif (defined($theme)) {
-           %atts = ("CS"=> "0.8");  # confidence = 0.95 (based on the IPTC words network)
+           %atts = ("CS"=> "0.8", "source"=>"md");  # confidence = 0.95 (based on the IPTC words network)
   	  	  	writeEltAtts("theme",\%atts,$fh);
   	  	    print {$fh} $theme;
   	  	  	writeEndElt("theme",$fh)}
   	 if (defined $portrait) {  	  	# if the illustration is a portrait
-  	  	 %atts = ("CS"=> "1.0");
+  	  	 %atts = ("CS"=> "1.0", "source"=>"md");
   	     writeEltAtts("contenuImg",\%atts,$fh);
   	     print {$fh} "person";
   	  	 writeEndElt("contenuImg",$fh);}

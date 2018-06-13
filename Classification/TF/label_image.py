@@ -10,14 +10,15 @@ import glob, os
 if __name__ == '__main__':
 
     # Liste des images à reconnaître (utiliser splitTrain_Validation.py pour générer le répèrtoire d'évaluation)
+    #imageList = glob.glob(r"./imInput/OUT_img/*.jpg")
     imageList = glob.glob(r"./imInput/OUT_img/*.jpg")
 
     # Répertoire contenant les données d'apprentissage (modèle)
-    modelDir = r"./bnfDataset2_model"
+    modelDir = r"./bnfDataset2_model_presse"
 
     # ----------------------------------------
 
-
+    #print(" model: %s" % modelDir)
 
     # Loads label file, strips off carriage return
     label_lines = [line.rstrip() for line in tf.gfile.GFile(modelDir + r"/output_labels.txt")]

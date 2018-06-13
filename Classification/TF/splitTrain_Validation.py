@@ -11,7 +11,7 @@ if __name__ == '__main__':
 
     # Répartoire contenant à la base 1 dossier par catégorie. Ces dossiers contiennent
     # les images correspondantes (avec possiblement des sous-dossiers)
-    datasetPath = r"./imInput/bnfDataset2.img"
+    datasetPath = r"./imInput/bnfDataset2.presse"
 
     # Répartition apprentissage/évaluation (ex: 80% pour l'apprentissage)
     ratioApprentissage = 1
@@ -19,7 +19,7 @@ if __name__ == '__main__':
     # ----------------------------------------
 
     print("-- debut --")
-
+    print (" modele : %s " % datasetPath)
     trainPath = datasetPath + "_train"
     testPath = datasetPath + "_test"
 

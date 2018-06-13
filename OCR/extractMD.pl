@@ -1414,7 +1414,7 @@ sub exportPage {my $id=shift; # id document
        	 say "   +illustration : ".$i;
        	 my $idill =  $hash{$p."_ill_".$i."id"};
        	 if (not defined $idill) {
-       	 	say " #### ERREUR FATALE  :  illustration $i inconnue ####";
+       	 	say " #### FATAL error:  illustration $i unknown!";
        	 	$bugsArk=$bugsArk.$id." ";
        	 	}
        	 else {
@@ -1453,7 +1453,8 @@ sub exportPage {my $id=shift; # id document
        	  			}
 
        	   # si l'illustration est filtrée, positionner l'attribut
-       	 if ( defined $hash{$p."_ill_".$i."filtre"}) {say "    ->filtree";}
+       	 	 if (defined $hash{$p."_ill_".$i."filtre"})
+					 	{say "    ->filtered";}
        	   # {$filtre = 1} else {undef $filtre}
 
        	   # ecrire les attributs
@@ -1466,23 +1467,22 @@ sub exportPage {my $id=shift; # id document
        	   my $tmp =  $hash{$p."_ill_".$i."genre"};  # types extrait de l'OCR
        	   $tmp = definirGenre($tmp);
        	   if ($tmp) {
-       	   	 if ($DEBUG) {say "    genre OCR : ".$tmp;}
-       	   	 $CS = 1 # CS = 1
+       	   	 if ($DEBUG) {say "    genre extracted from the OCR: ".$tmp;}
+       	   	 	$CS = 1 # CS = 1
        	      }
        	   if ((not $tmp) and (defined $genreDefaut)) { # genre par défaut
-       	   	  if ($DEBUG) {say "    genre par defaut : ".$genreDefaut; }
+       	   	  if ($DEBUG) {say "    default genre: ".$genreDefaut; }
        	   	  $CS = 0.8;
        	   	  $tmp = $genreDefaut;
        	      }
        	   if ($tmp) {
-       	     %atts = ("CS"=>$CS,"source"=>"md");  # d'après métadonnées : md
+       	     %atts = ("CS"=>$CS,"source"=>"md");  # source = metadata
        	     writeEltAtts("genre",\%atts,$fh,$tmp); }
 
        	   if (defined $themeDefaut) {
        	   	# CS =0.8
-       	   	%atts = ("CS"=>0.8,,"source"=>"md");
+       	   	%atts = ("CS"=>0.8,,"source"=>"md"); # source = metadata
        	   	writeEltAtts("theme",\%atts,$fh,$themeDefaut);  # sujet IPTC
-
        	   	}
 
        	   if (index($MODE, "olr")!=-1) {  # il y a des titres uniquement en OLR
@@ -1533,7 +1533,7 @@ sub definirGenre {my $genre=shift;
      my ($match) = grep {$_ =~ /$genre/} keys %genres;
      if ($match) {
    	   return $genres{$match}; }
-     else { if ($DEBUG) {say "############ Genre non gere : $genre  ################";}
+     else { if ($DEBUG) {say "############ unknown genre: $genre! ";}
 			      return undef
          }
       }

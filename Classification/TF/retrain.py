@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# usage : python3 retrain.py imInput/bnfDataset2.img_train/
+
 # Copyright 2015 The TensorFlow Authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -921,16 +923,18 @@ def main(_):
 if __name__ == '__main__':
 
   # Path vers les images à apprendre (utiliser splitTrain_Validation.py pour générer le répèrtoire d'entraînement)
-  inputImages = r"./imInput/bnfDataset2_train"
+  inputImages = r"./imInput/bnfDataset2.presse_train"
 
   # Répertoire de sortie (contenant le modèle à générer)
-  outputDir = r"./bnfDataset2_model"
+  outputDir = r"./bnfDataset2_model_presse"
 
   # Répertoire de sortie (contenant le modèle INCEPTION_v3 servant de base pour le re-entraînement)
   modelDir = r"./genericModel/imagenet"
 
   # -------------------------------------------
 
+  print("-- debut --")
+  print(inputImages)
 
   parser = argparse.ArgumentParser()
   parser.add_argument(
