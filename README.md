@@ -234,6 +234,7 @@ Each line describes the best classified class (according to its probability) and
   - `$lookForAds`: for newspapers, say if the ads class must be used 
 
 - Use the toolbox.pl script to import the CNN classification data in the illustrations metadata files:
+
 >perl toolbox.pl -importTF IN_md 
 
 >perl toolbox.pl -importTF IN_md -p # for newspapers
@@ -257,14 +258,13 @@ Usage:
 #### Wrapping up the metadata 
 The illustrations may have been processed by multiple enrichment technics and/or described by catalogs metadata. For some metadata like topic and image genre, a "final" metadata is computed from these different sources and is described as the "final" data to be queried by the web app.
 
-First, some parameters must be set:
-$`forceTFgenre`: force TF classifications to supersed the metadata classifications
+First, a parameter must be set:
+- `$forceTFgenre`: force TF classifications to supersed the metadata classifications
 
 Usage:
 >perl toolbox.pl -unify IN 
 
-All the sources are preserved but a new "final" metadata is generated, via a rules-based system. In the following example, the Inception CNN found a photo but this result has been superseded by a human correction:
-E.g. for image genres:
+All the sources are preserved but a new "final" metadata is generated, via a rules-based system. In the following example, the Inception CNN found a photo but this result has been superseded by a human correction. E.g. for image genres:
 ```xml
   	<genre source="final">drawing</genre>
         <genre CS="0.88" source="TensorFlow">photo</genre>
@@ -275,19 +275,19 @@ The noise classes for genres classification are also handled during the unify pr
 
 
 ### C. Load
-An XML database (BaseX.org) is the back-end. Querying the metadata is done with XQuery (setting up the HTTP BaseX server is detailled here: https://github.com/altomator/EN-data_mining). All the XQuery files and the other support files (.css, .jpg) must be stored in a $RESTPATH folder.
+An XML database (BaseX.org) is the back-end. Querying the metadata is done with XQuery (setting up the HTTP BaseX server is detailled [here](https://github.com/altomator/EN-data_mining)). All the XQuery files and the other support files (.css, .jpg) must be stored in a `$RESTPATH` folder.
 
 Note: the web app is minimalist and BaseX is not an effective choice for searching in large databases.
 
 The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](https://masonry.desandro.com/) grid layout JavaScript library for image display. The web app is builded around 2 files, a HTML form and a results list page. The business logic is implemented with JavaScript and XQuery FLOWR.
 
-The form (findIllustrations-form.xq) exposes 2 databases to users: general illustrations and illustrated ads. It can be switch in DEBUG mode to access more databases and to add filtering features, which can be helpful when a complete database is implemented (mixing illustrations and illustrated ads).
+The form (`findIllustrations-form.xq`) exposes 2 databases to users: general illustrations and illustrated ads. It can be switch in DEBUG mode to access more databases and to add filtering features, which can be helpful when a complete database is implemented (mixing illustrations and illustrated ads).
 
 
 ![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/form.png)
 
 
-The results list (findIllustrations-app.xq) also has a DEBUG mode which implements a filtering functionality (for ads and filtered illustrations) and some more minor tools (display, edit). 
+The results list (`findIllustrations-app.xq`) also has a DEBUG mode which implements a filtering functionality (for ads and filtered illustrations) and some more minor tools (display, edit). 
 
 The results list page also call some XQuery scripts which perform updates on the database (thanks to the XQuery Update Facility).
 
