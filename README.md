@@ -199,11 +199,11 @@ All the treatments described in the following sections enrich the  metadata illu
 - label_image.py: the evaluation set is labeled by the model
 
 >python3 split.py 
-# the GT dataset path and the training/evaluation ratio must be defined in the script
+(the GT dataset path and the training/evaluation ratio must be defined in the script)
 >python3 retrain.py 
-# the training dataset path and the generated model path must be defined in the script
+(the training dataset path and the generated model path must be defined in the script)
 >python3 label_image.py 
-# the model path and the input images path must be defined in the script
+(the model path and the input images path must be defined in the script)
 
 To classify a set of images, the following steps must be chained:
 
