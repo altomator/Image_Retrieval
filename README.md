@@ -241,7 +241,7 @@ Each line describes the best classified class (according to its probability) and
 
 After running the script, a new `genre` metadata is created:
 ```xml
-	<genre CS="0.52" source="TensorFlow">gravure</genre>
+<genre CS="0.52" source="TensorFlow">gravure</genre>
 ```
 
 The filtering classes (text, blank pages, cover...) are handled later (see section "Wrapping up the metadata").
@@ -249,7 +249,7 @@ The filtering classes (text, blank pages, cover...) are handled later (see secti
 
 #### Image recognition
 
-The different APIs results can be requested within the web app thanks to the CBIR criteria (see screen capture below).
+Various APIs can be tested and their results be requested within the web app thanks to the CBIR criteria (see screen capture below).
 
 
 ##### IBM Watson
@@ -259,7 +259,7 @@ Some parameters should be set before running the script:
 - `$ProcessIllThreshold`: max number of illustrations to be processed (Watson allows a free amount of calls per day)
 - `$classifCBIR`: CBIR API to be used. For IBM Watson: "ibm"
 - `$CSthreshold`: minimum confidence score for a classification to be used
-- `$genreClassif`: list of genres to be processed (drawing, pictures... but not maps)
+- `$genreClassif`: list of illustration genres to be processed (drawing, pictures... but not maps)
 - `$apiKeyWatson`: your API key
 
 Usage for content recognition:
@@ -292,10 +292,10 @@ The detect_faces.py script performs face detection based on a ResNet network (se
 It outputs a CSV file per input image, what can be merged in one file:
 >cat OUT_csv/*.csv > ./data.csv
 
-3. Finally import the classification in the metadata files:
+3. Finally import the classification in the metadata files. Mind to set the `$classifCBIR` var to "dnn" before: 
 >perl toolbox.pl -importDF IN_md 
 
-An object_detection.py script performs in a similar way to make content classification, thanks to a GoogLeNet network:
+An object_detection.py script performs in a similar way to make content classification, thanks to a GoogLeNet network (see this [post](https://www.pyimagesearch.com/2017/08/21/deep-learning-with-opencv/) for details). It can handle a dozen of classes (person, boat, aeroplane...):
 
 >python object_detection.py --prototxt MobileNetSSD_deploy.prototxt.txt --model MobileNetSSD_deploy.caffemodel --dir IN_img
 
@@ -311,9 +311,9 @@ Usage:
 
 All the sources are preserved but a new "final" metadata is generated, via a rules-based system. In the following example, the Inception CNN found a photo but this result has been superseded by a human correction. E.g. for image genres:
 ```xml
-  	<genre source="final">drawing</genre>
-        <genre CS="0.88" source="TensorFlow">photo</genre>
-        <genre CS="0.95" source="hm">drawing</genre>
+<genre source="final">drawing</genre>
+<genre CS="0.88" source="TensorFlow">photo</genre>
+<genre CS="0.95" source="hm">drawing</genre>
 ```
 
 The noise classes for genres classification are also handled during the unify processing. If an illustration is noise, the `filtre` attribute is set to true.
