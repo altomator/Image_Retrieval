@@ -248,11 +248,56 @@ The filtering classes (text, blank pages, cover...) are handled later (see secti
 
 
 #### Image recognition
-We've used IBM Watson [Visual Recognition API](https://www.ibm.com/watson/developercloud/doc/visual-recognition/index.html). The script calls the API to perform visual recognition of content or human faces. 
 
-Usage:
+The different APIs results can be requested within the web app thanks to the CBIR criteria (see screen capture below).
+
+
+##### IBM Watson
+We've used IBM Watson [Visual Recognition API](https://www.ibm.com/watson/developercloud/doc/visual-recognition/index.html). The toolbox.pl script calls the API to perform visual recognition of content or human faces. 
+
+Some parameters should be set before running the script:
+- `$ProcessIllThreshold`: max number of illustrations to be processed (Watson allows a free amount of calls per day)
+- `$classifCBIR`: CBIR API to be used. For IBM Watson: "ibm"
+- `$CSthreshold`: minimum confidence score for a classification to be used
+- `$genreClassif`: list of genres to be processed (drawing, pictures... but not maps)
+- `$apiKeyWatson`: your API key
+
+Usage for content recognition:
 >perl toolbox.pl -CC IN 
 
+Usage for face detection:
+>perl toolbox.pl -DF IN 
+
+The face detection Watson API also outputs cropping and genre detection:
+```xml
+<contenuImg CS="0.96" h="2055" l="1232" sexe="M" source="ibm" x="1900" y="1785">face</contenuImg>
+```
+
+##### Google Cloud Vision
+The very same visual content indexing can be performed with the Google Cloud Vision API.
+Just mind to set the `$classifCBIR` var to "google" and to set your key in `$apiKeyGoogle`.
+
+
+##### OpenCV/dnn module
+The [dnn](https://github.com/opencv/opencv/tree/master/modules/dnn) module can be used to try some pretrained neural network models imported from frameworks as Caffe or Tensorflow.
+
+The detect_faces.py script performs face detection based on a ResNet network (see this [post](https://www.pyimagesearch.com/2018/02/26/face-detection-with-opencv-and-deep-learning/) for details).
+
+1. Extract the images files:
+>perl toolbox.pl -extr IN_md
+
+2. Process the images:
+>python detect_faces.py --prototxt deploy.prototxt.txt --model res10_300x300_ssd_iter_140000.caffemodel --dir IN_img
+
+It outputs a CSV file per input image, what can be merged in one file:
+>cat OUT_csv/*.csv > ./data.csv
+
+3. Finally import the classification in the metadata files:
+>perl toolbox.pl -importDF IN_md 
+
+An object_detection.py script performs in a similar way to make content classification, thanks to a GoogLeNet network:
+
+>python object_detection.py --prototxt MobileNetSSD_deploy.prototxt.txt --model MobileNetSSD_deploy.caffemodel --dir IN_img
 
 
 #### Wrapping up the metadata 
@@ -292,5 +337,5 @@ The results list (`findIllustrations-app.xq`) also has a DEBUG mode which implem
 The results list page also call some XQuery scripts which perform updates on the database (thanks to the XQuery Update Facility).
 
 ![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/boat.png)
-* Looking for boat *
+*Looking for boats*
 
