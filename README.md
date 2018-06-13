@@ -194,23 +194,20 @@ All the treatments described in the following sections enrich the  metadata illu
 
 #### Image genres classification
 [Inception-v3](https://www.tensorflow.org/tutorials/image_recognition) model (Google's convolutional neural network, CNN) has been retrained on a multiclass ground truth datasets (photos, drawings, maps, music scores, comics... 12k images). Three Python scripts (within the Tensorflow framework) are used to train (and evaluate) a model:
-- split.py: the GT dataset is splited in a training set (e.g. 2/3) and an evaluation set (1/3)  
-- retrain.py: the training set is used to train the last layer of the Inception-v3 model
-- label_image.py: the evaluation set is labeled by the model
+- split.py: the GT dataset is splited in a training set (e.g. 2/3) and an evaluation set (1/3). The GT dataset path and the training/evaluation ratio must be defined in the script.
+- retrain.py: the training set is used to train the last layer of the Inception-v3 model. The training dataset path and the generated model path must be defined.
+- label_image.py: the evaluation set is labeled by the model. The model path and the input images path must be defined.
 
 >python3 split.py 
-(the GT dataset path and the training/evaluation ratio must be defined in the script)
 >python3 retrain.py 
-(the training dataset path and the generated model path must be defined in the script)
 >python3 label_image.py 
-(the model path and the input images path must be defined in the script)
 
 To classify a set of images, the following steps must be chained:
 
 1. Extract the image files from a documents metadata folder thanks to the IIIF protocol:
 >perl toolbox.pl -extr IN_md
 
-Mind to set a reduction factor in the "facteurIIIF" parameter (eg: $factIIIF=50) as the CNN resizes all images to a 299x299 matrix.
+Mind to set a reduction factor in the "facteurIIIF" parameter (eg: `$factIIIF`=50) as the CNN resizes all images to a 299x299 matrix.
 
 2. Move the OUT_img folder to a place where it will be found by the next script.
 
@@ -229,10 +226,11 @@ bd	carte	dessin	filtrecouv	filtretxt	gravure	photo	foundClass	realClass	success	
 Each line describes the best classified class (according to its probability) and also the probability for all the other classes.
 
 4. The classification data must then be reinjected in the metadata files:
-- Copy the data.csv file at the same level than the toolbox.pl script (or set a path in the $dataFile var)
+- Copy the data.csv file at the same level than the toolbox.pl script (or set a path in the `$dataFile` var)
 - Set some parameters in toolbox.pl: 
-$TFthreshold: minimal confidence score for a classification to be used
-$lookForAds: for newspapers, say if the ads class must be used 
+ - `$TFthreshold`: minimal confidence score for a classification to be used
+ - `$lookForAds`: for newspapers, say if the ads class must be used 
+
 - Use the toolbox.pl script to import the CNN classification data in the illustrations metadata files:
 >perl toolbox.pl -importTF IN_md 
 >perl toolbox.pl -importTF IN_md -p # for newspapers
@@ -241,6 +239,9 @@ After running the script, a new `genre` metadata is created:
 ```xml
 	<genre CS="0.52" source="TensorFlow">gravure</genre>
 ```
+
+The filtering classes (text, blank pages, cover...) are handled later (see section "Wrapping up the metadata").
+
 
 #### Image recognition
 We've used IBM Watson [Visual Recognition API](https://www.ibm.com/watson/developercloud/doc/visual-recognition/index.html). The script calls the API to perform visual recognition of content or human faces. 
@@ -254,7 +255,7 @@ Usage:
 The illustrations may have been processed by multiple enrichment technics and/or described by catalogs metadata. For some metadata like topic and image genre, a "final" metadata is computed from these different sources and is described as the "final" data to be queried by the web app.
 
 First, some parameters must be set:
-$forceTFgenre: force TF classifications to supersed the metadata classifications
+$`forceTFgenre`: force TF classifications to supersed the metadata classifications
 
 Usage:
 >perl toolbox.pl -unify IN 
@@ -266,6 +267,8 @@ E.g. for image genres:
         <genre CS="0.88" source="TensorFlow">photo</genre>
         <genre CS="0.95" source="hm">drawing</genre>
 ```
+
+The noise classes for genres classification are also handled during the unify processing. If an illustration is noise, the `filtre` attribute is set to true.
 
 
 ### C. Load
