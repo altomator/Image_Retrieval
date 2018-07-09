@@ -129,7 +129,7 @@ Regarding the newspapers type, the script can handle raw ALTO OCR mode or OLR mo
 
 The script can handle various dialects of ALTO (ALTO BnF, ALTO LoC...) which may have different ways to markup the illustrations and to express the blocks IDs.
 
-Some parameters must be set in the Perl script, the remaining via the command line options.
+Some parameters must be set in the Perl script, the remaining via the command line options (see readme.txt).
 
 Usage:
 >perl extractMD.pl [-LI] mode title IN OUT format
@@ -144,20 +144,20 @@ where:
 - format: XML only
 
 Example for the Europeana Newspapers subdataset *L'Humanité*, with ark IDs computation and illustrations extraction:
->perl extractMD.pl -LI ocren Humanite OCR-EN OUT-OCR-EN xml
+>perl extractMD.pl -LI ocren Humanite OCR-EN-BnF OUT-OCR-EN-BnF xml
 
 
 Note: some monoline OCR documents may need to be reformatted before running the extraction script, as it does not parse the XML content (for efficiency reasons) but use grep patterns at the line level.
 Usage:
 >perl prettyprint.pl IN
 
-The script exports the same metadata than before but also texts and captions surrounding illustrations: 
+The script exports the same image metadata than before but also texts and captions surrounding illustrations: 
 ```xml
 <ill  w="4774" n="4-5" couleur="gris" filtre="1" y="3357" taille="0" x="114" derniere="true" h="157"><leg> </leg>
 <txt>Fans— Imprimerie des Arts et Manufactures» S.rue du Sentier. (M. Baunagaud, imp.) </txt>
 ```
 
-Some illustrations are filtered according to their characteristics (size, form). In such cases, the illustrations are exported but they are reported with a "filtre" attribute set to true.
+Some illustrations are filtered according to their form factor (size, localization on the page). In such cases, the illustrations are exported but they are reported with a filtered attribute ("filtre") set to true.
 
 After this extraction step, the metadata can be enriched (see next section, B.) or directly be used as the input of BaseX XML databases (see. section C.).
 
