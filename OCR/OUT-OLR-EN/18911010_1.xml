@@ -2,6 +2,7 @@
 	<analyseAlto>
 	<metad>
 <type>P</type>
+<ID>bpt6k7159330</ID>
 <titre>Le Petit Journal illustré Supplément du dimanche</titre>
 <dateEdition>1891-10-10</dateEdition>
 <descr>cb32836564q</descr>
@@ -17,7 +18,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  n="1-1" h="3620" couleur="mono" x="53" taille="21.2089457264957" une="true" w="3145" y="917"><txt>TOUS LES VENDREDIS Le Supplément illustré 5 Centimes</txt>
+<ill  taille="11" h="3620" y="917" une="true" couleur="gris" w="3145" n="1-1" x="53"><txt>TOUS LES VENDREDIS Le Supplément illustré 5 Centimes</txt>
 </ill>
 </ills>
 </page>
@@ -25,37 +26,31 @@
 <blocTexte>12</blocTexte>
 <blocTab>0</blocTab>
 <blocPub>0</blocPub>
-<blocIll>0</blocIll>
 </page>
 <page  ordre="3"><nbMot>3333</nbMot>
 <blocTexte>11</blocTexte>
 <blocTab>0</blocTab>
 <blocPub>0</blocPub>
-<blocIll>0</blocIll>
 </page>
 <page  ordre="4"><nbMot>3442</nbMot>
 <blocTexte>15</blocTexte>
 <blocTab>0</blocTab>
 <blocPub>0</blocPub>
-<blocIll>0</blocIll>
 </page>
 <page  ordre="5"><nbMot>2842</nbMot>
 <blocTexte>17</blocTexte>
 <blocTab>0</blocTab>
 <blocPub>0</blocPub>
-<blocIll>0</blocIll>
 </page>
 <page  ordre="6"><nbMot>3741</nbMot>
 <blocTexte>25</blocTexte>
 <blocTab>0</blocTab>
 <blocPub>3</blocPub>
-<blocIll>0</blocIll>
 </page>
 <page  ordre="7"><nbMot>3337</nbMot>
 <blocTexte>19</blocTexte>
 <blocTab>1</blocTab>
 <blocPub>0</blocPub>
-<blocIll>0</blocIll>
 </page>
 <page  ordre="8"><nbMot>487</nbMot>
 <blocTexte>8</blocTexte>
@@ -63,7 +58,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  w="3128" y="1135" taille="19.7773656419496" h="3394" couleur="mono" x="137" n="8-1" derniere="true"><titraille> Les Ours du Gagyre </titraille>
+<ill  couleur="gris" w="3128" n="8-1" x="137" y="1135" derniere="true" h="3394" taille="11"><titraille> Les Ours du Gagyre </titraille>
 <txt>( IDESTETTCTIOIT ID TTIT TKOUPEAU IDE MOUTONS )</txt>
 </ill>
 </ills>

@@ -12,9 +12,9 @@ Notes :
 on the command line and the title's record ID must be known in %hashNotices
 
 # with Ark IDs:
->perl extractMD.pl -LI ocren Humanite OCR-EN OUT-OCR-EN xml
+>perl extractMD.pl -LI ocren Humanite OCR-EN-BnF OUT-OCR-EN-BnF xml
 # without Ark IDs:
->perl extractMD.pl -L ocren generic OCR-EN OUT-OCR-EN xml
+>perl extractMD.pl -L ocren generic OCR-EN-BnF OUT-OCR-EN-BnF xml
 
 
 Folder: OCR-EN-SBB
@@ -37,13 +37,14 @@ Folder: OLR-EN
 -------------
 Content: newspapers
 Producer: Europeana Newspapers project
-Manifest format: METS (CCS) with logical structure
+Manifest format: METS (CCS profile) with logical structure
 OCR FORMAT: ALTO v2.0
-Sample: $$$$$$$$$$$$$$$$$$
+Sample: BnF, Le Petit Journal illustré Supplément du dimanche, 10.10.1891
 Note :
 - $typeDoc parameter must be set to "P"
--$$$$$$
->perl extractMD.pl -LI olren
+
+>perl extractMD.pl -LI olren PJI OLR-EN OUT-OLR-EN xml
+
 
 
 Folder: OLR-BnF
@@ -67,7 +68,8 @@ Producer: BnF
 Manifest format: refNum (BnF, http://bibnum.bnf.fr/ns/refNum)
 OCR FORMAT: ALTO BnF (http://bibnum.bnf.fr/ns/alto_prod)
 Sample: La Restauration maxillo-faciale, 1919
-Note : $typeDoc parameter must be set to "R"
+Note :
+- $typeDoc parameter must be set to "R"
 
 >perl extractMD.pl -LI ocrbnf generic OCR-BnF-magazines OUT-OCR-BnF-magazines xml
 

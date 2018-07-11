@@ -37,7 +37,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  n="5-1" h="3082" taille="5" w="1772" x="273" y="60" couleur="coul"><leg> HONNEUR il</leg>
+<ill  n="5-1" taille="5" w="1772" y="60" h="3082" x="273" couleur="coul"><leg> HONNEUR il</leg>
 </ill>
 </ills>
 </page>

@@ -82,7 +82,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  couleur="coul" x="688" y="1195" w="1288" h="933" n="14-1" taille="1"><leg>FIG. I. chaque matin, pendant deux ou trois semaines, à couler et à placer sa prothèse et de ne le laisser partir que lorsqu il est rompu à cette manœuvre.</leg>
+<ill  x="688" taille="1" w="1288" couleur="gris" y="1195" n="14-1" h="933"><leg>FIG. I. chaque matin, pendant deux ou trois semaines, à couler et à placer sa prothèse et de ne le laisser partir que lorsqu il est rompu à cette manœuvre.</leg>
 <txt>Il faut que la réfection de sa prothèse devienne pour lui un acte automatique, et pour cela il est nécessaire de l obliger C est là un point capital. Si l on se contente de lui faire couler sa prothèse une ou deux fois avant sa sortie de l hôpital et de l expédier avec son moule, sa pâte et sa colle, quelle que soit la classe sociale à laquelle il appartienne, le blessé tâtonnera, manquera sa pièce, perdra du temps et, lassé, abandonnera sa prothèse.</txt>
 </ill>
 </ills>
@@ -98,7 +98,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  y="1001" h="1396" w="1159" n="16-1" taille="1" couleur="coul" x="757"><leg>FIG. 2. Soldat J.</leg>
+<ill  n="16-1" h="1396" y="1001" w="1159" couleur="gris" taille="1" x="757"><leg>FIG. 2. Soldat J.</leg>
 <txt>Éther. q. s. Mastic en larmes. 50 grammes.</txt>
 </ill>
 </ills>
@@ -109,7 +109,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  couleur="coul" x="637" h="1398" w="1144" y="963" taille="1" n="17-1"><leg>FIG. 3. SOlda-t J.</leg>
+<ill  y="963" n="17-1" h="1398" x="637" taille="1" couleur="gris" w="1144"><leg>FIG. 3. SOlda-t J.</leg>
 <txt>III. OBJECTIONS D ORDRE PSYCHOLOGIQUE. — Nous avons eu l occasion de montrer des blessés pourvus de prothèses plastiques à plusieurs dentistes et stomatologistes. Leur premier 40 Si elle dépasse un peu les limites de la prothèse, elle ne forme pas ces bavures brillantes que produisent les résines.</txt>
 </ill>
 </ills>
@@ -120,7 +120,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  taille="1" n="18-1" w="1118" h="1450" y="1017" x="748" couleur="coul"><leg>FlG. 4. Soldat W.</leg>
+<ill  x="748" taille="1" couleur="gris" w="1118" y="1017" n="18-1" h="1450"><leg>FlG. 4. Soldat W.</leg>
 <txt>Il est évident que la solidité et la durée sont des conditions essentielles et indispensables des appareils de prothèse fonctionnelle; mais il n en est pas de même dans les cas qui nous occupent, où la question primordiale est de rétablir l esthétique d une façon aussi parfaite que possible, car c est à cette condition seule que le mutilé portera sa prothèse (1). 10 LA RESTAURATION MAXILLO-FACIALE</txt>
 </ill>
 </ills>
@@ -131,7 +131,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  h="1439" w="1130" y="999" taille="1" n="19-1" couleur="coul" x="643"><leg>FIG. 5. Soldat W.</leg>
+<ill  x="643" taille="1" couleur="gris" w="1130" y="999" h="1439" n="19-1"><leg>FIG. 5. Soldat W.</leg>
 <txt>Elles n ont pas non plus la transparence de la gélatine, mais surtout, quel que soit leur mode de fixation, leurs contours ne se fondent pas avec les tissus voisins et il existe toujours une élastique et donne au toucher la sensation de la chair, les prothèses en vulcanite peinte, en métal émaillé ou en céramique ont une rigidité qui ne fait aucune illusion, même à distance.</txt>
 </ill>
 </ills>
@@ -142,7 +142,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  n="20-1" taille="1" y="1025" h="1350" w="1158" x="741" couleur="coul"><leg>FIG. 6. Soldat M.</leg>
+<ill  couleur="gris" w="1158" taille="1" x="741" n="20-1" h="1350" y="1025"><leg>FIG. 6. Soldat M.</leg>
 <txt>Celui de l irritation par le mode de fixation est supprimé par l emploi de la technique que nous employons. L inconvénient de leur durée éphémère est plus théorique que réel, car, comme nous l avons dit, presque tous les blessés s astreignent facilement à les couler et à les placer, même quotidiennement.</txt>
 </ill>
 </ills>
@@ -153,7 +153,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  h="1280" w="1137" y="929" taille="1" n="21-1" couleur="coul" x="637"><leg>FIG. 7. — Soldat M.</leg>
+<ill  x="637" taille="1" w="1137" couleur="gris" y="929" h="1280" n="21-1"><leg>FIG. 7. — Soldat M.</leg>
 <txt>20 octobre. La greffe est rabattue et fixée à ce qui reste des narines. 5 octobre. Une rhinoplastie est pratiquée par le Dr Lecène. Un greffon costal est insinué sous la peau du front.</txt>
 </ill>
 </ills>
@@ -239,10 +239,10 @@
 <blocPub>0</blocPub>
 <blocIll>2</blocIll>
 	<ills>
-<ill  couleur="coul" x="401" h="844" w="782" y="1611" taille="0" n="37-1"><leg>FIG. i. A gauche : situation normale du masséter; à droite : modifications produites par la déviation de la branche : le pointillé indique les contours normaux et permet d apprécier le raccourcissement du muscle.</leg>
+<ill  n="37-1" h="844" y="1611" x="401" couleur="gris" w="782" taille="0"><leg>FIG. i. A gauche : situation normale du masséter; à droite : modifications produites par la déviation de la branche : le pointillé indique les contours normaux et permet d apprécier le raccourcissement du muscle.</leg>
 <txt>Dans une note précédente, nous avons indiqué, d une façon générale, tout le parti que l on pouvait tirer de la thérapeutique par appareils à volet, dans les pertes de. substance, de la région angulaire du maxillaire inférieur. V</txt>
 </ill>
-<ill  x="1183" couleur="coul" n="37-2" taille="0" y="1611" w="818" h="844"><leg>FIG. i. A gauche : situation normale du masséter; à droite : modifications produites par la déviation de la branche : le pointillé indique les contours normaux et permet d apprécier le raccourcissement du muscle.</leg>
+<ill  n="37-2" h="844" y="1611" w="818" couleur="gris" taille="0" x="1183"><leg>FIG. i. A gauche : situation normale du masséter; à droite : modifications produites par la déviation de la branche : le pointillé indique les contours normaux et permet d apprécier le raccourcissement du muscle.</leg>
 <txt>Dans une note précédente, nous avons indiqué, d une façon générale, tout le parti que l on pouvait tirer de la thérapeutique par appareils à volet, dans les pertes de. substance, de la région angulaire du maxillaire inférieur. V</txt>
 </ill>
 </ills>
@@ -253,7 +253,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  x="502" couleur="coul" n="38-1" taille="1" y="998" h="1081" w="1618"><leg>FIG. 2. A gauche: temporal en situation normale: à droite: modifications à la suite du déplacement de la branche montante ; le muscle est à sa limite de contraction.</leg>
+<ill  y="998" h="1081" n="38-1" x="502" taille="1" couleur="gris" w="1618"><leg>FIG. 2. A gauche: temporal en situation normale: à droite: modifications à la suite du déplacement de la branche montante ; le muscle est à sa limite de contraction.</leg>
 <txt>Mieux que toute description, les figures ci-jointes indiquent les déviations produites par les fractures siégeant au niveau de tout de même, pour mieux préciser,.d en montrer le bien fondé par quelques figures reproduisant les conséquences des lésions; il en découle, tout naturellement, la nécessité du rétablissement à la normale.</txt>
 </ill>
 </ills>
@@ -264,7 +264,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  taille="2" n="39-1" h="1320" w="1557" y="851" x="456" couleur="coul"><leg>FIG. 3. — Modifications produites pour le ptérygoïdien par les déviations à la suite d une fracture: à gaurhe : face antérieuie de l os; à droite: face postérieure. Les flèches passant par la ligne médiane indiquent le déplacement de la portion horizontale. Les pointillés montrent les contours normaux.</leg>
+<ill  y="851" h="1320" n="39-1" x="456" taille="2" couleur="gris" w="1557"><leg>FIG. 3. — Modifications produites pour le ptérygoïdien par les déviations à la suite d une fracture: à gaurhe : face antérieuie de l os; à droite: face postérieure. Les flèches passant par la ligne médiane indiquent le déplacement de la portion horizontale. Les pointillés montrent les contours normaux.</leg>
 <txt>Le ptérygoïdien tend également à amener la région de l angle Pour le temporal, son action étant primordiale dans le déplacement, il arrive à placer ses insertions inférieures à la limite utile de sa contraction. Son action ultérieure se trouve de ce fait annihilée.</txt>
 </ill>
 </ills>
@@ -275,7 +275,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  couleur="coul" x="561" w="1449" h="1468" y="907" taille="2" n="40-1"><leg>FIG. 4. — Ch. Radiographie montrant l importance de la perte de substance.</leg>
+<ill  taille="2" w="1449" couleur="gris" x="561" y="907" n="40-1" h="1468"><leg>FIG. 4. — Ch. Radiographie montrant l importance de la perte de substance.</leg>
 <txt>En outre, il convient que cette réduction soit poussée aussi loin qu il. est nécessaire pour cette remise en place possible, c est-à-dire jusqu à la situation d avant le traumatisme. Le but que l on poursuit est un bon fonctionnement du système, et il est évident que pour l obtenir les conditions optima doivent 32 LA RESTAURATION MAXILLO-FACIALE</txt>
 </ill>
 </ills>
@@ -286,7 +286,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  couleur="coul" x="326" w="1600" h="3013" y="402" taille="5" n="41-1"><leg> </leg>
+<ill  h="3013" n="41-1" y="402" w="1600" couleur="gris" taille="5" x="326"><leg> </leg>
 <txt>Planche 1 </txt>
 </ill>
 </ills>
@@ -302,7 +302,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  x="478" couleur="coul" n="43-1" taille="2" y="891" w="1457" h="1449"><leg>FIG. 5. — Ch. Radiographie, avec l appareil à volet en bouche. On voit nettement que le volet est indépendant du fragment conservé au niveau du condyle.</leg>
+<ill  x="478" w="1457" couleur="gris" taille="2" n="43-1" h="1449" y="891"><leg>FIG. 5. — Ch. Radiographie, avec l appareil à volet en bouche. On voit nettement que le volet est indépendant du fragment conservé au niveau du condyle.</leg>
 <txt>Nous avons poussé, disions-nous, cette technique jusqu à son extrême limite; dans des cas où aucune portion de branche que les brides fibreuses interfragmentaires arrivaient à offrir dans les mouvements utiles pour la mastication une résistance plus que suffisante pour un rétablissement fonctionnel complet.</txt>
 </ill>
 </ills>
@@ -313,7 +313,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  taille="1" n="44-1" h="937" w="1440" y="1162" x="579" couleur="coul"><leg>FIG. 6. — Th. Radiographie de la lésion.</leg>
+<ill  y="1162" h="937" n="44-1" x="579" taille="1" couleur="gris" w="1440"><leg>FIG. 6. — Th. Radiographie de la lésion.</leg>
 <txt>Il arrive dans le service de Bordeaux le 4 juin 1918, sans être OBSERVATION I. — Ch. H., du 59e d artillerie, blessé le 3 avril 1916 à Verdun, et dirigé sur le 5e blessés au Val-de-Grâce.</txt>
 </ill>
 </ills>
@@ -324,7 +324,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  x="446" couleur="coul" n="45-1" taille="1" y="938" h="1294" w="1447"><leg>FIG. 7. — Bo. Radiographie de la lésion.</leg>
+<ill  x="446" taille="1" w="1447" couleur="gris" y="938" h="1294" n="45-1"><leg>FIG. 7. — Bo. Radiographie de la lésion.</leg>
 <txt>La réduction de cette portion s en trouvait compliquée d autant. résistant. C est sur cette zone que fut pris le point d application du volet. La .portion gauche et antérieure avait subi la déviation habituelle représentée dans les figures ci-contre. En plus, la consolidation en malposition avait accentué la linguo-trusion.</txt>
 </ill>
 </ills>
@@ -335,10 +335,10 @@
 <blocPub>0</blocPub>
 <blocIll>2</blocIll>
 	<ills>
-<ill  x="463" couleur="coul" taille="0" n="46-1" w="829" h="670" y="1191"><leg>FIG. 8. — Bo. Lésion et appareil à volet en bouche. Le pointillé indique le contour normal de la portion absente.</leg>
+<ill  taille="0" couleur="gris" w="829" x="463" y="1191" h="670" n="46-1"><leg>FIG. 8. — Bo. Lésion et appareil à volet en bouche. Le pointillé indique le contour normal de la portion absente.</leg>
 <txt>Quelques jours après, la tolérance s étant établie, le blessé accusa lui-même une force suffisante pour permettre sa mise Dès la mise en place de l appareil, on put constater que la force exercée, au moment de la fermeture, au niveau du fragment gauche, nulle au début du traitement, était devenue assez sérieuse.</txt>
 </ill>
-<ill  h="670" w="759" y="1191" taille="0" n="46-2" couleur="coul" x="1346"><leg>FIG. 8. — Bo. Lésion et appareil à volet en bouche. Le pointillé indique le contour normal de la portion absente.</leg>
+<ill  h="670" n="46-2" y="1191" x="1346" w="759" couleur="gris" taille="0"><leg>FIG. 8. — Bo. Lésion et appareil à volet en bouche. Le pointillé indique le contour normal de la portion absente.</leg>
 <txt>Quelques jours après, la tolérance s étant établie, le blessé accusa lui-même une force suffisante pour permettre sa mise Dès la mise en place de l appareil, on put constater que la force exercée, au moment de la fermeture, au niveau du fragment gauche, nulle au début du traitement, était devenue assez sérieuse.</txt>
 </ill>
 </ills>
@@ -379,7 +379,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  couleur="coul" x="357" y="476" h="2703" w="1598" n="53-1" taille="4"><leg> </leg>
+<ill  y="476" n="53-1" h="2703" x="357" taille="4" w="1598" couleur="gris"><leg> </leg>
 <txt>Planche 2 </txt>
 </ill>
 </ills>
@@ -405,7 +405,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  x="583" couleur="coul" n="57-1" taille="2" y="765" w="1132" h="1836"><leg>Fui. I. A la gouttière supérieure se fixe un guide en maillechort A auquel est soudé un petit crochet c. Un autre crochet est soudé à la gouttière au point b.</leg>
+<ill  h="1836" n="57-1" y="765" couleur="gris" w="1132" taille="2" x="583"><leg>Fui. I. A la gouttière supérieure se fixe un guide en maillechort A auquel est soudé un petit crochet c. Un autre crochet est soudé à la gouttière au point b.</leg>
 <txt>A ce moment et avant sa présentation devant une commission de réforme qui doit régler le sort de ce blessé, nous prenons les empreintes des mâchoires et nous appliquons deux gouttières ajourées en maxillor coulé emboîtant les dents des deux maxillaires (fig. I). TRAITEMENT DES COXSTRICTIONS DES MACHOIRES 45</txt>
 </ill>
 </ills>
@@ -421,7 +421,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  x="419" couleur="coul" taille="1" n="59-1" w="1440" h="847" y="1114"><leg>FIG. 2. estampé recouvrant la surface triturante des dents et garnie intérieurement de caoutchouc vulcanisé pour recouvrir la muqueuse de la voûte palatine (fig. 2).</leg>
+<ill  y="1114" n="59-1" h="847" x="419" taille="1" couleur="gris" w="1440"><leg>FIG. 2. estampé recouvrant la surface triturante des dents et garnie intérieurement de caoutchouc vulcanisé pour recouvrir la muqueuse de la voûte palatine (fig. 2).</leg>
 <txt>A la mâchoire supérieure, on applique une plaque en maillechort Le blessé est soumis au traitement mécanothérapique ; au bout d un mois, l ouverture buccale n est que de 9 millimètres; elle est suffisante pour permettre de prendre d assez bonnes empreintes des dents des deux mâchoires.</txt>
 </ill>
 </ills>
@@ -467,7 +467,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  taille="1" n="67-1" w="1159" h="1285" y="1059" x="516" couleur="coul"><leg>FIG. I. Screws 9 and 10, opposite each extension, arc used to lock each slide.</leg>
+<ill  x="516" taille="1" w="1159" couleur="gris" y="1059" n="67-1" h="1285"><leg>FIG. I. Screws 9 and 10, opposite each extension, arc used to lock each slide.</leg>
 <txt>Each slide is provided at its right end with a button 7 and 8, for the attachment of elastics. (3/4  approx.).</txt>
 </ill>
 </ills>
@@ -478,10 +478,10 @@
 <blocPub>0</blocPub>
 <blocIll>2</blocIll>
 	<ills>
-<ill  y="767" w="1122" h="1164" n="68-1" taille="1" couleur="coul" x="723"><leg>FIG. 2. washers (use ligature rubber.washers of Dr Angles S. S. White).</leg>
+<ill  h="1164" n="68-1" y="767" x="723" couleur="gris" w="1122" taille="1"><leg>FIG. 2. washers (use ligature rubber.washers of Dr Angles S. S. White).</leg>
 <txt>The power of the opener increases by using additional rubber buttons 7 and 8 of the slides and buttons 12 and 13 of the slide.</txt>
 </ill>
-<ill  x="727" couleur="coul" taille="0" n="68-2" w="1130" h="622" y="2340"><leg>FIG. 3. , dislodging under the strain of the apparatus, a sort of a quard is soldered on to the upper lingual edge of gutter 3.</leg>
+<ill  y="2340" h="622" n="68-2" taille="0" couleur="gris" w="1130" x="727"><leg>FIG. 3. , dislodging under the strain of the apparatus, a sort of a quard is soldered on to the upper lingual edge of gutter 3.</leg>
 <txt>The left fragment was in good position; to. prevent it from washers (use ligature rubber.washers of Dr Angles S. S. White).</txt>
 </ill>
 </ills>
@@ -492,7 +492,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  h="1293" w="1153" y="1109" taille="1" n="69-1" couleur="coul" x="623"><leg>FIG. 4. two shafts 17 and 18 have been placed, made of hard German silver wire 2 m/m (5/64  approx.) diameter and 8 m/m long.</leg>
+<ill  n="69-1" h="1293" y="1109" x="623" couleur="gris" w="1153" taille="1"><leg>FIG. 4. two shafts 17 and 18 have been placed, made of hard German silver wire 2 m/m (5/64  approx.) diameter and 8 m/m long.</leg>
 <txt>A cast gutter (16) was constructed on the right fragment that was to be realigned. On the lingual part of this gutter upper teeth, opposing the fragment which was to be immobilized, in such manner that whether the mouth be open or closed, the upper teeth, setting in this stop, steadied the gutter and prevented removal.</txt>
 </ill>
 </ills>
@@ -503,7 +503,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  w="1158" h="1198" y="1137" taille="1" n="70-1" couleur="coul" x="722"><leg>FIG. 5. line, and this resulted in the fragment being displaced upwards towards the palatial vault.</leg>
+<ill  y="1137" h="1198" n="70-1" x="722" taille="1" w="1158" couleur="gris"><leg>FIG. 5. line, and this resulted in the fragment being displaced upwards towards the palatial vault.</leg>
 <txt>SUPPLEMENTARY APPARATUS (above, sliding table). The teeth of the right fragment would not occluse with the uppers, owing to the displacement of this fragment towards the median Slide 6 is connected to the back of the same gutter by means 1 of extension 6, made of the same wire and in the same manner as extension 19, and attached to the gutter by means of shaft 17.</txt>
 </ill>
 </ills>
@@ -514,7 +514,7 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  x="578" couleur="coul" n="71-1" taille="1" y="1055" w="1150" h="1369"><leg>FIG. 6. During the first days, the apparatus was working with three rubber washers 4n each slide; the power developed being almost nearly the same at the front and the back and the spreading Was parallel; this movement was allowed to continue until the teeth of the back part of the fragment came into contact with the corresponding upper teeth. After this first period of adjustment by tightening screw 10, slide 6 acting on the back part was locked; thus any movement ln this part of the fragment was rendered impossible.</leg>
+<ill  h="1369" n="71-1" y="1055" w="1150" couleur="gris" taille="1" x="578"><leg>FIG. 6. During the first days, the apparatus was working with three rubber washers 4n each slide; the power developed being almost nearly the same at the front and the back and the spreading Was parallel; this movement was allowed to continue until the teeth of the back part of the fragment came into contact with the corresponding upper teeth. After this first period of adjustment by tightening screw 10, slide 6 acting on the back part was locked; thus any movement ln this part of the fragment was rendered impossible.</leg>
 <txt>ACTION OF THE DEVICE. ----.: Fig. 2 illustrating .the apparatus ready to be put in place, should. give a sufficient idea of its operation. to be moved away and the cusps of the upper teeth in the same horizontal plan.</txt>
 </ill>
 </ills>

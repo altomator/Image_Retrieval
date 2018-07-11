@@ -196,6 +196,7 @@ $motifIDIllBlock = "IL"; # "PAG_00000017_IL000011"
 ########## specific ALTO patterns  ############
 # Europeana Newspapers
 $paramMotifIDBlockOCREN = "Page1_Block";  # Example: "Page1_Block38"
+$paramMotifIDBlockOLREN = "TB";  # Example: "P1_TB00001"
 $paramMotifPubALTO_OCREN = "TYPE=\"Advertisement";
 $paramMotifPubALTO_OLREN = $paramMotifPubALTO_OCREN ;
 $paramMotifTableALTO_OCREN = "TYPE=\"Table";
@@ -777,14 +778,18 @@ sub lireMD {
 			my $tmp = $date;
     	$tmp =~ tr/\//-/; # transformer le / du refNum en -
 			#say $tmp;
-    	if (($tmp =~ m/^(\d{4})-(\d\d)-(\d\d)$/) or # yyyymmdd
-    	 	($tmp =~ m/^(\d{4})-(\d\d)$/) or						# yyyymm
+    	if (($tmp =~ m/^(\d{4})-(\d\d)-(\d\d)$/) or # yyyy-mm-dd
+    	 	($tmp =~ m/^(\d{4})-(\d\d)$/) or						# yyyy-mm
     	  ($tmp =~ m/^(\d{4})$/) ) {								# yyyy
     		say ".. ISO date OK: ".$tmp;
     		$date=$tmp;
        }
-			 elsif ($tmp =~ m/^(\d\d)-(\d\d)-(\d{4})$/) { # ddmmyyyy
+			 elsif ($tmp =~ m/^(\d\d)-(\d\d)-(\d{4})$/) { # dd-mm-yyyy
 				 $date = join "-", reverse split /\-/, $tmp; # reformatter en date ISO
+				 say ".. ISO date OK: ".$date;
+			 }
+			 elsif ($tmp =~ m/^(\d\d)\.(\d\d)\.(\d{4})$/) { # dd.mm.yyyy
+				 $date = join "-", reverse split /\./, $tmp; # reformatter en date ISO
 				 say ".. ISO date OK: ".$date;
 			 }
 			 else {
@@ -995,9 +1000,9 @@ sub extraireIllOLR{my $fh=shift;
      }
     } # fin du while ligne
 
-   $hash{$numPageEnCours."_blocsIllustration"} = $numIll;
-    say " processing #page $numPageEnCours is done: ".($numIll-1)." found";
-    say "\n----------- total number : ".$numIllDoc;
+   #$hash{$numPageEnCours."_blocsIllustration"} = $numIll;
+  #  say " processing #page $numPageEnCours is done: ".($numIll-1)." found";
+    say "\n...  total number of illustrations: ".$numIllDoc;
 
 }
 
@@ -1009,6 +1014,7 @@ sub incIdBlocALTO {
 	my $id=shift;
 	my $increment=shift;
 	my $motif=shift;
+
 
 	my @tmp = split($motif,$id);
   my $res = $tmp[1];
@@ -1464,12 +1470,12 @@ sub exportPage {my $id=shift; # id document
            		}
 					 if ($DEBUG) {say "   color: $couleur"} ;
 
-       	   if ($p==1) {  # illustration en une
+       	   if ($p==1) {  # illustration en une / illustration on the front page
        	   	    $une = "true";
        	   	    undef $derniere;
        	  	    #print {$fh} "une=\"true\">";
        	  	    }
-       	   elsif ($p==$hash{"pages"}) { # illustration en derniere page
+       	   elsif ($p==$hash{"pages"}) { # illustration en derniere page / last page
        	   	    $derniere = "true";
        	   	    undef $une
        	  			#print {$fh} "derniere=\"true\">";
@@ -1587,7 +1593,7 @@ sub calculerARKmono {my $id=shift;
 
 # ----------------------
 # calcul d'un ark a partir d'un ID et d'une date de periodique
-# computing a ark ID for a serial, based on the date
+# computing a ark ID for a serial, based on the date. Needs the Gallica API
 sub calculerARKperio {my $id=shift;
 
     	my $ark;
@@ -1598,8 +1604,9 @@ sub calculerARKperio {my $id=shift;
     	my $urlDate;
     	my $i=0;
     	my $notice= $hash{"notice"};
+			my $cmd;
 
-    	say "\n...computing ARK: ".$date;
+    	say "\n...computing ARK for serial: ".$date;
 
     	if (not defined ($notice)) {
     		say " ## unknown bibliographic record, can't process the ark ID!";
@@ -1631,17 +1638,24 @@ sub calculerARKperio {my $id=shift;
          $urlDate = $urlAPI.$notice."/date&date=".$annee;
          say $urlDate;
          # appeler l'API date
-         $reponseAPI = get($urlDate);
-         #print $reponseAPI;
-         if ($reponseAPI)  {
-          # remplir le hash par ligne
-          @reponseXML = split '\n', $reponseAPI;
-          #say $reponseXML[4];
+         # $reponseAPI = get($urlDate); # get has a problem with https
+				 $cmd="curl '$urlDate'";
+				 say $cmd;
+				 my $res = `$cmd`;
+	     	 #say "res: ".$res;
+         if ($res)  {
+					say "... API is responding: ".substr($res,0,150)." ...";
+					#say $res;
 
-          # remplir le hash
+          # remplir le hash par ligne
+          my @reponseXML = split '\n', $res;
+          #say Dumper @reponseXML;
+
+          # remplir le hash / fill the hash
           foreach my $line (@reponseXML) {
-          if (index($line,"<issue ") != -1) {
-          	#say "L: ".$line;
+					#
+          if (index($line,"<issue ") != -1) { # we have a newspaper issue on this line
+						#say "L: ".$line;
           	( $tmpArk ) = $line =~ m/$motifArk/;
           	if ($MODE ne "ocrbnf") { # cas de la presse Europeana Newspapers
           		( $jour ) = $line =~ m/$motifJour/;
@@ -1652,13 +1666,13 @@ sub calculerARKperio {my $id=shift;
            		if (exists($dateARKs{$jour})) { # il y a deja un fascicule avec cette date : cas edition du jour + supplement
            	     # NB : l'API ne permet pas de distinguer edition du jour et supplements
            	     # on suppose qu'elle liste d'abord l'edition
-           		   say "-- a supplement exists: $jour - $tmpArk";
+           		   say "** a supplement exists: $jour - $tmpArk";
            		   # il faut inverser les arks car le script Perl traite d'abord les supplements (pour EN)
            		   	 $edArk = $dateARKs{$jour};
            		   	 delete($dateARKs{$jour});
                  	 $dateARKs{$jour.".supp"} = $edArk;
                  	 $dateARKs{$jour} = $tmpArk;
-                   say "-- second: $edArk";
+                   say "-> second ark: $edArk";
                 }
              else {
                $dateARKs{$jour} = $tmpArk;}
@@ -1666,6 +1680,7 @@ sub calculerARKperio {my $id=shift;
            else  # cas documents  bnf : on remplit le tableau avec les arks
             {
             	$dateARKs{$i} = $tmpArk;
+							say "... adding ark in the hash: $tmpArk";
             	$i++;
             }
           }}
@@ -1695,6 +1710,7 @@ sub calculerARKperio {my $id=shift;
          }
         else {
           say "\n   ## Gallica Issues API: no response!";
+					say $res;
           $noArk=$noArk.$id." ";
           return -1}
     }
