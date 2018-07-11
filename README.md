@@ -18,7 +18,8 @@ A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllus
 
 ### Articles, blogs
 - ["Image Retrieval in Digital Libraries"](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_EN-final.pdf) (EN article, [FR article](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_FR-final.pdf), [presentation](http://www.euklides.fr/blog/altomator/Image_Retrieval/MOREUX-CHIRON-presentation-final.pdf)), IFLA News Media section 2017 (Dresden, August 2017). 
-- ["Hybrid Image Retrieval in Digital Libraries"](https://fr.slideshare.net/Europeana/hybrid-image-retrieval-in-digital-libraries-by-jeanphilippe-moreux-europeanatech-conference-2018), EuropeanaTech 2018 (Rotterdam, May 2018). 
+- ["Hybrid Image Retrieval in Digital Libraries"](https://fr.slideshare.net/Europeana/hybrid-image-retrieval-in-digital-libraries-by-jeanphilippe-moreux-europeanatech-conference-2018), EuropeanaTech 2018 (Rotterdam). Poster, TPDL 2018 (Porto)
+
 - ["Plongez dans les images de 14-18 avec notre nouveau moteur de recherche iconographique GallicaPix"](http://gallicastudio.bnf.fr/bo%C3%AEte-%C3%A0-outils/plongez-dans-les-images-de-14-18-en-testant-un-nouveau-moteur-de-recherche) (FR blog post)
 - ["Towards new uses of cultural heritage online: Gallica Studio"](http://pro.europeana.eu/post/towards-new-uses-of-cultural-heritage-online-gallica-studio) (EN blog post)
  
@@ -293,7 +294,7 @@ The face detection Watson API also outputs cropping and genre detection:
 ```xml
 <contenuImg CS="0.96" h="2055" l="1232" sexe="M" source="ibm" x="1900" y="1785">face</contenuImg>
 ```
-Example: looking for faces of ["poilus"](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&similarity=&corpus=1418-v2&keyword=poilu&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=face&classif=&operator=and&colName=00&size=31&density=26)
+Example: looking for  ["poilus"](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&similarity=&corpus=1418-v2&keyword=poilu&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=face&classif=&operator=and&colName=00&size=31&density=26) faces.
 
 ##### Google Cloud Vision
 The very same visual content indexing can be performed with the Google Cloud Vision API.
@@ -347,9 +348,9 @@ The form (`findIllustrations-form.xq`) exposes 2 databases to users: general ill
 ![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/form.png)
 
 
-The results list (`findIllustrations-app.xq`) also has a DEBUG mode which implements a filtering functionality (for ads and filtered illustrations) and some more minor tools (display, edit). 
+The results list (`findIllustrations-app.xq`) has a DEBUG mode which implements a filtering functionality (for ads and filtered illustrations) and some more minor tools (display, edit). 
 
-The results list page also call some XQuery scripts which perform updates on the database (thanks to the XQuery Update Facility).
+The results list page call some XQuery scripts which perform updates on the database (thanks to the XQuery Update Facility). These functionalities may be usefull for crowdsourcing experimentations.
 
 ![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/boat.png)
 
