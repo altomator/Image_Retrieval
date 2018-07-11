@@ -11,7 +11,7 @@ A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllus
 
 
 ![GallicaPix](http://gallicastudio.bnf.fr/sites/default/files/clemenceau_gallicastudio.JPG)
-*Looking for [Georges Clemenceau](http://localhost:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&locale=fr&similarity=&corpus=1418-v2&keyword=clemenceau&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=00&classif=&CBIR=*&operator=and&colName=00&size=31&density=26) iconography in GallicaPix*
+*Looking for [Georges Clemenceau](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&similarity=&corpus=1418-v2&keyword=clemenceau&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=00&classif=&operator=and&colName=00&illType=&size=31&density=26) iconography in GallicaPix*
 
 ### GitHub
 [Repository](https://github.com/altomator/Image_Retrieval/)
@@ -243,7 +243,7 @@ After running the script, a new `genre` metadata is created:
 ```xml
 <genre CS="0.52" source="TensorFlow">gravure</genre>
 ```
-Example: [caricatures](http://localhost:8984/rest?CS=3&CS=3&run=findIllustrations-app.xq&keyword=clemenceau&kwTarget=&kwMode=&title=&fromDate=&toDate=&sup=&page=&iptc=00&size=31&density=26&filter=1&ad=&illAd=&corpus=1418-v2&colName=00&classif=&operator=and&CBIR=*&start=1&locale=fr&records=500&illType=dessin&color=&persType=00&order=0&module=0.5&similarity=&action=%EF%81%AE) of George Clemenceau can be found using the Genre facet.
+Example: [caricatures](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&similarity=&corpus=1418-v2&keyword=clemenceau&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=00&classif=&operator=and&colName=00&illType=dessin&size=31&density=26) of George Clemenceau can be found using the Genre facet.
 
 The filtering classes (text, blank pages, cover...) are handled later (see section "Wrapping up the metadata").
 
@@ -293,7 +293,7 @@ The face detection Watson API also outputs cropping and genre detection:
 ```xml
 <contenuImg CS="0.96" h="2055" l="1232" sexe="M" source="ibm" x="1900" y="1785">face</contenuImg>
 ```
-Example: looking for faces of ["poilus"](http://localhost:8984/rest?CS=3&CS=3&run=findIllustrations-app.xq&keyword=poilu&kwTarget=&kwMode=&title=&fromDate=&toDate=&sup=&page=&iptc=00&size=31&density=26&filter=1&ad=&illAd=&corpus=1418-v2&colName=00&classif=&operator=and&CBIR=ibm&start=1&locale=fr&records=500&illType=&color=&persType=face&order=0&module=1&similarity=&action=%EF%81%AE)
+Example: looking for faces of ["poilus"](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&similarity=&corpus=1418-v2&keyword=poilu&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=face&classif=&operator=and&colName=00&size=31&density=26)
 
 ##### Google Cloud Vision
 The very same visual content indexing can be performed with the Google Cloud Vision API.
@@ -303,8 +303,6 @@ Usage for content recognition:
 >perl toolbox.pl -CC IN -google
 
 Note: The Google face detection API outputs cropping but doesn't support genre detection.
-
-Example: looking for [tanks](http://localhost:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&locale=fr&similarity=&corpus=1418-v2&keyword=&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=00&classif=tank&CBIR=google&operator=and&colName=00&size=31&density=26)
 
 ###### OCR 
 The Google Vision OCR can be applied to illustrations for which no textual metadata are available.
@@ -335,7 +333,6 @@ An object_detection.py script performs in a similar way to make content classifi
 
 >python object_detection.py --prototxt MobileNetSSD_deploy.prototxt.txt --model MobileNetSSD_deploy.caffemodel --dir IN_img
 
-Example: looking for [boats](http://localhost:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&locale=fr&similarity=&corpus=1418-v2&keyword=&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=00&classif=boat&CBIR=dnn&operator=and&colName=00&size=31&density=26)
 
 ### C. Load
 An XML database (BaseX.org) is the back-end. Querying the metadata is done with XQuery (setting up the HTTP BaseX server is detailled [here](https://github.com/altomator/EN-data_mining)). All the XQuery files and the other support files (.css, .jpg) must be stored in a `$RESTPATH` folder.
@@ -356,5 +353,5 @@ The results list page also call some XQuery scripts which perform updates on the
 
 ![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/boat.png)
 
-*Looking for boats*
+*Looking for [boats](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&similarity=&corpus=1418-v2&keyword=&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=00&classif=boat&operator=and&colName=00&size=31&density=26)*
 
