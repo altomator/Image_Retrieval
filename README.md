@@ -171,9 +171,9 @@ The toolbox.pl Perl script performs basic operations on the illustrations metada
 ![Workflow: extract](http://www.euklides.fr/blog/altomator/Image_Retrieval/wf2.png)
 
 All the treatments described in the following sections enrich the  metadata illustrations and set some attributes on these new metadata: 
-- `classif`: the processing applied (CC: content classification, DF: face detection)
-- `source`: the source of the processing (IBM Watson, Google Cloud Vision, OpenCV/dnn, Tensorflow/Inception-v3)
-- `CS`: the metadata confidence score
+- `classif`: the treatment applied (CC: content classification, DF: face detection)
+- `source`: the source of the treatment (IBM Watson, Google Cloud Vision, OpenCV/dnn, Tensorflow/Inception-v3)
+- `CS`: the confidence score
 
 ```xml
 <ill classif="CCibm CCgoogle" ... >
@@ -276,16 +276,15 @@ We've used IBM Watson [Visual Recognition API](https://www.ibm.com/watson/develo
 
 Some parameters should be set before running the script:
 - `$ProcessIllThreshold`: max number of illustrations to be processed (Watson allows a free amount of calls per day)
-- `$classifCBIR`: CBIR API to be used. For IBM Watson: "ibm"
 - `$CSthreshold`: minimum confidence score for a classification to be used
 - `$genreClassif`: list of illustration genres to be processed (drawing, pictures... but not maps)
 - `$apiKeyWatson`: your API key
 
 Usage for content recognition:
->perl toolbox.pl -CC IN 
+>perl toolbox.pl -CC IN -ibm
 
 Usage for face detection:
->perl toolbox.pl -DF IN 
+>perl toolbox.pl -DF IN -ibm
 
 Note: the image content is sent to Watson as an IIIF URL.
 
@@ -296,7 +295,13 @@ The face detection Watson API also outputs cropping and genre detection:
 
 ##### Google Cloud Vision
 The very same visual content indexing can be performed with the Google Cloud Vision API.
-Just mind to set the `$classifCBIR` var to "google" and to set your key in `$apiKeyGoogle`.
+Just mind to set your key in `$apiKeyGoogle`.
+
+Usage for content recognition:
+>perl toolbox.pl -CC IN -google
+
+Note: The Google face detection API outputs cropping but doesn't support genre detection.
+
 
 ###### OCR 
 The Google Vision OCR can be applied to illustrations for which no textual metadata are available.
