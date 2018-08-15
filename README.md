@@ -11,14 +11,15 @@ A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllus
 
 
 ![GallicaPix](http://gallicastudio.bnf.fr/sites/default/files/clemenceau_gallicastudio.JPG)
-*Looking for Georges Clemenceau iconography in GallicaPix*
+*Looking for [Georges Clemenceau](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&similarity=&corpus=1418-v2&keyword=clemenceau&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=00&classif=&operator=and&colName=00&illType=&size=31&density=26) iconography in GallicaPix*
 
 ### GitHub
 [Repository](https://github.com/altomator/Image_Retrieval/)
 
 ### Articles, blogs
 - ["Image Retrieval in Digital Libraries"](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_EN-final.pdf) (EN article, [FR article](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_FR-final.pdf), [presentation](http://www.euklides.fr/blog/altomator/Image_Retrieval/MOREUX-CHIRON-presentation-final.pdf)), IFLA News Media section 2017 (Dresden, August 2017). 
-- ["Hybrid Image Retrieval in Digital Libraries"](https://fr.slideshare.net/Europeana/hybrid-image-retrieval-in-digital-libraries-by-jeanphilippe-moreux-europeanatech-conference-2018), EuropeanaTech 2018 (Rotterdam, May 2018). 
+- ["Hybrid Image Retrieval in Digital Libraries"](https://fr.slideshare.net/Europeana/hybrid-image-retrieval-in-digital-libraries-by-jeanphilippe-moreux-europeanatech-conference-2018), EuropeanaTech 2018 (Rotterdam). Poster, TPDL 2018 (Porto)
+
 - ["Plongez dans les images de 14-18 avec notre nouveau moteur de recherche iconographique GallicaPix"](http://gallicastudio.bnf.fr/bo%C3%AEte-%C3%A0-outils/plongez-dans-les-images-de-14-18-en-testant-un-nouveau-moteur-de-recherche) (FR blog post)
 - ["Towards new uses of cultural heritage online: Gallica Studio"](http://pro.europeana.eu/post/towards-new-uses-of-cultural-heritage-online-gallica-studio) (EN blog post)
  
@@ -122,14 +123,14 @@ Usage:
 Printed collections (with OCR) can be analysed using extractMD.pl script. This script is the more BnF centered and it will be tricky to adapt to other context... It can handle various types of digital documents (books, newspapers) produced by the BnF or during the Europeana Newspapers project.
 
 Regarding the newspapers type, the script can handle raw ALTO OCR mode or OLR mode (articles recognition described with a METS/ALTO format):
-- ocrbnf: to be used with BnF documents (monographies, serials) described with a refNum manifest
-- olrbnf: to be used with BnF serials described with a METS manifest and an OLR mode (BnF METS profil) 
-- ocren: to be used with Europeana Newspapers serials described with a METS manifest
-- olren: to be used with Europeana Newspapers serials described with a METS manifest and an OLR mode (&copy;CCS METS profil)
+- <b>ocrbnf</b>: to be used with BnF documents (monographies, serials) described with a refNum manifest
+- <b>olrbnf</b>: to be used with BnF serials described with a METS manifest and an OLR mode (BnF METS profil) 
+- <b>ocren</b>: to be used with Europeana Newspapers serials described with a METS manifest
+- <b>olren</b>: to be used with Europeana Newspapers serials described with a METS manifest and an OLR mode (&copy;CCS METS profil)
 
 The script can handle various dialects of ALTO (ALTO BnF, ALTO LoC...) which may have different ways to markup the illustrations and to express the blocks IDs.
 
-Some parameters must be set in the Perl script, the remaining via the command line options.
+Some parameters must be set in the Perl script, the remaining via the command line options (see readme.txt).
 
 Usage:
 >perl extractMD.pl [-LI] mode title IN OUT format
@@ -144,20 +145,20 @@ where:
 - format: XML only
 
 Example for the Europeana Newspapers subdataset *L'Humanité*, with ark IDs computation and illustrations extraction:
->perl extractMD.pl -LI ocren Humanite OCR-EN OUT-OCR-EN xml
+>perl extractMD.pl -LI ocren Humanite OCR-EN-BnF OUT-OCR-EN-BnF xml
 
 
 Note: some monoline OCR documents may need to be reformatted before running the extraction script, as it does not parse the XML content (for efficiency reasons) but use grep patterns at the line level.
 Usage:
 >perl prettyprint.pl IN
 
-The script exports the same metadata than before but also texts and captions surrounding illustrations: 
+The script exports the same image metadata than before but also texts and captions surrounding illustrations: 
 ```xml
 <ill  w="4774" n="4-5" couleur="gris" filtre="1" y="3357" taille="0" x="114" derniere="true" h="157"><leg> </leg>
 <txt>Fans— Imprimerie des Arts et Manufactures» S.rue du Sentier. (M. Baunagaud, imp.) </txt>
 ```
 
-Some illustrations are filtered according to their characteristics (size, form). In such cases, the illustrations are exported but they are reported with a "filtre" attribute set to true.
+Some illustrations are filtered according to their form factor (size, localization on the page). In such cases, the illustrations are exported but they are reported with a filtered attribute ("filtre") set to true.
 
 After this extraction step, the metadata can be enriched (see next section, B.) or directly be used as the input of BaseX XML databases (see. section C.).
 
@@ -171,9 +172,9 @@ The toolbox.pl Perl script performs basic operations on the illustrations metada
 ![Workflow: extract](http://www.euklides.fr/blog/altomator/Image_Retrieval/wf2.png)
 
 All the treatments described in the following sections enrich the  metadata illustrations and set some attributes on these new metadata: 
-- `classif`: the processing applied (CC: content classification, DF: face detection)
-- `source`: the source of the processing (IBM Watson, Google Cloud Vision, OpenCV/dnn, Tensorflow/Inception-v3)
-- `CS`: the metadata confidence score
+- `classif`: the treatment applied (CC: content classification, DF: face detection)
+- `source`: the source of the treatment (IBM Watson, Google Cloud Vision, OpenCV/dnn, Tensorflow/Inception-v3)
+- `CS`: the confidence score
 
 ```xml
 <ill classif="CCibm CCgoogle" ... >
@@ -243,6 +244,7 @@ After running the script, a new `genre` metadata is created:
 ```xml
 <genre CS="0.52" source="TensorFlow">gravure</genre>
 ```
+Example: [caricatures](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&similarity=&corpus=1418-v2&keyword=clemenceau&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=00&classif=&operator=and&colName=00&illType=dessin&size=31&density=26) of George Clemenceau can be found using the Genre facet.
 
 The filtering classes (text, blank pages, cover...) are handled later (see section "Wrapping up the metadata").
 
@@ -276,16 +278,15 @@ We've used IBM Watson [Visual Recognition API](https://www.ibm.com/watson/develo
 
 Some parameters should be set before running the script:
 - `$ProcessIllThreshold`: max number of illustrations to be processed (Watson allows a free amount of calls per day)
-- `$classifCBIR`: CBIR API to be used. For IBM Watson: "ibm"
 - `$CSthreshold`: minimum confidence score for a classification to be used
 - `$genreClassif`: list of illustration genres to be processed (drawing, pictures... but not maps)
 - `$apiKeyWatson`: your API key
 
 Usage for content recognition:
->perl toolbox.pl -CC IN 
+>perl toolbox.pl -CC IN -ibm
 
 Usage for face detection:
->perl toolbox.pl -DF IN 
+>perl toolbox.pl -DF IN -ibm
 
 Note: the image content is sent to Watson as an IIIF URL.
 
@@ -293,10 +294,16 @@ The face detection Watson API also outputs cropping and genre detection:
 ```xml
 <contenuImg CS="0.96" h="2055" l="1232" sexe="M" source="ibm" x="1900" y="1785">face</contenuImg>
 ```
+Example: looking for  ["poilus"](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&similarity=&corpus=1418-v2&keyword=poilu&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=face&classif=&operator=and&colName=00&size=31&density=26) faces.
 
 ##### Google Cloud Vision
 The very same visual content indexing can be performed with the Google Cloud Vision API.
-Just mind to set the `$classifCBIR` var to "google" and to set your key in `$apiKeyGoogle`.
+Just mind to set your key in `$apiKeyGoogle`.
+
+Usage for content recognition:
+>perl toolbox.pl -CC IN -google
+
+Note: The Google face detection API outputs cropping but doesn't support genre detection.
 
 ###### OCR 
 The Google Vision OCR can be applied to illustrations for which no textual metadata are available.
@@ -341,11 +348,11 @@ The form (`findIllustrations-form.xq`) exposes 2 databases to users: general ill
 ![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/form.png)
 
 
-The results list (`findIllustrations-app.xq`) also has a DEBUG mode which implements a filtering functionality (for ads and filtered illustrations) and some more minor tools (display, edit). 
+The results list (`findIllustrations-app.xq`) has a DEBUG mode which implements a filtering functionality (for ads and filtered illustrations) and some more minor tools (display, edit). 
 
-The results list page also call some XQuery scripts which perform updates on the database (thanks to the XQuery Update Facility).
+The results list page call some XQuery scripts which perform updates on the database (thanks to the XQuery Update Facility). These functionalities may be usefull for crowdsourcing experimentations.
 
 ![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/boat.png)
 
-*Looking for boats*
+*Looking for [boats](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&similarity=&corpus=1418-v2&keyword=&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=00&classif=boat&operator=and&colName=00&size=31&density=26)*
 
