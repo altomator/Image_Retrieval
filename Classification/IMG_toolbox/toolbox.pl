@@ -1,20 +1,19 @@
 #!/usr/bin/perl -w
-
-
 #######################
-
-# USAGE: perl traiterIMGs.pl -service  IN
+# USAGE: perl toolbox.pl -service  IN option
 #   service: see below
 #   IN : input folder
-
+#   option :
 # OBJECTIVES:
-# Reprocess and enrich the illustrations metadata
+# Handle and enrich the illustrations metadata
 
 
 # use strict;
 use warnings;
 use 5.010;
 use LWP::Simple;
+use LWP::Protocol::https;  # for the https gallica URLs
+use LWP::UserAgent;
 use Data::Dumper;
 use XML::Twig;
 use Path::Class;
@@ -35,32 +34,26 @@ use JSON qw( decode_json );
 
 binmode(STDOUT, ":utf8");
 
-sub removeClassif {
-	my $classif=shift;
-	my $service=shift;
+my $ua = LWP::UserAgent->new(
+    ssl_opts => { verify_hostname => 0 },
+    protocols_allowed => ['https'],
+);
 
- if ($classif eq $service) { return undef}
- else {
-   my @services = split(/\ /, $classif);
-   @services = grep {$_ ne $service} @services;
-   return join(' ', @services)
- }
-}
 
 
 ############  Parameters  ###########################
-my $couleur="mono"; # default color mode (to be set if using the -color option): mono, gris, coul
+my $couleur="gris"; # default color mode (to be set if using the -color option): mono, gris, coul
 my $illThemeNew="16";     # default IPTC theme (to be set if using the -setTheme option)
 my $documentType="PA";   # document type to be fixed with the -fixType option : PA = music score, C = map
 my $illGenreOld="graphique";   # illustration genre to be looked ()-fixType and -setGenre options)
 my $illGenreNew="photog"; # illustration genre to be set with the -setGenre option
-my $classifSource="md"; # illustration genre source : TensorFlow, md, hm, cw (-fixSource, -setGenre or -delGenre options)
+my $classifSource="hm"; # illustration genre source : TensorFlow, md, hm, cw (-fixSource, -setGenre or -delGenre options)
 
 ## Images parameters used for IIIF calls ##
-my $factIIIF = 15;   # size factor for IIIF image exportation (%)
-my $modeIIIF ="linear"; # export using $factIIIF size factor even for small images
+my $factIIIF = 30;   # size factor for IIIF image exportation (%)
+my $modeIIIF ="no"; # "linear": export using $factIIIF size factor even for small images
 # To avoid small images to be over reduced, set $modeIIIF to any other value
-my $expandIIIF=0.1 ; # expand/reduce size factor for image cropping. The final size will be x by 1+$expandIIIF
+my $expandIIIF=0.3 ; # expand/reduce size factor for image cropping. The final size will be x by 1+$expandIIIF
 # Used for OCR (expand), image classification (crop), faces extraction (expand)
 my $reDimThreshold = 600;  # threshold (on the smallest dimension) under which the output factor $factIIIF is not applied (in pixels)
 #my $seuilExport = 50; # threshold (biggest dimension) under which the illustration is not exported
@@ -68,18 +61,24 @@ my $reDimThreshold = 600;  # threshold (on the smallest dimension) under which t
 ####################################
 # for Classification APIs
 my $processIllThreshold = 250;  # max ill to be processed
-my $classifCBIR="ibm"; # classification service : dnn, ibm, google, aws (-CC -fixCBIRsource options)
+my $classifCBIR; # classification service: dnn, ibm, google, aws (to be used with -CC -DF -fixCBIRsource... commands)
+# must be set by the user on the command line
 my $classifAction;     # CC / DF. Set from the option asked by the user
-#my $sizeIllThreshold=0.01; # do not classify illustrations if size <
-my $CSthreshold=0.1 ;   # confidence score threshold for using data classification
+my $sizeIllThreshold=1; # do not classify illustrations if size <
+my $CSthreshold=0.25 ;   # confidence score threshold for using data classification
+
 
 ### comment the next line to classify everything ###
-my $genreClassif="affiche dessin gravure photo photog"; # classify illustrations only if genre is equal to $genreClassif
+my $genreClassif="photo photog"; # classify illustrations only if genre is equal to $genreClassif
 #my $genreClassif="affiche bd carte dessin gravure graphique photo photog";
 
-# IBM Watson
-my $endPointWatson= "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/";
-my $apiKeyWatson= "9f342fa2919764a43782be4c74b32af049836872";
+# IBM Watson : watsoncc6@gmail.com / M---7
+# https://console.bluemix.net/
+# https://console.bluemix.net/dashboard/apps
+# test
+#curl -X POST -u "apikey:KFGuZ6ont7jLO0IRE2x_546RffziA-Lh0T5GEJQNejo5" --form "images_file=@native.jpg" "https://gateway.watsonplatform.net/visual-recognition/api/v3/classify?version=2018-03-19"
+my $endPointWatson= "https://gateway.watsonplatform.net/visual-recognition/api/v3/";
+my $apiKeyWatson= "cgnEOcXcQL5T5lPGHM0Y1-WmnI6s-enP-zDcz1D41zBs";
 # for Google Vision API : compte jpmoreux@gmail.fr
 $endPointGoogle= "https://vision.googleapis.com/v1/images:annotate?key=";
 $apiKeyGoogle= "AIzaSyD9zSaYk5nVubWTTZw_oLpVZ-GK4uXMXlE";
@@ -91,7 +90,7 @@ my $carreVSG=1 ;     # 1:1 format
 my $motifClasseWatson = "\"class\": \"(.+)\"";       # "class": "beige color"
 my $motifScoreWatson = "\"score\": (\\d+\.\\d+)";    # "score": 0.32198
 # for Face Detection API
-my $motifGenderWatson = "\"gender\": \"(.+)\"";    # "gender": "MALE",
+my $motifGenreWatson = "\"gender\": \"(.+)\"";    # "gender": "MALE",
 #my $motifAgeMax = "\"max\": (\\d+)";    # "max": 54
 my $motifAgeMinWatson = "\"min\": (\\d+)";    # "min": 44
 my $motifHautWatson = "\"height\": (\\d+)";    # "height": 540
@@ -107,7 +106,11 @@ my $motifCoulVGoogle = "\"green\": (\\d+)";
 my $motifCoulBGoogle = "\"blue\": (\\d+)";
 my $motifTexteGoogle = "\"description\": (.+)";
 my $motifVerticesGoogle = "\"vertices\": \\[(.*?)\\]"; # non-greedy
+#my $motifVerticesGoogle = "\"vertices\": \\[(.+)\\]";
 my $motifCropYGoogle = "\"y\": (\\d+)";
+# face detection
+my $motifVisageGoogle = "\"boundingPoly\":" ;
+my $motifScoreVisageGoogle = "\"detectionConfidence\": (\\d+\.\\d+)";
 
 ######################
 # for importation of external data (TensorFlow classification data or image hashing)
@@ -160,8 +163,8 @@ $motifIll = "<ill " ;
 ##################
 
 # Gallica root IIIF URL
-$urlIIIF = "http://gallica.bnf.fr/iiif/ark:/12148/";
-$urlGallica = "http://gallica.bnf.fr/ark:/12148/";
+$urlGallicaIIIF = "https://gallica.bnf.fr/iiif/ark:/12148/";
+$urlGallica = "https://gallica.bnf.fr/ark:/12148/";
 
 # data.bnf.fr endpoint
 my $endPointData = "http://data.bnf.fr/sparql";
@@ -196,20 +199,21 @@ my $nbTotData=0;
 my $nbTotEchec=0;
 
 # illustration ID currently analysed
-my $idIll="1";
+my $idIll;
 
 # output folder
 my $OUT = "OUT_img";
 
-# document type set on the command line: newspapers, monographs, img...
-my $TYPE;
+# option set on the command line
+my $OPTION;
 
 
-$msg = "\nUsage : perl toolbox.pl -service IN [-document type]
-services :
+$msg = "\nUsage : perl toolbox.pl -service IN [options]
+services:
 -info: give some stats on the illustrations
 -del : suppress the files with no illustrations
--nIDs : renumber the illustrations ID
+-setID : renumber the illustrations ID
+-setFaceID : number the faces ID
 -extr : extract the illustration files
 -extrFiltered : extract the filtered illustrations files
 -extrFace : extract the faces files
@@ -223,6 +227,7 @@ services :
 -fixSource : set the classification source
 -fixCBIRsource : set the CBIR source (IBM Watson, AWS, Google)
 -fixCBIRClassif
+-fixGoogleHL
 -fixAd : set the ad attribute from article title (for OLR newspapers only)
 -unify : compute the final classification (genre, filter, pub)
 -unifyTheme : compute a theme
@@ -231,7 +236,7 @@ services :
 -OCR : extract texts with OCR
 -importCC : import content classification data
 -importDF : import face detection data
--extrCC : list the Watson classes
+-extrClasses : list the visual recognition classes
 -delCC : suppress the content classification metadata
 -delDF : suppress the face detection metadata
 -delGenre : suppress the genre classifications
@@ -244,8 +249,9 @@ services :
 
 IN : input files directory
 
-document type: -p --> newspapers (to be used with the TF option)
-
+Options:
+-document type (values: news), to be used with the -TF command
+-CBIR mode: API or CNN model (values: ibm, google or dnn) to be used with CC or DF options
 	";
 
 
@@ -257,8 +263,6 @@ document type: -p --> newspapers (to be used with the TF option)
 ####################################
 ##             MAIN               ##
 
-say " *** CBIR mode: $classifCBIR ***";
-
 if (scalar(@ARGV)<2)  {
 	die $msg;
 }
@@ -266,12 +270,13 @@ if (scalar(@ARGV)<2)  {
 # list of subroutines
 my %actions = ( del => \&del,
                 info => "hd_info", # handler XML:Twig
-                nIDs => "hd_updateID",
+                setID => "hd_updateID",
+                setFaceID => "hd_updateFaceID",
                 extr => "hd_extract",
 								extrFiltered => "hd_extractFiltered",
 								extrGenre => "hd_extractGenre",
                 extrNotClassif => "hd_extractNotClassif",
-                extrFace => \&extrFace,
+                extrFace => "hd_extractFace",  #\&extrFace,
 								fixFace => \&fixFace,
 								color => "hd_color",
                 setColor => "hd_updateColor",
@@ -282,6 +287,7 @@ my %actions = ( del => \&del,
 								fixLeg => "hd_fixLeg",
 								fixCBIRsource => "hd_fixCBIRsource",
 								fixCBIRClassif => "hd_fixCBIRClassif",
+                fixGoogleHL => "hd_fixGoogleHL",
 								fixAd => "hd_fixAd",
 								fixGenre => "hd_fixGenre",
 								fixRot => "hd_fixRotation",
@@ -298,7 +304,7 @@ my %actions = ( del => \&del,
 								OCR => "hd_OCR",
 								importDF => "hd_importCC",
 								importCC => "hd_importCC",
-								extrCC => "hd_extrCC",
+								extrClasses => "hd_extrCC",
 								importTF => "hd_TFfilter",
 								TFunFilter => "hd_TFunFilter",
 								data => \&data,
@@ -317,19 +323,27 @@ if (not($actions{$SERVICE})) {
 $DOCS=shift @ARGV;
 
 # optional arg
-$TYPE=shift @ARGV;
-if ($TYPE) {say "--- Document type: $TYPE"}
+$OPTION=shift @ARGV;
+if ($OPTION) {say "--- option: $OPTION"}
 
 # classification type
 switch ($SERVICE) {
  case "importCC" {$classifAction="CC"}
  case "importDF" {$classifAction="DF"}
  case "CC" {$classifAction="CC"}
- case "extrCC" {$classifAction="CC"}
+ case "extrClasses" {$classifAction="CC"}
  case "DF"  {$classifAction="DF"}
  case "delDF"  {$classifAction="DF"}
  case "delCC"  {$classifAction="CC"}
+ case "info"  {$classifAction="foo"}
+ case "extrFace"  {$classifAction="foo"}
 }
+
+if ($classifAction and not $OPTION) {
+  die " ### CBIR mode (ibm, google, dnn) must be set on the command line!\n";
+} elsif ($classifAction) {
+  $classifCBIR=$OPTION;
+  say " *** CBIR mode: $classifCBIR ***";}
 
 # folders
 if(-d $DOCS){
@@ -348,7 +362,7 @@ if(-d $OUT){
 
 ##############
 # output the classification data in a txt file for service extrCC
-if ($SERVICE eq "extrCC") {
+if ($SERVICE eq "extrClasses") {
 	say "Writing in $OUTFile";
 	open($OUTfh, '>',$OUTFile) || die "### Can't write in $OUTFile file: $!\n";
 }
@@ -430,13 +444,15 @@ $dir->recurse(depthfirst => 1, callback => sub {
 
 say "\n\n=============================";
 say "$nbDoc documents analysed on ".$dir->children(no_hidden => 1);
-if ($nbTot != 0) {say " $nbTot illustrations";}
+if ($nbTot != 0) {say " $nbTot illustrations analysed";}
 if ($nbFailIll != 0) {say " $nbFailIll failed illustrations";}
 if ($SERVICE eq "del") {
   say "$nbTotIll files deleted ";	}
 elsif ($SERVICE eq "info") {
   say "$nbTotIll illustrations ";
-	say "(including $nbTotFiltre filtered)";
+	say "(including $nbTotFiltre filtered and $nbTotPub illustrated ads)";
+  say "----------";
+  say $nbTotIll - $nbTotFiltre - $nbTotPub;
 	say " * $nbTotThem final theme classifications ";
   say "   $nbTotThemeMD MD   ";
 	say "   $nbTotThemeHM HM   ";
@@ -449,18 +465,18 @@ elsif ($SERVICE eq "info") {
 	say "   $nbTotGenTF TF   ";
 	say "   $nbTotGenHM HM   ";
   say " * $nbTotCol color classifications ";
-	say " * $nbTotPub pub classifications";
+
   say " * $nbTotCC illustrations with $classifCBIR image content indexing";
   say " * $nbTotDF illustrations with $classifCBIR face detections";
 }
 else {
-  say "$nbTotIll illustrations processed ";
+  say " $nbTotIll illustrations processed ";
   if ($nbTotDF!=0) {say "$nbTotDF faces processed"}
 }
 
 say "=============================";
 
-if ($SERVICE eq "extrCC") {
+if ($SERVICE eq "extrClasses") {
 	close($OUTfh);}
 ########### end MAIN ##################
 #######################################
@@ -569,6 +585,7 @@ sub del {
 
 # ----------------------
 # extract the faces as image files (non-generic because the XPath is specific)
+# ** obsolete! **
 sub extrFace {
 	my $fic=shift;
 	my $nomFic=shift;
@@ -585,10 +602,13 @@ sub extrFace {
   	   say "### ID unknown! ###";
        return 0}
   say "ark : $idArk";
-
+  if ($classifCBIR eq "all") {
+    say $handler = '/analyseAlto/contenus/pages/page/ills/ill/contenuImg["face"]';}
+  else {
+    say $handler = '/analyseAlto/contenus/pages/page/ills/ill/contenuImg["face" and @source="'.$classifCBIR.'"]'}
   my $t = XML::Twig->new(
     twig_handlers => {
-       '/analyseAlto/contenus/pages/page/ills/ill/contenuImg["face"]' => \&hd_extractFace, },
+       $handler => \&hd_extractFace, },
     pretty_print => 'indented',
     );
 
@@ -866,6 +886,18 @@ sub hd_extrCC {
 	}
 }
 
+sub removeClassif {
+	my $classif=shift;
+	my $service=shift;
+
+ if ($classif eq $service) { return undef}
+ else {
+   my @services = split(/\ /, $classif);
+   @services = grep {$_ ne $service} @services;
+   return join(' ', @services)
+ }
+}
+
 # suppress all the content classification metadata (CC or DF from a specific source)
 sub hd_deleteContent {
    my ($t, $elt) = @_;
@@ -1043,7 +1075,7 @@ sub hd_extract {
     my ($t, $elt) = @_;
 
     my $page = $elt->parent->att('ordre');
-    say " page: $page";
+    say "\n page: $page";
 
     my @ills = $elt->children('ill');
     for my $ill ( @ills ) {
@@ -1051,10 +1083,128 @@ sub hd_extract {
     	$nill = $ill->att('n');
     	my $filtre = $ill->att('filtre');
 			my $pub = $ill->att('pub');
-    	if ((not $filtre) ) {	   # do not export filtered illustrations
-				IIIF_get($ill,$idArk,$nill,$page)}
-    	else { say " $nill : filtered  illustration "}
+    	if ($filtre or $pub) {	   # do not export filtered illustrations
+				say " $nill : filtered/ad illustration ";
+        next}
+      if (defined $genreClassif) { # a filter on genres exists
+         #say $ill->name;
+         my $genre = getGenre($ill);
+         if (not $genre) {
+              say " # illustration has no genre: use it anyway"}
+         elsif (index($genreClassif,$genre) ==-1) {
+              say " # illustration is not a $genreClassif!";
+              next} # use only if  specific genre
+        }
+
+      if (IIIF_get($ill,$idArk,$nill,$page)) {
+        $nbTotIll++;}
    }
+}
+
+## extract the faces as image files
+sub hd_extractFace {
+my ($t, $elt) = @_;
+
+my $ficImg;
+my @contenus;
+
+my $page = $elt->parent->att('ordre');
+say "\n page: $page";
+
+my @ills = $elt->children('ill');
+for my $ill ( @ills ) {
+  $nbTot+=1;
+  my $filtre = $ill->att('filtre');
+  my $pub = $ill->att('pub');
+  if ($filtre or $pub) 	{  # do not export filtered illustrations
+     say " # filtered/ad illustration ";
+     next }
+  if (defined $genreClassif) { # a filter on genres exists
+     #say $ill->name;
+     my $genre = getGenre($ill);
+     if (not $genre) {
+        say " # illustration has no genre: use it anyway"}
+     elsif (index($genreClassif,$genre) ==-1) {
+        say " # illustration is not a $genreClassif!";
+        next} # use only if  specific genre
+  }
+
+  $nill = $ill->att('n');
+  #say $classifCBIR;
+  if ($classifCBIR eq "all") {
+    @contenus = $ill->children('contenuImg["face"]');}
+  else {
+    @contenus = $ill->children('contenuImg["face" and @source="'.$classifCBIR.'"]')}
+
+  for my $ct ( @contenus ) {
+   if ($ct->text() eq "face") {
+     if ($ct->att('sexe')) {
+        say " Face: ".$ct->att('sexe');}
+     my $CS = $ct->att('CS');
+     say " CS: $CS";
+     if ($CS < $CSthreshold) {
+       say " # confidence $CS < $CSthreshold! #";
+       next}
+     # looking for a filename
+     for (my $i = 1; $i <= 40; $i++) {
+       $ficImg = "$OUT/$idArk-$nill-$i";
+       if (not -e $ficImg.".jpg") {
+        last}
+      }
+     $ficImg = $ficImg.".jpg";
+	   unlink $ficImg;
+
+	 # handle rotation
+	 $rotation = $ct->parent->att('rotation');
+	 $rotation ||= "0";
+
+	 # dimensions
+	 my $largVSG = $ct->att('l');
+	 my $hautVSG = $ct->att('h');
+   if ((not defined $largVSG) or (not defined $hautVSG) or ($largVSG <= 0) or ($hautVSG <= 0)) {
+     say "### w=$largVSG h=$hautVSG :  null dimension! ###";
+     next
+   }
+
+	 # 1:1 format?
+	 if ($carreVSG==1) {
+	 	if ( $largVSG >= $hautVSG) {  # we take the largest dimension
+	     $deltaL = $largVSG*$expandIIIF;
+			 $deltaH= $deltaL; # delta: to crop larger than the face
+	     $hautVSG = $largVSG;
+	      }
+	 	else  {
+	 		$deltaH = $hautVSG*$expandIIIF;
+      $deltaL= $deltaH;
+	 		$largVSG = $hautVSG;}
+	 } else {
+	 	  $deltaL = $largVSG*$expandIIIF;
+	 	  $deltaH = $hautVSG*$expandIIIF;
+	}
+  # export size
+  $w = $largVSG+$deltaL;
+  $h = $hautVSG+$deltaH;
+
+  if (($w < $reDimThreshold) or ($h < $reDimThreshold)) {
+    $redim = "/full"}
+  else {
+    $redim = "/pct:$factIIIF";}
+
+	 say " width:".$w	;
+   say " heigth:".$h	;
+	 my $url = $urlGallicaIIIF.$idArk."/f$page/".($ill->att('x')+$ct->att('x')-$deltaL/2).",".($ill->att('y')+$ct->att('y')-$deltaH/2).","
+	 .$w.",".$h."$redim/$rotation/native.jpg";
+	 say "--> $url \n in $ficImg";
+   my $cmd="curl '$url' -o $ficImg";
+   #say $cmd;
+   my $res = `$cmd`;
+   say "res: ".$res;
+	 if (-e $ficImg) {
+       $nbTotIll++;}
+     else {say "### IIIF : $url \n can't extract! ###"}
+    }
+  }
+ }
 }
 
 # extract specific genre
@@ -1070,8 +1220,11 @@ sub hd_extractGenre {
     	my $filtre = $ill->att('filtre');
 			my $genre = $ill->first_child_text(\&is_genre);
     	if (not $filtre and $genre) {
-				say " genre : $genre";
-				IIIF_get($ill,$idArk,$nill,$page)}
+				say " ->genre : $genre";
+				if (IIIF_get($ill,$idArk,$nill,$page)) {
+          $nbTotIll++
+        }
+      }
    }
 }
 
@@ -1088,7 +1241,9 @@ sub hd_extractNotClassif {
 			my $classif = $ill->att('classif');;
     	if ((not $filtre) and ((not $classif) or index($classif, $classifCBIR) == -1)) {
 				#say " classif : $classif";
-				IIIF_get($ill,$idArk,$nill,$page)}
+				if (IIIF_get($ill,$idArk,$nill,$page))
+        {$nbTotIll++}
+      }
    }
 }
 
@@ -1113,7 +1268,8 @@ sub hd_extractFiltered {
     	$nill = $ill->att('n');
     	$filtre = $ill->att('filtremd');
     	if ($filtre) {	   # export filtered illustrations
-				IIIF_get($ill,$idArk,$nill,$page)}
+				if (IIIF_get($ill,$idArk,$nill,$page)) {$nbTotIll++}
+        }
     	else { say " $nill : not a filtered illustration"}
    }
 }
@@ -1126,9 +1282,31 @@ sub setIIIFURL {my $ill=shift;
 	my $redim;
 	my $w = $ill->att('w');
 	my $h = $ill->att('h');
-  my $url;
-  #say "l : ".$w;
-	#say "h : ".$h;
+  my $prefix = $idArk."/f$page/"; # default
+  my $postfix;
+  my $urlIIIF = $urlGallicaIIIF; # default
+  my $format = "native.jpg"; # default
+  my $meta = $ill->parent->parent->parent->parent->parent->first_child;
+  my $source = $meta->first_child('source'); # europeana...
+  my $resize = $factIIIF/100;
+
+  say $resize;
+
+  if ($source) {
+    $source=$source->text();
+    $url=$meta->first_child('urlIIIF')->text(); # extract the iiif url
+    say " document has an extern source: $source";
+    switch ($source) {
+     case "Wellcome Collection" {
+       $prefix = "";
+       $urlIIIF = $url;
+       $format = "default.jpg";
+    }
+   }
+  }
+
+  say "l : ".$w*$resize;
+	say "h : ".$h*$resize;
   # handle the rotation
 	my $rotation = $ill->att('rotation');
 	$rotation ||= "0";
@@ -1136,50 +1314,54 @@ sub setIIIFURL {my $ill=shift;
 	if ($modeIIIF eq "linear")  {
     $redim = "/pct:$factIIIF"
   }
- else { # avoid too small images
-   if (($w < $reDimThreshold) or ($h < $reDimThreshold)) {
-		$redim = "/full"}
+  else { # avoid too small images
+   if (($w*$resize < $reDimThreshold) or ($h*$resize < $reDimThreshold)) {
+     say "...small image -> no resizing";
+		 $redim = "/full"}
 	 else {
-		$redim = "/pct:$factIIIF";
+		 $redim = "/pct:$factIIIF";
 	  }
   }
+
 	switch ($mode) {
 	 case "ocr" { # expand the illustration to get some text around
-		my $deltaW = $w*0.1; # enlarge a little bit horizontaly
-		my $deltaH = $h*$expandIIIF;
-		my $x = $ill->att('x')-$deltaW/2;
+		my $deltaW = int($w*0.1); # enlarge a little bit horizontaly
+		my $deltaH = int($h*$expandIIIF);
+		my $x = $ill->att('x')-int($deltaW/2);
 		if ($x<=0) {$x=0};
-		my $y = $ill->att('y')-$deltaH/4; # expand 1/4 above the illustration
+		my $y = $ill->att('y')-int($deltaH/4); # expand 1/4 above the illustration
 		if ($y<=0) {$y=0};
-		$url = $idArk."/f$page/".$x.",".$y.",".($w+$deltaW).",".($h+$deltaH).$redim."/$rotation/native.jpg";
+		$postfix = $x.",".$y.",".($w+$deltaW).",".($h+$deltaH).$redim."/$rotation/$format";
 	}
 	case "zoom" {
-		my $deltaW = $w*$expandIIIF; # reduce
-		my $deltaH = $h*$expandIIIF;
-		my $x = $ill->att('x')+$deltaW/2;
-		my $y = $ill->att('y')+$deltaH/2;
-		$url = $idArk."/f$page/".$x.",".$y.",".($w-$deltaW).",".($h-$deltaH).$redim."/$rotation/native.jpg";
+		my $deltaW = int($w*$expandIIIF); # reduce
+		my $deltaH = int($h*$expandIIIF);
+		my $x = $ill->att('x')+int($deltaW/2);
+		my $y = $ill->att('y')+int($deltaH/2);
+		$postfix = $x.",".$y.",".($w-$deltaW).",".($h-$deltaH).$redim."/$rotation/$format";
 	}
 	else {
-		$url = $idArk."/f$page/".$ill->att('x').",".$ill->att('y').",".$w.",".$h.$redim."/$rotation/native.jpg";
+		$postfix = $ill->att('x').",".$ill->att('y').",".$w.",".$h.$redim."/$rotation/$format";
 	}
  }
-	say " --> ".$url;
-	return $url;
+	say " --> $urlIIIF$prefix$postfix";
+	return $urlIIIF.$prefix.$postfix;
 }
 
 # extract a IIIF file in /tmp/
 sub IIIF_get {my $ill=shift;
-							my $idArk=shift;
+							my $id=shift;
 	            my $nill=shift;
 							my $page=shift;
 
-		my $tmp = "$OUT/$idArk-$nill.jpg";
+    my $tmpID = $id;
+    $tmpID =~ s/\//-/g; # replace the / with - to avoid issues on filename
+		my $tmp = "$OUT/$tmpID-$nill.jpg";
 		if (-e $tmp) {say "$tmp already exists!"}
 		else {
       my $url = setIIIFURL($ill,$page,"std");
 			say "$nill --> ".$url;
-			$nbTotIll+= IIIF_extract($url,$tmp)
+			return IIIF_extract($url,$tmp)
 		}
 }
 
@@ -1188,13 +1370,21 @@ sub IIIF_extract {my $url=shift;
 	                my $fic=shift;
 
        unlink $fic;
-       getstore($urlIIIF.$url, $fic);
-	     if (-e $fic) {
-         return 1;}
-       else {
-		     say "### IIIF : $urlIIIF$url \n can't extract! ###";
+       #say $fic;
+
+       my $cmd="curl '$url' -o $fic";
+       say $cmd;
+       my $res = `$cmd`;
+     	 #say "res: ".$res;
+       #my $rc = getstore($urlIIIF.$url, $fic);
+	     #if (is_error($rc)) {
+       if ($res and (index($res,"ERROR")!=-1)) {
+         say "### curl: $url \n can't extract: <$res>! ###";
          $nbFailIll+= 1;
-		     return 0;
+		     return 0;}
+       else {
+         say "Writing in $fic";
+		     return 1
 			 }
 }
 
@@ -1204,22 +1394,22 @@ sub IIIF_extract {my $url=shift;
 # 1 : yes but be carefull
 # 2 : yes
 sub classifyReady {my $ill=shift;
-
  my $nill = $ill->att('n');
  my $filtre = $ill->att('filtre');
  if (defined $filtre) {	# do not classify the filtered illustrations
 		say "$nill -> filtered";
 		return 0}
+
  my $classif = $ill->att('classif');
- #if ((defined $classif) && (index($classif, $classifAction." ") != -1)) {
- if ((defined $classif) && (index($classif, $classifAction.$classifCBIR) != -1)) {   # do not classify twice
-		say "$nill -> already $classifAction$classifCBIR classified!";
-		#say "$nill -> already $classifAction classified!";
+ if ((defined $classif) && (index($classif, $classifAction." ") != -1)) { # do not classify twice
+ #if ((defined $classif) && (index($classif, $classifAction.$classifCBIR) != -1)) {   # do not classify twice (using the same API)
+		#say "$nill -> already $classifAction$classifCBIR classified!";
+		say "$nill -> already $classifAction classified!";
 		return 0}
  #my $size = $ill->att('taille');
  #if ($size < $sizeIllThreshold) {
-	#			say "$nill  -> illustration is too small! (size=$size)"; # do not classify small ill.
-	#			return 0}
+	#		say "$nill  -> illustration is too small! (size=$size)"; # do not classify small ill.
+	 #   return 0}
  if (defined $genreClassif) { # a filter on genres exists
    my $genre = getGenre($ill);
    if (not $genre) {
@@ -1307,7 +1497,7 @@ sub hd_OCR {
        my $iiifFile = "$OUT/$idArk-$nill.jpg";
 			 my $url = setIIIFURL($ill,$page,"ocr");
 	     # call the APIs
-			$res = callGoogleOCR($url);
+			$res = callgoogleOCR($url);
 
 			if ($res and ($res ne "")) { # API call succeed
 					$nbTotIll++;
@@ -1342,25 +1532,26 @@ sub hd_classifyCC {
     	$nill = $ill->att('n');
 			if (classifyReady($ill)) {
     	 # tmp image file
-       my $iiifFile = "$OUT/$idArk-$nill.jpg";
+       my $iiifFile = "/tmp/image.jpg";
 
 	     # call the APIs
 			switch ($classifCBIR)  {
 	 				case "ibm"			{
 						my $url = setIIIFURL($ill,$page,"std");
 						if (IIIF_extract($url,$iiifFile)) {  # extract the file locally
-						   @res = callWatsonCC($iiifFile);}
-						 }
+						   @res = callibmCC($iiifFile);}
+             }
 					case "google"		{
 						my $url = setIIIFURL($ill,$page,"zoom");
-						@res = callGoogleCC($url);}
+						@res = callgoogleCC($url);}
           else { say "## unknown CBIR mode: $classifCBIR ##"}
 				 }
 
 			if (scalar(@res)>1) { # API call succeed
+          say " -->API call: success!";
 					$nbTotIll++;
 					updateClassif($ill);
-					say Dumper @res;
+					#say Dumper @res;
 
 					#my $tmp = scalar(@res)/2; # list of classes + list of scores
 					#foreach my $i  (0..int($tmp)-1) { # look
@@ -1379,7 +1570,7 @@ sub hd_classifyCC {
 					 my $h = int($res[1+$nbClasses+3]*$fact);
            foreach my $i  (1..$nbClasses) {
 						 my $label = $res[$i];
-						 my $CS = $res[$i+$nbClasses+4] || 1; # float number pattern : to be fixed!
+						 my $CS = sprintf("%.2f",$res[$i+$nbClasses+4]) || 1.0; # float number pattern : to be fixed!
 						 if ($i<=3) {
 							say "  $i ... crop on tag $label ($CS)";
 							$ill->insert_new_elt('contenuImg', $label)->set_atts("x"=>$x,"y"=>$y,"l"=>$l,"h"=>$h,"CS"=>$CS, "source"=>$classifCBIR);
@@ -1402,16 +1593,20 @@ sub hd_classifyCC {
 }
 
 
-# call the Watson API and return the list of classes followed by the confidence scores
-sub callWatsonCC {my $ill=shift;
+# call the IBM Watson API and return the list of classes followed by the confidence scores
+sub callibmCC {my $fic=shift;
 
 	my @classes;
 	my @scores;
 
-	my $cmd=  "curl -X POST -F \"images_file=@".$ill."\" \"".$endPointWatson."classify?api_key=$apiKeyWatson&version=2016-05-20\"";
-	#say "cmd : ".$cmd;
+  #say $urlIIIF.$url;
+	#my $cmd=  "curl -X POST -F \"images_file=@".$ill."\" \"".$endPointWatson."classify?api_key=$apiKeyWatson&version=2016-05-20\"";
+  #my $cmd =  "curl -u  \"apikey:".$apiKeyWatson."\" \"".$endPointWatson."classify?images_file=@".$fic."&version=2018-03-19\"";
+  my $cmd =  "cd /tmp;curl -X POST -u \"apikey:".$apiKeyWatson."\" --form \"images_file=@".$fic."\" \"".$endPointWatson."classify?version=2018-03-19\"";
+
+  say "\n** curl cmd: ".$cmd;
 	my $res = `$cmd`;
-	say "res : ".$res;
+	say "res: ".$res;
 	if ($res and (index($res, "ERROR") == -1))   {
 	 	(@classes) = do { local $/; $res =~ m/$motifClasseWatson/g };
 	 	(@scores) = do { local $/; $res =~ m/$motifScoreWatson/g };
@@ -1424,23 +1619,36 @@ sub callWatsonCC {my $ill=shift;
 	 }
 }
 
-sub writeGoogleJSON {my $img=shift;
+sub writeGoogleJSON {my $url=shift;
 										 my $JSONfile=shift;
-										 my $mode=shift;
+										 my $mode=shift; # face detection/ocr/visual recognition
 
-		my $OUT;
+ my $OUT;
+ my $tmpImg = "/tmp/imageIIIF.jpg";
+ IIIF_extract($url,$tmpImg);
+ my $cmd = "base64 -i $tmpImg"; # conversion base 64
+ my $res = `$cmd`;
 
-open($OUT, '>',$JSONfile) || die "### Can't write in $JSONfile file: $!\n";
-print $OUT "{
+ open($OUT, '>',$JSONfile) || die "### Can't write in $JSONfile file: $!\n";
+ # using the url:
+ #\"source\": {
+ #     \"imageUri\": \"$res\"
+ #   }
+
+ print $OUT "{
 \"requests\": [
 	{
 		\"image\": {
-		\"source\": {
-				\"imageUri\": \"$img\"
-			}
+		  \"content\": \"$res\"
 	 },
 		\"features\": [";
 	switch ($mode) {
+  case "DF" {
+  	  print $OUT "
+  			{
+  				\"type\": \"FACE_DETECTION\",
+          \"maxResults\": \"30\"
+  			}";}
 	case "CC" {
 	  print $OUT "
 			{
@@ -1475,7 +1683,7 @@ close $OUT;
 #		\"aspectRatios\": [1]
 #		}
 
-sub callGoogleCC {my $url=shift;
+sub callgoogleCC {my $url=shift;
 
 	my @classes;
 	my @scores;
@@ -1483,9 +1691,9 @@ sub callGoogleCC {my $url=shift;
   my $res;
   my $json = "/tmp/request.json";
 
-  say $urlIIIF.$url;
+  #say $urlIIIF.$url;
 	say "Writing in $json";
-	writeGoogleJSON($urlIIIF.$url, $json, "CC");
+	writeGoogleJSON($url, $json, "CC");
 
 	my $cmd=  "curl -v -s -H \"Content-Type: application/json\" $endPointGoogle$apiKeyGoogle --data-binary \@$json";
 	say "cmd : ".$cmd;
@@ -1497,10 +1705,10 @@ sub callGoogleCC {my $url=shift;
 		($coulR) = do { local $/; $res =~ m/$motifCoulRGoogle/ };
 		($coulV) = do { local $/; $res =~ m/$motifCoulVGoogle/ };
 		($coulB) = do { local $/; $res =~ m/$motifCoulBGoogle/ };
-		($vertices) = do { local $/; $res =~ m/$motifVerticesGoogle/s };
+		($vertices) = do { local $/; $res =~ m/$motifVerticesGoogle/s }; # we keep the first crop
 
 		#($cropy) = do { local $/; $res =~ m/$motifCropYGoogle/ };
-		my @crop = decodeVertices("{\"vertices\": [".$vertices."]}");
+		my @crop = decodeVertices($vertices);
 		#say Dumper (@crop);
 		say " dominante color : R : $coulR / G: $coulV / B: $coulB";
 		my $couleur = getColorName($coulR,$coulV,$coulB);
@@ -1515,41 +1723,15 @@ sub callGoogleCC {my $url=shift;
 	 }
 }
 
-sub decodeVertices {my $str=shift;
 
-	my $x0 = 10;
-	my $y0 = 10;
-	my $width;
-	my $height;
-
-	#say $str;
-	my $decoded = decode_json($str);
-	#print  Dumper($str);
-
-	my @vertices = @{ $decoded->{'vertices'} };
-	#foreach my $v ( @vertices ) {
-	#	my $x = $v->{"x"} || 0;
-	#	my $y = $v->{"y"} || 0;
-	if (defined $vertices[0]->{"x"})  {
-  	 $x0 = $vertices[0]->{"x"}}
-	if (defined $vertices[0]->{"y"})  {
-	   $y0 = $vertices[0]->{"y"}}
-	if (defined $vertices[1]->{"x"})  {
-	 	  $width = $vertices[1]->{"x"} - $x0}
-	if (defined $vertices[2]->{"y"})  {
-		 	$height = $vertices[2]->{"y"} - $y0}
-	return ($x0,$y0,$width,$height)
-}
-
-sub callGoogleOCR {my $url=shift;
-
+sub callgoogleOCR {my $url=shift;
 	my @classes;
   my $res;
   my $json = "/tmp/request.json";
 
-  say $urlIIIF.$url;
+  #say $urlIIIF.$url;
 	say "Writing in $json";
-	writeGoogleJSON($urlIIIF.$url, $json, "OCR");
+	writeGoogleJSON($url, $json, "OCR");
 
 	my $cmd=  "curl -v -s -H \"Content-Type: application/json\" $endPointGoogle$apiKeyGoogle --data-binary \@$json";
 	say "cmd : ".$cmd;
@@ -1572,7 +1754,7 @@ sub hd_classifyDF {
 
     my $redim;
     my $rotation;
-		my $fact = 100.0/$factIIIF; # ratio to set the dimensions in the original image space
+    my $fact; # ratio to set the dimensions in the original illustration space
     my $page = $elt->parent->att('ordre');
     say " page: $page";
 
@@ -1581,63 +1763,191 @@ sub hd_classifyDF {
 			my $classify = classifyReady($ill);
 			if ($classify) {
        $nill = $ill->att('n');
-    	 # tmp image file
-       my $iiifFile = "$OUT/$idArk-$nill.jpg";
-			 my $url = setIIIFURL($ill,$page,"std");
-       if (IIIF_extract($url,$iiifFile)) {
-				 # call the APIs
-				 switch ($classifCBIR)  {
-	 				case "ibm"			{@res = callWatsonDF($iiifFile);}
-					case "google"		{@res = callGoogleDF($iiifFile);}
+       # tmp image file
+       my $iiifFile = "/tmp/image.jpg";
+       # compute the IIIF url to the image
+       my $url = setIIIFURL($ill,$page,"std");
+       if (index($url,"full") != -1) {
+            $fact = 1}  # the illustration has been processed at full size
+       else {$fact = 100.0/$factIIIF }
+	     # call the APIs
+			 switch ($classifCBIR)  {
+	 				case "ibm"			{
+						if (IIIF_extract($url,$iiifFile)) {  # extract the file locally
+						   @res = callibmDF($iiifFile);}
+             }
+					case "google"		{
+						@res = callgoogleDF($url);}
+          else { say "## unknown CBIR mode: $classifCBIR ##"}
 				 }
-				 if (@res) { # the API call succeed
+
+				 if ($res[0] ne -1) { # the API call succeed
+         say " --> API call: success!";
 					$nbTotIll++;
+          #say Dumper @res;
 					updateClassif($ill);
 					if ($res[0]) { # the API returned some results
 						# write the new metadata in the XML
-						#say Dumper (@res);
-						$nbVisages = int ((scalar(@res)/8)+0.5); # @res is a list of 8 array values
-						say " ** number of faces: $nbVisages";
-            foreach my $i  (0..$nbVisages-1) {
-							my $score = $res[$i*2+$nbVisages+1]; # two scores, for age and gender
-							if ($score >= $CSthreshold) {
-								if ($res[$i] eq "MALE") {$sexe="M";}
-								else {$sexe = "F";}
-								}
-							else 	{$sexe = "P";# gender unknown
-										 $score=1}
+						say Dumper (@res);
+						#$nbVisages = int ((scalar(@res)/8)+0.5); # @res is a list of 7 array values
+            $nbVisages = $res[0];
+						say "--> $nbVisages new faces";
+            $visages =  scalar($ill->children('contenuImg[text()="face"]'));
+            say "    $visages already defined faces";
+            foreach my $i  (1..$nbVisages) {
+              say $i;
+              $nbTotDF++;
+              my $l = int($res[$i+$nbVisages*5]);
+              my $h = int($res[$i+$nbVisages*6]);
+              say " l: $l - h: $h";
+              if (($l <1) or ($h<1)) {
+                say " ### ERROR: negative coord: w: $l / h: $h###";
+                die
+              }
+							my $score = sprintf("%.2f", $res[$i+$nbVisages*2]); # two confidence scores, for age and gender
+							if ($res[$i] eq "MALE")
+                {$sexe="M";}
+							elsif ($res[$i] eq "FEMALE")
+                {$sexe = "F";}
+							else 	{$sexe = "P";}# gender unknown
+
 						  say " -> $sexe ($score)";
-							my $age = $res[$i+$nbVisages*7]*1.2;  # the API returns age_min
+							my $age = $res[$i+$nbVisages*7]*1.2;  # the IBM API returns age_min
 							#if ((defined $ageMin) and (defined $ageMax))
 							#       {$age = ($ageMin + $ageMax)/2}
 							say " -> age : $age";
-							#if ($age) {
-							$ill->insert_new_elt( 'contenuImg', "face" )->set_atts("sexe"=>$sexe,"CS"=>$score,"age"=>$age,"source"=>$classifCBIR,
-										 "x"=>int($res[$i+$nbVisages*3]*$fact),"y"=>int($res[$i+$nbVisages*4]*$fact),"l"=>int($res[$i+$nbVisages*5]*$fact), "h"=>int($res[$i+$nbVisages*6]*$fact));}
-							#else  {
-							#  $ill->insert_new_elt( 'contenuImg', "face" )->set_atts("sexe"=>$sexe,"CS"=>$score,"source"=>$classifCBIR,
-								#		 "x"=>int($res[$i*9+3]*$fact),"y"=>int($res[$i*9+4]*$fact),"l"=>int($res[$i*9+5]*$fact), "h"=>int($res[$i*9+6]*$fact));}
+              my $nv = $nill."-".($visages+$i);
+							if ($age ne 0) {
+							$ill->insert_new_elt( 'contenuImg', "face" )->set_atts("n"=>$nv,"sexe"=>$sexe,"CS"=>$score,"age"=>$age,"source"=>$classifCBIR,
+										 "x"=>int($res[$i+$nbVisages*3]*$fact),"y"=>int($res[$i+$nbVisages*4]*$fact),"l"=>int($l*$fact),"h"=>int($h*$fact));}
+							else  {
+                $ill->insert_new_elt( 'contenuImg', "face" )->set_atts("n"=>$nv,"sexe"=>$sexe,"CS"=>$score,"source"=>$classifCBIR,
+  										 "x"=>int($res[$i+$nbVisages*3]*$fact),"y"=>int($res[$i+$nbVisages*4]*$fact),"l"=>int($l*$fact),"h"=>int($h*$fact));}}
 							}
-	     }
 		 }
 	 }
   } #for
 }
 
-# call the Watson API on a file
+sub callgoogleDF {my $url=shift;
+
+	my @scores;
+  my @faces;
+  my @genres=();
+  my @vides=();
+  my $visages;
+  my $res;
+  my $json = "/tmp/request.json";
+
+  #say $urlIIIF.$url;
+	say "Writing in $json";
+	writeGoogleJSON($url, $json, "DF");
+
+	my $cmd=  "curl --max-time 10 -v -s -H \"Content-Type: application/json\" $endPointGoogle$apiKeyGoogle --data-binary \@$json";
+	say "cmd: ".$cmd;
+	$res = `$cmd`;
+	#say "result: ".$res;
+	if ($res and (index($res, "error") == -1))   {
+		(@faces) = do { local $/; $res =~ m/$motifVisageGoogle/g };
+    $visages = scalar(@faces);
+    say " number of faces detected: $visages";
+	 	(@scores) = do { local $/; $res =~ m/$motifScoreVisageGoogle/g };
+    #say Dumper @scores;
+		(@vertices) = do { local $/; $res =~ m/$motifVerticesGoogle/sg }; # we get all the vertices structures
+
+    say " vertices from the API:";
+    #say Dumper @vertices;
+    say "-----------";
+		#($cropy) = do { local $/; $res =~ m/$motifCropYGoogle/ };
+    if (@vertices) {
+		    my @crop = decodeVertices(\@vertices);
+		    #say Dumper (@crop);
+        for ($a=1;$a<=$visages;$a++)
+	       { push @vides,0;
+           push @genres,"P";
+	         }
+        # list of: genders, age CS, genre CS, X, Y, W ,H , age
+        return ($visages,@genres,@vides,@scores,@crop,@vides);}
+    else {
+      say " ### no vertices in the API result!\n";
+      return 0
+    }
+	}
+	else {
+	 	say " ### API error: ".$res;
+	 	return -1
+	 }
+}
+
+# take a list of json crops as input and return the dimensions as a list of:
+# all the x0
+# then all the y0
+# ... width
+# ... height
+sub decodeVertices {my $arg = shift;
+
+  my @vertices = @{$arg}; # get the reference to the array
+
+	my @x0 = ();
+	my @y0 = ();
+	my @width=();
+	my @height=();
+  my $x;
+  my $y;
+  my $count=1;
+
+say "decodeVertices";
+#say Dumper @vertices;
+foreach my $v ( @vertices ) {
+ if ($count%2 != 0) { # we have to consider on crop every 2 as the API returns 2 crops for each face
+	my $decoded = decode_json("{\"vertices\": [".$v."]}");
+	my @dv = @{ $decoded->{'vertices'} };
+  #say Dumper @dv;
+
+	$x = $dv[0]->{"x"} || 0;
+
+	#if (defined $dv[0]->{"x"})  { # first point: up/left
+  	 #$x = $dv[0]->{"x"};
+     push @x0, $x;
+     print "x0: $x";
+	#if (defined $dv[0]->{"y"})  {
+  $y = $dv[0]->{"y"} || 0;
+	   #$y = $dv[0]->{"y"};
+     push @y0, $y;
+     print " - y0: $y ";
+	#if (defined $dv[2]->{"x"})  { # 3rd point: down/right
+	my $tmp = $dv[2]->{"x"} || 0;
+      push @width, $tmp - $x;
+      print " - w: ".($tmp - $x);
+	#if (defined $dv[2]->{"y"})  {
+  $tmp = $dv[2]->{"y"} || 0;
+  #$h = $dv[2]->{"y"} - $y;
+      push @height, $tmp - $y;
+      say " - h: ".($tmp - $y);
+    }
+   $count++;
+  }
+	return (@x0,@y0,@width,@height)
+}
+
+# call the Watson API on a file path
 # return: the list of classes followed by the confidence scores
-sub callWatsonDF {my $ill=shift;
+sub callibmDF {my $fic=shift;
 
 	my @classes;
 	my @scores;
 
-	my $cmd=  "curl -X POST -F \"images_file=@".$ill."\" \"".$endPointWatson."detect_faces?api_key=$apiKeyWatson&version=2016-05-20\"";
-	#say "cmd : ".$cmd;
+	#my $cmd=  "curl -X POST -F \"images_file=@".$ill."\" \"".$endPointWatson."detect_faces?api_key=$apiKeyWatson&version=2016-05-20\"";
+	#say "cmd: ".$cmd;
+#  my $cmd=  "curl -u  \"apikey:".$apiKeyWatson."\" \"".$endPointWatson."detect_faces?url=$url&version=2018-03-19\"";
+  my $cmd =  "cd /tmp;curl -X POST -u \"apikey:".$apiKeyWatson."\" --form \"images_file=@".$fic.\" \"".$endPointWatson."detect_faces?version=2018-03-19\"";
 	my $res = `$cmd`;
 	say "res : ".$res;
 
 	if ($res and (index($res, "ERROR") == -1))   {
-		(@genders) = do { local $/; $res =~ m/$motifGenderWatson/g };
+		(@genders) = do { local $/; $res =~ m/$motifGenreWatson/g };
+    $visages = scalar(@genders);
+    say " number of faces detected: $visages";
 		(@scores) = do { local $/; $res =~ m/$motifScoreWatson/g };
 		(@agesMin) = do { local $/; $res =~ m/$motifAgeMinWatson/g };
 		#(@agesMax) = do { local $/; $res =~ m/$motifAgeMax/g };
@@ -1646,7 +1956,7 @@ sub callWatsonDF {my $ill=shift;
 		(@Larg) = do { local $/; $res =~ m/$motifLargWatson/g };
 		(@Haut) = do { local $/; $res =~ m/$motifHautWatson/g };
 		if (@genders) {
-		  return (@genders,@scores,@Xo,@Yo,@Larg,@Haut,@agesMin);}
+		  return ($visages,@genders,@scores,@Xo,@Yo,@Larg,@Haut,@agesMin);}
 		else {return (-1)}
 	}
 	else {
@@ -1710,7 +2020,7 @@ sub hd_fixFace {
          for my $d (@data) {
      	     say " data: $d"; # returns label,x,y,w,h,confidence score
             my @md = split(/\,+/, $d);
-            my $score =$md[5];
+            my $score = sprintf("%.2f",$md[5]);
             if ($score >= $threshold) {
               $nbTotDF++;
 							switch ($SERVICE)  {
@@ -1743,56 +2053,6 @@ sub hd_fixFace {
      }
  }
 
-## extract the faces as image files
-sub hd_extractFace {
-    my ($t, $elt) = @_;
-
-   if ($elt->text() eq "face") {
-     say "Face : ".$elt->att('age')." ans - sexe : ".$elt->att('sexe');
-     my $ill = $elt->parent;
-     my $page = $ill->parent->parent->att('ordre');
-     say " page: $page";
-     my $tmp = "$OUT/$idArk-$page-".$ill->att('n').".jpg";
-	   unlink $tmp;
-
-	 # handle rotation
-	 $rotation = $elt->parent->att('rotation');
-	 $rotation ||= "0";
-
-	 # dimensions
-	 my $largVSG = $elt->att('l');
-	 my $hautVSG = $elt->att('h');
-
-	 # 1:1 format?
-	 if ($carreVSG==1) {
-	 	if ( $largVSG >= $hautVSG) {  # we take the largest dimension
-	     $deltaL = $largVSG*$expandIIIF;
-			 $deltaH= $deltaL; # delta: to crop larger than the face
-	     $hautVSG = $largVSG;
-	      }
-	 	else  {
-	 		$deltaH = $hautVSG*$expandIIIF; $deltaL= $deltaH;
-	 		$largVSG = $hautVSG;}
-	 } else {
-	 	  $deltaL = $largVSG*$expandIIIF;
-	 	  $deltaH = $hautVSG*$expandIIIF;
-	}
-
-	 say " L :".$deltaL	;say " H :".$deltaH	;
-
-	 my $url = $urlIIIF.$idArk."/f$page/".($ill->att('x')+$elt->att('x')-$deltaL/2).",".($ill->att('y')+$elt->att('y')-$deltaH/2).","
-	 .($largVSG+$deltaL).",".($hautVSG+$deltaH)."/pct:$factIIIF/$rotation/native.jpg";
-	 say "--> ".$url;
-     getstore($url, $tmp);
-	 if (-e $tmp) {
-       $nbTotIll++;}
-     else {
-		 say "### IIIF : $url \n can't extract! ###";
-		}
-    }
-
-}
-
 ## reset the IDs numbering
 sub hd_updateID {
     my ($t, $elt) = @_;
@@ -1807,6 +2067,27 @@ sub hd_updateID {
     	$ill->set_att("n",$page."-".$n);  # IDs has this pattern: n° page-n° illustration
     	say " n: ".$ill->att('n');
     	$n++;
+    	$nbTotIll++;
+    }
+}
+
+## reset the face IDs numbering
+sub hd_updateFaceID {
+    my ($t, $elt) = @_;
+
+    my $page = $elt->parent->att('ordre');
+    say " page : $page";
+
+    my @ills = $elt->children('ill');
+    for my $ill ( @ills ) {
+      my @faces = $ill->children('contenuImg[text()="face"]');
+      my $illID = $ill->att('n');
+      my $n = 1;
+      for my $face( @faces ) {
+         my $faceID =  $illID."-".$n;
+    	   $face->set_att("n", $faceID);  # IDs has this pattern: n° page-n° illustration
+    	   say " n: ".$faceID;
+    	   $n++;}
     	$nbTotIll++;
     }
 }
@@ -1872,8 +2153,10 @@ sub hd_updateColor {
 
     my @ills = $elt->children('ill');
     for my $ill ( @ills ) {
-    	$ill->set_att("couleur",$couleur);
-    	$nbTotIll++;
+      #if ($ill->att("couleur") eq "mono") {
+    	  $ill->set_att("couleur",$couleur);
+    	  $nbTotIll++;
+      #}
     }
 }
 
@@ -1890,7 +2173,7 @@ sub hd_updateGenre {
 			for my $g ( @genres ) {
     	 my $tmp = $g->att('source');
     	 if ((defined $tmp) and ($tmp eq $classifSource) and ($g->text eq $illGenreOld)) {
-				 $g->delete; # suppress it
+				 $g->delete;
     		 $ill->insert_new_elt("genre","$illGenreNew")->set_atts("source"=>$classifSource);
 				 print " +";
 				 $nbTotIll++;
@@ -1899,6 +2182,7 @@ sub hd_updateGenre {
   }
 }
 
+# fix illustrations with no genre
 sub hd_fixGenre {
     my ($t, $elt) = @_;
 
@@ -1910,12 +2194,14 @@ sub hd_fixGenre {
 			my @genres = $ill->children('genre');
     	if (not @genres) {
     		 $ill->insert_new_elt("genre","$illGenreNew")->set_atts("source"=>$classifSource);
+         #$ill->insert_new_elt("genre","$illGenreNew")->set_atts("source"=>"final");
 				 print " +";
 				 $nbTotIll++;
 			}
     }
 }
 
+# set ads genre on last pages
 sub hd_fixAdGenre {
     my ($t, $elt) = @_;
 
@@ -2169,15 +2455,46 @@ sub hd_fixCBIRClassif {
     }
 }
 
-# get the genre
+# fix h and w when they don't exist on Google croppings
+# replace with the illustration w & h
+sub hd_fixGoogleHL {
+    my ($t, $elt) = @_;
+
+		my $page = $elt->parent->att('ordre');
+		say " page: $page";
+
+    my @ills = $elt->children('ill');
+    for my $ill ( @ills ) {
+			$nbTotIll++;
+      $wIll = int($ill->att('w'))*0.9;
+      $hIll = int($ill->att('h'))*0.9;
+			my @cbir = $ill->children('contenuImg[text()!="face" and @source="google"]');
+			if (@cbir) {
+			 $nbTotIll++;
+			 for my $c (@cbir) {
+         #say $c->text();
+         $h = $c->att('h');
+         $l = $c->att('l');
+         if (defined $h and int($h) < 2) {
+						print "+";
+						$c->set_att("h",$hIll);}
+         if (defined $l and int($l < 2)) {
+   						print "+";
+   						$c->set_att("l",$wIll);}
+          }
+			  }
+			}
+	}
+
+
+# get the illustration genre
 sub getGenre {
     my $ill=shift;
 
-    #say "\n n : ".$ill->att('n');
 	 if ($ill->children('genre')) {
 		 my $genreFinal = $ill->get_xpath('./genre[@source="final"]', 0);
-     #say $genreFinal->text();
 		 if ($genreFinal) {
+       say "-> genre: ".$genreFinal->text();
 			 return $genreFinal->text();
 		 }
    }
@@ -2224,7 +2541,7 @@ sub hd_unify {
 				 }
 				$genreMD = $ill->first_child_text('genre[@source="md"]');
 				$genreTF = $ill->first_child_text('genre[@source="TensorFlow"]');
-				$genreHM = $ill->first_child_text('genre[@source="hm"]');
+				$genreHM = $ill->first_child_text('genre[@source="hm"]'); # or 'cwd'
 
 				# process the results
 				if ($genreHM) { # top priority
@@ -2348,6 +2665,7 @@ sub hd_fixType {
 		my $page = $elt->parent->att('ordre');
 		say " page : $page";
 
+    my $meta = $elt->parent->parent->parent->first_child;
     my @ills = $elt->children('ill');
     for my $ill ( @ills ) {
     	my $tmp = $ill->first_child('genre');
@@ -2356,7 +2674,6 @@ sub hd_fixType {
 				# suppress the genre
 				# $tmp->delete; # non, on garde pour la facette GENRE
 				# suppress the type
-				my $meta = $elt->parent->parent->parent->parent->first_child;
 				$meta->first_child('type')->delete;
 				# and replace it with the right type
 				$meta->insert_new_elt("type",$documentType);
@@ -2407,7 +2724,7 @@ sub hd_TFfilter {
 			my $page = $elt->parent->att('ordre');
     	$nill = "$idArk-$nill";
 
-    	if (($TYPE) and ($TYPE="-p"))
+    	if (($OPTION) and ($OPTION="news"))
 			 {@genreIll = isTFclassify_news($nill,$page);}
 			 else {@genreIll = isTFclassify($nill);}
 			#say Dumper @genreIll;
@@ -2463,13 +2780,15 @@ sub hd_TFunFilter {
 # return: class  and its confidence value
 # for newspapers
 sub isTFclassify_news {
-	my $nomFic=shift;
+	my $fichier=shift;
 	my $page=shift;
 
   my $top1CS=0;
 	my $top2CS=0;
+  my $nomFic=$fichier;
 
 	say "TensorFlow newspapers: $nomFic (page : $page)";
+  $nomFic =~ s/\//-/g;# replace the / with - to avoid issues on filename
 
 	#to do : use a hash
 	foreach my $i  (0..scalar(@listeDocs)-1) {
@@ -2531,15 +2850,17 @@ sub isTFclassify_news {
 
 # look for the classification data
 sub isTFclassify {
-	my $nomFic=shift;
+	my $fichier=shift;
 
   my $tmpCS=0;
+  my $nomFic=$fichier;
 
 	say "TensorFlow: ".$nomFic;
+  $nomFic =~ s/\//-/g;# replace the / with - to avoid issues on filename
 
 	#to do : use a hash
 	foreach my $i  (0..scalar(@listeDocs)-1) {
-	 if (index($listeDocs[$i],$nomFic) != -1) { # the illustration name is in the TensorFlow data
+	 if (index($listeDocs[$i],$nomFic) != -1) { # the illustration filename is in the TensorFlow data
 	 	my @ligne=@{$externalData[$i]}; # the CSV data for the illustration
 	 	#say Dumper @ligne;
 	 	undef $indiceClasse;

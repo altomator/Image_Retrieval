@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<analyseAlto>
+	<metad>
+<type>I</type>
+<ID>btv1b10510693p</ID>
+<titre>Nid de blessés : estampe / Steinlen 1917</titre>
+<dateEdition>1917</dateEdition>
+<auteur>Steinlen, Théophile Alexandre (1859-1923). Graveur</auteur>
+<lang>Sans contenu linguistique</lang>
+<source>Bibliothèque nationale de France, département Estampes et photographie, FT 5-DC-385 (G, 2)</source>
+<nbPage>1</nbPage>
+<descr>Guerre mondiale (1914-1918) -- Champs de bataille Guerre mondiale (1914-1918) -- Guerre de tranchées Poilus (Guerre mondiale, 1914-1918) Blessés Scènes -- 1914-1945</descr>
+</metad>
+<contenus  ocr="false" toc="false"><largeur>497</largeur>
+<hauteur>381</hauteur>
+<largeurPx>11742</largeurPx>
+<hauteurPx>9013</hauteurPx>
+	<pages>
+<page  ordre="1"><blocIllustration>1</blocIllustration>
+	<ills>
+<ill  w="11742" h="9013" couleur="inconnu" taille="49" y="1" n="1-1" x="1"><genre  CS="1" source="hm">carte</genre>
+<genre  CS="0.95" source="md">gravure</genre>
+<theme  source="md" CS="0.8">16</theme>
+<titraille>Nid de blessés : estampe / Steinlen 1917</titraille>
+</ill>
+</ills>
+</page>
+</pages>
+</contenus>
+</analyseAlto>

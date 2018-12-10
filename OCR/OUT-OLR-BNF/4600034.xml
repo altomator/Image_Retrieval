@@ -2,28 +2,26 @@
 	<analyseAlto>
 	<metad>
 <type>P</type>
-<ID>bpt6k46000341</ID>
+<ID>4600034</ID>
 <titre>Excelsior</titre>
 <dateEdition>1910-12-20</dateEdition>
-<descr>cb32771891w</descr>
+<lang>fre</lang>
+<notice>cb32771891w</notice>
 <nbPage>12</nbPage>
 </metad>
-<contenus ><largeur>6314</largeur>
-<hauteur>8650</hauteur>
-<nbArticle>206</nbArticle>
+<contenus ><largeur>400</largeur>
+<hauteur>549</hauteur>
+<largeurPx>6314</largeurPx>
+<hauteurPx>8650</hauteurPx>
 	<pages>
-<page  ordre="1"><nbMot>274</nbMot>
-<blocTexte>16</blocTexte>
+<page  ordre="3"><nbMot>4146</nbMot>
+<blocTexte>137</blocTexte>
 <blocTab>0</blocTab>
-<blocPub>0</blocPub>
+<blocPub>8</blocPub>
 <blocIll>2</blocIll>
 	<ills>
-<ill  une="true" taille="11" couleur="gris" n="1-1" h="2128" y="1726" w="5267" x="505"><titraille> La Tempête sur les Côtes de France </titraille>
-<leg> Phot. de notre correspondant M. Lefebvre. LA JETÉE OUEST -DE CALAIS APRÈS L ABORDA.GE L AVANT DU VAPEUR ANGLAIS  quot; ELLERBECK  quot; APRÈS LA COLLISION La tempête qui-a --, sévi-ces jours derniers sur les côtes Nord et Ouest de la France a causé dans ces régions de sérieux dommages. A Calais, le vapeur anglais Ellerbeck, arrivant de Hull, venait de - s engager -- entre ~. les jetées quand drossé par le vent et par le courant, il se - plaça de travers, son avant entra dansf la jetée et - subit de sérieux dégâts. </leg>
-</ill>
-<ill  une="true" taille="17" couleur="gris" n="1-2" h="3179" y="4543" w="5241" x="531"><titraille> Le procès des faux tableaux, à Tours </titraille>
-<leg> Phot. Peigné. ; j i ; • A.uiourd hui @comPara les A ssises d Indre-et-Loire Daulby, inculpé d avoir vendu de faux tableaux à line riche américaine, M Paine. ^ 1. La porte d entrée du château de la Tour. De chaque côté, les armés sculptées par Daulby. Ce dernier prétendait qu elles étaient celles des comtes d^Aulby. -^M1^ Daulby. --3.AM^e Paine,^quica *porté n accusaHon contre Daulby et sa femme. — .4. Daulby. --;5.vLe château de la Tour, qui avait été acheté par Daulby.---  6.:M! Maurice- Bernard, défenseur .• : : ï C  gt; de4 àccusé. --- il,Le P^laisde Justice -de Tours. -- 8.;iLa^foule devant»le Palais. — 9. Le-conseiller-Robert.,président des Assisesi </leg>
-</ill>
+<ill  couleur="gris" w="1005" taille="1" y="1672" h="1194" x="2486" n="3-1" filtre="1"></ill>
+<ill  filtre="1" couleur="gris" w="2004" n="3-2" taille="3" y="6304" h="1740" x="2564"></ill>
 </ills>
 </page>
 <page  ordre="2"><nbMot>4249</nbMot>
@@ -32,42 +30,17 @@
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  x="2643" w="2056" taille="2" couleur="gris" h="1265" y="6417" n="2-1"><titraille> UNE VERITABLE AMIE </titraille>
-<leg> (Extrait du Punch.) LA  quot;MAÎTRESSE DE :MAI!SON. ■—Je-suis désolée cVapprendre que vous êtes fâ-chée acec Gladys. *. LA BONNE AMIE;—Ma chérie ,.c est à cause de vous. Elle disait que vous CH ie:;. l âme, bas::¡e, que vous étiez fausse, que cous flirtiez de façon scandaleuse £H C,C Jacques,  n importar niais quand elle a a/lil ll/é que vous vous habilliez  chez une pelité cdulitrière de quartier: je n ai pas pu me contenir. </leg>
-</ill>
+<ill  n="2-1" x="2643" taille="2" h="1265" y="6417" couleur="gris" w="2056" filtre="1"></ill>
 </ills>
 </page>
-<page  ordre="3"><nbMot>4146</nbMot>
-<blocTexte>137</blocTexte>
+<page  ordre="1"><nbMot>274</nbMot>
+<blocTexte>16</blocTexte>
 <blocTab>0</blocTab>
-<blocPub>8</blocPub>
+<blocPub>0</blocPub>
 <blocIll>2</blocIll>
 	<ills>
-<ill  taille="1" couleur="gris" n="3-1" h="1194" y="1672" w="1005" x="2486"><titraille> AU CONSERVATOIRE : Le grand prix Osiris est décerné à Mlle Yvonne Ducos </titraille>
-<leg> Mlle YVONNE Ducos </leg>
-</ill>
-<ill  x="2564" w="2004" y="6304" h="1740" n="3-2" couleur="gris" taille="3"><titraille> Le Lyceum Club de France : UNE BRILLANTE INAUGURATION </titraille>
-<leg> Parc et Hôtel du Lyceum, rue de Penthièvre </leg>
-</ill>
-</ills>
-</page>
-<page  ordre="4"><nbMot>4458</nbMot>
-<blocTexte>179</blocTexte>
-<blocTab>0</blocTab>
-<blocPub>5</blocPub>
-<blocIll>4</blocIll>
-	<ills>
-<ill  filtre="1" w="522" x="2835" couleur="gris" taille="0" n="4-1" y="1582" h="843"><titraille> Le Ministre laisse espérer la croix pour M. Saint-Pol Roux LE MAGNIFIQUE : Impressions de l auteur de la  quot; Dame à la Faulx — Le poète en Bretagne. -- La vie d un artiste. </titraille>
-<leg> Phot. Capelle. M. .SAINT-POL ROUX </leg>
-</ill>
-<ill  h="1439" y="4016" n="4-2" taille="1" couleur="gris" x="3904" w="1044"><titraille> LES PETITES EXPOSITIONS : Le peintre espagnol Vaspez-Diaz </titraille>
-<leg> . :LES TOREROS PEPETE ET BAZAN Tableau de Vasques-Dias </leg>
-</ill>
-<ill  y="3242" h="878" n="4-3" couleur="gris" taille="0" x="4970" w="1057"><titraille> Tableaux Modernes de M. A. DUPRAT </titraille>
-<leg> VUE DE VENISE A- Duprat. </leg>
-</ill>
-<ill  pub="true" x="4970" w="1057" h="596" y="5098" n="4-4" taille="0" couleur="gris"><titraille> Publicité </titraille>
-</ill>
+<ill  filtre="1" w="5267" couleur="gris" une="true" taille="11" h="2128" y="1726" x="505" n="1-1"></ill>
+<ill  n="1-2" taille="17" y="4543" h="3179" x="531" une="true" w="5241" couleur="gris" filtre="1"></ill>
 </ills>
 </page>
 <page  ordre="5"><nbMot>170</nbMot>
@@ -76,12 +49,57 @@
 <blocPub>0</blocPub>
 <blocIll>2</blocIll>
 	<ills>
-<ill  n="5-1" h="3262" y="697" taille="18" couleur="gris" w="5302" x="409"><titraille> L Assemblé Générale des Artistes Français L Assemblée Générale des Artistes Français </titraille>
-<leg> L ASSEMBLEE EN SÉANCE, A LA SALLE DES HORTICULTÈURS, RUE D ATHÈNES * A </leg>
-</ill>
-<ill  n="5-2" h="3113" y="4604" taille="16" couleur="gris" w="5154" x="505"><titraille> Le parricide Gaston Waché de Roo devant ses juges </titraille>
-<leg> croquis d audience de Cipriani. LE PRÉSIDENT BERTULUS Mme A. Waché, une des sœurs de l accusé. GASTON WACHÉ DE ROO pendant l interrogatoire DANS LE MÉDAILLON, M. HAJOS L ACCUSÉ Mme F. Sauvard, U:..,J des sœurs de l accusé. </leg>
-</ill>
+<ill  filtre="1" h="3262" taille="18" y="697" x="409" n="5-1" w="5302" couleur="gris"></ill>
+<ill  filtre="1" w="5154" couleur="gris" y="4604" taille="16" h="3113" x="505" n="5-2"></ill>
+</ills>
+</page>
+<page  ordre="11"><nbMot>5800</nbMot>
+<blocTexte>255</blocTexte>
+<blocTab>0</blocTab>
+<blocPub>11</blocPub>
+<blocIll>2</blocIll>
+	<ills>
+<ill  n="11-1" x="1474" taille="0" h="745" y="5337" w="1039" couleur="gris" filtre="1"></ill>
+<ill  couleur="gris" w="1078" h="755" taille="0" y="3980" x="4681" n="11-2" filtre="1"></ill>
+</ills>
+</page>
+<page  ordre="10"><nbMot>4479</nbMot>
+<blocTexte>176</blocTexte>
+<blocTab>0</blocTab>
+<blocPub>0</blocPub>
+<blocIll>4</blocIll>
+	<ills>
+<ill  couleur="gris" w="2095" h="1200" taille="2" x="574" y="3759" n="10-1" filtre="1"></ill>
+<ill  couleur="gris" w="509" n="10-2" h="843" taille="0" y="2390" x="2713" filtre="1"></ill>
+<ill  filtre="1" w="1974" couleur="gris" n="10-3" taille="2" y="686" h="1243" x="3835"></ill>
+<ill  filtre="1" n="10-4" h="149" taille="0" y="7785" x="5607" couleur="gris" w="267"></ill>
+</ills>
+</page>
+<page  ordre="4"><nbMot>4458</nbMot>
+<blocTexte>179</blocTexte>
+<blocTab>0</blocTab>
+<blocPub>5</blocPub>
+<blocIll>4</blocIll>
+	<ills>
+<ill  filtre="1" couleur="gris" w="522" taille="0" y="1582" h="843" x="2835" n="4-1"></ill>
+<ill  couleur="gris" w="1044" n="4-2" taille="1" x="3904" h="1439" y="4016" filtre="1"></ill>
+<ill  n="4-3" x="4970" taille="0" h="878" y="3242" couleur="gris" w="1057" filtre="1"></ill>
+<ill  filtre="1" w="1057" couleur="gris" n="4-4" taille="0" y="5098" h="596" x="4970"></ill>
+</ills>
+</page>
+<page  ordre="12"><nbMot>2769</nbMot>
+<blocTexte>128</blocTexte>
+<blocTab>0</blocTab>
+<blocPub>100</blocPub>
+<blocIll>7</blocIll>
+	<ills>
+<ill  n="12-1" taille="1" x="639" h="1217" y="347" couleur="gris" w="1017" filtre="1" derniere="true"></ill>
+<ill  filtre="1" derniere="true" n="12-2" taille="0" y="2558" h="689" x="558" w="478" couleur="gris"></ill>
+<ill  derniere="true" filtre="1" couleur="gris" w="1019" n="12-3" taille="1" x="1706" h="1425" y="1693"></ill>
+<ill  derniere="true" filtre="1" couleur="gris" w="357" taille="0" y="3112" h="274" x="2039" n="12-4"></ill>
+<ill  couleur="gris" w="2105" n="12-5" h="1646" taille="3" x="643" y="6152" derniere="true" filtre="1"></ill>
+<ill  couleur="gris" w="1034" n="12-6" x="3850" taille="1" h="1425" y="5681" derniere="true" filtre="1"></ill>
+<ill  filtre="1" derniere="true" n="12-7" h="39" taille="0" x="4076" y="1134" couleur="gris" w="21"></ill>
 </ills>
 </page>
 <page  ordre="6"><nbMot>5234</nbMot>
@@ -95,27 +113,8 @@
 <blocPub>5</blocPub>
 <blocIll>2</blocIll>
 	<ills>
-<ill  x="445" w="1028" couleur="gris" taille="1" y="1770" h="1652" n="7-1"><titraille> L Anniversaire de Racine : La gloire du poète en 1910. Un livre de M. Masson-Forestier- --  quot; Bérénice  quot; à la Comédie-Française;  quot; Iphigénie  quot; à l Odéon. </titraille>
-<leg> RACINE A 32 ANS (Musée de Langres) </leg>
-</ill>
-<ill  taille="5" couleur="gris" h="2768" y="5180" n="7-2" x="2650" w="1958"><leg> Mme EDVINA quot; .. 1 .- .1 nouvelle « Louise » de l Ovéra-Comiaue </leg>
-</ill>
-</ills>
-</page>
-<page  ordre="8"><nbMot>4667</nbMot>
-<blocTexte>170</blocTexte>
-<blocTab>0</blocTab>
-<blocPub>10</blocPub>
-<blocIll>3</blocIll>
-	<ills>
-<ill  w="500" x="1165" taille="0" couleur="gris" n="8-1" h="1387" y="1034"><titraille> Les robes d intérieur doivent être en harmonie avec le  quot; home  quot; </titraille>
-</ill>
-<ill  x="1704" filtre="1" w="496" couleur="gris" taille="0" y="2925" h="826" n="8-2"><titraille> MARIAGES </titraille>
-<leg> Mlle GABY DAUM </leg>
-</ill>
-<ill  couleur="gris" taille="0" n="8-3" y="2925" h="830" filtre="1" w="518" x="2230"><titraille> MARIAGES </titraille>
-<leg> M. ANDRÉ HOUDARD </leg>
-</ill>
+<ill  filtre="1" x="445" taille="1" h="1652" y="1770" n="7-1" w="1028" couleur="gris"></ill>
+<ill  y="5180" taille="5" h="2768" x="2650" n="7-2" couleur="gris" w="1958" filtre="1"></ill>
 </ills>
 </page>
 <page  ordre="9"><nbMot>192</nbMot>
@@ -124,67 +123,20 @@
 <blocPub>0</blocPub>
 <blocIll>3</blocIll>
 	<ills>
-<ill  taille="9" couleur="gris" n="9-1" h="3331" y="601" w="2659" x="497"><titraille> L aviateur Sopwith qui a traversé la Manche </titraille>
-<leg> ...... -. SOPWITH AVANT SON DÉPART </leg>
-</ill>
-<ill  w="2608" x="3243" taille="9" couleur="gris" n="9-2" h="3349" y="575"><titraille> La Fête de l Empereur de Russie </titraille>
-<leg> LA CÉRÉMONIE A L ÉGLISE RUSSE DE LA RUE DARU </leg>
-</ill>
-<ill  couleur="gris" taille="17" y="4682" h="3183" n="9-3" x="566" w="5285"><titraille> Le Roi Lewanika reçu par le Duc de Connaught </titraille>
-<leg> LE ROI LEWANIKA A LA GARDEN-PARTY DU DUC DE CONNAUGHrr LE ROI EN GRANDE TENUE. — UN SIMULACRE DE CHASSE A L HIPPOPOTAME ijEWANIKA PRÉSENTÉ AU DUC DE CONNAUGH quot;ll </leg>
-</ill>
+<ill  n="9-1" taille="9" h="3331" y="601" x="497" w="2659" couleur="gris" filtre="1"></ill>
+<ill  couleur="gris" w="2608" n="9-2" taille="9" h="3349" x="3243" y="575" filtre="1"></ill>
+<ill  taille="17" h="3183" x="566" y="4682" n="9-3" couleur="gris" w="5285" filtre="1"></ill>
 </ills>
 </page>
-<page  ordre="10"><nbMot>4479</nbMot>
-<blocTexte>176</blocTexte>
+<page  ordre="8"><nbMot>4667</nbMot>
+<blocTexte>170</blocTexte>
 <blocTab>0</blocTab>
-<blocPub>0</blocPub>
-<blocIll>4</blocIll>
+<blocPub>10</blocPub>
+<blocIll>3</blocIll>
 	<ills>
-<ill  taille="2" couleur="gris" n="10-1" h="1200" y="3759" w="2095" x="574"><titraille> UNE NOUVELLE TRAVERSÉE DE LA MANCHE EN AÉROPLANE </titraille>
-<leg> Trajet accompli, dimanche, par l aviateursopwith, dans sa tentative pour le prix de 100.000 francs du baron de Forest : de l île Sheppey à Beaumont-Bely. </leg>
-</ill>
-<ill  filtre="1" w="509" x="2713" n="10-2" y="2390" h="843" couleur="gris" taille="0"><titraille> PARACHUTES POUR AVIATEURS : Mlle Marvingt nous donne son opi- nion : « Le parachute sera parfait, ou il ne sera pas. » </titraille>
-<leg> Mlle MARVINGT </leg>
-</ill>
-<ill  n="10-3" y="686" h="1243" couleur="gris" taille="2" w="1974" x="3835"><titraille> NOS GRANDES ÉQUIPES DE FOOTBALL-RUGBY </titraille>
-<leg> L ÉQUIPE DES « PROBABLES » QUI A BATTU L ÉQUIPE DES « POSSIBLES » DIMANCHE A COLOMBE; La plupart de ces joueurs ferçnt partie de l équipe nationale française. </leg>
-</ill>
-<ill  h="149" y="7785" n="10-4" taille="0" couleur="gris" x="5607" w="267" filtre="1"></ill>
-</ills>
-</page>
-<page  ordre="11"><nbMot>5800</nbMot>
-<blocTexte>255</blocTexte>
-<blocTab>0</blocTab>
-<blocPub>11</blocPub>
-<blocIll>2</blocIll>
-	<ills>
-<ill  x="1474" w="1039" couleur="gris" taille="0" y="5337" h="745" n="11-1"><titraille> PROPRIETES DE CAMPAGNE </titraille>
-</ill>
-<ill  taille="0" couleur="gris" n="11-2" h="755" y="3980" w="1078" x="4681"><titraille> A PARIS </titraille>
-</ill>
-</ills>
-</page>
-<page  ordre="12"><nbMot>2769</nbMot>
-<blocTexte>128</blocTexte>
-<blocTab>0</blocTab>
-<blocPub>100</blocPub>
-<blocIll>7</blocIll>
-	<ills>
-<ill  n="12-1" y="347" h="1217" couleur="gris" taille="1" pub="true" derniere="true" w="1017" x="639"><titraille> Publicité </titraille>
-</ill>
-<ill  x="558" w="478" filtre="1" derniere="true" pub="true" taille="0" couleur="gris" h="689" y="2558" n="12-2"><titraille> Publicité </titraille>
-</ill>
-<ill  couleur="gris" taille="1" n="12-3" y="1693" h="1425" derniere="true" w="1019" x="1706" pub="true"><titraille> Publicité </titraille>
-</ill>
-<ill  derniere="true" filtre="1" w="357" x="2039" pub="true" couleur="gris" taille="0" n="12-4" y="3112" h="274"><titraille> Publicité </titraille>
-</ill>
-<ill  taille="3" couleur="gris" h="1646" y="6152" n="12-5" x="643" w="2105" derniere="true" pub="true"><titraille> Publicité </titraille>
-</ill>
-<ill  taille="1" couleur="gris" n="12-6" h="1425" y="5681" w="1034" derniere="true" x="3850" pub="true"><titraille> Publicité </titraille>
-</ill>
-<ill  n="12-7" y="1134" h="39" couleur="gris" taille="0" pub="true" derniere="true" filtre="1" w="21" x="4076"><titraille> Publicité </titraille>
-</ill>
+<ill  filtre="1" h="1387" taille="0" x="1165" y="1034" n="8-1" couleur="gris" w="500"></ill>
+<ill  taille="0" y="2925" h="826" x="1704" n="8-2" couleur="gris" w="496" filtre="1"></ill>
+<ill  taille="0" h="830" y="2925" x="2230" n="8-3" w="518" couleur="gris" filtre="1"></ill>
 </ills>
 </page>
 </pages>

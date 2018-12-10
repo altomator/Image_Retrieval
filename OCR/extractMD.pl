@@ -56,6 +56,7 @@ $couleurDefaut = "gris"; # placer en commentaire pour analyser le mode de couleu
 
 # Image resolution
 $facteurDPI=25.4; # for DPI conversion to mm
+$coeffDPI=0; #  will be computed later : coeffDPI = facteurDPI / DPIdefaut
 # A8 surface (mm2). The illustrations size is expressed as a multiple of A8 size
 $A8 = 3848; # surface d'un A8 en mm2 (= format d'une carte de jeu). La taille des ill. est exprimée en multiple de A8
 
@@ -69,7 +70,7 @@ $unknown = "inconnu";  # to be localized
 # $themeDefaut = "16"; #  IPTC theme
 ####### parameter TO BE DEFINED ##########
 # The collection type
-$typeDoc="P"; # documents type :  P (newspapers) /  R (magazine) / M (monograph) / I (image)
+$typeDoc="M"; # documents type :  P (newspapers) /  R (magazine) / M (monograph) / I (image)
 ####### parameter TO BE DEFINED ##########
 # UNCOMMENT this line to se a default image type (picture, drawing, map...)
 #$genreDefaut="gravure"; # photo, gravure, dessin...
@@ -124,6 +125,8 @@ $paramMotifTitre_OCREN = "\<mods:title\>(.+)\<\/mods:title\>" ;
 $paramMotifTitre_OLREN = "\<title\>(.+)\<\/title\>" ;
 $paramMotifDate_OCREN = "\>(.+)\<\/mods:dateIssued";
 $paramMotifDate_OLREN = $paramMotifDate_OCREN;
+$paramMotifLang_OCREN = "\>(.+)\<\/mods:languageTerm";
+$paramMotifLang_OLREN = $paramMotifLang_OCREN;
 $paramMotifCouleur_OLREN = "\>(.+)\<\/mix:bitsPerSampleValue";
 #$paramMotifCouleur_OCREN = $paramMotifCouleur_OCREN;
 
@@ -154,6 +157,7 @@ $paramMotifDate_OCRBNF = "\>(.+)\<\/dateEdition\>";
 # $paramMotifNotice_OCRBNF = "12148\/(.*?)\<\/reference\>"; # non greedy
 # <reference type="NOTICEBIBLIOGRAPHIQUE">ark:/12148/cb42568994f</reference>
 $paramMotifNotice_OCRBNF = "BIBLIOGRAPHIQUE\"\>(.*?)\<\/reference\>";
+$paramMotifSource_OCRBNF = "SOURCE\"\>(.*?)\<\/reference\>";
 $paramMotifCouleur_OCRBNF = "profondeur=\"(\\d+)\"";
 $paramMotifDPI_OCRBNF = "resolution=\"(\\d+),";
 
@@ -453,6 +457,7 @@ if ($MODE eq "ocren"){
 	$motifNbPagesALTO = $paramMotifNbPagesALTO_OCREN;
 	$motifTitre=$paramMotifTitre_OCREN;
 	$motifDate = $paramMotifDate_OCREN;
+	$motifLang = $paramMotifLang_OCREN;
 	#$motifCouleur = $paramMotifCouleur_OCREN;
 	# structure logique
 	$motifPubALTO =$paramMotifPubALTO_OCREN;
@@ -469,6 +474,7 @@ if ($MODE eq "ocren"){
 	$motifNbPagesALTO = $paramMotifNbPagesALTO_OLREN;
 	$motifTitre=$paramMotifTitre_OLREN;
 	$motifDate = $paramMotifDate_OLREN;
+	$motifLang = $paramMotifLang_OLREN;
 	$motifCouleur = $paramMotifCouleur_OLREN;
 	# structure logique
 	$motifNumAlto =$motifNumAlto_OLREN;
@@ -490,6 +496,7 @@ if ($MODE eq "ocren"){
   $motifNbPagesALTO = $paramMotifNbPagesALTO_OCRBNF;
   $motifNbVuesALTO = $paramMotifNbVuesALTO_OCRBNF;
   $motifNotice = $paramMotifNotice_OCRBNF;
+	$motifSource = $paramMotifSource_OCRBNF;
   # structure logique
   #$motifPubALTO =$paramMotifPubALTO_OCRBNF;
   #$motifTable =$paramMotifTable_OCR;
@@ -731,11 +738,11 @@ sub lireMD {
   open my $fh, '<:encoding(UTF-8)', $ficMETS or die "Can't open: $ficMETS!"; # manifeste refNum ou METS en utf8
 
   if ($MODE eq "ocrbnf") { # OCR BnF case: some metadata are in the refNum manifest
-    ( $junk, $titre , $junk, $date, $junk, $nbPages, $junk, $notice ) = do { local $/; <$fh> =~ m/($motifTitre).*($motifDate).*($motifNbPagesALTO).*($motifNotice)/s }; # $/ : lire tout le fichier
+    ( $junk, $titre , $junk, $date, $junk, $nbPages, $junk, $notice,$junk, $source) = do { local $/; <$fh> =~ m/($motifTitre).*($motifDate).*($motifNbPagesALTO).*($motifNotice).*($motifSource)/s }; # $/ : lire tout le fichier
     # if #pages is not available, try to use the number of images
     if (not $nbPages) {
     	seek $fh, 0, 0;
-    	( $junk, $titre , $junk, $date, $junk, $notice,$junk,$nbPages,) = do { local $/; <$fh> =~ m/($motifTitre).*($motifDate).*($motifNotice).*($motifNbVuesALTO)/s };
+    	( $junk, $titre , $junk, $date, $junk, $notice,$junk,$source, $junk,$nbPages,) = do { local $/; <$fh> =~ m/($motifTitre).*($motifDate).*($motifNotice).*($motifSource).*($motifNbVuesALTO)/s };
     	}
   }
   elsif ($MODE eq "olrbnf") { # OLR BnF case
@@ -752,7 +759,7 @@ sub lireMD {
     $titre = $titreDefaut;
   }
   else { #  Europeana case
-  	( $junk, $titre , $junk, $date ) = do { local $/; <$fh> =~ m/($motifTitre).*($motifDate)/s }; # $/
+  	( $junk, $titre , $junk, $date, $junk, $lang ) = do { local $/; <$fh> =~ m/($motifTitre).*($motifDate).*($motifLang)/s }; # $/
   	$notice = $noticeEN; # record's ID is not in the METS manifest
   	# looking for #pages
 	  seek $fh, 0, 0;
@@ -768,8 +775,14 @@ sub lireMD {
   $notice ||= $unknown;
   $hash{"notice"} = $notice;
 
+	$source ||= $unknown;
+  $hash{"source"} = $source;
+
   $nbPages ||= "0";
   $hash{"pages"} = $nbPages ;
+
+	$lang ||= "fre";
+  $hash{"lang"} = $lang ;
 
   if (defined ($date))
     {   #$dateISO = Date::Simple->new($date);
@@ -807,6 +820,7 @@ sub lireMD {
 	else {	$hash{"supplement"}="FALSE";}
 
 	say " title: ".$titre;
+	say " lang: ".$lang;
   say " date: ".$date;
   say " pages: ".$nbPages;
   say " bibliographic record: ".$notice;
@@ -851,6 +865,7 @@ sub lireMD {
 	 }
 
    say " DPI: ".$DPIdefaut;
+   $coeffDPI = $facteurDPI/$DPIdefaut;
 
    # cas OLR : on cherche illustrations+legendes dans le manifeste
    if ($MODE eq "olren") { # la structure logique est dans le manifeste
@@ -1123,12 +1138,14 @@ sub lireMDALTO {
       say " ## Issue: extracting page dimension ##";
       return -1;
     }
-    #$largeurPage = $largeurPage;
-    #$hauteurPage = $hauteurPage;
-    $hash{"largeur"} = $largeurPage; # pixels
-    $hash{"hauteur"} = $hauteurPage;
+		$hash{"largeur"} = int($largeurPage*$coeffDPI); # document size in mm
+		$hash{"hauteur"} = int($hauteurPage*$coeffDPI); # actually, we take the first page...
+    $hash{"largeurPx"} = $largeurPage; # in pixels
+    $hash{"hauteurPx"} = $hauteurPage;
+
   }
-  #if ($DEBUG) {say "L : ". $largeurPage." x H : ".$hauteurPage} ;
+  if ($DEBUG) {
+		say "L : ". $largeurPage." (px) x H : ".$hauteurPage." (px)" }
 
   seek $fh, 0, 0;
   while (my $ligne = <$fh>) {
@@ -1415,9 +1432,6 @@ sub exportPage {my $id=shift; # id document
 	my $format=shift;  # format d'export
 	my $fh=shift;  # file handler
 
-			my $coeffDPI;
-	    if (defined $DPIdefaut) {
-				$coeffDPI = $facteurDPI/$DPIdefaut;}
 	    my $filtre;
 	    my $une;
 	    my $derniere;

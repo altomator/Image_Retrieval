@@ -28,15 +28,18 @@ sub exportMD {my $id=shift;
 
   #say Dumper (%hash);
 
-  say "\n-------------------------- Writing MD: ".$id;
+  say "\n--------------------- Writing MD for: ".$id;
 
   if ((keys %hash)==0) {
   	say "  ## empty HASH  !  ##";
   	return }
 
   $nbTotDocs++;
-  if (defined $page) {$ficOut = $OUT."/$id-$page.".$format}
-  else {$ficOut = $OUT."/$id.".$format}
+
+	$tmp = $id;
+	$tmp =~ s/\//-/g; # replace the / with - to avoid issues on filename
+  if (defined $page) {$ficOut = $OUT."/$tmp-$page.".$format}
+  else {$ficOut = $OUT."/$tmp.".$format}
   # if exists, delete
   if(-e $ficOut){
 		unlink $ficOut;
@@ -47,19 +50,25 @@ sub exportMD {my $id=shift;
   try {
   ####### XML #########
   if ($format eq "xml") {
-   say "--> export XML";
+   say "...Exporting to XML format";
    print {$fh} "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
    writeOpenElt("analyseAlto",$fh);
    writeOpenElt("metad",$fh);
    writeElt("type",$hash{"type"},$fh);
-   if ($calculARK == 1) {
-  		$tmp = $hash{"id"};
-  		if ($tmp) {
-  			writeElt("ID",$tmp,$fh); }
-  		}
+   #if ($calculARK == 1) {
+  	#	$tmp = $hash{"id"};
+  		#if ($tmp) {
+  writeElt("ID",$id,$fh);
+	#}
+  #		}
   writeElt("titre",$hash{"titre"},$fh);
   writeElt("dateEdition",$hash{"date"},$fh);
-  if (defined ($hash{"notice"})) {writeElt("descr",$hash{"notice"},$fh);}
+	if (defined ($hash{"auteur"})) {writeElt("auteur",$hash{"auteur"},$fh);}
+	if (defined ($hash{"lang"})) {writeElt("lang",$hash{"lang"},$fh);}
+  if (defined ($hash{"notice"})) {writeElt("notice",$hash{"notice"},$fh);}
+	if (defined ($hash{"source"})) {writeElt("source",$hash{"source"},$fh);}
+	if (defined ($hash{"url"})) {writeElt("url",$hash{"url"},$fh);}
+	if (defined ($hash{"URLbaseIIIF"})) {writeElt("urlIIIF",$hash{"URLbaseIIIF"},$fh);}
   writeElt("nbPage",$hash{"pages"},$fh);
   if (defined ($hash{"sujet"})) {writeElt("descr",$hash{"sujet"},$fh);}
   writeEndElt("metad",$fh);
@@ -67,6 +76,8 @@ sub exportMD {my $id=shift;
   writeEltAtts("contenus",\%atts,$fh);
   writeElt("largeur",$hash{"largeur"},$fh);
   writeElt("hauteur",$hash{"hauteur"},$fh);
+	writeElt("largeurPx",$hash{"largeurPx"},$fh);
+  writeElt("hauteurPx",$hash{"hauteurPx"},$fh);
   if ($hash{"articles"}){writeElt("nbArticle",$hash{"articles"},$fh);}
 
 	# Exporting the content

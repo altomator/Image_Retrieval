@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<analyseAlto>
+	<metad>
+<type>I</type>
+<ID>btv1b105109480</ID>
+<titre>La payse : estampe (Épreuve de bon à tirer avec remarque) / Steinlen</titre>
+<dateEdition>1917</dateEdition>
+<auteur>Steinlen, Théophile Alexandre (1859-1923). Lithographe</auteur>
+<lang>fre</lang>
+<source>Bibliothèque nationale de France, département Estampes et photographie, FOL-DC-385 (19)</source>
+<nbPage>1</nbPage>
+<descr>Guerre mondiale (1914-1918) -- Réfugiés -- France Guerre mondiale (1914-1918) -- Alimentation -- France Femmes et guerre -- France Poilus (Guerre mondiale, 1914-1918) Figures -- 1914-1945</descr>
+</metad>
+<contenus  ocr="false" toc="false"><largeur>235</largeur>
+<hauteur>360</hauteur>
+<largeurPx>5566</largeurPx>
+<hauteurPx>8521</hauteurPx>
+	<pages>
+<page  ordre="1"><blocIllustration>1</blocIllustration>
+	<ills>
+<ill  w="5566" h="8521" couleur="inconnu" taille="21" x="1" n="1-1" y="1"><genre  source="hm" CS="1">carte</genre>
+<genre  CS="0.95" source="md">gravure</genre>
+<theme  CS="0.8" source="md">16</theme>
+<titraille>La payse : estampe (Épreuve de bon à tirer avec remarque) / Steinlen</titraille>
+</ill>
+</ills>
+</page>
+</pages>
+</contenus>
+</analyseAlto>

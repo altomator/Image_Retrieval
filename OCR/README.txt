@@ -27,8 +27,8 @@ Sample: SB Berlin, Volkszeitung (1890-1904)/Berliner Volkszeitung (1904-1930), 1
 Notes :
 - $typeDoc parameter must be set to "P"
 - ALTO files names must be parametrized for SBB OCR in the Perl script:
-$numFicALTOdebut = -6
-$numFicALTOlong = 3;
+$numFicALTOdebut = -6 # default: -8
+$numFicALTOlong = 3; # default: 4
 
 >perl extractMD.pl -L ocren generic OCR-EN-SBB OUT-OCR-EN-SBB xml
 

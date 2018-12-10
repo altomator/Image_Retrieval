@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<analyseAlto>
+	<metad>
+<type>I</type>
+<ID>btv1b10510891j</ID>
+<titre>Les deux cortèges : estampe (Épr. biffée) / Steinlen 1916</titre>
+<dateEdition>1916</dateEdition>
+<auteur>Steinlen, Théophile Alexandre (1859-1923). Graveur</auteur>
+<lang>fre</lang>
+<source>Bibliothèque nationale de France, département Estampes et photographie, FOL-DC-385 (3)</source>
+<nbPage>1</nbPage>
+<descr>Guerre mondiale (1914-1918) -- Évacuation des civils -- France Guerre mondiale (1914-1918) -- Réfugiés -- France Poilus (Guerre mondiale, 1914-1918) Transports de troupes (navires) Scènes -- 1914-1945</descr>
+</metad>
+<contenus  toc="false" ocr="false"><largeur>233</largeur>
+<hauteur>188</hauteur>
+<largeurPx>5525</largeurPx>
+<hauteurPx>4455</hauteurPx>
+	<pages>
+<page  ordre="1"><blocIllustration>1</blocIllustration>
+	<ills>
+<ill  h="4455" w="5525" x="1" n="1-1" y="1" taille="11" couleur="inconnu"><genre  source="hm" CS="1">carte</genre>
+<genre  CS="0.95" source="md">gravure</genre>
+<theme  source="md" CS="0.8">16</theme>
+<titraille>Les deux cortèges : estampe (Épr. biffée) / Steinlen 1916</titraille>
+</ill>
+</ills>
+</page>
+</pages>
+</contenus>
+</analyseAlto>

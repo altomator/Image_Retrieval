@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<analyseAlto>
+	<metad>
+<type>I</type>
+<ID>btv1b105106927</ID>
+<titre>Organisation : estampe / Steinlen 1917</titre>
+<dateEdition>1917</dateEdition>
+<auteur>Steinlen, Théophile Alexandre (1859-1923). Graveur</auteur>
+<lang>Sans contenu linguistique</lang>
+<source>Bibliothèque nationale de France, département Estampes et photographie, FT 5-DC-385 (G, 2)</source>
+<nbPage>1</nbPage>
+<descr>Guerre mondiale (1914-1918) -- Champs de bataille Guerre mondiale (1914-1918) -- Guerre de tranchées Poilus (Guerre mondiale, 1914-1918) Bombardement Manoeuvres militaires Scènes -- 1914-1945</descr>
+</metad>
+<contenus  ocr="false" toc="false"><largeur>382</largeur>
+<hauteur>497</hauteur>
+<largeurPx>9025</largeurPx>
+<hauteurPx>11754</hauteurPx>
+	<pages>
+<page  ordre="1"><blocIllustration>1</blocIllustration>
+	<ills>
+<ill  x="1" n="1-1" y="1" taille="49" couleur="inconnu" h="11754" w="9025"><genre  source="hm" CS="1">carte</genre>
+<genre  CS="0.95" source="md">gravure</genre>
+<theme  source="md" CS="0.8">16</theme>
+<titraille>Organisation : estampe / Steinlen 1917</titraille>
+</ill>
+</ills>
+</page>
+</pages>
+</contenus>
+</analyseAlto>

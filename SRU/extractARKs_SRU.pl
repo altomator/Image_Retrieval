@@ -18,7 +18,7 @@ use LWP::Simple;
 
 
 #####################
-$DEBUG = 0;
+$DEBUG = 1;
 
 
 #####################################
@@ -26,7 +26,7 @@ $DEBUG = 0;
 # Requests samples
 
 # affiches
-#"gallica%20all%20%22affiche%22%20%20and%20(dc.type%20all%20%22image%22)%20and%20(gallicapublication_date>=%221910/01/01%22%20and%20gallicapublication_date<=%221920/12/31%22)%20and%20(provenance%20adj%20%22bnf.fr%22)";
+#my $req ="gallica%20all%20%22affiche%22%20%20and%20(dc.type%20all%20%22image%22)%20and%20(gallicapublication_date>=%221910/01/01%22%20and%20gallicapublication_date<=%221920/12/31%22)%20and%20(provenance%20adj%20%22bnf.fr%22)";
 # Agence Meurisse
 #"gallica%20all%20%22agence%20meurisse%22%20and%20(dc.type%20all%20%22image%22)%20and%20(gallicapublication_date%3E=%221914/01/01%22%20and%20gallicapublication_date%3C=%221918/12/31%22)";
 # Guerre 14-18
@@ -39,14 +39,24 @@ $DEBUG = 0;
 #my $req ="gallica%20all%20%22lion%22%20%20and%20(dc.type%20all%20%22image%22)%20and%20((bibliotheque%20adj%20%22Biblioth%C3%A8que%20nationale%20de%20France%22))%20and%20(provenance%20adj%20%22bnf.fr%22)&suggest=10";
 # chien
 #my $req ="gallica%20all%20%22chien%22%29%20and%20dc.type%20all%20%22image%22&suggest=0";
-# 2nd empire
-my $req ="%28%28notice%20all%20%22Recueil%20%20Collection%20Michel%20Hennin%20%20Estampes%20relatives%20%C3%A0%20l%27Histoire%20de%20France%22%29%20or%20notice%20all%20%22Recueil%20%20Collection%20de%20Vinck%20%20Un%20si%C3%A8cle%20d%27histoire%20de%20France%20par%20l%27estampe%2C%201770-1870%22%29%20and%20%28gallicapublication_date%3E%3D%221853%2F01%2F01%22%29%20sortby%20dc.date%2Fsort.ascending";
-
+#my $req ="gallica%20all%20%22chien%22%20%20and%20(dc.type%20all%20%22image%22)&suggest=10&keywords=";
+# maps
+#my $req ="dc.subject%20all%20%22Guerre%20mondiale%22%20%20and%20(dc.type%20all%20%22carte%22)";
+# Normandie
+#my $req ="gallica%20all%20%22BNormand1%22%20%20and%20%28ocr.quality%20all%20%22Texte%20disponible%22%29&suggest=10";
+#my $req ="gallica%20all%20%22HNormand1%22%20%20and%20%28ocr.quality%20all%20%22Texte%20disponible%22%29&suggest=10&collapsing=false";
+# equestre
+#my $req ="dc.subject%20any%20%22cavalerie%20cavaleries%20cheval%20chevaux%20chevaline%20chevalines%20courre%20écuries%20équestre%20équestres%20équitation%20haras%20hippiques%20hippisme%20hippodromes%20hippomobile%20maréchalerie%20remonte%20trotteurs%22%20and%20%28ocr.quality%20all%20%22Texte%20disponible%22%&collapsing=false";
+#my $req ="dc.subject%20any%20%22cavalerie%20cavaleries%20cheval%20chevaux%20chevaline%20chevalines%20courre%20écuries%20équestre%20équestres%20équitation%20haras%20hippiques%20hippisme%20hippodromes%20hippomobile%20maréchalerie%20remonte%20trotteurs%22%20and%20(ocr.quality%20all%20%22Texte%20disponible%22)&suggest=10&collapsing=false";
+# pour obtenir les arks d'un périodique : collapsing=false
+#my $req = "gallica%20all%20%22tombouctou%22%20%20and%20%28dc.type%20all%20%22carte%22%20or%20dc.type%20all%20%22image%22%29&filter=provenance%20all%20%22bnf.fr%22";
+# TOURS #
+my $req = "(dc.title%20all%20%22tours%22%20and%20dc.subject%20all%20%22tours%22%20)%20%20and%20(dc.type%20all%20%22carte%22%20or%20dc.type%20all%20%22image%22)";
 
 
 #####################
 # API SRU
-$urlAPISRU = "http://gallica.bnf.fr/SRU?version=1.2&operation=searchRetrieve&query="; # Gallica SRU API endpoint
+$urlAPISRU = "https://gallica.bnf.fr/SRU?version=1.2&operation=searchRetrieve&query="; # Gallica SRU API endpoint
 #$urlGallica = "http://gallica.bnf.fr/ark:/12148/";
 
 # number of records extracted at each call
@@ -65,12 +75,19 @@ sub getNumberRecordsSRU {my $req=shift;
 	  my $urlAPI = $urlAPISRU.$req."&startRecord=1&maximumRecords=1";
 	  if ($DEBUG==1) {say $urlAPI}
 
-		$reponseAPI = get($urlAPI);
+		my $cmd=  "curl --request GET --url '$urlAPI'";
+		#$reponseAPI = get($urlAPI);
+    my $reponseAPI = `$cmd`;
 
     if (defined $reponseAPI) {
       if ($DEBUG==1) {say $reponseAPI;}
       (my $tmp)  = $reponseAPI =~ m/$motifRecords/;
-      return $tmp;
+			if (defined $tmp) {
+         return $tmp;}
+			else {
+				say "## SRU Gallica: can't get the number of records";
+				return -1
+			}
     }
     else {
     	say "## SRU Gallica: no response";
@@ -85,9 +102,11 @@ sub getRecordsSRU {my $req=shift;
 	  my $urlAPI = $urlAPISRU.$req."&startRecord=$start&maximumRecords=$module";
 	  if ($DEBUG==1) {say $urlAPI}
 
-	$reponseAPI = get($urlAPI);
+  my $cmd=  "curl --request GET --url '$urlAPI'";
+	#$reponseAPI = get($urlAPI);
+	my $reponseAPI = `$cmd`;
 
-    if (defined $reponseAPI) {
+  if (defined $reponseAPI) {
       if ($DEBUG==1) {
       	say $reponseAPI;
       	}
@@ -97,7 +116,7 @@ sub getRecordsSRU {my $req=shift;
 
     }
     else {
-    	say "## SRU Gallica : no response";
+    	say "## SRU Gallica: no response";
     	return -1 ;
     }
   }

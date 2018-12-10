@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<analyseAlto>
+	<metad>
+<type>I</type>
+<ID>btv1b530027351</ID>
+<titre>Soldats français portant des masques à gaz dans une tranchée : photographie de presse / Agence Rol</titre>
+<dateEdition>1917</dateEdition>
+<auteur>Agence Rol. Agence photographique</auteur>
+<lang>fre</lang>
+<source>Bibliothèque nationale de France, département Estampes et photographie, EI-13 (551)</source>
+<nbPage>1</nbPage>
+<descr>Guerre mondiale (1914-1918) -- Guerre de tranchées Guerre mondiale (1914-1918) -- Guerre chimique Gaz de combat Masques à gaz Poilus (Guerre mondiale, 1914-1918)</descr>
+</metad>
+<contenus  toc="false" ocr="false"><largeur>128</largeur>
+<hauteur>178</hauteur>
+<largeurPx>3036</largeurPx>
+<hauteurPx>4222</hauteurPx>
+	<pages>
+<page  ordre="1"><blocIllustration>1</blocIllustration>
+	<ills>
+<ill  couleur="gris" taille="5" x="1" n="1-1" y="1" w="3036" h="4222"><genre  source="hm" CS="1">carte</genre>
+<genre  source="md" CS="0.95">photo</genre>
+<theme  source="md" CS="0.8">16</theme>
+<titraille>Soldats français portant des masques à gaz dans une tranchée : photographie de presse / Agence Rol</titraille>
+</ill>
+</ills>
+</page>
+</pages>
+</contenus>
+</analyseAlto>
