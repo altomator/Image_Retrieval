@@ -44,7 +44,9 @@ The global workflow is detailled bellow.
 The extract step can be performed from the catalog metada (using OAI-PMH and SRU protocols) or directly from the digital documents files (and their OCR). 
 
 #### OAI-PMH
-The OAI-PMH Gallica repository ([endpoint](http://oai.bnf.fr/oai2/OAIHandler?verb=Identify)) can be used to extract still image documents (drawings, photos, posters...) The extractMD_OAI.pl script harvests sets of documents or documents. Note: this script needs a Web connection (for Gallica OAI-PMH and Gallica APIs)
+The OAI-PMH Gallica repository ([endpoint](http://oai.bnf.fr/oai2/OAIHandler?verb=Identify)) can be used to extract still image documents (drawings, photos, posters...) The extractMD_OAI.pl script harvests sets of documents or documents. Note: this script needs a Web connection (for Gallica OAI-PMH and Gallica APIs).
+
+Europeana Data Model OAI is also supported (see EDM.pl).
 
 Perl script extractMD_OAI.pl can handled 3 methods:
 - harvesting a complete OAI Set, from its name:
@@ -61,12 +63,17 @@ require "arks.pl";
 ```
 
 Usage: 
->perl extractMD_OAI.pl gallica:corpus:1418 OUT xml 
+perl extractMD_OAI.pl oai_name oai_set out_folder format 
 
 where: 
-- "gallica:corpus:1418" is the OAI set title
-- "OUT" the output folder
-- "xml" the (only) output format
+- oai_name: gallica/europeana
+- oai_set:  the OAI set title
+- out_fodler: the output folder
+- format: the only output format supported is xml
+
+Example:
+>perl extractMD_OAI.pl gallica gallica:corpus:1418 OUT xml 
+
 
 This script also performs (using the available metadata):
 - IPTC topic classification (considering the WW1 theme)
@@ -167,7 +174,8 @@ For newspapers and magazines collections, another kind of content should be iden
 
 ### B. Transform & Enrich
 
-The toolbox.pl Perl script performs basic operations on the illustrations metadata files and the enrichment processing itself. This script supports the enrichment workflow as detailled bellow.
+The toolbox.pl Perl script performs basic operations on the illustrations metadata files and the enrichment processing itself. 
+This script supports the enrichment workflow as detailled bellow.
 
 ![Workflow: extract](http://www.euklides.fr/blog/altomator/Image_Retrieval/wf2.png)
 
@@ -175,6 +183,7 @@ All the treatments described in the following sections enrich the  metadata illu
 - `classif`: the treatment applied (CC: content classification, DF: face detection)
 - `source`: the source of the treatment (IBM Watson, Google Cloud Vision, OpenCV/dnn, Tensorflow/Inception-v3)
 - `CS`: the confidence score
+(See the XML schema for a detailled presentation of the data model.)
 
 ```xml
 <ill classif="CCibm CCgoogle" ... >
