@@ -183,6 +183,8 @@ All the treatments described in the following sections enrich the  metadata illu
 - `classif`: the treatment applied (CC: content classification, DF: face detection)
 - `source`: the source of the treatment (IBM Watson, Google Cloud Vision, OpenCV/dnn, Tensorflow/Inception-v3)
 - `CS`: the confidence score
+...
+
 (See the XML schema for a detailled presentation of the data model.)
 
 ```xml
