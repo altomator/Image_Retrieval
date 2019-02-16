@@ -22,6 +22,8 @@ A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllus
 
 - ["HYBRID IMAGE RETRIEVAL IN DIGITAL LIBRARIES: EXPERIMENTATION OF DEEP LEARNING TECHNIQUES"](https://pro.europeana.eu/page/issue-10-innovation-agenda), EuropeanaTech Insight, Issue 10, 2018
 
+- ["EXPLORER DES CORPUS D’IMAGES. L’IA AU SERVICE DU PATRIMOINE"](https://bnf.hypotheses.org/2809), projet CORPUS, atelier BnF, 18 avril 2018
+
 - ["Plongez dans les images de 14-18 avec notre nouveau moteur de recherche iconographique GallicaPix"](http://gallicastudio.bnf.fr/bo%C3%AEte-%C3%A0-outils/plongez-dans-les-images-de-14-18-en-testant-un-nouveau-moteur-de-recherche) (FR blog post)
 - ["Towards new uses of cultural heritage online: Gallica Studio"](http://pro.europeana.eu/post/towards-new-uses-of-cultural-heritage-online-gallica-studio) (EN blog post)
  
