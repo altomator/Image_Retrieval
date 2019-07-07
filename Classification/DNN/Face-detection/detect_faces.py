@@ -1,18 +1,23 @@
 # USAGE
 # python detect_faces.py --prototxt deploy.prototxt.txt --model res10_300x300_ssd_iter_140000.caffemodel --dir folder
 
-# import the necessary packages
+# Adapted from www.pyimagesearch.com
+# The Caffe-based face detector can be found in the face_detector sub-directory of the dnn samples:
+# https://github.com/opencv/opencv/tree/master/samples/dnn/face_detector
+
 import numpy as np
 import argparse
 import os
 import cv2
 from imutils import paths
 
-# output folder
+# output folder for the CSV files
 output = "OUT_csv"
 nbFaces = 0
 
 def process_image(file):
+	# load the input image and construct an input blob for the image
+	# by resizing to a fixed 300x300 pixels and then normalizing it
 	image = cv2.imread(file)
 	(h, w) = image.shape[:2]
 	blob = cv2.dnn.blobFromImage(cv2.resize(image, (300, 300)), 1.0,(300, 300), (104.0, 177.0, 123.0))
@@ -20,7 +25,6 @@ def process_image(file):
 
 	global nbFaces
 	# pass the blob through the network and obtain the detections and predictions
-	#print("[INFO] computing object detections...")
 	net.setInput(blob)
 	detections = net.forward()
 
@@ -37,13 +41,13 @@ def process_image(file):
 					print (" out of image : %d %d") % (w,h)
 				else:
 					nbFaces += 1
-					# draw the bounding box of the face along with the associated probability
 					text = "{:.2f}%".format(confidence * 100)
 					print "\t%s" % text
-					#y = startY - 10 if startY - 10 > 10 else startY + 10
 					print (startX, startY,(endX-startX),(endY-startY))
+					# draw the boxes
 					#cv2.rectangle(image, (startX, startY), (endX, endY),(0, 0, 255), 2)
 					#cv2.putText(image, text, (startX, y),cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
+					# build the data
 					if (outText ==""):
 						outText = "face,%d,%d,%d,%d,%.2f" % (startX, startY,(endX-startX), (endY-startY), confidence)
 					else:
@@ -59,9 +63,9 @@ def process_image(file):
 
 	else:
 		print "\tno detection"
-			# show the output image
-			#cv2.imshow("Output", image)
-			#cv2.waitKey(0)
+		# show the output image
+		#cv2.imshow("Output", image)
+		#cv2.waitKey(0)
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
@@ -83,16 +87,14 @@ else:
 	print "Output will be saved to %s" % output_dir
 
 # load our serialized model from disk
-print("[INFO] loading model...")
+print(" loading model...")
 net = cv2.dnn.readNetFromCaffe(args["prototxt"], args["model"])
-
-# load the input image and construct an input blob for the image
-# by resizing to a fixed 300x300 pixels and then normalizing it
+# load the images list
 filePaths = list(paths.list_images(args["dir"]))
 filePaths = [img.replace("\\", "") for img in filePaths]
 
 for i in filePaths:
-	print " analyse de %s" % i
+	print " analysing %s" % i
 	process_image(i)
 
 print " ### faces: %d ###" % nbFaces
