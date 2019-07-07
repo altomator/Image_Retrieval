@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<alto SCHEMAVERSION="alto_bnf-v2_0" xmlns="http://www.loc.gov/standards/alto/ns-v3#" xmlns:xlink="http://www.w3.org/TR/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/standards/alto/ns-v3# http://bibnum.bnf.fr/schema/alto_bnf-v2_0.xsd">
+  <Description>
+    <MeasurementUnit>pixel</MeasurementUnit>
+    <sourceImageInformation>
+      <fileName>00000008.jp2</fileName>
+      <documentIdentifier documentIdentifierLocation="IFN">9612399</documentIdentifier>
+    </sourceImageInformation>
+    <OCRProcessing ID="OCR_1">
+      <ocrProcessingStep>
+        <processingDateTime>2015-10-09</processingDateTime>
+        <processingStepDescription>[001_OCR_BRUT]OCR BRUT 88.64 %</processingStepDescription>
+        <processingStepDescription>[002_CHARS]{33}</processingStepDescription>
+        <processingStepDescription>[003_CHARS_USED]{29}</processingStepDescription>
+        <processingStepDescription>[004_CHARS_SUSPECTS_USED]{0}</processingStepDescription>
+        <processingStepDescription>[005_CHARS_UNUSED]{4}</processingStepDescription>
+        <processingStepDescription>[006_CHARS_SUSPECTS_UNUSED]{0}</processingStepDescription>
+        <processingStepDescription>[007_STRINGS]{7}</processingStepDescription>
+        <processingStepDescription>[008_STRINGS_USED]{7}</processingStepDescription>
+        <processingStepDescription>[009_STRINGS_SUSPECTS_UNUSED]{0}</processingStepDescription>
+        <processingStepDescription>[010_CHARS_LETTERS]{29}</processingStepDescription>
+        <processingStepDescription>[011_CHARS_PUNCTUATION]{3}</processingStepDescription>
+        <processingStepDescription>[012_CHARS_DIGITS]{0}</processingStepDescription>
+        <processingStepDescription>[013_CHARS_SUSPECT]{0}</processingStepDescription>
+        <processingStepDescription>[022_CHARS_UNUSED_BY_BLOCK]{0}</processingStepDescription>
+        <processingStepDescription>[023_BLOCKS_SUSPECTS]{0}</processingStepDescription>
+        <processingStepDescription>[111_LIGS_DETECTED_CURV]{0}</processingStepDescription>
+      </ocrProcessingStep>
+    </OCRProcessing>
+  </Description>
+  <Styles>
+    <TextStyle FONTFAMILY="Times" FONTSIZE="6" ID="TXT_6"/>
+  </Styles>
+  <Tags>
+    <LayoutTag ID="TAG_stamp" LABEL="stamp"/>
+    <LayoutTag ID="TAG_transition" LABEL="transition"/>
+    <OtherTag ID="TAG_important" LABEL="important"/>
+  </Tags>
+  <Layout>
+    <Page ACCURACY="88.64" HEIGHT="2988" ID="PAG_00000008" PHYSICAL_IMG_NR="8" PRINTED_IMG_NR="0" QUALITY="OK" WIDTH="1816">
+      <PrintSpace HEIGHT="477" HPOS="673" ID="PAG_00000008_PrintSpace" VPOS="1244" WIDTH="715">
+        <GraphicalElement HEIGHT="44" HPOS="796" ID="PAG_00000008_GE000001" TAGREFS="TAG_transition" VPOS="1244" WIDTH="482"/>
+        <TextBlock HEIGHT="39" HPOS="673" ID="PAG_00000008_TB000001" LANG="fr" STYLEREFS="TXT_6" VPOS="1304" WIDTH="715">
+          <TextLine HEIGHT="39" HPOS="673" ID="PAG_00000008_TL000001" STYLEREFS="TXT_6" VPOS="1304" WIDTH="715">
+            <String CONTENT="Le" HEIGHT="29" HPOS="673" ID="PAG_00000008_ST000001" STYLEREFS="TXT_6" VPOS="1306" WC="0.56" WIDTH="38"/>
+            <SP HPOS="711" ID="PAG_00000008_SP000001" VPOS="1306" WIDTH="18"/>
+            <String CONTENT="Mans." HEIGHT="29" HPOS="729" ID="PAG_00000008_ST000002" STYLEREFS="TXT_6" TAGREFS="TAG_important" VPOS="1306" WC="1" WIDTH="94"/>
+            <SP HPOS="823" ID="PAG_00000008_SP000002" VPOS="1322" WIDTH="20"/>
+            <String CONTENT="—" HEIGHT="5" HPOS="843" ID="PAG_00000008_ST000003" STYLEREFS="TXT_6" VPOS="1322" WC="1" WIDTH="36"/>
+            <SP HPOS="879" ID="PAG_00000008_SP000003" VPOS="1306" WIDTH="19"/>
+            <String CONTENT="Impr." HEIGHT="37" HPOS="898" ID="PAG_00000008_ST000004" STYLEREFS="TXT_6" VPOS="1306" WC="1" WIDTH="88"/>
+            <SP HPOS="986" ID="PAG_00000008_SP000004" VPOS="1305" WIDTH="23"/>
+            <String CONTENT="Beauvais" HEIGHT="29" HPOS="1009" ID="PAG_00000008_ST000005" STYLEREFS="TXT_6" VPOS="1305" WC="1" WIDTH="146"/>
+            <SP HPOS="1155" ID="PAG_00000008_SP000005" VPOS="1308" WIDTH="19"/>
+            <String CONTENT="et" HEIGHT="26" HPOS="1174" ID="PAG_00000008_ST000006" STYLEREFS="TXT_6" VPOS="1308" WC="1" WIDTH="31"/>
+            <SP HPOS="1205" ID="PAG_00000008_SP000006" VPOS="1304" WIDTH="19"/>
+            <String CONTENT="Vallienne." HEIGHT="30" HPOS="1224" ID="PAG_00000008_ST000007" STYLEREFS="TXT_6" TAGREFS="TAG_important" VPOS="1304" WC="0.97" WIDTH="164"/>
+          </TextLine>
+        </TextBlock>
+        <GraphicalElement HEIGHT="37" HPOS="793" ID="PAG_00000008_GE000002" TAGREFS="TAG_transition" VPOS="1362" WIDTH="485"/>
+        <GraphicalElement HEIGHT="148" HPOS="945" ID="PAG_00000008_GE000003" TAGREFS="TAG_stamp" VPOS="1573" WIDTH="103"/>
+      </PrintSpace>
+    </Page>
+  </Layout>
+</alto>

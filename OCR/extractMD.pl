@@ -11,7 +11,7 @@
 # -L : extraction of illustrations metadata  : captions, dimensions...
 # -I : compute ARK identifiants (BnF only)
 # mode :  documents type :  olren, ocren, olrbnf, ocrbnf
-# title: newspaper title for the Europeana Newspapers corpus (otherwise, use "generic")
+# title: newspaper title for the Europeana Newspapers corpus (otherwise, use "foo"...)
 # IN : documents folder
 # OUT : metadata folder
 # format : xml|json|csv
@@ -31,6 +31,14 @@ use Date::Simple qw(date);
 use Try::Tiny;
 use Switch;
 use List::MoreUtils 'first_index';
+use Text::Similarity::Overlaps;
+
+my %options = ('normalize' => 1, 'verbose' => 0);
+my $mod = Text::Similarity::Overlaps->new (\%options);
+defined $mod or die "Construction of Text::Similarity::Overlaps failed";
+
+#use Encode qw(encode decode);
+#my $enc = 'utf-8';
 
 $t0 = Benchmark->new;
 
@@ -39,9 +47,30 @@ binmode(STDOUT, ":utf8");
 
 #################
 #  debug mode
-$DEBUG = 0;
+$DEBUG = 1;
 #################
 
+
+# DOCUMENTS
+# ---------
+####### parameter TO BE DEFINED ##########
+# The collection SOURCE
+$sourceDefault = "BnF";
+# The collection type
+$typeDoc="M"; # documents type :  P (newspapers) /  R (magazine) / M (monograph) / I (image)
+# UNCOMMENT this line to set a default IPTC theme
+#$themeDefaut = "13"; #  IPTC theme
+### uncomment the following parameters to defined classification tags
+#@tags = ("animal", "fish", "verterbrate");
+# UNCOMMENT this line to se a default image type (picture, drawing, map...)
+#$genreDefaut="gravure"; # photo, gravure, dessin...
+
+####### parameter TO BE DEFINED ##########
+# max length of OCR texts to be extrated (in characters)
+$maxTxt=2500; # longueur max des textes OCR extraits (en caracteres)
+# nb of txtBlocks
+$maxTxtBlock=3; #
+$unknown = "inconnu";  # to be localized
 
 
 ###########################################
@@ -50,9 +79,11 @@ $DEBUG = 0;
 ####### parameter TO BE DEFINED ##########
 # COMMENT this line to look for the DPI (resolution) in the manisfeste
 $DPIdefaut=400;	#  placer en commentaire pour analyser la résolution dans le manifeste
+
 ####### parameter TO BE DEFINED ##########
 # COMMENT this line to analyse the color mode in the manifest
-$couleurDefaut = "gris"; # placer en commentaire pour analyser le mode de couleur dans le manifeste, sinon :  "gris" / "mono" (sepia, etc.)  / "coul"
+$couleurDefaut="gris"; # placer en commentaire pour analyser le mode couleur dans le manifeste,
+# sinon :  "gris" (impressions noir et blanc, photos)/ "mono" (sepia, etc.)  / "coul"
 
 # Image resolution
 $facteurDPI=25.4; # for DPI conversion to mm
@@ -61,22 +92,6 @@ $coeffDPI=0; #  will be computed later : coeffDPI = facteurDPI / DPIdefaut
 $A8 = 3848; # surface d'un A8 en mm2 (= format d'une carte de jeu). La taille des ill. est exprimée en multiple de A8
 
 
-# DOCUMENTS
-# ---------
-####### parameter TO BE DEFINED ##########
-$unknown = "inconnu";  # to be localized
-####### parameter TO BE DEFINED ##########
-# UNCOMMENT this line to set a default IPTC theme
-# $themeDefaut = "16"; #  IPTC theme
-####### parameter TO BE DEFINED ##########
-# The collection type
-$typeDoc="M"; # documents type :  P (newspapers) /  R (magazine) / M (monograph) / I (image)
-####### parameter TO BE DEFINED ##########
-# UNCOMMENT this line to se a default image type (picture, drawing, map...)
-#$genreDefaut="gravure"; # photo, gravure, dessin...
-####### parameter TO BE DEFINED ##########
-# max length of OCR texts to be extrated (in characters)
-$maxTxt=2500; # longueur max des textes OCR extraits (en caracteres)
 
 # FILTERING
 # ---------
@@ -84,7 +99,7 @@ $maxTxt=2500; # longueur max des textes OCR extraits (en caracteres)
 #$seuilHauteur=200;
 ####### parameter TO BE DEFINED ##########
 # minimum ratio size of the illustration (% of the page surface, 0.01=1%))
-$seuilTaille = 0.01; # ratio de taille minimum de l'illustration en % de la page (0,01=1%)
+$seuilTaille = 0.001; # ratio de taille minimum de l'illustration en % de la page (0,01=1%)
 ####### parameter TO BE DEFINED ##########
 # for newspapers, upper margin of the front page to be excluded
 $ratioOurs = 5; # pour filtrer les illustrations de la zone supérieure (1/5 a 1/8) de la page de une
@@ -107,6 +122,7 @@ require "../bib-XML.pl"; ## importation macros d'export XML ou JSON ##
 
 ## classification of illustrations genres from the OCR types
 %genres = (  ## classification des genres des illustrations en fonction des typages présents dans l'OCR
+  "stamp  TAG_stamp"  => "filtretimbre",
 	"carte map TAG_map"  => "carte", # map
 	"formula TAG_formula" => "formule" , # math formula
 	"manuscript TAG_manuscript" => "manuscrit", # manuscript
@@ -115,6 +131,11 @@ require "../bib-XML.pl"; ## importation macros d'export XML ou JSON ##
 
 ##########################################################
 # PARAMETRES pour les motifs GREP / GREP patterns parameters
+
+# motifs pour l'API Gallica Pagination
+# patterns for Gallica Pagination API
+$motifOCR = "\<hasContent\>(\\w+)\<\/hasContent\>" ;
+$motifNumero = "\<numero\>(.*)\<\/numero\>" ;
 
 ## motifs de recherche dans le manifeste METS           ##
 ## patterns to analysed the METS manifest               ##
@@ -135,14 +156,16 @@ $paramMotifCouleur_OLREN = "\>(.+)\<\/mix:bitsPerSampleValue";
 $motifArticle = "TYPE=\"ARTICLE\"";
 $motifIllustration = "TYPE=\"ILLUSTRATION\"";
 #$motifTitreArticle = "TYPE=\"ARTICLE\"";
+$motifSection = "TYPE=\"SECTION\"";
 $motifSurtitreArticle = "TYPE=\"OVERLINE\"";
 #$motifBody = "TYPE=\"BODY\"";
-$motifLabel = "LABEL\=(.+)\>";
+$motifLabel = "LABEL\=\"(.+?)\"";
 $motifArea = "BETYPE\=";
 #$motifDMDID = "DMDID\=\"(.+)\"";
-$motifDMDID = "DMDID\=\"DMD\.(\\d+)\"";
+$motifDMDID = "DMDID\=\"DMD\.(\\d+)\""; # DMDID="DMD.3"
 $motifParagraphe = "BEGIN=\"P.+_TB.+\"";  # P1_TB00003
-$motifIDblock = "BEGIN\=\"(.+)\"/>";
+$motifIDblock = "BEGIN\=\"(.+?)\"";
+#$motifIDblock = "BEGIN\=\"(.+)\"/>";
 
 ## spécifiques à OLR Europeana Newspapers  ##
 ## specific to OLR Europeana Newspapers    ##
@@ -161,23 +184,35 @@ $paramMotifSource_OCRBNF = "SOURCE\"\>(.*?)\<\/reference\>";
 $paramMotifCouleur_OCRBNF = "profondeur=\"(\\d+)\"";
 $paramMotifDPI_OCRBNF = "resolution=\"(\\d+),";
 
+## motifs de recherche dans le fichier tdmNum BnF ##
+#$paramMotifEntree_TdMBNF  = "<seg n\=.+\>(.+(\n.+)?)\<\/seg\>" ;   # <seg n="int.000001">Aard-vark</seg>
+#$paramMotifItem_TdMBNF  = "<item\>\n?(.+)\n?\<\/item\>|<row>\n(.+)\n\<\/row\>" ;
+$paramMotifItem_TdMBNF  = "\<item\>(.+?)\<\/item\>|\<row\>(.+?)\<\/row\>" ; # non greedy
+$paramMotifEntree_TdMBNF  = "\<seg n\=.+\>(.+)\<\/seg\>|\<hi rend\=.+\>(.+)\<\/hi\>" ; #from="FOREIGN(9669000/000413.jp2)"
+$paramMotifEntreeVue_TdMBNF = "\/0(.+?)\.(jp2|TIF)" ; # from="FOREIGN (6439443/000392.TIF)" # non greedy: only one
+# <xref type="unresolved">665</xref>
+#$paramMotifEntreeVue_TdMBNF = "\/0(.+)\.TIF|\/0(.+)\.jp2|unresolved\"\>(.+)\<\/xref\>"
+
 ## motifs de recherche dans le manifeste METS OLR BnF ##
 ## patterns to analysed the BnF OLR METS manifest     ##
 #$paramMotifNbPagesALTO_OLRBNF = "paginationA\"\>(\\d+)\<\/dc:title\>"; # par_dc:paginationA">2</dc:title>
 $paramMotifNbPagesALTO_OLRBNF = "FILEID=\"ocr";
-#$paramMotifTitre_OLRBNF = "\<titre\>(.+)\<\/titre\>" ;
-$paramMotifDate_OLRBNF = "date\>(.+)\<\/dc:date\>";
-$paramMotifNotice_OLRBNF = "12148\/(.*?)\<\/dc:relation"; # non greedy
+$paramMotifTitre_OLRBNF = "title\>(.+?)\<\/dc:title\>" ;
+$paramMotifDate_OLRBNF = "date\>(.+?)\<\/dc:date\>";
+$paramMotifNotice_OLRBNF = "k\"\>(.+?)\<\/dc:relation"; # non greedy ark:/12148/cb30435700t
 $paramMotifCouleur_OLRBNF = "bitsPerSampleValue\>(.*?)\<\/mix:bitsPerSampleValue";
-$paramMotifDPI_OLRBNF = "numerator\>(\\d+)<\/mix:numerator";
+$paramMotifDPI_OLRBNF = "numerator\>(\\d+?)<\/mix:numerator";
+$paramMotifSource_OLRBNF =  "provenance\>(.+?)<\/dcterms:provenance";
+$paramMotifLang_OLRBNF =  "3\"\>(.+?)<\/dc:language";
 
 ## motifs de recherche dans la structure logique METS OLR BnF ##
 ## patterns to analysed the BnF METS OLR structMap       ##
 #$motifParagraphe_OLRBNF = "BEGIN=\"PAG_._TB.+\"";  # PAG_1_TB000017
-$motifNumAlto_OLRBNF = "FILEID\=\"ocr\.(.+)\" BEGIN"; # FILEID="ocr.1"
+$motifNumAlto_OLRBNF = "FILEID\=\"ocr\.(.+?)\""; # FILEID="ocr.1"
 #$motifIDill_OLRBNF = "BEGIN=\"PAG_._IL.+\"";  # PAG_1_IL000017
 $motifSurtitreArticle = "TYPE=\"TOPHEADING\"";
-
+$labelPub = "Publicit";
+$labelAnnonce = "Annonce";
 
 ## motifs de recherche OCR ALTO communs 		 ##
 ## commun patterns to analysed ALTO OCR      ##
@@ -220,7 +255,7 @@ $paramRepALTO_OCREN="alto";
 $paramRepALTO_OLREN="ALTO";
 $paramRepALTO_OCRBNF="X";
 $paramRepALTO_OLRBNF="ocr";
-$paramRepTOC_OLRBNF="moc";
+$paramRepTOC_OLRBNF="toc";
 $repTOC="";
 
 # nommage des manifestes METS et refNum
@@ -233,8 +268,8 @@ $paramPrefixe_OLRBNF="manifest";
 
 # nommage des fichiers ALTO : extraction du numéro de page
 # name of the ALTO files: extracting the page number
-$numFicALTOdebut = -8; # index of the first digit (from the end)
-$numFicALTOlong = 4; # number of digits
+$numFicALTOdebut = -8; # index of the first digit (from the end). Default = -8
+$numFicALTOlong = 4; # number of digits. Default=4
 
 # detection des supplements sur la longueur des noms de fichier Europeana
 # detecting newspapers supplements for Europeana
@@ -246,6 +281,8 @@ $paramSupplements_OLREN=10;
 ##################################
 # API Gallica Issues
 $urlAPI = "https://gallica.bnf.fr/services/Issues?ark=";
+# API Pagination
+$urlAPIpagination = "https://gallica.bnf.fr/services/Pagination?ark="; # Gallica Pagination API
 # motifs de recherche API
 # patterns to analyse the API results
 $motifArk = "ark\=\"(.+)\" ";
@@ -272,6 +309,7 @@ $hashNotices{"Intransigeant"}="cb32793876w";
 $hashNotices{"Univers"}="cb34520232c";
 $hashNotices{"Presse"}="cb34448033b";
 $hashNotices{"Croix"}="cb343631418";
+$hashNotices{"Fronde"}="cb343631418";
 #$hashNotices{"generic"}="00000000";
 ######################
 
@@ -308,18 +346,24 @@ $calculARK=0;  # calculer les identifiants ark
 my $codeErreur = 0;
 # document ID currently analysed
 my $id; # id du document en cours
-# total number of documents
-$nbDoc=0; # nbre de documents traites
+# total number of analysed documents
+$nbDoc=0; # nbre de documents analysés
+# total number of metadata exported
+$nbDocExport=0; # nbre de metadonnées produites
 # total number of illustrations
 $nbTotIll=0; # nbre d'illustrations trouvees
 # total number of illustrations which have been filtered
 $nbTotIllFiltrees=0; # nbre d'illustrations filtrées
 # OLR: total number of illustrations which have been filtered
 $nbTotIllFiltreesOLR=0; # nbre d'illustrations filtree OLR
+# number of pages which have been filtered (bindings)
+$nbTotPagesFiltrees=0; # nbre de pages filtrées
 # missing METSs
 $noMETS=""; # METS absents
 # missing ALTOs
 $noALTO=""; # ALTO absents
+# ToC with problem
+$bugsToC="";
 # unknown arks
 $noArk=""; # Arks inconnus
 # Arks with problem
@@ -372,12 +416,12 @@ sub getALTO {my ($t, $elt) = @_;
 	  for ($i=0; $i<=@$aref-1; $i++)  {
 	  	 $idTmp = $listeIDsTxt[$numPageALTO][$i];
 	  	 if (defined($idTmp)) {
-	  	   if ($DEBUG) {say "txt ID to look for: ".$idTmp;}
+	  	   if ($DEBUG) {say "txt TextBlock ID to look for: ".$idTmp;}
 	  	   # récupérer le contenu texte du bloc
 	  	   $scal = getALTOtxt($elt,$idTmp); # get the text content
 	       # si OCR : prendre le bloc n-1 en plus pour obtenir plus de texte
 	       if (index($MODE,"ocr") !=-1) { # if OCR mode, get the n-1 block to have more text
-	       	 $idTmp = incIdBlocALTO($idTmp, -1,$motifIDTxtBlock) ;
+	       	 $idTmp = incIdBlocALTO($idTmp, -1, $motifIDTxtBlock) ;
 	         $scal = $scal." ".getALTOtxt($elt,$idTmp);
 	       }
 	       # concatener les 2 blocs et raccourcir les textes
@@ -391,13 +435,16 @@ sub getALTO {my ($t, $elt) = @_;
 	   for ($i=0; $i<=@$aref-1; $i++) {
 	  	 $idTmp = $listeIDsLeg[$numPageALTO][$i];
 	  	 if (defined($idTmp)) {
-	  	   if ($DEBUG) {say "caption ID to look for: ".$idTmp;}
+	  	   if ($DEBUG) {say "caption TextBlock ID to look for: ".$idTmp;}
 	  	   $scal = getALTOtxt($elt,$idTmp);
-
 	  	   # on essaye aussi de prendre le bloc de txt suivant si la légende est courte
-	  	   if (length($scal) < 10) { # we try to get the n+1 text block
-	  	     $idTmp = incIdBlocALTO($idTmp, 1, $motifIDTxtBlock);
-	  	     $scal = $scal." ".getALTOtxt($elt,$idTmp);}
+	  	   if (length($scal) < 50) { # we try to get the n++ text blocks
+				  for ($n=1;$n<$maxTxtBlock;$n++) {
+	  	     	$idTmp = incIdBlocALTO($idTmp, 1, $motifIDTxtBlock);
+	  	     	$scal = $scal." ".getALTOtxt($elt,$idTmp);
+					 }
+				 }
+				 if ($DEBUG) {say "caption:  $scal"}
 	  	   $hash{$numPageALTO."_ill_".$i."leg"} = subTxt($scal);
 	  	   }
 	  } # for
@@ -414,12 +461,11 @@ sub getALTO {my ($t, $elt) = @_;
 $MODE=shift @ARGV;
 
 if ((not (defined($MODE)) or (substr ($MODE,0,1) eq "-") && (scalar(@ARGV)<5)) or (scalar(@ARGV)<4))  {
-	die "\nUsage : perl extractMD.pl [-options]  ocren|ocrbnf|olren|olrbnf titre IN OUT csv|json|xml
-[L]: include the illustrations description
-[I]: compute ARK IDs (BnF only)
-ocren, olren, ocrbnf, olrbnf:  documents origin
-title: document title if needed for olrbnf mode and to compute BnF ark IDs
-(otherwise, use 'generic')
+	die "\nUsage : perl extractMD.pl [-options]  ocren|ocrbnflegacy|ocrbnf|olren|olrbnf titre IN OUT csv|json|xml
+[-L]: include the illustrations description
+[-I]: compute ARK IDs (BnF only)
+ocren, olren, ocrbnflegacy, ocrbnf, olrbnf, :  documents origin
+title: newspaper title if needed for olrbnf mode and to compute BnF ark IDs (otherwise use 'foo'...)
 IN: input folder of the digital documents
 OUT:  output folder for the metadata
 csv,json,xml : export format for the metadata
@@ -430,9 +476,7 @@ if (not defined $typeDoc) {
 	say " \n## unknown documents type! Must be set in typeDoc var";
 	die
 }
-else {
-	say " \n... WARNING: Running the script for '$typeDoc' documents \n  P (newspaper) /  R (magazine) / M (monograph) / I (image)";
-}
+
 
 # gestion des options
 # mode d'extraction : (OCR ou OLR) et calcul des arks
@@ -448,7 +492,7 @@ elsif (($MODE eq "-LI") or ($MODE eq "-IL")){
  $MODE=shift @ARGV;}
 
 # option: mode
-if ($MODE eq "ocren"){
+if ($MODE eq "ocren"){ # OCR projet Europeana Newspapers
 	$ratioBandeau = 7; # on est plus severe pour filtrer plus / more filtering for newspapers
 	$repALTO=$paramRepALTO_OCREN;
 	$suffixeManif =$paramSuffixe_OCREN;
@@ -485,7 +529,7 @@ if ($MODE eq "ocren"){
 
 	#$motifIDill = $motifIDBlockOCREN;
 
-} elsif ($MODE eq "ocrbnf") {
+} elsif ($MODE eq "ocrbnflegacy") {
 	$repALTO=$paramRepALTO_OCRBNF;
   $suffixeManif =$paramSuffixe_OCRBNF;
   $prefixeManif =$paramPrefixe_OCRBNF;
@@ -498,34 +542,50 @@ if ($MODE eq "ocren"){
   $motifNotice = $paramMotifNotice_OCRBNF;
 	$motifSource = $paramMotifSource_OCRBNF;
   # structure logique
+	$prefixeManifToc = "T";
+	$motifItemTdM = $paramMotifItem_TdMBNF ;
+	$motifEntreeTdM = $paramMotifEntree_TdMBNF;
+	$motifEntreeVueTdM = $paramMotifEntreeVue_TdMBNF;
+
   #$motifPubALTO =$paramMotifPubALTO_OCRBNF;
   #$motifTable =$paramMotifTable_OCR;
   #$motifIllustrationALTO =$paramMotifIllustrationALTO_OCR;
   $motifIDTxtBlock = $paramMotifIDTxtBlockOCRBNF;
   #$motifIDIllBlock = $motifIDIllBlockOCRBNF;
 
-} elsif ($MODE eq "olrbnf") {
+} elsif (($MODE eq "ocrbnf") or ($MODE eq "olrbnf"))  {
 	$repALTO=$paramRepALTO_OLRBNF;
 	$repTOC=$paramRepTOC_OLRBNF;
   $suffixeManif =$paramSuffixe_OCRBNF;
   $prefixeManif =$paramPrefixe_OLRBNF;
-  #$motifTitre=$paramMotifTitre_OLRBNF;
+  $motifTitre=$paramMotifTitre_OLRBNF;
   $motifDate = $paramMotifDate_OLRBNF;
   $motifCouleur = $paramMotifCouleur_OLRBNF;
   $motifDPI = $paramMotifDPI_OLRBNF;
   $motifNbPagesALTO = $paramMotifNbPagesALTO_OLRBNF;
   $motifNotice = $paramMotifNotice_OLRBNF;
-  # structure logique
+  $motifSource = $paramMotifSource_OLRBNF;
+	$motifLang = $paramMotifLang_OLRBNF;
+  #  TdM
+	if ($MODE eq "ocrbnf") {
+		$prefixeManifToc = "T"
+	} else # olr
+	  {$prefixeManifToc = "M"; # ATTENTION : bug de la MAD, préfixe = T
+	   $motifIllustrationALTO=$paramMotifIllustrationALTO_OLRBNF;}
+	$motifItemTdM = $paramMotifItem_TdMBNF ;
+	$motifEntreeTdM = $paramMotifEntree_TdMBNF;
+	$motifEntreeVueTdM = $paramMotifEntreeVue_TdMBNF;
+	# structure logique
   #$motifParagraphe = $motifParagraphe_OLRBNF;
   $motifNumAlto = $motifNumAlto_OLRBNF ;
   #$motifTable =$paramMotifTable_OCR;
-  #$motifIllustrationALTO =$paramMotifIllustrationALTO_OCR;
   $motifIDTxtBlock = $paramMotifIDTxtBlockOCRBNF;
   #$motifIDIllBlock = $motifIDIllBlockOCRBNF;
   # OCR
   $motifPubALTO=$paramMotifPubALTO_OLRBNF;
   $motifTypeIllALTO=$paramMotifTypeIllALTO_OLRBNF;
-  $motifIllustrationALTO=$paramMotifIllustrationALTO_OLRBNF;
+
+
   }
 else {
   die "##  $MODE:  unknown mode!\n";}
@@ -541,7 +601,7 @@ if ($calculARK==1) {
 
   # for Europeana corpus, we need to find the ID in the hash
   if (index($MODE, "en") != -1) {  # il faut trouver l'ID de notice dans le hash : cas des corpus EN
-		 say "  title: ".$titreDefaut."\n";
+		 say "  title: ".$titreDefaut;
 		 if ($hashNotices{$titreDefaut}) {
 		   $noticeEN = $hashNotices{$titreDefaut};}
 	   else
@@ -587,15 +647,41 @@ while(@ARGV){
   }
 }
 
+
+
+
+say " ********************************************";
+say " Running the script for '$typeDoc' documents [P (newspaper) /  R (magazine) / M (monograph) / I (image)]";
+say "... looking for illustration using this pattern: $motifIllustrationALTO";
+say "    OCRs text are captured up to $maxTxt characters";
+if ($calculARK==1) {
+ say " arks ID are going to be computed";}
+if ($DPIdefaut) {
+ say " a default DPI is set to: $DPIdefaut -> it will overwrite the documents local values";}
+if ($couleurDefaut) {
+ say " a default color mode is set to: $couleurDefaut -> it will overwrite the documents local values";}
+if ($themeDefaut) {
+	say " a default theme is set to: $themeDefaut -> it will overwrite the documents local values";}
+if ($genreDefaut) {
+say " a genre is set to: $genreDefaut -> it will overwrite the documents local values";}
+
+
+
+say " ********************************************";
+print " OK to continue? (Y/N)\n >";
+my $rep = <STDIN>;
+chomp $rep;
+if (not ($rep eq "o" or $rep eq "O")) {die}
+
 # analyse récursive du dossier
 # recurse analysis of the input folder
 my $dir = dir($DOCS);
 say "--- documents: ".$dir->children(no_hidden => 1)."\n";
 
-
 $dir->recurse(depthfirst => 1, preorder => 1, callback => sub {
 	my $obj = shift;
 	my $codeErreur = 0;
+  my $fh;
 
 	# avoid the toplevel folder
 	if (index ($DOCS,$obj->basename) == -1)  { # sauter le dossier courant
@@ -607,33 +693,46 @@ $dir->recurse(depthfirst => 1, preorder => 1, callback => sub {
 		   print "\n*************************************\n".$id."... ";
 		   $codeErreur = genererMD($obj,$id); # analyser le manifeste / analysing the manifest
 		   if ($codeErreur == -1) {
-		    say "\n##  The manifest is missing!\n";}
-		   else {$nbDoc++;}
-
+		     say "\n##  The manifest is missing!\n";}
+		   else {
+				 $nbDoc++}
 		 }
-		 # cas de l'OLR BnF avec une table logique METS distincte
-		 # we have a METS OLR structure in a distinct file: BnF case
+     # do we have a ToC or a OLR structure?
 		 elsif ($obj->basename eq $repTOC) {
   			#say "\n".$obj->basename;
-		   	say "\n------------------------  OLR structure detected: ".$id."... ";
+		   	say "\n------------------------  ToC detected for ".$id."... ";
 		   	#say "  filtered illustrations: ".$nbTotIllFiltrees;
 		   	#say "M".$id.$suffixeManif;
-		   	my $toc = $obj->file("M".$id.$suffixeManif);
+		   	my $toc = $obj->file($prefixeManifToc.$id.$suffixeManif);
 		   	if (-e $toc) {
 		      #return lireMD($manifeste,$idDoc);
-		      open my $fh, '<:encoding(UTF-8)', $toc or die "Can't open: $toc !";
-		      extraireIllOLR($fh);
+					$hash{"toc"} = "true";
+					if ($MODE eq "olrbnf")  {   # cas de l'OLR BnF avec une table logique METS distincte
+					  open $fh, '<:encoding(UTF-8)', $toc or die "## Can't open: $toc ! ##";
+		        extraireIllOLR($fh) }     # we have a METS OLR structure in a distinct file: BnF case
+					elsif (($MODE eq "ocrbnf") or ($MODE eq "ocrbnflegacy")){  # we have a ToC in a distinct file: BnF case
+					  open $fh, '<:encoding(UTF-8)', $toc or die "Can't open: $toc !"; #<:encoding(ISO-8859-1)
+						my $firstLine = <$fh>;
+						if (index($firstLine,"ISO") != -1 ) {
+							say "...reopening with ISO encoding";
+							close $fh;
+							open $fh, '<:encoding(ISO-8859-1)', $toc or die "Can't open: $toc !";
+						}
+  				  extraireLegToC3($fh) }
+					else 	{ say " ### suspicious ToC: $toc! ###"}
+					close $fh;
+					#die
 		      #$codeOLR=1;
 		      #ecrireMD($id);
 	      }
 	      else{
-		       say "## $toc is missing!";
+		       say "## $toc is missing! ##";
 		       $noMETS=$noMETS.$id." ";}
 		    }
 		 elsif ($obj->basename eq $repALTO)
 		  { # we are on an ALTOs folder
 		 	if  (($codeErreur != -1)) { # analyser les ALTO
-		 	  my $nbrePages = genererMDALTO($obj,$obj->parent->basename);
+		 	  my $nbrePages = genererMDALTO($obj,$obj->parent->basename); #  repertoire / identifiant
 		 	  #$hash{"pages"} = $numPageALTO-1;
 		      if ($nbrePages == 1) {
 		  	    say "\n## ALTO are missing!";
@@ -648,15 +747,15 @@ $dir->recurse(depthfirst => 1, preorder => 1, callback => sub {
 		     # exporter les metadonnees selon les formats choisis
 				 # export the metadata
 		     #if ($MODE ne "olrbnf") { # on n'a pas besoin de la toc, on peut finir
-		     	 if ($codeErreur != -1) { #and ($codeOLR==1)) {
+		     if ($codeErreur != -1) { #and ($codeOLR==1)) {
   		         ecrireMD($id);
-  		     }
-  		     else {$nbDoc--;
+               $nbMD++;
+  		   }
+  		   else {$nbDoc--;
   		     	say "????????? Fatal ERROR ???????";
   		     	die}
   		   #}
-  		} # fin analyser ALTO
-
+  		 } # fin analyser ALTO
   		} # fin if obj is_dir
 	}
  return PRUNE;
@@ -666,13 +765,17 @@ $dir->recurse(depthfirst => 1, preorder => 1, callback => sub {
 
 say "\n\n=============================";
 say "$nbDoc documents analysed on ".$dir->children(no_hidden => 1);
+say "$nbMD metadata files analysed";
+say "$nbDocExport metadata files written";
 say "$nbTotIll illustrations";
 say "$nbTotIllFiltrees ill. filtered on the form factor / $nbTotIllFiltreesOLR filtered thanks to the OLR";
 if ($MODE eq "olrbnf") {
 say "  remaining: ".($nbTotIll - $nbTotIllFiltreesOLR - $nbTotIllFiltrees)}
 else {say "  remaining: ".($nbTotIll - $nbTotIllFiltrees)}
+say "$nbTotPagesFiltrees pages filtered (bindings)";
 say "missing METS: ".$noMETS;
 say "missing ALTO: ".$noALTO;
+say "ToC with problems: ".$bugsToC;
 say "Ark IDs unknown: ".$noArk;
 say "Fatal errors: ".$bugsArk;
 say "=============================";
@@ -693,7 +796,7 @@ sub genererMD {
 	my $idDoc=shift;
   #my $handler=shift;
 
-	if ($MODE eq "olrbnf") { # pour traiter le cas des nouveaux manifestes METS BnF de la forme manifest.xml
+	if (($MODE eq "olrbnf") or ($MODE eq "ocrbnf")) { # pour traiter le cas des nouveaux manifestes METS BnF de la forme manifest.xml
 	  	  $manifeste = $rep->file($prefixeManif.$suffixeManif)}
 	else {
 				$manifeste = $rep->file($prefixeManif.$idDoc.$suffixeManif)}
@@ -717,10 +820,12 @@ sub lireMD {
 	my $idDoc=shift; # ID document
 	#my $handler=shift;
 
-	my $titre = $unknown;
-	my $date = $unknown;
+	my $titre ;
+	my $date ;
   my $nbPages;
   my $junk;
+	my $source;
+	my $lang;
   my $notice ;
   my @pages ;
 
@@ -732,31 +837,39 @@ sub lireMD {
 
   $hash{"type"}=$typeDoc;
 
-	print "...loading the manifest: $ficMETS\n--------------------------\n";
+	print "...loading the manifest: $ficMETS\n-------------------------------------\n";
 
   # extraire par regexp (plus rapide que XML
   open my $fh, '<:encoding(UTF-8)', $ficMETS or die "Can't open: $ficMETS!"; # manifeste refNum ou METS en utf8
 
-  if ($MODE eq "ocrbnf") { # OCR BnF case: some metadata are in the refNum manifest
-    ( $junk, $titre , $junk, $date, $junk, $nbPages, $junk, $notice,$junk, $source) = do { local $/; <$fh> =~ m/($motifTitre).*($motifDate).*($motifNbPagesALTO).*($motifNotice).*($motifSource)/s }; # $/ : lire tout le fichier
+  if ($MODE eq "ocrbnflegacy") { # OCR BnF case: some metadata are in the refNum manifest
+    ( $junk, $titre , $junk, $date, $junk, $nbPages, $junk, $notice, $junk, $source) = do { local $/; <$fh> =~ m/($motifTitre).*($motifDate).*($motifNbPagesALTO).*($motifNotice).*($motifSource)/s }; # $/ : lire tout le fichier
     # if #pages is not available, try to use the number of images
     if (not $nbPages) {
     	seek $fh, 0, 0;
-    	( $junk, $titre , $junk, $date, $junk, $notice,$junk,$source, $junk,$nbPages,) = do { local $/; <$fh> =~ m/($motifTitre).*($motifDate).*($motifNotice).*($motifSource).*($motifNbVuesALTO)/s };
+    	( $junk, $titre , $junk, $date, $junk, $notice,$junk,$source, $junk,$nbPages) = do { local $/; <$fh> =~ m/($motifTitre).*($motifDate).*($motifNotice).*($motifSource).*($motifNbVuesALTO)/s };
     	}
   }
-  elsif ($MODE eq "olrbnf") { # OLR BnF case
-    ( $junk,  $date, $junk, $notice, $junk) = do { local $/; <$fh> =~ m/($motifDate).*($motifNotice)/s };
-    # date and record's ID are in the  manifest
+  elsif (($MODE eq "ocrbnf") or ($MODE eq "olrbnf")) { # OLR BnF case
+	  # title, date... are in the  manifest
+    #($junk, $titre, $junk,  $date, $junk, $source, $junk, $lang, $junk, $notice ) = do { local $/; <$fh> =~ m/($motifTitre).*($motifDate).*($motifSource).*($motifLang).*($motifNotice)/o }; # perfs problem
+		($titre) = do { local $/; <$fh> =~ /$motifTitre/ };
+		seek $fh, 0, 0;
+		($date) = do { local $/; <$fh> =~ /$motifDate/ };
+		seek $fh, 0, 0;
+		($source) = do { local $/; <$fh> =~ /$motifSource/ };
+		seek $fh, 0, 0;
+		($lang) = do { local $/; <$fh> =~ /$motifLang/ };
+		seek $fh, 0, 0;
+		($notice) = do { local $/; <$fh> =~ /$motifNotice/ };
     seek $fh, 0, 0;
+
+
 		# looking for #pages
-    ( @pages ) = do { local $/; <$fh> =~ m/$motifNbPagesALTO/g};
+    ( @pages ) = do { local $/; <$fh> =~ m/$motifNbPagesALTO/g}; # g : global match
     if (@pages)
          { $nbPages = scalar (@pages);}
    	else {say "## unknown pages number (pattern: $motifNbPagesALTO ) ##"; }
-		# the title is not in the manifest...
-
-    $titre = $titreDefaut;
   }
   else { #  Europeana case
   	( $junk, $titre , $junk, $date, $junk, $lang ) = do { local $/; <$fh> =~ m/($motifTitre).*($motifDate).*($motifLang)/s }; # $/
@@ -768,14 +881,14 @@ sub lireMD {
          { $nbPages = scalar (@pages);}
    	else {say "## unknown pages number (pattern: $motifNbPagesALTO ) ##"; }
   }
-
-  $titre ||= $unknown;
+  # if the title is not in the manifest...
+  $titre ||= $titreDefaut;
   $hash{"titre"} = $titre;
 
   $notice ||= $unknown;
   $hash{"notice"} = $notice;
 
-	$source ||= $unknown;
+	$source ||= $sourceDefault;
   $hash{"source"} = $source;
 
   $nbPages ||= "0";
@@ -822,6 +935,7 @@ sub lireMD {
 	say " title: ".$titre;
 	say " lang: ".$lang;
   say " date: ".$date;
+	say " source: ".$source;
   say " pages: ".$nbPages;
   say " bibliographic record: ".$notice;
 
@@ -844,7 +958,6 @@ sub lireMD {
  		 die
 	 }
 	 else {say " default color mode: $couleurDefaut"}
-
 
    # looking for the DPI
    if (not (defined ($DPIdefaut)) and defined($motifDPI)) { #trouver la résolution
@@ -873,9 +986,117 @@ sub lireMD {
    #elsif ($MODE eq "olrbnf")  # la structure logique est dans un fichier toc distinct
    }
   say "\n-------------------------- manifest end";
+	close $fh;
 	return 1;
 }
 
+# Looking for captions in a ToC
+sub extraireLegToC{my $fh=shift;
+
+#@lines = split /\n/, <$fh>;
+#say Dumper @lines;
+foreach my $line (<$fh>) {
+		#say $line;
+		(my $entree ) = $line =~ m/$motifEntreeTdM/;
+		if (defined $entree)  {
+			say $entree;
+		  (my $vue ) = $line =~ m/$motifEntreeVueTdM/;
+		  if (defined $vue) {
+			  say "... $vue: $entree";
+				$hash{int($vue)."_ill_index"} = $entree;
+			}
+   }
+ }
+}
+sub extraireLegToC3{my $fh=shift;
+
+	my @entrees;
+	my @vues;
+	my $nEntrees = 0;
+
+  my $tmp = do { local $/; <$fh> };
+  $tmp =~ s/<placeName>//g;  # suppress the internal xml markup
+	$tmp =~ s/<\/placeName>//g;
+  $tmp =~ s/<hi rend=\"italic\">//g;
+  $tmp =~ s/<\/hi>//g;
+
+	( @items ) = do { local $/; $tmp =~ m/$motifItemTdM/gs }; # global and non sensitive to newline
+	@items = grep defined, @items;
+  #if ($DEBUG) {say Dumper @items}
+	foreach my $i (0 .. $#items) {
+		(my $entree ) = $items[$i] =~ m/$motifEntreeTdM/s;
+		if ($entree) { # we have a toc entry
+			$entree =~ s/  //g; # suppress white spaces
+			$entree =~ s/\n//g; # new line
+			my $last = substr $entree, -1;
+			if (($last eq ",") or ($last eq ".")) { # suppress punctuation marks
+				my $entree = chop($entree);
+			}
+			(my $vue ) = $items[$i] =~ m/$motifEntreeVueTdM/s;
+			if ($vue) { # we have a  page number
+			   $vues[$nEntrees] = $vue;
+				 $entrees[$nEntrees] = $entree;
+				 $nEntrees++;
+	  }}
+	}
+	if (scalar (@vues) != scalar (@entrees)) {
+		say "#### something wrong in the ToC: ".scalar (@entrees)." entries / ".scalar (@vues)." page references! ####";
+		$bugsToC=$bugsToC.$id." ";
+	} else {
+	 say "...processing ".scalar (@entrees)." ToC entries";
+	 foreach my $i (0 .. $#entrees) {
+		if ($DEBUG) {say "... $entrees[$i]: $vues[$i]"}
+		#my $text_str = decode( $enc, $entrees[$i]);
+		#$text_str = lc $text_str;
+		if ($hash{int($vues[$i])."_ill_index"}) { # we already have an entry on this page
+			my $score = $mod->getSimilarityStrings (lc $entrees[$i], lc $hash{int($vues[$i])."_ill_index"});
+			if ($DEBUG) {say "...an entry already exists: ".$hash{int($vues[$i])."_ill_index"}." (similarity: $score)"}
+			if ($score < 0.2) {
+				if ($DEBUG) {say "...adding ".$entrees[$i]." to ".$hash{int($vues[$i])."_ill_index"}}
+				$hash{int($vues[$i])."_ill_index"} .= " - ".$entrees[$i];
+				#say $hash{int($vues[$i])."_ill_index"}
+			}
+			} else {
+				$hash{int($vues[$i])."_ill_index"} = $entrees[$i]}
+	}
+ }
+}
+
+sub extraireLegToC2{my $fh=shift;
+
+	#( @items ) = do { local $/=undef; <$fh> =~ m/$motifItemTdM/gs };
+	#@items = grep defined, @items;
+	#say Dumper @items;
+  #seek $fh, 0, 0;
+	( @entrees ) = do { local $/; <$fh> =~ m/$motifEntreeTdM/g };
+	@entrees = grep defined, @entrees;
+  if ($DEBUG) {say Dumper @entrees}
+	seek $fh, 0, 0;
+	( @vues ) = do { local $/; <$fh> =~ m/$motifEntreeVueTdM/g };
+	@vues = grep defined, @vues;
+	if ($DEBUG) {say Dumper @vues}
+	if (scalar (@vues) != scalar (@entrees)) {
+		say "#### something wrong in the ToC: ".scalar (@entrees)." entries / ".scalar (@vues)." page references! ####";
+		$bugsToC=$bugsToC.$id." ";
+	} else {
+		say "... processing ".scalar (@entrees)." ToC entries";
+		foreach my $i (0 .. $#vues) {
+			if ($DEBUG) {say "... $vues[$i]: $entrees[$i]"}
+			#my $text_str = decode( $enc, $entrees[$i]);
+      #$text_str = lc $text_str;
+			if ($hash{int($vues[$i])."_ill_index"}) { # we already have an entry on this page
+			  my $score = $mod->getSimilarityStrings (lc $entrees[$i], lc $hash{int($vues[$i])."_ill_index"});
+			  if ($DEBUG) {say "...an entry already exists: ".$hash{int($vues[$i])."_ill_index"}." (similarity: $score)"}
+			  if ($score < 0.2) {
+				  if ($DEBUG) {say "...adding ".$entrees[$i]." to ".$hash{int($vues[$i])."_ill_index"}}
+					$hash{int($vues[$i])."_ill_index"} .= " - ".$entrees[$i];
+					#say $hash{int($vues[$i])."_ill_index"}
+				}
+			  } else {
+			    $hash{int($vues[$i])."_ill_index"} = $entrees[$i]}
+		}
+	}
+}
 
 # Looking for illustrations in OLR manifests
 sub extraireIllOLR{my $fh=shift;
@@ -893,6 +1114,8 @@ sub extraireIllOLR{my $fh=shift;
   my $overline;
   my $numIll=0; # pour chq page
   my $numIllDoc=0; # pour le doc
+  my $pub;
+  my $annonce;
 
   #say "...extraireIll";
 
@@ -901,21 +1124,35 @@ sub extraireIllOLR{my $fh=shift;
    ( @articles ) = do { local $/; <$fh> =~ m/$motifArticle/g};
    $hash{"articles"} = scalar (@articles);
    if ($DEBUG) {say " number of articles: ".scalar (@articles);}
-   say "---------";
 
    seek $fh, 0, 0;
    while (my $line = <$fh>) {
      # on detecte s'il y a un surtitre a un article
      if ($line =~ /$motifSurtitreArticle/) { $overline = 1;}
+     # une section de publicité ?
+     if ($line =~ /$motifSection/) {
+       ( $titreSection ) = $line =~ m/$motifLabel/;
+       if ($titreSection) {
+         say "-----------\n* SECTION : $titreSection";
+         if (index ($titreSection,$labelPub) !=-1) {
+           $pub =1;}
+         elsif (index ($titreSection,$labelAnnonce) !=-1) {
+          $annonce = 1}
+         }
+      }
      # on cherche le titre de l'article
 		 # looking for article title
      if ($line =~ /$motifArticle/) {
       ( $titreArticle ) = $line =~ m/$motifLabel/;
       ( $DMDIDarticle ) = $line =~ m/$motifDMDID/;
 			#say "DMD : $DMDIDarticle";
-      if ($DEBUG) {
-      	if (defined $titreArticle) {say "--> article title: ".$titreArticle;}
-      	else {say "--> untitled article"}}
+      if (defined $titreArticle) {
+          if ($DEBUG) {say "--> article title: ".$titreArticle}
+          # hack pour détecter la fin d'une section de publicité
+          undef $pub;
+          undef $annonce;
+        }
+      else {say "--> untitled article"}
       # RAZ de l'ID du titre
       undef $idTitre ; }
 
@@ -941,9 +1178,9 @@ sub extraireIllOLR{my $fh=shift;
       $numIll++; }
 
    # si on a trouve precedemment une illustration, on cherche le num de page correspondant et l'ID ALTO
-	 # if we have an illusration, look for page number and ALTO ID
+	 # if we have an illustration, look for page number and ALTO ID
    if ((defined $illEnCours) && ($line =~ /$motifArea/)) { #chercher la ligne qui contient la ref vers la page ALTO contenant l'illustration
-    	( $IDalto ) = $line =~ m/$motifNumAlto/;  # numero du fichier ALTO : entier
+      ( $IDalto ) = $line =~ m/$motifNumAlto/;  # numero du fichier ALTO : entier
     	( $IDill ) = $line =~ m/$motifIDblock/; # ID de l'illustration : PAG_2_IL000002
      	$IDalto = int($IDalto) ;
 
@@ -964,7 +1201,7 @@ sub extraireIllOLR{my $fh=shift;
     	#if ($DEBUG) {say " ** $numIll illustrations on page: $IDalto" }
 
     	# si OLR BnF, il y a parfois des GraphicalElement référencés par erreur
-			# if OLR BNF use case, we need to filer GraphicalElement
+			# if OLR BNF use case, we need to filter GraphicalElement
     	if (($MODE eq "olrbnf") and (index ($IDill,"_GE") != -1))
     	 {$hash{$IDalto."_ill_".$numIll."filtre"} = 2;
     	 	$nbTotIllFiltreesOLR++;
@@ -981,37 +1218,51 @@ sub extraireIllOLR{my $fh=shift;
     	$hash{int($IDalto)."_ill_".$numIll."id"} = $IDill;
 
     	# le titre de l'article englobant l'illustration
-      if ( (defined($titreArticle)) && (length($titreArticle) != 0)) {
+      if ( defined($titreArticle) && (length($titreArticle) != 0)) {
           #say "  hash --> ID titre : ". $numIDtitre. " - ". substr $titreArticle,0,30 ;
           $hash{int($IDalto)."_ill_".$numIll."titre"} = $titreArticle;
-          if (index ($titreArticle,"Publicit") !=-1) {
+          # gestion des publicites
+          if (index ($titreArticle,$labelPub) !=-1) {
           	$hash{int($IDalto)."_ill_".$numIll."pub"} = "true";
           	say " ** Advertisement **"}
+          elsif (index ($titreArticle,$labelAnnonce) !=-1) {
+            	$hash{int($IDalto)."_ill_".$numIll."annonce"} = "true";
+            	say " ** Freead **"}
           }
+      # cas des sections de publicité
+      if (defined $pub) {
+        $hash{int($IDalto)."_ill_".$numIll."pub"} = "true";
+        $hash{int($IDalto)."_ill_".$numIll."titre"} = "Publicité";
+        say " ** Advertisement in a section **"}
+      if (defined $annonce) {
+          $hash{int($IDalto)."_ill_".$numIll."annonce"} = "true";
+          $hash{int($IDalto)."_ill_".$numIll."titre"} = "Annonce";
+          say " ** Freead in a section **"}
 
       # on stocke pour plus tard le numero de l'ID du bloc texte ALTO suivant le titre
-			# text blcok ID following the title
+			# text block ID following the title
       # $listeIDtxt = tableau de tableaux
       if (defined ($idTitre)) {
-      	     say " *** title ID: ".$idTitre;
+      	     if ($DEBUG) {say " *** title ID: ".$idTitre;}
            	 $txtApres = incIdBlocALTO($idTitre,1,$motifIDTxtBlock);
            	 $listeIDsTxt[$IDalto][$numIll] = $txtApres;
-
         }
 
     	if (defined $titreArticle) {
     	  	say " title: ".(substr $titreArticle,0,30);}
     	if (defined $caption) {
     	    say " caption: ".(substr $caption,0,30);}
-      say " ill ID: $IDill  ";
-    	if (defined $txtApres)
-    	   {say " text ID: $txtApres";}
+      if ($DEBUG) {say " ill ID: $IDill  "}
+    	if (defined $txtApres) {
+    	   if ($DEBUG) {say " text ID: $txtApres"}
+       }
     	#say "**";
 
      	#$caption = "";	# RAZ des tampons jusqu'au prochain "match"
     	undef $overline;
     	undef $illEnCours;
     	undef $txtApres;
+
      }
     } # fin du while ligne
 
@@ -1030,21 +1281,29 @@ sub incIdBlocALTO {
 	my $increment=shift;
 	my $motif=shift;
 
-
+  #say "motif : $motif";
 	my @tmp = split($motif,$id);
   my $res = $tmp[1];
-  if (not  $res) {
+  if (not $res) {
   	say "## error in incIdBlocALTO: ID : $id / pattern: $motif ##";
     return undef}
 
   if ($increment == 0) {  # si le parametre = 0, on veut le bloc n° 1
         $res = 1}
-  else {$res = $tmp[1] + $increment;}
+  else {
+		$res = $tmp[1] + $increment;
+	  if ($res == 0)
+		 {$res = 1}
+	 }
 
   if ( index ($MODE,"bnf") != -1) { # on construit un ID de bloc texte
          return $tmp[0].$motifIDTxtBlock.sprintf '%06s',$res; # sur 6 digits
      }
-  else { # cas EN
+  elsif ($MODE eq "ocren")  { # cas OCR EN
+         return $tmp[0].$motifIDTxtBlock.$res; # pas de formattage
+       }
+  else   { # cas OCR EN
+
          return $tmp[0].$motifIDTxtBlock.sprintf '%05s',$res; # sur 5 digits
        }
    }
@@ -1060,25 +1319,31 @@ sub genererMDALTO {
 
   my $nbrePagesALTO = 0;
 
-  #say "genererMDALTO";
+  #say "genererMDALTO: $rep";
   #say Dumper(@listeDMDIDs);
   #say Dumper(@listeIDsTxt);
 
-  while (my $fichier = $rep->next) {
-			if ((substr $fichier, -4) eq ".xml") {
-		    #$numPageALTO = int(substr $fichier,-6,3); # SBB
-				$numPageALTO = int(substr $fichier,$numFicALTOdebut,$numFicALTOlong);  #recup du num de page dans le nom de fichier : X0000002.xml
-		    say "\n#page: ". int($numPageALTO);
+  opendir (my $DIR, $rep) || die "Error while opening $rep: $!\n";
 
-		    $codeErreur=lireMDALTO($fichier,$idDoc); #,$handler
-		    if ($codeErreur == -1) {say "\n##  a problem occured during ALTO analysis: $fichier\n";}
+  foreach my $fichier(sort readdir $DIR)  # sorting files in the folder
+  {
+        next if $fichier eq '.' or $fichier eq '..';
+        $chemin = $rep."/".$fichier;
+        #print("fileName: $chemin \n");
+  #while (my $fichier = $rep->next) {
+			if ((substr $chemin, -4) eq ".xml") {
+		    #$numPageALTO = int(substr $fichier,-6,3); # SBB
+				$numPageALTO = int(substr $chemin,$numFicALTOdebut,$numFicALTOlong);  #recup du num de page dans le nom de fichier : X0000002.xml
+		    say "\n#ALTO: ". int($numPageALTO);
+		    $codeErreur=lireMDALTO($chemin,$idDoc); #,$handler
+		    if ($codeErreur == -1) {say "\n##  a problem occured during ALTO analysis: $chemin\n";}
 		    else {
 					$nbrePagesALTO++;
 					if ($hash{"lpages"}) {
 						$hash{"lpages"} = $hash{"lpages"}.$numPageALTO.","}  # liste des num de pages ALTO
 					else {$hash{"lpages"} = $numPageALTO.","}
 			}
-		  }
+		 }
     }
    say "\n $nbrePagesALTO ALTO pages analysed";
    say "-------------------------- ALTO: END";
@@ -1138,11 +1403,14 @@ sub lireMDALTO {
       say " ## Issue: extracting page dimension ##";
       return -1;
     }
-		$hash{"largeur"} = int($largeurPage*$coeffDPI); # document size in mm
-		$hash{"hauteur"} = int($hauteurPage*$coeffDPI); # actually, we take the first page...
-    $hash{"largeurPx"} = $largeurPage; # in pixels
-    $hash{"hauteurPx"} = $hauteurPage;
-
+		if ($numPageALTO == 1) { # actually, we take the first page to get the document dimensions
+		 $hash{"largeur"} = int($largeurPage*$coeffDPI); # document size in mm
+		 $hash{"hauteur"} = int($hauteurPage*$coeffDPI);
+     $hash{"largeurPx"} = $largeurPage; # in pixels
+     $hash{"hauteurPx"} = $hauteurPage;
+   }
+	 $hash{$numPageALTO."hauteurPx"} = $hauteurPage;
+	 $hash{$numPageALTO."largeurPx"} = $largeurPage;
   }
   if ($DEBUG) {
 		say "L : ". $largeurPage." (px) x H : ".$hauteurPage." (px)" }
@@ -1177,6 +1445,7 @@ sub lireMDALTO {
      if ($extractILL==1) { 	# on cherche des illustrations (si demande)
     	# extraire les dimensions
     	($idBlocAlto) = $ligne =~ m/$motifIDALTO/;
+			#say "motif : $motifIDALTO";
     	say "\nID ill : ".$idBlocAlto;
 
     	my ( $typeIll ) = $ligne =~ m/$motifTypeIllALTO/;
@@ -1265,18 +1534,19 @@ sub lireMDALTO {
     	   #say "IDtxt : ".$IDtxt;
          if (defined($IDtxt) && ($IDtxt ne "")) {
               $listeIDsTxt[$numPageALTO][$numIllEnCours] = $IDtxt;  # on cherche l'ID de l'éventuel bloc de texte qui suit l'illustration (légende)
-           	  if ( $MODE eq "ocrbnf") {
+           	  if (($MODE eq "ocrbnf") or ($MODE eq "ocrbnflegacy")) {
            	    # bloc de texte suivant
            	    $IDleg =  incIdBlocALTO($IDtxt,1,$motifIDTxtBlock);  }
               else { # cas EN : tous les blocs sont numérotés en séquence
                 $IDleg = incIdBlocALTO($IDtxt,2,$motifIDTxtBlock);    #+1 = illustration; +2 = bloc apres
               }
-              #if ($DEBUG) {say "  -> ID txt avant  : ".$numIDtxt;}
+              if ($DEBUG) {say "  -> ID txt avant  : ".$IDtxt;}
 
            }
            else { # pas de txt avant : cas de l'illustration en premier dans la page
            	  #my @tmp = split($motifIDIllBlock,$idBlocAlto); # recuperer le num de page
            	  $IDleg = incIdBlocALTO($idBlocAlto, -1,$motifIDIllBlock); # on tente un ID = 1...
+
            }
 
            #le numero de l'ID du bloc texte ALTO apres l'illustration
@@ -1394,9 +1664,6 @@ sub getALTOtxt {
 	  	   }
 }
 
-
-
-
 ###################
 sub calculerARK {my $id=shift;
 
@@ -1411,13 +1678,17 @@ sub calculerARK {my $id=shift;
 # Ecriture des metadonnees
 sub ecrireMD {my $id=shift;
 
-  # calculer l'ID ark
+  # computing ark ID
   calculerARK($id);
+
+	# looking for the folio number and other stuff (for Gallica docs)
+  extrairePagination($id);
 
   # generer tous les formats
   foreach my $f (@FORMATS) {
-  		         exportMD($id,$f);
-  		      }
+		#say Dumper %hash;
+  	$nbDocExport += exportMD($id,$f);
+  }
 }
 
 #######################
@@ -1432,15 +1703,19 @@ sub exportPage {my $id=shift; # id document
 	my $format=shift;  # format d'export
 	my $fh=shift;  # file handler
 
-	    my $filtre;
-	    my $une;
-	    my $derniere;
-	    my $couleur="";
+	my $filtre;
+	my $une;
+	my $derniere;
+	my $couleur="";
 
-	    say "... for #page: $p";
-      #say Dumper %hash;
+	    say "... exporting page: #$p";
+			my $l =  $hash{$p."largeurPx"};
+			my $h =  $hash{$p."hauteurPx"};
 
-      %atts = ("ordre"=> $p);
+			if (defined $l && defined $h) {
+				%atts = ("ordre"=> $p,"l"=>$l,"h"=>$h);
+			} else {
+        %atts = ("ordre"=> $p)}
   	  writeEltAtts("page",\%atts,$fh);
   	  writeElt("nbMot",$hash{$p."_mots"},$fh);
   	  writeElt("blocTexte",$hash{$p."_blocsTexte"},$fh);
@@ -1482,68 +1757,91 @@ sub exportPage {my $id=shift; # id document
 	           			 else {$couleur = "coul"}} # couleur
            			else {say " ## color mode unknown!"}
            		}
-					 if ($DEBUG) {say "   color: $couleur"} ;
+					if ($DEBUG) {say "     color: $couleur"} ;
 
-       	   if ($p==1) {  # illustration en une / illustration on the front page
+       	  if ($p==1) {  # illustration en une / illustration on the front page
        	   	    $une = "true";
        	   	    undef $derniere;
-       	  	    #print {$fh} "une=\"true\">";
-       	  	    }
-       	   elsif ($p==$hash{"pages"}) { # illustration en derniere page / last page
-       	   	    $derniere = "true";
-       	   	    undef $une
-       	  			#print {$fh} "derniere=\"true\">";
-       	  			}
+								# hack pour les illustrés
+								#$couleur = "coul";
 
-       	   # si l'illustration est filtrée, positionner l'attribut
-       	 	 if (defined $hash{$p."_ill_".$i."filtre"})
-					 	{print "    ->filtered\n";}
-       	   else {print "\n"}
+       	  	    }
+       	  elsif ($p==$hash{"pages"}) { # illustration en derniere page / last page
+       	   	    $derniere = "true";
+                undef $une;
+                # hack pour les illustrés
+								#$couleur = "coul";
+       	  			}
+					if (exists $hash{$p."_filtre"} or exists$hash{$p."_ill_".$i."filtre"}) {
+						    $filtre = 1;
+								say "    ->filtered";
+							}
 
        	   # ecrire les attributs
        	   %atts =("n"=>$p."-".$i,"x"=>$hash{$p."_ill_".$i."x"}, "y"=>$hash{$p."_ill_".$i."y"},
        	   "w"=>$w, "h"=>$h,  "taille"=>$taille,"couleur"=>$couleur,"rotation"=>$hash{$p."rotation"},
-       	   "pub"=>$hash{$p."_ill_".$i."pub"},"une"=>$une,"derniere"=>$derniere,"filtre"=>$hash{$p."_ill_".$i."filtre"} );
+       	   "pub"=>$hash{$p."_ill_".$i."pub"},"annonce"=>$hash{$p."_ill_".$i."annonce"},"une"=>$une,"derniere"=>$derniere,"filtre"=>$filtre );
   	       writeEltAtts("ill",\%atts,$fh);
+					 undef $filtre;
 
-       	   # classification
+       	   # genre classification
        	   my $tmp =  $hash{$p."_ill_".$i."genre"};  # types extrait de l'OCR
        	   $tmp = definirGenre($tmp);
        	   if ($tmp) {
-       	   	 if ($DEBUG) {say "    genre extracted from the OCR: ".$tmp;}
+       	   	 if ($DEBUG) {say "     genre extracted from the OCR: ".$tmp;}
        	   	 	$CS = 1 # CS = 1
        	      }
        	   if ((not $tmp) and (defined $genreDefaut)) { # genre par défaut
-       	   	  if ($DEBUG) {say "    default genre: ".$genreDefaut; }
-       	   	  $CS = 0.8;
+       	   	  if ($DEBUG) {say "     default genre is used: ".$genreDefaut; }
+       	   	  $CS = 0.9;
        	   	  $tmp = $genreDefaut;
        	      }
        	   if ($tmp) {
        	     %atts = ("CS"=>$CS,"source"=>"md");  # source = metadata
-       	     writeEltAtts("genre",\%atts,$fh,$tmp); }
+       	     writeEltAtts("genre",\%atts,$fh,$tmp);
+					 }
 
        	   if (defined $themeDefaut) {
        	   	# CS =0.8
-       	   	%atts = ("CS"=>0.8,,"source"=>"md"); # source = metadata
+       	   	%atts = ("CS"=>0.9,,"source"=>"md"); # source = metadata
        	   	writeEltAtts("theme",\%atts,$fh,$themeDefaut);  # sujet IPTC
        	   	}
+					 if (@tags) {  	  	# default content tags
+			 		   foreach $t (@tags) {
+			 		 		 %atts = ("CS"=> "1.0", "lang"=>"en", "source"=>"hm");
+			 		 		 writeEltAtts("contenuImg",\%atts,$fh);
+			 		 		 print {$fh} $t;
+			 		 		 writeEndElt("contenuImg",$fh);}
+			 			 }
+					 # captions
+					 $leg = $hash{$p."_ill_".$i."leg"};
+					 #say $leg;
+					 if ($leg && (index($leg, "Untitled") == -1)) {
+						 	 writeElt("leg",escapeXML($leg),$fh);}
 
-       	   if (index($MODE, "olr")!=-1) {  # il y a des titres uniquement en OLR
-       	     $tmp =  $hash{$p."_ill_".$i."titre"};
-       	     if ($tmp) {
-       	       writeElt("titraille",escapeXML($tmp),$fh); }
-       	     }
-       	   $tmp = 	$hash{$p."_ill_".$i."leg"};
-           if ($tmp && (index($tmp, "Untitled") == -1)) {
-              writeElt("leg",escapeXML($tmp),$fh);}
-
+					 # headings
+       	   if (index($MODE, "olr") != -1) {  # il y a des titres uniquement en OLR
+       	     my $titre =  $hash{$p."_ill_".$i."titre"};
+       	     if ($titre) {
+       	       writeElt("titraille",escapeXML($titre),$fh) }
+       	   } elsif (index($MODE, "ocrbn") != -1) { # il y a des infos extraites des Tdm ou index
+						 my $titre =  $hash{$p."_ill_index"};
+						 #$titre ||= $hash{($p-1)."_ill_index"};
+						 #$titre ||= $hash{($p+1)."_ill_index"};
+						 #say $titre;
+						 if ($titre and ( not(defined($leg)) or (lc($titre) ne lc($leg)))) {
+							 say "    ->text extracted from ToC: ".(substr ($titre, 1, 25));
+							 writeElt("titraille",escapeXML($titre),$fh) }
+						 }
+					 # text
            $txt = $hash{$p."_ill_".$i."txt"};
            # OLR : il peut arriver que le texte soit identique a la légende : ne pas le garder
            # substring pour supprimer les guillemets
            if ((($txt) && index($MODE,"ocr")!=-1)
-            	or (($txt) && ($MODE eq "olren") && ( (not(defined($tmp))) or ($txt ne substr ($tmp,1,length($tmp) - 2))))) {
+            	or (($txt) && ($MODE eq "olren") && ( not(defined($leg)) or ($txt ne substr ($leg,1,length($leg) - 2))))) {
                #say "\n...TXT...";
                writeElt("txt",escapeXML($txt),$fh); }
+
             writeEndElt("ill",$fh);
          	 }
       } # fin for
@@ -1551,7 +1849,7 @@ sub exportPage {my $id=shift; # id document
       } # fin if
     }
     writeEndElt("page",$fh);
-    }
+}
 
 # -----------------
 # mapping du genre
@@ -1671,7 +1969,7 @@ sub calculerARKperio {my $id=shift;
           if (index($line,"<issue ") != -1) { # we have a newspaper issue on this line
 						#say "L: ".$line;
           	( $tmpArk ) = $line =~ m/$motifArk/;
-          	if ($MODE ne "ocrbnf") { # cas de la presse Europeana Newspapers
+          	if (($MODE eq "ocren") or ($MODE eq "olren")) { # cas de la presse Europeana Newspapers
           		( $jour ) = $line =~ m/$motifJour/;
            		my ($year, $day_of_year) = ($annee, $jour);
            		# calculer le jour
@@ -1691,7 +1989,7 @@ sub calculerARKperio {my $id=shift;
              else {
                $dateARKs{$jour} = $tmpArk;}
               }
-           else  # cas documents  bnf : on remplit le tableau avec les arks
+           else  # cas des documents bnf : on remplit le tableau avec les arks
             {
             	$dateARKs{$i} = $tmpArk;
 							say "... adding ark in the hash: $tmpArk";
@@ -1730,6 +2028,60 @@ sub calculerARKperio {my $id=shift;
     }
   }
 
+sub extrairePagination {my $id=shift;
+	   # sample
+	   # http://gallica.bnf.fr/services/Pagination?ark=btv1b10315938r
+
+	    # call API Gallica
+
+		 my @numeros;
+
+		 say "...extracting pages information for $id";
+
+		 if ($typeDoc eq "M" and index($MODE, "ocrbnf") !=-1)  { # we have a Gallica monography
+				my $ark = $hash{"id"};
+				if (not $ark) {
+					say "#### can't proceed! ####";
+					die
+				}
+				my $url = $urlAPIpagination.$ark;
+	    	say "\n  ** calling the Gallica Pagination service: $url";
+	    	#my $reponseAPI = get($url); # get is in LWP::Simple
+				$cmd="curl '$url'";
+				my $reponseAPI = `$cmd`;
+				#say "res: ".$res;
+				if ($reponseAPI and index($reponseAPI, "Server Error") == -1)  {
+			  	say "... API is responding: ".substr($reponseAPI,0,200)." ...";
+					say "-------------------------------------";
+
+	      	# test if OCR
+	     		(my $ocr) = do { local $/; $reponseAPI =~ m/$motifOCR/s };
+	     		$hash{"ocr"} = $ocr;
+	     		if ($DEBUG) {say "  ... OCR: ".$ocr;}
+					# look for the pages info
+					(@numeros ) = do { local $/; $reponseAPI =~ m/$motifNumero/g };
+					if (@numeros ) {
+						say " filtering ".scalar @numeros." vues...";
+					  for (my $page = 1; $page <= $hash{"pages"}; $page++) {
+						 # we have to throw away the binding pages: "plat", "dos" keyword
+						 if ((index($numeros[$page-1], "plat ") != -1)
+							 or (index($numeros[$page-1], "garde ") != -1)
+							 or $numeros[$page-1] eq "dos") {
+								 $nbTotPagesFiltrees++;
+								 $hash{$page."_filtre"} = "1";
+							 }
+						}
+						return 1
+					}
+					else {
+						say "#### no vues info! ####";
+						return -1
+					}
+				} else
+			 		{say "#### API error! #### ";
+				  return -1}
+	  	}
+		}
 
 
 =BEGIN

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<alto SCHEMAVERSION="alto_bnf-v2_0" xmlns="http://www.loc.gov/standards/alto/ns-v3#" xmlns:xlink="http://www.w3.org/TR/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/standards/alto/ns-v3# http://bibnum.bnf.fr/schema/alto_bnf-v2_0.xsd">
+  <Description>
+    <MeasurementUnit>pixel</MeasurementUnit>
+    <sourceImageInformation>
+      <fileName>00000007.jp2</fileName>
+      <documentIdentifier documentIdentifierLocation="IFN">9612399</documentIdentifier>
+    </sourceImageInformation>
+    <OCRProcessing ID="OCR_1">
+      <ocrProcessingStep>
+        <processingDateTime>2015-10-09</processingDateTime>
+        <processingStepDescription>[001_OCR_BRUT]OCR BRUT 71.89 %</processingStepDescription>
+        <processingStepDescription>[002_CHARS]{41}</processingStepDescription>
+        <processingStepDescription>[003_CHARS_USED]{21}</processingStepDescription>
+        <processingStepDescription>[004_CHARS_SUSPECTS_USED]{0}</processingStepDescription>
+        <processingStepDescription>[005_CHARS_UNUSED]{20}</processingStepDescription>
+        <processingStepDescription>[006_CHARS_SUSPECTS_UNUSED]{0}</processingStepDescription>
+        <processingStepDescription>[007_STRINGS]{4}</processingStepDescription>
+        <processingStepDescription>[008_STRINGS_USED]{2}</processingStepDescription>
+        <processingStepDescription>[009_STRINGS_SUSPECTS_UNUSED]{0}</processingStepDescription>
+        <processingStepDescription>[010_CHARS_LETTERS]{39}</processingStepDescription>
+        <processingStepDescription>[011_CHARS_PUNCTUATION]{2}</processingStepDescription>
+        <processingStepDescription>[012_CHARS_DIGITS]{0}</processingStepDescription>
+        <processingStepDescription>[013_CHARS_SUSPECT]{0}</processingStepDescription>
+        <processingStepDescription>[022_CHARS_UNUSED_BY_BLOCK]{0}</processingStepDescription>
+        <processingStepDescription>[023_BLOCKS_SUSPECTS]{0}</processingStepDescription>
+        <processingStepDescription>[111_LIGS_DETECTED_CURV]{0}</processingStepDescription>
+      </ocrProcessingStep>
+    </OCRProcessing>
+  </Description>
+  <Styles>
+    <TextStyle FONTFAMILY="Times" FONTSIZE="11" ID="TXT_10"/>
+    <TextStyle FONTFAMILY="Times" FONTSIZE="18" ID="TXT_13"/>
+  </Styles>
+  <Tags>
+    <LayoutTag ID="TAG_manuscript" LABEL="manuscript"/>
+    <LayoutTag ID="TAG_stamp" LABEL="stamp"/>
+    <LayoutTag ID="TAG_textStamped" LABEL="textStamped"/>
+  </Tags>
+  <Layout>
+    <Page ACCURACY="91.43" HEIGHT="3008" ID="PAG_00000007" PHYSICAL_IMG_NR="7" PRINTED_IMG_NR="0" QUALITY="OK" WIDTH="1812">
+      <PrintSpace HEIGHT="2505" HPOS="228" ID="PAG_00000007_PrintSpace" VPOS="249" WIDTH="1240">
+        <GraphicalElement HEIGHT="362" HPOS="544" ID="PAG_00000007_GE000001" TAGREFS="TAG_stamp" VPOS="249" WIDTH="622"/>
+        <ComposedBlock HEIGHT="558" HPOS="249" ID="PAG_00000007_CB000001" VPOS="812" WIDTH="1089">
+          <GraphicalElement HEIGHT="514" HPOS="249" ID="PAG_00000007_GE000002" TAGREFS="TAG_stamp" VPOS="812" WIDTH="507"/>
+          <TextBlock HEIGHT="124" HPOS="300" ID="PAG_00000007_TB000001" LANG="fr" STYLEREFS="TXT_13" TAGREFS="TAG_textStamped" VPOS="1072" WIDTH="1038">
+            <TextLine HEIGHT="124" HPOS="300" ID="PAG_00000007_TL000001" STYLEREFS="TXT_13" VPOS="1072" WIDTH="1038">
+              <String CONTENT="%AJJJJE" HEIGHT="124" HPOS="300" ID="PAG_00000007_ST000001" STYLEREFS="TXT_13" VPOS="1072" WC="0.69" WIDTH="290"/>
+              <SP HPOS="590" ID="PAG_00000007_SP000001" VPOS="1090" WIDTH="24"/>
+              <String CONTENT=".MrOMOLOGIQUE" HEIGHT="102" HPOS="614" ID="PAG_00000007_ST000002" STYLEREFS="TXT_13" VPOS="1090" WC="0.90" WIDTH="724"/>
+            </TextLine>
+          </TextBlock>
+          <TextBlock HEIGHT="66" HPOS="640" ID="PAG_00000007_TB000002" LANG="fr" STYLEREFS="TXT_10" VPOS="1304" WIDTH="394">
+            <TextLine HEIGHT="66" HPOS="640" ID="PAG_00000007_TL000002" STYLEREFS="TXT_10" VPOS="1304" WIDTH="394">
+              <String CONTENT="FRANÇAISE" HEIGHT="66" HPOS="640" ID="PAG_00000007_ST000003" STYLEREFS="TXT_10" VPOS="1304" WC="1" WIDTH="394"/>
+            </TextLine>
+          </TextBlock>
+        </ComposedBlock>
+        <TextBlock HEIGHT="98" HPOS="228" ID="PAG_00000007_TB000003" LANG="fr" STYLEREFS="TXT_13" VPOS="1634" WIDTH="1216">
+          <TextLine HEIGHT="98" HPOS="228" ID="PAG_00000007_TL000003" STYLEREFS="TXT_13" VPOS="1634" WIDTH="1216">
+            <String CONTENT="LÉPIDOPTÈRES" HEIGHT="98" HPOS="228" ID="PAG_00000007_ST000004" STYLEREFS="TXT_13" VPOS="1634" WC="0.94" WIDTH="1216"/>
+          </TextLine>
+        </TextBlock>
+        <GraphicalElement HEIGHT="153" HPOS="1170" ID="PAG_00000007_GE000003" TAGREFS="TAG_manuscript" VPOS="2601" WIDTH="298"/>
+      </PrintSpace>
+    </Page>
+  </Layout>
+</alto>

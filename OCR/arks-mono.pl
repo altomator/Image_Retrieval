@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
 # list of ark IDs
-@arksM = (
+@arksM = ("bpt6k9612399b",
 	"btv1b8594527d", "bpt6k108123h"
 , "bpt6k135117k"
 , "bpt6k1475481"

@@ -2,137 +2,179 @@
 	<analyseAlto>
 	<metad>
 <type>P</type>
-<ID>4600000</ID>
-<titre>Excelsior</titre>
+<ID>bpt6k46000007</ID>
+<titre>1910-11-16 (Numéro 1)</titre>
 <dateEdition>1910-11-16</dateEdition>
 <lang>fre</lang>
-<notice>cb32771891w</notice>
+<notice>ark:/12148/cb32771891w</notice>
+<source>BnF</source>
 <nbPage>12</nbPage>
 </metad>
-<contenus ><largeur>400</largeur>
-<hauteur>548</hauteur>
-<largeurPx>6314</largeurPx>
-<hauteurPx>8632</hauteurPx>
+<contenus  toc="true"><largeur>401</largeur>
+<hauteur>550</hauteur>
+<largeurPx>6318</largeurPx>
+<hauteurPx>8677</hauteurPx>
+<nbArticle>143</nbArticle>
 	<pages>
-<page  ordre="3"><nbMot>3314</nbMot>
-<blocTexte>81</blocTexte>
-<blocTab>0</blocTab>
-<blocPub>0</blocPub>
-<blocIll>3</blocIll>
-	<ills>
-<ill  filtre="1" taille="1" y="4478" h="1575" x="1446" n="3-1" couleur="gris" w="1057"></ill>
-<ill  couleur="gris" w="1019" taille="1" h="1624" x="4686" y="2128" n="3-2" filtre="1"></ill>
-<ill  filtre="1" h="1699" taille="7" y="6483" x="1527" n="3-3" couleur="gris" w="4129"></ill>
-</ills>
-</page>
-<page  ordre="2"><nbMot>4167</nbMot>
-<blocTexte>151</blocTexte>
-<blocTab>0</blocTab>
-<blocPub>0</blocPub>
-</page>
-<page  ordre="1"><nbMot>179</nbMot>
+<page  ordre="1" l="6318" h="8677"><nbMot>179</nbMot>
 <blocTexte>14</blocTexte>
 <blocTab>0</blocTab>
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  filtre="1" une="true" w="5276" couleur="gris" taille="33" h="6043" x="429" y="1935" n="1-1"></ill>
+<ill  y="1935" w="5276" h="6043" une="true" x="429" couleur="gris" n="1-1" taille="33"><leg>S. A. I. ELISABETH, SUPÉRIEURE DU COUVEN T DES DIACONESSES DE MOSCOU, EST REÇUE PAR LE TSAR La grancîe-duchesse Elisabeth a pris le voile après l assassinat de son mari, gouverneur de ^Moscou et oncle du tsar Nicolas. On ne l avait pas encore vue sous le costume religieux. Cette • .curieuse photographie el été faite àFn(  .fherg, lors du récent séjour de la famille iwpï-ncL - russe.</leg>
+<titraille>LA VEUVE DU GRAND-DUC SERGE AU COUVENT</titraille>
+</ill>
 </ills>
 </page>
-<page  ordre="5"><nbMot>149</nbMot>
-<blocTexte>7</blocTexte>
+<page  h="8632" ordre="2" l="6314"><nbMot>4167</nbMot>
+<blocTexte>151</blocTexte>
+<blocTab>0</blocTab>
+<blocPub>0</blocPub>
+</page>
+<page  ordre="3" l="6318" h="8677"><nbMot>3314</nbMot>
+<blocTexte>81</blocTexte>
 <blocTab>0</blocTab>
 <blocPub>0</blocPub>
 <blocIll>3</blocIll>
 	<ills>
-<ill  couleur="gris" w="5297" n="5-1" h="3257" taille="18" x="462" y="827" filtre="1"></ill>
-<ill  filtre="1" n="5-2" x="494" taille="17" h="3255" y="4709" couleur="gris" w="5276"></ill>
-<ill  taille="0" h="65" y="7964" x="4573" n="5-3" w="1261" couleur="gris" filtre="1"></ill>
+<ill  couleur="gris" taille="1" n="3-1" y="4478" w="1057" h="1575" x="1446"><leg>LE MARECHAL DA FONSECA  </leg>
+<titraille>Tolstoï errant se meurt : Il est tombé malade sur le chemin de Koselsk à Rostov-sur-Don</titraille>
+</ill>
+<ill  h="1624" w="1019" x="4686" y="2128" n="3-2" taille="1" couleur="gris"><leg>MISS GHRISTABEL PANKHURST de la « National Womeris Social and Political Union »</leg>
+<titraille>Miss Christabel suffragette : Elle a tous les diplômes ; elle en a plus que M. Asquith. Mme Marcelle Tinayre nous décrit sa silhouette et son éloquence</titraille>
+</ill>
+<ill  y="6483" x="1527" h="1699" w="4129" couleur="gris" taille="7" n="3-3"><leg>La Seine inonde la banlieue. — A Cli oisy-le-Roi : Le, quartier des Gondoles</leg>
+<titraille>Miss Christabel suffragette : Elle a tous les diplômes ; elle en a plus que M. Asquith. Mme Marcelle Tinayre nous décrit sa silhouette et son éloquence</titraille>
+</ill>
 </ills>
 </page>
-<page  ordre="11"><nbMot>5646</nbMot>
-<blocTexte>219</blocTexte>
-<blocTab>0</blocTab>
-<blocPub>0</blocPub>
-<blocIll>3</blocIll>
-	<ills>
-<ill  filtre="1" h="1494" taille="1" x="3749" y="1669" n="11-1" couleur="gris" w="1043"></ill>
-<ill  couleur="gris" w="2147" n="11-2" y="3286" taille="4" h="2218" x="3759" filtre="1"></ill>
-<ill  filtre="1" h="120" taille="0" x="5613" y="8093" n="11-3" w="249" couleur="gris"></ill>
-</ills>
-</page>
-<page  ordre="10"><nbMot>2639</nbMot>
-<blocTexte>98</blocTexte>
-<blocTab>0</blocTab>
-<blocPub>28</blocPub>
-<blocIll>3</blocIll>
-	<ills>
-<ill  filtre="1" y="5324" taille="0" h="436" x="2634" n="10-1" couleur="gris" w="1027"></ill>
-<ill  filtre="1" n="10-2" h="1690" taille="5" x="417" y="6439" couleur="gris" w="3285"></ill>
-<ill  n="10-3" h="2701" taille="5" y="513" x="3721" w="2106" couleur="gris" filtre="1"></ill>
-</ills>
-</page>
-<page  ordre="4"><nbMot>4691</nbMot>
+<page  l="6314" ordre="4" h="8632"><nbMot>4691</nbMot>
 <blocTexte>130</blocTexte>
 <blocTab>0</blocTab>
 <blocPub>5</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  filtre="1" n="4-1" taille="0" x="4954" h="827" y="3789" couleur="gris" w="400"></ill>
+<ill  pub="true" taille="0" n="4-1" couleur="gris" h="827" w="400" x="4954" y="3789"><titraille>Publicité</titraille>
+</ill>
 </ills>
 </page>
-<page  ordre="12"><nbMot>1111</nbMot>
-<blocTexte>54</blocTexte>
+<page  l="6318" ordre="5" h="8677"><nbMot>149</nbMot>
+<blocTexte>7</blocTexte>
 <blocTab>0</blocTab>
-<blocPub>54</blocPub>
-<blocIll>7</blocIll>
+<blocPub>0</blocPub>
+<blocIll>3</blocIll>
 	<ills>
-<ill  derniere="true" filtre="1" w="2156" couleur="gris" n="12-1" x="465" taille="10" h="4845" y="481"></ill>
-<ill  filtre="1" derniere="true" taille="1" h="1227" y="481" x="2663" n="12-2" w="1027" couleur="gris"></ill>
-<ill  filtre="1" derniere="true" y="1970" taille="1" h="1391" x="2803" n="12-3" w="908" couleur="gris"></ill>
-<ill  derniere="true" filtre="1" w="1049" couleur="gris" n="12-4" x="2660" taille="1" h="1268" y="3695"></ill>
-<ill  derniere="true" filtre="1" w="328" couleur="gris" n="12-5" h="248" taille="0" y="3797" x="4097"></ill>
-<ill  derniere="true" filtre="1" couleur="gris" w="1028" n="12-6" taille="1" h="1164" x="4826" y="3799"></ill>
-<ill  w="3010" couleur="gris" taille="10" h="3273" x="2753" y="4963" n="12-7" derniere="true" filtre="1"></ill>
+<ill  x="462" w="5297" h="3257" y="827" n="5-1" taille="18" couleur="gris"><leg>CHAQUE MATIN LE GÉNÉRAL SE PROMÈNE AU BOIS AVEC SON OFFICIER D ORDONNANCE ET SON PORTE-FANION La nomination du Général Michel au titre de Généralissime de, l A rmée Française n est plus qit itne question de jours. Le Général Tremeau qui occupe actuellement ces hautes fonctions, / dote fet les aba^dontter pour raison de santé w- a /</leg>
+<titraille>Le Généralissime de demain. -- Le Général Michel en promenade</titraille>
+</ill>
+<ill  w="5276" h="3255" x="494" y="4709" n="5-2" taille="17" couleur="gris"><titraille>Une Escadre Américaine dans les eaux de la Manche</titraille>
+</ill>
+<ill  couleur="gris" n="5-3" taille="0" y="7964" filtre="1" x="4573" w="1261" h="65"><leg>1. New-Hampshire. -- 2. Louisiana. — 3. Michigan. -- 4. North Dakota.— 5. Kansas. - 6. Delaware (bateau amiral). -- 7. Connecticut. -- 8. South Carolina. Seize cuirassés de la flotte américaine de l Atlantique arrivent sur la cote  européenize. Deux divisions touchent Pjortland et Graveshend, en Angleterre, les deux autres, Brest et Cherbourg. Nous Publions ci-dessus huit des principales unités de cette escadre et, dans le médaillon, son commandant en chef, l amiral ochrdeaer* *</leg>
+<titraille>Une Escadre Américaine dans les eaux de la Manche</titraille>
+</ill>
 </ills>
 </page>
-<page  ordre="6"><nbMot>4523</nbMot>
+<page  h="8632" l="6314" ordre="6"><nbMot>4523</nbMot>
 <blocTexte>146</blocTexte>
 <blocTab>0</blocTab>
 <blocPub>0</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  w="1046" couleur="gris" n="6-1" h="722" taille="0" x="3780" y="6990" filtre="1"></ill>
+<ill  n="6-1" taille="0" couleur="gris" h="722" w="1046" x="3780" y="6990"><titraille>A PARIS</titraille>
+</ill>
 </ills>
 </page>
-<page  ordre="7"><nbMot>2925</nbMot>
+<page  ordre="7" l="6318" h="8677"><nbMot>2925</nbMot>
 <blocTexte>117</blocTexte>
 <blocTab>0</blocTab>
 <blocPub>0</blocPub>
 <blocIll>2</blocIll>
 	<ills>
-<ill  w="3129" couleur="gris" n="7-1" taille="7" x="2551" h="2377" y="913" filtre="1"></ill>
-<ill  filtre="1" couleur="gris" w="3122" n="7-2" taille="4" y="6698" h="1446" x="370"></ill>
+<ill  y="913" h="2377" w="3129" x="2551" couleur="gris" n="7-1" taille="7"><leg>Phot. Larcher. Malbrouck s en va-t-en guerre, opérette en 4 actes, de MM. Vaucaire et Nessi, musique de Leoncavallo. —- Premier acle.</leg>
+<titraille>LA RÉPÉTITION GÉNÉRALE DE L APOLLO</titraille>
+</ill>
+<ill  y="6698" w="3122" h="1446" x="370" couleur="gris" n="7-2" taille="4"><leg>Mite Lucy Yau-xhuix M. MESMAECKEK Mlle Chasle M. Cazeneuve Mlle Al lettt3 DORGÈRE.</leg>
+<titraille>Une fête second Empire à l ambassade des Etats-Unis</titraille>
+</ill>
 </ills>
 </page>
-<page  ordre="9"><nbMot>175</nbMot>
-<blocTexte>11</blocTexte>
-<blocTab>0</blocTab>
-<blocPub>0</blocPub>
-<blocIll>3</blocIll>
-	<ills>
-<ill  filtre="1" w="5269" couleur="gris" taille="18" y="790" h="3290" x="575" n="9-1"></ill>
-<ill  filtre="1" w="2597" couleur="gris" n="9-2" h="3269" taille="8" y="4741" x="564"></ill>
-<ill  filtre="1" couleur="gris" w="2581" taille="8" y="4693" h="3285" x="3279" n="9-3"></ill>
-</ills>
-</page>
-<page  ordre="8"><nbMot>4481</nbMot>
+<page  h="8632" ordre="8" l="6314"><nbMot>4481</nbMot>
 <blocTexte>149</blocTexte>
 <blocTab>0</blocTab>
 <blocPub>11</blocPub>
 <blocIll>1</blocIll>
 	<ills>
-<ill  filtre="1" n="8-1" taille="1" y="855" h="1720" x="2885" couleur="gris" w="1053"></ill>
+<ill  taille="1" n="8-1" couleur="gris" x="2885" h="1720" w="1053" y="855"><leg>ENCOIGNURE EN  I\lArIQl ETLRIU DE BOIS DE COULEURS, DÉCORÉE D UN GROUPE 1)  INSTRUMENTS DE MUSIQUE. GARNITURE DE BRONZE. EPOQUE LOUIS XV.</leg>
+<titraille>A L HOTEL DROUOT : Les Faïences et Porcelaines de la Collection Azam Meubles Louis XV et Tapisseries du XVe siècle</titraille>
+</ill>
+</ills>
+</page>
+<page  l="6318" ordre="9" h="8677"><nbMot>175</nbMot>
+<blocTexte>11</blocTexte>
+<blocTab>0</blocTab>
+<blocPub>0</blocPub>
+<blocIll>3</blocIll>
+	<ills>
+<ill  couleur="gris" taille="18" n="9-1" y="790" w="5269" h="3290" x="575"><leg>LE FILS DU KRONPRINZ PASSE, AUX COTÉS DE SON PÈRE, LA REVUE DES CUIRASSIERS DE LA GARDE, A POTSDAM Lorsde la récente-visite? du tsar, à Potsdam, le fils aîné ■■ du kronpriiz--, le prince Guillaume-Frédéric, a fait ses .débuts,,officiels dans .^armée. Il  amp; passé entrevue bicyclette --ë les - v •• ^ régiments de la gai -de, en compagnie de soit pèt-e. Le jeune officier avait revêtu; pour cette circonstance solennelle, Vélégante tenue des hussards.</leg>
+<titraille>LES DÉBUTS OFFICIELS D UN HUSSARD DE QUATRE ANS</titraille>
+</ill>
+<ill  couleur="gris" n="9-2" taille="8" y="4741" x="564" w="2597" h="3269"><leg>LE MAITRE RODIN DANS SON ATELIER Qn a fêté hier le 70 anniversaire du célèbre sculpteur Rodin. Nombreux furent les élèves çt les amis du maître, mut vinrent lui témoigner, une fois de plus, leur profonde et - respectueuse admiration.</leg>
+<titraille>L anniversaire d un grand artiste</titraille>
+</ill>
+<ill  n="9-3" taille="8" couleur="gris" h="3285" w="2581" x="3279" y="4693"><leg>Phot. Fe til i»,.- ,Mlle CÉCILE SOREL DANS LÉ ROLE DE  quot; L AVENTURIÈRE quot;, La brillante Célimène de la Comédie-Française, Mlle Cécile Sorel, a joué dimanche, pour la première fois, le rôle principal du cnef.:.d œttvre d quot;Emile Augier. Elle y a justement et joliment triot»phd.</leg>
+<titraille>Une nouvelle Aventurière quot; .</titraille>
+</ill>
+</ills>
+</page>
+<page  ordre="10" l="6314" h="8632"><nbMot>2639</nbMot>
+<blocTexte>98</blocTexte>
+<blocTab>0</blocTab>
+<blocPub>28</blocPub>
+<blocIll>3</blocIll>
+	<ills>
+<ill  couleur="gris" n="10-1" taille="0" y="5324" x="2634" h="436" w="1027"><titraille>LES ROLLS-ROYCE en France</titraille>
+</ill>
+<ill  n="10-2" taille="5" couleur="gris" w="3285" h="1690" x="417" y="6439"><leg>Photographies prises au cours du récent tournoi du Tennis Club dt Paris</leg>
+<titraille>Trois instantanés d une partie de tennis</titraille>
+</ill>
+<ill  couleur="gris" taille="5" n="10-3" pub="true" y="513" x="3721" h="2701" w="2106"><titraille>Publicité</titraille>
+</ill>
+</ills>
+</page>
+<page  ordre="11" l="6318" h="8677"><nbMot>5646</nbMot>
+<blocTexte>219</blocTexte>
+<blocTab>0</blocTab>
+<blocPub>0</blocPub>
+<blocIll>3</blocIll>
+	<ills>
+<ill  x="3749" h="1494" w="1043" y="1669" n="11-1" taille="1" pub="true" couleur="gris"><titraille>Publicité</titraille>
+</ill>
+<ill  h="2218" w="2147" x="3759" y="3286" pub="true" taille="4" n="11-2" couleur="gris"><titraille>Publicité</titraille>
+</ill>
+<ill  x="5613" h="120" w="249" filtre="1" y="8093" n="11-3" taille="0" couleur="gris"></ill>
+</ills>
+</page>
+<page  l="6314" ordre="12" h="8632"><nbMot>1111</nbMot>
+<blocTexte>54</blocTexte>
+<blocTab>0</blocTab>
+<blocPub>54</blocPub>
+<blocIll>7</blocIll>
+	<ills>
+<ill  couleur="gris" taille="10" n="12-1" pub="true" y="481" x="465" w="2156" derniere="true" h="4845"><titraille>Publicité</titraille>
+</ill>
+<ill  y="481" w="1027" h="1227" derniere="true" x="2663" couleur="gris" pub="true" taille="1" n="12-2"><titraille>Publicité</titraille>
+</ill>
+<ill  y="1970" x="2803" w="908" derniere="true" h="1391" couleur="gris" taille="1" n="12-3" pub="true"><titraille>Publicité</titraille>
+</ill>
+<ill  w="1049" h="1268" derniere="true" x="2660" y="3695" pub="true" n="12-4" taille="1" couleur="gris"><titraille>Publicité</titraille>
+</ill>
+<ill  taille="0" n="12-5" pub="true" couleur="gris" x="4097" h="248" derniere="true" w="328" y="3797"><titraille>Publicité</titraille>
+</ill>
+<ill  y="3799" x="4826" h="1164" derniere="true" w="1028" couleur="gris" taille="1" n="12-6" pub="true"><titraille>Publicité</titraille>
+</ill>
+<ill  couleur="gris" taille="10" n="12-7" pub="true" y="4963" x="2753" w="3010" derniere="true" h="3273"><titraille>Publicité</titraille>
+</ill>
 </ills>
 </page>
 </pages>

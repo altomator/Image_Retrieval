@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TEI.2 xmlns:xlink="http://www.w3.org/TR/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://bibnum.bnf.fr/ns/tdmNum.xsd">
+  <text id="tdm.9612399">
+    <body>
+      <div0 type="TdM">
+        <head>TABLE DES MATIÈRES DU PREMIER VOLUME.</head>
+        <table>
+          <row>
+            <cell/>
+            <cell>Pages.</cell>
+          </row>
+          <row>
+            <cell>
+              <seg n="int.000001">Utilité de l'entomologie</seg>
+            </cell>
+            <cell>
+              <xref from="FOREIGN(9612399/000013.jp2)" n="lie.000001" type="image">7</xref>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <seg n="int.000002">Ustensiles</seg>
+            </cell>
+            <cell>
+              <xref from="FOREIGN(9612399/000017.jp2)" n="lie.000002" type="image">11</xref>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <seg n="int.000003">Chasse des chenilles</seg>
+            </cell>
+            <cell>
+              <xref from="FOREIGN(9612399/000025.jp2)" n="lie.000003" type="image">19</xref>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <seg n="int.000004">Manière d'élever les chenilles</seg>
+            </cell>
+            <cell>
+              <xref from="FOREIGN(9612399/000028.jp2)" n="lie.000004" type="image">22</xref>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <seg n="int.000005">Préparation et conservation des chenilles</seg>
+            </cell>
+            <cell>
+              <xref from="FOREIGN(9612399/000030.jp2)" n="lie.000005" type="image">24</xref>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <seg n="int.000006">Instruction sur la chasse des Lépidoptères à l'état parfait</seg>
+            </cell>
+            <cell>
+              <xref from="FOREIGN(9612399/000035.jp2)" n="lie.000006" type="image">29</xref>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <seg n="int.000007">Epoques et localités ou il faut chercher les Lépidoptères à l'étatparfait</seg>
+            </cell>
+            <cell>
+              <xref from="FOREIGN(9612399/000042.jp2)" n="lie.000007" type="image">36</xref>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <seg n="int.000008">Manière de préparer et de conserver les Lépidoptères et de les ranger en collection</seg>
+            </cell>
+            <cell>
+              <xref from="FOREIGN(9612399/000080.jp2)" n="lie.000008" type="image">74</xref>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <seg n="int.000009">Introduction ou généralités. Lépidoptères</seg>
+            </cell>
+            <cell>
+              <xref from="FOREIGN(9612399/000089.jp2)" n="lie.000009" type="image">83</xref>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <seg n="int.000010">Etat parfait</seg>
+            </cell>
+            <cell>
+              <xref from="FOREIGN(9612399/000090.jp2)" n="lie.000010" type="image">84</xref>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <seg n="int.000011">État d'œuf</seg>
+            </cell>
+            <cell>
+              <xref from="FOREIGN(9612399/000100.jp2)" n="lie.000011" type="image">94</xref>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <seg n="int.000012">État de chenille</seg>
+            </cell>
+            <cell>
+              <xref from="FOREIGN(9612399/000103.jp2)" n="lie.000012" type="image">97</xref>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <seg n="int.000013">État de chrysalide</seg>
+            </cell>
+            <cell>
+              <xref from="FOREIGN(9612399/000103.jp2)" n="lie.000013" type="image">97</xref>
+            </cell>
+          </row>
+          <row>
+            <cell>
+              <seg n="int.000014">Méthode de classification</seg>
+            </cell>
+            <cell>
+              <xref from="FOREIGN(9612399/000106.jp2)" n="lie.000014" type="image">100</xref>
+            </cell>
+          </row>
+        </table>
+      </div0>
+    </body>
+  </text>
+</TEI.2>
