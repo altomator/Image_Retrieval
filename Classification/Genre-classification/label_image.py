@@ -11,10 +11,10 @@ if __name__ == '__main__':
 
     # Liste des images à reconnaître (utiliser splitTrain_Validation.py pour générer le répèrtoire d'évaluation)
     #imageList = glob.glob(r"./imInput/OUT_img/*.jpg")
-    imageList = glob.glob(r"./imInput/OUT_img/*.jpg")
+    imageList = glob.glob(r"./imInput/bnfDataset.encyclo2_test/*/*.jpg")
 
     # Répertoire contenant les données d'apprentissage (modèle)
-    modelDir = r"./bnfDataset2_model_presse"
+    modelDir = r"./bnfDataset_model_encyclo2"
 
     # ----------------------------------------
 
