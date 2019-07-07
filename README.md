@@ -329,7 +329,7 @@ The Google Vision OCR can be applied to illustrations for which no textual metad
 
 
 ##### Face and object detection 
-A couple of Python scripts are used to apply face and objet detection to the . They output CSV data that must then be imported in the XML metadata files.
+A couple of Python scripts are used to apply face and objet detection to the illustrations. They output CSV data that must then be imported in the XML metadata files.
 
 ###### OpenCV/dnn module
 The [dnn](https://github.com/opencv/opencv/tree/master/modules/dnn) module can be used to try some pretrained neural network models imported from frameworks as Caffe or Tensorflow.
