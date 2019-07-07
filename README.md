@@ -24,6 +24,8 @@ A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllus
 
 - ["EXPLORER DES CORPUS D’IMAGES. L’IA AU SERVICE DU PATRIMOINE"](https://bnf.hypotheses.org/2809), projet CORPUS, atelier BnF, 18 avril 2018
 
+- ["Using IIIF for Image Retrieval in Digital Libraries: Experimentation of Deep Learning Techniques"](https://drive.google.com/open?id=1jsxT5lW3bR-582UX7a9oeOc5nGQjoQnb), [presentation], 2019 IIIF Conference (Göttingen, June 2019). 
+
 - ["Plongez dans les images de 14-18 avec notre nouveau moteur de recherche iconographique GallicaPix"](http://gallicastudio.bnf.fr/bo%C3%AEte-%C3%A0-outils/plongez-dans-les-images-de-14-18-en-testant-un-nouveau-moteur-de-recherche) (FR blog post)
 - ["Towards new uses of cultural heritage online: Gallica Studio"](http://pro.europeana.eu/post/towards-new-uses-of-cultural-heritage-online-gallica-studio) (EN blog post)
  
@@ -115,8 +117,6 @@ It outputs one XML metadata file per document, describing the document (title, d
 ```
 
 
-
-
 #### SRU (Search/Retrieve via URL)
 SRU requesting of Gallica digital library can be done with the extractARKs_SRU.pl script.
 The SRU request can be tested within gallica.bnf.fr and then copy/paste directly in the script:
@@ -131,17 +131,19 @@ Usage:
 >perl extractARKs_SRU.pl OUT.txt
 
 #### OCR
-Printed collections (with OCR) can be analysed using extractMD.pl script. This script is the more BnF centered and it will be tricky to adapt to other context... It can handle various types of digital documents (books, newspapers) produced by the BnF or during the Europeana Newspapers project.
+Printed collections (with OCR) can be analysed using extractMD.pl script. 
+It can handle various types of digital documents (books, newspapers) produced by BnF digitization programs or during the Europeana Newspapers project. Samples are available (see readme.txt).
 
 Regarding the newspapers type, the script can handle raw ALTO OCR mode or OLR mode (articles recognition described with a METS/ALTO format):
-- <b>ocrbnf</b>: to be used with BnF documents (monographies, serials) described with a refNum manifest
+- <b>ocrbnf</b>: to be used with BnF documents (monographies, serials) described with a METS manifest
+- <b>ocrbnflegacy</b>: to be used with BnF documents (monographies, serials) described with a refNum manifest
 - <b>olrbnf</b>: to be used with BnF serials described with a METS manifest and an OLR mode (BnF METS profil) 
 - <b>ocren</b>: to be used with Europeana Newspapers serials described with a METS manifest
 - <b>olren</b>: to be used with Europeana Newspapers serials described with a METS manifest and an OLR mode (&copy;CCS METS profil)
 
-The script can handle various dialects of ALTO (ALTO BnF, ALTO LoC...) which may have different ways to markup the illustrations and to express the blocks IDs.
+The script can handle various dialects of ALTO (ALTO BnF, ALTO LoC...) which may have different ways to markup the illustrations and to express the blocks IDs. This script is the more BnF centered and it may be complex to adapt to other context. An attempt has been made with a sample delivered by the SB Berlin library.
 
-Some parameters must be set in the Perl script, the remaining via the command line options (see readme.txt).
+Some parameters must be set in the Perl script, the remaining via the command line options (see readme.txt in the OCR folder).
 
 Usage:
 >perl extractMD.pl [-LI] mode title IN OUT format
@@ -178,8 +180,7 @@ For newspapers and magazines collections, another kind of content should be iden
 
 ### B. Transform & Enrich
 
-The toolbox.pl Perl script performs basic operations on the illustrations metadata files and the enrichment processing itself. 
-This script supports the enrichment workflow as detailled bellow.
+The toolbox.pl Perl script performs basic operations on the illustrations XML metadata files and the enrichment processing itself. This script supports the enrichment workflow as detailled bellow.
 
 ![Workflow: extract](http://www.euklides.fr/blog/altomator/Image_Retrieval/wf2.png)
 
@@ -285,7 +286,7 @@ The noise classes for genres classification are also handled during the unify pr
 
 #### Image recognition
 
-Various APIs can be tested and their results be requested within the web app thanks to the CBIR criteria (see screen capture below).
+Various APIs or open sources frameworks can be tested and their results be requested within the web app thanks to the CBIR criteria (see screen capture below).
 
 
 ##### IBM Watson
@@ -320,18 +321,22 @@ Usage for content recognition:
 
 Note: The Google face detection API outputs cropping but doesn't support genre detection.
 
+
 ###### OCR 
 The Google Vision OCR can be applied to illustrations for which no textual metadata are available.
 
 >perl toolbox.pl -OCR -IN_md
 
 
-##### OpenCV/dnn module
+##### Face and object detection 
+A couple of Python scripts are used to apply face and objet detection to the . They output CSV data that must then be imported in the XML metadata files.
+
+###### OpenCV/dnn module
 The [dnn](https://github.com/opencv/opencv/tree/master/modules/dnn) module can be used to try some pretrained neural network models imported from frameworks as Caffe or Tensorflow.
 
 The detect_faces.py script performs face detection based on a ResNet network (see this [post](https://www.pyimagesearch.com/2018/02/26/face-detection-with-opencv-and-deep-learning/) for details).
 
-1. Extract the images files:
+1. Extract the illustration files from a collection:
 >perl toolbox.pl -extr IN_md
 
 2. Process the images:
@@ -341,6 +346,8 @@ Note: the minimum confidence probability for a classification to be exported can
 
 It outputs a CSV file per input image, what can be merged in one file:
 >cat OUT_csv/*.csv > ./data.csv
+or
+>find . -name "*.csv" -maxdepth 1  -exec cat {} >data.csv  \;
 
 3. Finally import the classification in the metadata files. Mind to set the `$classifCBIR` var to "dnn" before: 
 >perl toolbox.pl -importDF IN_md 
@@ -348,6 +355,11 @@ It outputs a CSV file per input image, what can be merged in one file:
 An object_detection.py script performs in a similar way to make content classification, thanks to a GoogLeNet network (see this [post](https://www.pyimagesearch.com/2017/08/21/deep-learning-with-opencv/) for details). It can handle a dozen of classes (person, boat, aeroplane...):
 
 >python object_detection.py --prototxt MobileNetSSD_deploy.prototxt.txt --model MobileNetSSD_deploy.caffemodel --dir IN_img
+
+###### Yolo v3 model
+The yolo.py Python script performs object detection on a 80 classes model (see this [post](https://www.pyimagesearch.com/2018/11/12/yolo-object-detection-with-opencv/) for details).
+
+>python3 yolo.py --dir images --yolo yolo-coco
 
 
 ### C. Load
@@ -361,7 +373,6 @@ The form (`findIllustrations-form.xq`) exposes 2 databases to users: general ill
 
 
 ![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/form.png)
-
 
 The results list (`findIllustrations-app.xq`) has a DEBUG mode which implements a filtering functionality (for ads and filtered illustrations) and some more minor tools (display, edit). 
 
