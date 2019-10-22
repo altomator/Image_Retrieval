@@ -16,7 +16,7 @@ A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllus
 ### GitHub
 [Repository](https://github.com/altomator/Image_Retrieval/)
 
-### Articles, blogs
+### Articles, blogs, conferences
 - ["Image Retrieval in Digital Libraries"](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_EN-final.pdf) (EN article, [FR article](http://www.euklides.fr/blog/altomator/Image_Retrieval/000-moreux-chiron_FR-final.pdf), [presentation](http://www.euklides.fr/blog/altomator/Image_Retrieval/MOREUX-CHIRON-presentation-final.pdf)), IFLA News Media section 2017 (Dresden, August 2017). 
 - ["Hybrid Image Retrieval in Digital Libraries"](https://fr.slideshare.net/Europeana/hybrid-image-retrieval-in-digital-libraries-by-jeanphilippe-moreux-europeanatech-conference-2018), EuropeanaTech 2018 (Rotterdam). Poster, TPDL 2018 (Porto)
 
@@ -25,6 +25,8 @@ A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllus
 - ["EXPLORER DES CORPUS D’IMAGES. L’IA AU SERVICE DU PATRIMOINE"](https://bnf.hypotheses.org/2809), projet CORPUS, atelier BnF, 18 avril 2018
 
 - ["Using IIIF for Image Retrieval in Digital Libraries: Experimentation of Deep Learning Techniques"](https://drive.google.com/open?id=1jsxT5lW3bR-582UX7a9oeOc5nGQjoQnb), [presentation], 2019 IIIF Conference (Göttingen, June 2019). 
+
+- ["Intelligence artificielle et fouille de contenus iconographiques patrimoniaux"](https://adbu.fr/retour-sur-la-journee-detude-du-congres-adbu2019-tous-bibl-ia-thecaires-lintelligence-artificielle-vers-un-nouveau-service-public/), [video & presentation], Congrès ADBU 2019 (Bordeaux, septembre 2019). 
 
 - ["Plongez dans les images de 14-18 avec notre nouveau moteur de recherche iconographique GallicaPix"](http://gallicastudio.bnf.fr/bo%C3%AEte-%C3%A0-outils/plongez-dans-les-images-de-14-18-en-testant-un-nouveau-moteur-de-recherche) (FR blog post)
 - ["Towards new uses of cultural heritage online: Gallica Studio"](http://pro.europeana.eu/post/towards-new-uses-of-cultural-heritage-online-gallica-studio) (EN blog post)
