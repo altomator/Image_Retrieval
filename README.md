@@ -54,9 +54,9 @@ The extract step can be performed from the catalog metada (using OAI-PMH and SRU
 #### OAI-PMH
 The OAI-PMH Gallica repository ([endpoint](http://oai.bnf.fr/oai2/OAIHandler?verb=Identify)) can be used to extract still image documents (drawings, photos, posters...) The extractMD_OAI.pl script harvests sets of documents or documents. Note: this script needs a Web connection (for Gallica OAI-PMH and Gallica APIs).
 
-Europeana Data Model OAI is also supported (see EDM.pl).
+Europeana OAI is also supported (see EDM.pl for the Europeana Data Model mapping).
 
-Perl script extractMD_OAI.pl can handled 3 methods:
+Perl script extractMD_OAI.pl can handled 3 methods which needs to be choosen within the script:
 - harvesting a complete OAI Set, from its name:
 ```perl
 getOAI($set);
@@ -71,7 +71,9 @@ require "arks.pl";
 ```
 
 Usage: 
+```shell
 perl extractMD_OAI.pl oai_name oai_set out_folder format 
+```
 
 where: 
 - oai_name: gallica/europeana
@@ -87,7 +89,7 @@ This script also performs (using the available metadata):
 - IPTC topic classification (considering the WW1 theme)
 - image genres classification (photo/drawing/map...)
 
-It outputs one XML metadata file per document, describing the document (title, date...), each page of the document and the included illustrations. Some illustrations are "filtered" due to their nature (empty page, bindings).
+It outputs one XML metadata file per document, describing the document (title, date...), each page of the document and the included illustrations. Some illustrations are "filtered" due to their nature (empty page, bindings) thanks to the Gallica Pagination API.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -131,6 +133,7 @@ It outputs a text file (one ark ID per line). This output can then be used as th
 
 Usage:
 >perl extractARKs_SRU.pl OUT.txt
+
 
 #### OCR
 Printed collections (with OCR) can be analysed using extractMD.pl script. 
@@ -190,23 +193,18 @@ All the treatments described in the following sections enrich the  metadata illu
 - `classif`: the treatment applied (CC: content classification, DF: face detection)
 - `source`: the source of the treatment (IBM Watson, Google Cloud Vision, OpenCV/dnn, Tensorflow/Inception-v3)
 - `CS`: the confidence score
+- `lang`: the tag's language 
 ...
 
 (See the XML schema for a detailled presentation of the data model.)
 
 ```xml
-<ill classif="CCibm CCgoogle" ... >
-            <contenuImg CS="0.8137588" source="google">black and white</contenuImg>
-            <contenuImg CS="0.8162437" source="google">weapon</contenuImg>
-            <contenuImg CS="0.85856307" source="google">churchill tank</contenuImg>
-            <contenuImg CS="0.9450831" source="google">vehicle</contenuImg>
-            <contenuImg CS="0.94837654" h="2560" l="3534" source="google" x="466.6" y="352.8">combat vehicle</contenuImg>
-            <contenuImg CS="0.9654834" h="2560" l="3534" source="google" x="466.6" y="352.8">motor vehicle</contenuImg>
-            <contenuImg CS="0.98043555" h="2560" l="3534" source="google" x="466.6" y="352.8">tank</contenuImg>
-            <contenuImg CS="1.0" source="ibm">gray color</contenuImg>
-            <contenuImg CS="0.53" source="ibm">tracked vehicle</contenuImg>
-            <contenuImg CS="0.812" source="ibm">vehicle</contenuImg>
-            <contenuImg CS="0.592" source="ibm">amphibious vehicle</contenuImg>
+<ill classif="CCibm" ... >
+            <contenuImg CS="0.598" lang="en" source="ibm">clothing</contenuImg>
+            <contenuImg CS="0.5" lang="en" source="ibm">sister</contenuImg>
+            <contenuImg CS="0.5" lang="en" source="ibm">nurse</contenuImg>
+            <contenuImg CS="0.501" lang="en" source="ibm">mason</contenuImg>
+            <contenuImg CS="0.502" lang="en" source="ibm">indoors</contenuImg>
 	    <genre CS="0.88" source="TensorFlow">photo</genre>
 ```
 
@@ -251,6 +249,7 @@ Each line describes the best classified class (according to its probability) and
 - Set some parameters in toolbox.pl: 
   - `$TFthreshold`: minimal confidence score for a classification to be used
   - `$lookForAds`: for newspapers, say if the ads class must be used 
+  - `$dataFile`: the CSV file name 
 
 - Use the toolbox.pl script to import the CNN classification data in the illustrations metadata files:
 
@@ -306,7 +305,7 @@ Usage for content recognition:
 Usage for face detection:
 >perl toolbox.pl -DF IN -ibm
 
-Note: the image content is sent to Watson as an IIIF URL.
+Note: the image content is sent to Watson as a IIIF URL.
 
 The face detection Watson API also outputs cropping and genre detection:
 ```xml
@@ -362,6 +361,16 @@ An object_detection.py script performs in a similar way to make content classifi
 The yolo.py Python script performs object detection on a 80 classes model (see this [post](https://www.pyimagesearch.com/2018/11/12/yolo-object-detection-with-opencv/) for details).
 
 >python3 yolo.py --dir images --yolo yolo-coco
+
+#### Color analysis
+
+Color names can be extracted from the colors palette (RVB) produced by the Google Cloud Vision API (done with the -CC option).
+Colors may also be extracted from images thanks to the RoyGBiv Python package.
+
+>ls IMG/*.jpg | python3 extract_colors.py
+
+This script generates a .csv data file and small image palette (one palette for each image).
+It can also detect the background color.
 
 
 ### C. Load
