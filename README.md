@@ -411,6 +411,7 @@ The form (`findIllustrations-form.xq`) exposes databases to users. It can be swi
 
 The results list (`findIllustrations-app.xq`) has a DEBUG mode which implements a filtering functionality (for ads and filtered illustrations) and  more admin tools (display, edit, annotate).  These functions call XQuery scripts which perform updates on the database (thanks to the XQuery Update facility). These functionalities may be usefull for crowdsourcing experimentations.
 
+![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/boats.png)
 *Looking for [boats](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&similarity=&corpus=1418-v2&keyword=&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=00&classif=boat&operator=and&colName=00&size=31&density=26)*
 
 A faceting functionality is also available.
