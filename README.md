@@ -331,7 +331,7 @@ The Google Vision OCR can be applied to illustrations for which no textual metad
 ##### Face and object detection 
 A couple of Python scripts are used to apply face and objet detection to the illustrations. They output CSV data that must then be imported in the XML metadata files.
 
-![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/faces.png)
+
 
 ###### OpenCV/dnn module
 The [dnn](https://github.com/opencv/opencv/tree/master/modules/dnn) module can be used to try some pretrained neural network models imported from frameworks as Caffe or Tensorflow.
@@ -357,6 +357,7 @@ or
 >perl toolbox.pl -importDF IN_md dnn
 
 Note: to have consistent bounding boxes, mind to keep the same size factor in $factIIIF
+![faces](http://www.euklides.fr/blog/altomator/Image_Retrieval/faces.png)
 
 An object_detection.py script performs in a similar way to make content classification, thanks to a GoogLeNet network (see this [post](https://www.pyimagesearch.com/2017/08/21/deep-learning-with-opencv/) for details). It can handle a dozen of classes (person, boat, aeroplane...):
 
@@ -381,8 +382,8 @@ The CSV color data can then be imported:
 ```xml
 <contenuImg b="20" coul="1" g="26" ordre="4" r="37" source="colorific" type="bckg">#251a14</contenuImg>
 ```
-![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/colors.png)
-*Looking for wallpaper patterns with a yellow background and a floral theme*
+![Colors](http://www.euklides.fr/blog/altomator/Image_Retrieval/colors.png)
+*Looking for wallpaper patterns with a yellow background*
 
 
 #### Languages
