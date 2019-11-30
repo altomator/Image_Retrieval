@@ -71,9 +71,8 @@ require "arks.pl";
 ```
 
 Usage: 
-```shell
-perl extractMD_OAI.pl oai_name oai_set out_folder format 
-```
+>perl extractMD_OAI.pl oai_name oai_set out_folder format 
+
 
 where: 
 - oai_name: gallica/europeana
