@@ -331,6 +331,7 @@ The Google Vision OCR can be applied to illustrations for which no textual metad
 ##### Face and object detection 
 A couple of Python scripts are used to apply face and objet detection to the illustrations. They output CSV data that must then be imported in the XML metadata files.
 
+
 ###### OpenCV/dnn module
 The [dnn](https://github.com/opencv/opencv/tree/master/modules/dnn) module can be used to try some pretrained neural network models imported from frameworks as Caffe or Tensorflow.
 
@@ -338,6 +339,8 @@ The detect_faces.py script performs face detection based on a ResNet network (se
 
 1. Extract the illustration files from a collection:
 >perl toolbox.pl -extr IN_md
+
+Note: mind to set the size factor for IIIF image exportation in $factIIIF
 
 2. Process the images:
 >python detect_faces.py --prototxt deploy.prototxt.txt --model res10_300x300_ssd_iter_140000.caffemodel --dir IN_img
@@ -349,8 +352,10 @@ It outputs a CSV file per input image, what can be merged in one file:
 or
 >find . -name "*.csv" -maxdepth 1  -exec cat {} >data.csv  \;
 
-3. Finally import the classification in the metadata files. Mind to set the `$classifCBIR` var to "dnn" before: 
->perl toolbox.pl -importDF IN_md 
+3. Finally import the classification in the metadata files. Mind to set the classification source as a parameter: 
+>perl toolbox.pl -importDF IN_md dnn
+
+Note: to have consistent bounding boxes, mind to keep the same size factor in $factIIIF
 
 An object_detection.py script performs in a similar way to make content classification, thanks to a GoogLeNet network (see this [post](https://www.pyimagesearch.com/2017/08/21/deep-learning-with-opencv/) for details). It can handle a dozen of classes (person, boat, aeroplane...):
 
@@ -368,8 +373,10 @@ Colors may also be extracted from images thanks to the RoyGBiv Python package.
 
 >ls IMG/*.jpg | python3 extract_colors.py
 
-This script generates a .csv data file and small image palette (one palette for each image).
-It can also detect the background color.
+This script generates a .csv data file and small image palette (one palette for each image) which may be displayed on top of the illustration. (The script can also detect the background color.)
+
+The CSV color data can then be imported:
+>perl toolbox.pl -importColors no_bckg/bckg
 
 
 ### C. Load
@@ -384,9 +391,9 @@ The form (`findIllustrations-form.xq`) exposes 2 databases to users: general ill
 
 ![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/form.png)
 
-The results list (`findIllustrations-app.xq`) has a DEBUG mode which implements a filtering functionality (for ads and filtered illustrations) and some more minor tools (display, edit). 
+The results list (`findIllustrations-app.xq`) has a DEBUG mode which implements a filtering functionality (for ads and filtered illustrations) and some more minor tools (display, edit, annotate). 
 
-The results list page call some XQuery scripts which perform updates on the database (thanks to the XQuery Update Facility). These functionalities may be usefull for crowdsourcing experimentations.
+The results list page calls some XQuery scripts which perform updates on the database (thanks to the XQuery Update Facility). These functionalities may be usefull for crowdsourcing experimentations.
 
 ![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/boat.png)
 
