@@ -407,7 +407,7 @@ The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](h
 
 The form (`findIllustrations-form.xq`) exposes databases to users. It can be switch in DEBUG mode to access more databases and to add filtering features, which can be helpful when a complete database is implemented (mixing illustrations and illustrated ads).
 
-![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/form.png)
+![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/formv3.png)
 
 The results list (`findIllustrations-app.xq`) has a DEBUG mode which implements a filtering functionality (for ads and filtered illustrations) and  more admin tools (display, edit, annotate).  These functions call XQuery scripts which perform updates on the database (thanks to the XQuery Update facility). These functionalities may be usefull for crowdsourcing experimentations.
 
