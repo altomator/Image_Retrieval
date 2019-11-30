@@ -331,6 +331,7 @@ The Google Vision OCR can be applied to illustrations for which no textual metad
 ##### Face and object detection 
 A couple of Python scripts are used to apply face and objet detection to the illustrations. They output CSV data that must then be imported in the XML metadata files.
 
+![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/faces.png)
 
 ###### OpenCV/dnn module
 The [dnn](https://github.com/opencv/opencv/tree/master/modules/dnn) module can be used to try some pretrained neural network models imported from frameworks as Caffe or Tensorflow.
@@ -368,7 +369,7 @@ The yolo.py Python script performs object detection on a 80 classes model (see t
 
 #### Color analysis
 Color names can be extracted from the colors palette (RVB) produced by the Google Cloud Vision API (done with the -CC option).
-Colors may also be extracted from images thanks to the RoyGBiv Python package.
+Colors may also be extracted from images thanks to the RoyGBiv Python package (based on the Colorific package).
 
 >ls IMG/*.jpg | python3 extract_colors.py
 
@@ -377,10 +378,22 @@ This script generates a .csv data file and small image palette (one palette for 
 The CSV color data can then be imported:
 >perl toolbox.pl -importColors IN no_bckg/bckg
 
+```xml
+<contenuImg b="20" coul="1" g="26" ordre="4" r="37" source="colorific" type="bckg">#251a14</contenuImg>
+```
+![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/colors.png)
+*Looking for wallpaper patterns with a yellow background and a floral theme*
+
+
 #### Languages
 The GallicaPix Web app offers 2 languages (FR, EN). Classification tags from the IBM or Google APIs can be translated from English to any other language with the -translateCC option. Bilingual lexicons must be set in $googleDict or $ibmDict vars.
 
 >perl toolbox.pl -translateCC IN ibm
+
+```xml
+<contenuImg CS="0.67" lang="en" source="google">Cathedral</contenuImg>
+<contenuImg CS="0.67" lang="fr" source="google">cathédrale</contenuImg>
+```
 
 
 ### C. Load
