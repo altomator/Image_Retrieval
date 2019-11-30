@@ -367,7 +367,6 @@ The yolo.py Python script performs object detection on a 80 classes model (see t
 >python3 yolo.py --dir images --yolo yolo-coco
 
 #### Color analysis
-
 Color names can be extracted from the colors palette (RVB) produced by the Google Cloud Vision API (done with the -CC option).
 Colors may also be extracted from images thanks to the RoyGBiv Python package.
 
@@ -376,7 +375,12 @@ Colors may also be extracted from images thanks to the RoyGBiv Python package.
 This script generates a .csv data file and small image palette (one palette for each image) which may be displayed on top of the illustration. (The script can also detect the background color.)
 
 The CSV color data can then be imported:
->perl toolbox.pl -importColors no_bckg/bckg
+>perl toolbox.pl -importColors IN no_bckg/bckg
+
+#### Languages
+The GallicaPix Web app offers 2 languages (FR, EN). Classification tags from the IBM or Google APIs can be translated from English to any other language with the -translateCC option. Bilingual lexicons must be set in $googleDict or $ibmDict vars.
+
+>perl toolbox.pl -translateCC IN ibm
 
 
 ### C. Load
