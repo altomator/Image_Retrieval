@@ -1,0 +1,533 @@
+.couleurSecond {
+  color:rgba(229, 42, 7,0.5);
+}
+
+
+#top {
+    padding:0pt;
+    margin:0pt;
+   }
+
+#showForm {
+    z-index: 2;
+    position: fixed;
+    top: 0px;
+    left: 8px;
+    font-size:22pt;
+    font-weight:bold;
+    color: #B1CAF6
+       }
+
+div.info {
+    padding-left: 0pt;
+    padding-right: 10pt;
+    display: inline;
+    font-family: sans-serif;
+   }
+
+
+/* bandeau du formulaire horizontal */
+.form {
+    z-index: 1;
+    /* line-height: 10pt;*/
+    font-size: 9pt;
+    /* bordure */
+    padding-left: 3em;
+    margin: 0em;
+     /*border: 0px solid #CCC;*/
+    /* border-radius: 3px;*/
+    position: fixed;
+    top: 0px;
+    left: 0;
+    width:100%;
+    height: 0px;
+    background-color: rgba(210, 207, 200, 0.4) ;
+ }
+
+ .formMasque {
+    z-index: 1;
+    /* line-height: 10pt;*/
+    font-size: 9pt;
+    /* bordure */
+    padding-left: 3em;
+    margin: 0em;
+     /*border: 0px solid #CCC;*/
+    /* border-radius: 3px;*/
+    position: fixed;
+    top: 0px;
+    left: 0;
+    width:100%;
+    height: 30px;
+    background-color: rgba(210, 207, 200, 0.4) ;
+ }
+
+
+#infoContent {
+    position: relative;
+    padding: 2em;
+    padding-right: 5em;
+    margin-left: 18%;
+    margin-right: 10%;
+    background-color: rgba(210, 207, 200, 0.95);
+    z-index: 12;
+   }
+
+.info {
+    margin-left: 20px;
+   }
+
+/* bandeau vertical à gauche : classification */
+#classification {
+    z-index: 1;
+    font-size: 9pt;
+    position: fixed;
+    top: 30px;
+    left: -26pt;
+    width:20%;
+    height:100%;
+    background-color: rgba(210, 207, 200, 0.4) ;
+ }
+
+/* icons */
+.iconClassif {
+  margin-left: 5px;
+  margin-top: 8px;
+  margin-bottom: 6px;
+  font-size:8pt;
+}
+
+ /* ---- buttons ---- */
+ .buttonColor {
+   background-color:rgba(96, 0, 0,0.3);
+ }
+
+.buttonPages {
+  font-size: 12px;
+  background-color: rgba(0, 0, 0, 0.0);
+  padding:2px;
+  border:0
+}
+
+.buttonPages:hover {
+  color: rgba(100, 149, 237,0.85);
+}
+
+.buttonClassif {
+  font-size: 10px;
+  margin-top:0em;
+  padding: 4px 6px;
+}
+
+.buttonClassif:hover {
+  text-shadow: 0 1px hsla(0, 0%, 100%, 0.3);
+ /* color: #222;*/
+}
+
+.buttonClassif:active,
+.buttonClassif.is-checked {
+  background-color: rgba(160,82,45,0.9);
+}
+
+.buttonClassif.is-checked {
+  color: white;
+  text-shadow: 0 -1px hsla(0, 0%, 0%, 0.8);
+}
+
+.buttonClassif:active {
+  box-shadow: inset 0 1px 10px hsla(0, 0%, 0%, 0.8);
+}
+
+/* ---- button-group ---- */
+.button-groupClassif:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.button-groupClassif {
+  margin-left: 5px;
+}
+
+.button-groupClassif .buttonClassif {
+  float: left;
+  border-radius: 0;
+  margin-left: 0;
+  margin-right: 1px;
+}
+
+.button-groupGenres .buttonClassif:first-child { border-radius: 0.5em 0 0 0.5em; }
+.button-groupGenres .buttonClassif:last-child { border-radius: 0 0.5em 0.5em 0; }
+
+
+label {
+  padding-left:0px;
+}
+
+div.champ  {
+  margin-top: 0.6em;
+  display: inline;
+
+  }
+
+input.button  {
+    margin-left:2px;
+    padding-top:-2px;
+    height: 1.5em;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+/* pour Firefox */
+#ipnumber {
+  width: 50px;
+  font-size: 8pt;
+}
+#selectGenre {
+  width: 80px;
+}
+#selectCouleur {
+  width: 80px;
+}
+#persType {
+  width: 100px;
+}
+#selectOrdre {
+  width: 90px;
+}
+
+/*  textes */
+.titre {
+    color: black ;
+    font-size: 9.5pt;
+    font-family: sans-serif;
+    font-weight: bold;
+    line-height: 1.2;
+}
+.auteur {
+    color: black ;
+    font-size: 9pt;
+    font-family: sans-serif;
+    font-weight: bold;
+    line-height: 1.1;
+}
+.source {
+    font-size: 9pt;
+    font-family: sans-serif;
+    line-height: 1.1;
+    color : darkgray;
+
+}
+.classif {
+    color: lightGray;
+    font-size: 9pt;
+    font-family: sans-serif;
+    font-weight: normal;
+    line-height: 1.1;
+}
+.date {
+  font-family: sans-serif;
+  font-size: 9pt;
+  color : black;
+  font-weight: normal;
+}
+.folio {
+  font-family: sans-serif;
+  font-size: 9pt;
+  color : black;
+  font-weight: normal;
+}
+.article{
+    display:block;
+    padding-top:6pt;
+    font-family: sans-serif;
+    font-size: 10pt;
+    line-height: 1.3;
+    color: whitesmoke;
+   }
+.legende {
+   display: block;
+   font-family: sans-serif;
+   font-size: 9pt;
+   padding-top: 4px;
+   line-height: 1.2;
+}
+
+
+/*  Panneau des textes rgba(160,82,45,0.65) */
+.help-tip{  /* icone i */
+  display: none;
+	position: relative;
+  z-index: 2;
+  align: left;
+	top: 5px;
+	right: -10px;
+  margin-bottom: -20px;
+	text-align: center;
+	 background-color: rgba(229, 42, 7,0.5) ;
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	font-size: 12px;
+	line-height: 20px;
+	cursor: default;
+}
+
+.help-tip:before{
+	content:'i';
+	font-weight: normal;
+  font-style: italic;
+	color:#fff;
+}
+
+.help-tip:hover p{
+	display:block;
+  z-index: 12;
+  right: -240px;    /* position du panneau */
+	transform-origin: 100% 0%;
+	-webkit-animation: fadeIn 0.3s ease-in-out;
+	animation: fadeIn 0.3s ease-in-out;
+}
+
+.help-tip p{	/* onglet du texte */
+	display: none;
+	text-align: left;
+  z-index: 12;
+	background-color: rgba(160,82,45,0.8) ;
+	padding: 10px;
+	width: 320px;
+	position: absolute;
+	border-radius: 3px;
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+	right: -4px;
+	color: #FFF;
+	font-size: 13px;
+	line-height: 1.4;
+}
+
+.help-tip p:before{ /* pointeur triangle  */
+	position: absolute;
+	content: '';
+	width:0;
+	height: 0;
+	border:6px solid transparent;
+	border-bottom-color:rgba(160,82,45,0.75);
+  color: sienna;
+	right:244px;
+	top:-12px;
+}
+
+.help-tip p:after{ /* Prevents the tooltip from being hidden */
+	width:100%;
+	height:40px;
+	content:'';
+	position: absolute;
+	top:-40px;
+	left:10;
+}
+
+
+/*  images */
+.img {
+  top: 0px;
+  position: relative;
+}
+
+/* effet de zoom  sur les images */
+figure {
+ overflow: hidden;  /* rogner les images qui depassent   */
+ margin: 0px 0 0 0;
+ z-index: 0;
+}
+
+figure img {
+	-webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+
+figure img:hover {
+	-webkit-transform: scale(1.2);
+	transform: scale(1.2);
+}
+
+/* menu flottant bandeau */
+.menu-tip, .menu-tipv{
+  display: none;
+	position: relative;
+  align: left;
+  width: 200px;
+  margin: 0pt;
+	text-align: left;
+	background-color: rgba(255,165,0,0.4);
+	font-family: Geneva;
+	line-height: 16px;
+	cursor: default;
+  z-index:10
+}
+
+/* décaler le menu vers le haut pour Chrome */
+@media screen and (-webkit-min-device-pixel-ratio:0){
+  .menu-tip{
+     top: -28px;
+  }
+}
+
+/* affichage */
+/* couleur du menu flottant  */
+.crowd2{
+  background-color:rgba(255,165,0,0.5); /* orange */
+/*	background-color:rgba(154,205,50,0.6);  vert */
+}
+.crowd1{
+	background-color:rgba(255,165,0,0.5); /* orange */
+}
+.crowd0{
+	background-color:rgba(255,99,71,0.5); /* rouge  */
+}
+
+.img:hover .menu-tip{
+	display:block;
+  z-index: 6;
+	transform-origin: 100% 0%;
+	-webkit-animation: fadeIn 0.3s ease-in-out;
+	animation: fadeIn 0.3s ease-in-out;
+}
+
+.imgv:hover .menu-tipv{
+	display:block;
+  z-index: 6;
+	transform-origin: 100% 0%;
+	-webkit-animation: fadeIn 0.3s ease-in-out;
+	animation: fadeIn 0.3s ease-in-out;
+}
+
+.img:hover .help-tip{
+	display:block;
+  z-index: 7;
+	transform-origin: 100% 0%;
+	-webkit-animation: fadeIn 0.3s ease-in-out;
+	animation: fadeIn 0.3s ease-in-out;
+}
+
+/* le menu flottant est une liste */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: inherit;
+  font-family: Geneva, sans-serif;
+  color: white;
+  text-decoration: none;
+}
+
+.cache {
+  color: black;
+  background-color:red;
+}
+
+ul li {
+  display: block;
+  position: relative;
+  float: left;
+  background: #inherit;
+}
+
+
+/* This hides the dropdowns */
+li ul { display: none; }
+
+ul li a {
+  display: block;
+  padding: 3pt;
+  text-decoration: none;
+  text-align: left;
+  white-space: nowrap;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit
+}
+
+.menu {
+  display: block;
+  padding: 3pt;
+  text-decoration: none;
+  text-align: left;
+  white-space: nowrap;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit
+}
+
+ul li a:hover {
+     background: rgba(44, 62, 80,0.7);
+ }
+
+ul li a:link {
+    color: white;
+}
+
+li:hover > ul {
+  display: block;
+  position: absolute;
+}
+
+li:hover li { float: none; }
+
+li:hover a { background:rgba(44, 62, 80, 0.5) }
+
+li:hover li a:hover { background: rgba(44, 62, 80,0.9) }
+
+.main-navigation li ul li {
+border-top: 0;
+z-index:12 }
+
+.main-navigation  {
+   z-index:12 }
+
+
+/* Displays second level dropdowns to the right of the first level dropdown */
+ul ul ul {
+  left: 100%;
+  top: 0;
+}
+
+/* Simple clearfix */
+ul:before,
+ul:after {
+  content: " "; /* 1 */
+  display: table; /* 2 */
+}
+
+ul:after { clear: both; }
+
+
+@-webkit-keyframes argh-my-eyes {
+    0%   { background-color: #fff; }
+    49% { background-color: #fff; }
+    50% { background-color: rgba(255,165,0,0.25); }
+    99% { background-color: rgba(255,165,0,0.25); }
+    100% { background-color: #fff; }
+  }
+
+  @-moz-keyframes argh-my-eyes {
+    0%   { background-color: #fff; }
+    49% { background-color: #fff; }
+    50% { background-color: rgba(255,165,0,0.25); }
+    99% { background-color: rgba(255,165,0,0.25); }
+    100% { background-color: #fff; }
+  }
+
+  @keyframes argh-my-eyes {
+    0%   { background-color: #fff; }
+    49% { background-color: #fff; }
+    50% { background-color: rgba(255,165,0,0.25); }
+    99% { background-color:rgba(255,165,0,0.25); }
+    100% { background-color: #fff; }
+  }
+
+.anim {
+  -webkit-animation: argh-my-eyes 0.1s ;
+  -moz-animation:    argh-my-eyes 0.1s ;
+  animation:         argh-my-eyes 0.1s ;
+}

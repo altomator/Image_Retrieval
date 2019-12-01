@@ -1,0 +1,172 @@
+
+*{
+      margin: 0;
+      padding: 0;
+    }
+
+
+body {
+color:black;
+background-color:white;
+background-repeat:no-repeat;
+background-position:right top;
+}
+
+
+message {
+ color:black;
+ /* background-color:#D2CFC8; */
+ font-family: sans-serif;
+ font-size: 8pt;
+ margin: 10px;
+}
+
+.couleurSecond {
+  color:#E52A07;
+}
+
+p {
+ color: white ;
+ font-family: sans-serif;
+ font-size: 8pt;
+}
+
+b {
+   font-weight: bold;
+}
+
+#top {
+    padding:5pt;
+
+   }
+
+/* formulaire */
+.form {
+    background-color: #D2CFC8; /* sable : rgb(210, 207, 200) */
+    font-family: sans-serif;
+ }
+
+input  {
+    font: 1em sans-serif;
+
+    /* To give the same size to all text field */
+    /* width: 300px; */
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding:0.1em;
+    /* To harmonize the look  feel of text field border */
+    border: 1px solid #999;
+}
+
+select  {
+    font: 1em sans-serif;
+    padding:0.1em;
+
+}
+
+input:focus  {
+    border-color: DimGray;
+}
+
+.button {
+  display: inline-block;
+  padding: 5px 9px;
+  margin-bottom: 5px;
+  background: rgba(44, 62, 80, 0.1);
+  border: none;
+  border-radius: 5px;
+  background-image: linear-gradient( to bottom, hsla(0, 0%, 0%, 0), hsla(0, 0%, 0%, 0.5) );
+  color: white;
+  font-family: sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top:0.5em;
+}
+
+.button:hover {
+  background-color: #6495ED;
+  /* text-shadow: 0 1px hsla(0, 0%, 100%, 0.5); */
+ /* color: #222;*/
+}
+
+input.button:focus  {
+    border-color: black;
+    }
+
+
+/* titres */
+h2 {
+    padding: 15pt;
+    font-family: sans-serif;
+    font-size: 16pt;
+    text-align: center;
+}
+h3 {
+    padding-top:0pt;padding-bottom:0pt;
+    font-family:sans-serif;
+    line-height: 16pt;
+    font-weight: normal;
+    font-size: 11pt;
+    color: DimGray
+}
+
+.inter {
+  margin-top:0.2em;
+  margin-bottom:-0.5em;
+  font-size: 9pt;
+  color:grey
+}
+
+/* liens */
+a {
+  text-decoration: none;
+}
+
+a:link {
+    color: #E52A07; /* rouge */
+}
+
+a.classes{
+ color:white;
+ font-weight:normal;
+ text-decoration: underline
+}
+
+a:hover {
+    /* color: #6495ED; cornflower blue */
+    color: rgba(100, 149, 237,0.85)
+}
+
+div.information {
+  position: relative;
+  display: inline;
+  padding-left: 5pt;
+  font-family: serif;
+  font-size: 16pt;
+  z-index: 12; 
+}
+
+p.warning {
+    display: block;
+    color: red;
+    padding-left: 15pt;
+}
+
+
+/* CSS animation */
+@-webkit-keyframes fadeIn {
+	0% {
+		opacity:0;
+		transform: scale(0.6);
+	}
+
+	100% {
+		opacity:100%;
+		transform: scale(1);
+	}
+}
+
+@keyframes fadeIn {
+	0% { opacity:0; }
+	100% { opacity:100%; }
+}

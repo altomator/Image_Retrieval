@@ -1,0 +1,219 @@
+body {
+color:black;
+background-color:white;
+background-repeat:no-repeat;
+background-position:right top;
+}
+
+.cache{
+display: none;
+}
+
+p.warning {
+    display: block;
+    color: red;
+    padding-left: 15pt;
+}
+
+p.titrePage {
+    text-align = center ;
+    margin-top: -1px;
+    margin-bottom: -17px;
+    font-family: sans-serif;
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+img.thumb {
+ max-width:100%;
+}
+
+img.types {
+  width: 50px;
+  padding-top: 14px;
+  padding-right: 12px;
+}
+
+div.thumb {
+ float:right;
+ margin-right: 0px;
+ margin-top: -30px;
+}
+
+
+h2 {
+    padding: 15pt;
+    font-family: sans-serif;
+    font-size: 16pt;
+    text-align: center;
+}
+h3 {
+    padding-top:0pt;padding-bottom:0pt;
+    font-family:sans-serif;
+    line-height: 16pt;
+    font-weight: normal;
+    font-size: 11pt;
+    color: DimGray
+}
+
+
+/*  formulaire */
+a {
+  padding-left: 0pt;
+  font-family: serif;
+  font-size: 18pt;
+}
+a:link {
+    color: black;
+}
+a:hover {
+    color: darkgray;
+}
+
+form {
+    margin:0px;
+}
+div.form {
+    margin:10px;
+    line-height: 20pt;
+    background-color: #c7a693 ;
+    font-family:sans-serif;
+    /* bordure */
+    padding: 1em;
+    border: 0px solid #CCC;
+    border-radius: 1em;
+ }
+
+/* pour Firefox */
+select {
+  width: 150px;
+}
+
+input  {
+    /* To make sure that all text fields have the same font settings
+       By default, textareas have a monospace font */
+    font: 0.9em sans-serif;
+    color:gray;
+
+    /* To give the same size to all text field */
+    /* width: 400px; */
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    /* To harmonize the look  feel of text field border */
+    border: 1px solid #999;
+}
+div.champ1  {
+  margin-bottom: 0.5em;
+  
+  }
+div.champ  {
+  margin-bottom: 0.25em;
+  }
+div.champTypes  {
+ font-size: 9pt;
+
+  }
+
+textarea {
+    padding:5px;
+   
+}
+      
+.gris  {
+  color: gray;
+    }
+    
+input.titre  {
+  width: 60%;
+  color: gray;
+  font-size: 12pt;
+  }
+input.texte  {
+  width: 60%;
+  color: gray;
+  }
+  
+input.date  {
+  width: 150px;
+  font-size: 10pt;
+  }
+input:focus  {
+  border-color: DimGray;
+}
+
+.button  {
+  margin-top:15px;
+  color: white;
+  background-color: #404953;
+  border:1px solid DimGray;
+  font-size: 11pt;
+  padding:5px;
+}
+.button:focus  {
+    border-color: black;
+    }
+
+/*  Aide du formulaire de recherche */
+.help-tip{
+	position: relative;
+	top: -0.5em;
+	right: -96%;
+	align: right;
+	text-align: center;
+	background-color: #6495ED;
+	border-radius: 50%;
+	width: 24px;
+	height: 24px;
+	font-size: 14px;
+	line-height: 26px;
+	cursor: default;
+}
+
+.help-tip:before{
+	content:'?';
+	font-weight: bold;
+	color:#fff;
+}
+
+.help-tip:hover p{
+	display:block;
+	transform-origin: 100% 0%;
+	-webkit-animation: fadeIn 0.3s ease-in-out;
+	animation: fadeIn 0.3s ease-in-out;
+}
+
+.help-tip p{	/* The tooltip */
+	display: none;
+	text-align: left;
+	background-color: #1E2021;
+	padding: 10px;
+	width: 290px;
+	position: absolute;
+	border-radius: 3px;
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+	right: -4px;
+	color: #FFF;
+	font-size: 13px;
+	line-height: 1.4;
+}
+
+.help-tip p:before{ /* The pointer of the tooltip */
+	position: absolute;
+	content: '';
+	width:0;
+	height: 0;
+	border:6px solid transparent;
+	border-bottom-color:#1E2021;
+	right:10px;
+	top:-12px;
+}
+
+.help-tip p:after{ /* Prevents the tooltip from being hidden */
+	width:100%;
+	height:40px;
+	content:'';
+	position: absolute;
+	top:-40px;
+	left:0;
+}

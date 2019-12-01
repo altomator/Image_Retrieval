@@ -29,40 +29,51 @@ use Switch;
 use Try::Tiny;
 use Image::Info qw(image_info dim);
 use Benchmark qw(:all) ;
-use EDM qw( /Users/bnf/Documents/BnF/Dev/GallicaPix/OAI ); # path miust be set for the Eureopana Data Model OAI 
+use EDM qw( /Users/bnf/Documents/BnF/Dev/GallicaPix/OAI ); # path must be set for the Eureopana Data Model OAI package
+
 
 ######################
 # global variables #
 ######################
 %hash = ();	   	# hash table of metadata/value  pairs
-$calculARK = 1;  #  ark IDs must be exported? (used in bib-XML.pl)
+$calculARK = 0; #  ark IDs must be exported? (used in bib-XML.pl)
 my $couleur;  	# color mode
-my $genre;    	# illustration genre
-my $type;    	# document type
+my $genre;    	# illustration genre: photo, drawing, map... (similar to dc:type)
+my $type;    	  # document type: monograph, newspaper...
+my @sujets;			# illustration subjects (dc:subject)
 my $theme;    	# illustration IPTC theme
-my $portrait; 	# the illustration is a person portrait?
-my $sujet;    	# illustration subject
+my $personne; 	# the illustration is a person portrait?
 my $pageExt;  	# page number to be extracted  -> see getRecordOAI_page()
 my $harvester ;
 
 #########################
 ### parameters to be set  ##
+$reprise = 1 ; # to start the harvest at record X
 $DPI_photo = 600; # default DPI value for photos
 $DPI_imp = 400; # default DPI value for print content
-$facteur_imp= 25.4/$DPI_imp; # converting pixels to mm
+$facteur_imp = 25.4/$DPI_imp; # converting pixels to mm
 $facteur_photo = 25.4/$DPI_photo;
 $A8 = 3848; # A8 surface (mm2)
 
-### uncomment the following parameters to set a default value
-my $genreDefaut = "carte";    #  illustrations default genre
-#my $typeDefaut = "I";  # default source type  :  newspapers : P, magazine : R, monograph = M, image = I, manuscript = A, music scores = PA, maps: M
-my $IPTCDefaut = "16";   # default IPTC theme
-#my $couleurDefaut ="coul";  # default color mode: coul / gris / monochrome
+### uncomment the following parameters to override a default value
+#my $genreDefaut = "gravure";    #  illustrations default genre
+my $typeDefaut = "I";  # default collection type  :  newspapers : P, magazine : R, monograph = M, image = I, manuscript = A, music scores = PA, maps: M
+#my $IPTCDefaut = "0";   # default IPTC theme
+my $couleurDefaut = "coul";  # default color mode: coul / gris / monochrome
+
+### uncomment the following parameters to defined image classification tags applied to all illustrations
+#my @tags = ("animal", "bird", "verterbrate");
 
 # debugging mode
-$DEBUG = 0;
+$DEBUG = 1;
+$exportBnF = 1; # used by bib-XML.pl to export more metadata at the illustration level
 ########################
 
+
+
+
+#findPerson("Jean Emile Raymond (1860-1934)");
+#die
 
 ## import of XML output macros ##
 require "../bib-XML.pl";
@@ -76,12 +87,14 @@ $cleEuropeana = "cSQ72DjmT";
 # OAI endpoints
 $urlOAIbnf = "http://oai.bnf.fr/oai2/OAIHandler";  # Gallica OAINUM endpoint
 $urlOAIeuropeana = "http://oai.europeana.eu/oaicat/OAIHandler";
+# http://oai.bnf.fr/oai2/OAIHandler?verb=ListSets
+# https://api.europeana.eu/oai/record?verb=ListSets
 # OAI data models
 $MDeuropeana = "edm";
 $MDbnf = "oai_dc";
 
-# patterns for extraction
-# Gallica
+# patterns for XML extraction
+# API Gallica: Pagination
 $motifOrdre = "\<ordre\>(\\d+)\<\/ordre\>" ;
 $motifLargeurBnF = "\<image_width\>(\\d+)\<\/image_width\>" ;
 $motifHauteurBnF = "\<image_height\>(\\d+)\<\/image_height\>" ;
@@ -93,7 +106,7 @@ $motifLeg = "\<legend\>(.*)\<\/legend\>" ;
 $motifFirst = "\<firstDisplayedPage\>(\\d+)\<\/firstDisplayedPage\>" ;
 $motifPage = ".*/f(\\d+)" ;
 
-# europeana EDM
+# Europeana EDM
 $motifLargeurEDM = "width\": (\\d+)" ;
 $motifHauteurEDM = "height\": (\\d+)" ;
 $motifCoulEDM = "edmHasColorSpace\":\"(.*?)\"" ; # non-greedy
@@ -104,16 +117,16 @@ my $dateMin;   # to filter documents on dates
 my $dateMax;
 my $nbPages = 1;
 
-# Counting #
-$nbTotDocs=0;
-$nbMaxDocs=3;
-$nbTotIlls=0;
-$noClass = 0;$noGenre = 0;$noType = 0;
-$noRecord = 0; $nbDates = 0;
-$nbPerio = 0;$nbMono = 0;$nbManu = 0;
-$nbIIIF=0;
+# Stats #
+my $nbTotDocs=0;
+my $nbMaxDocs=3;
+my $nbTotIlls=0;
+my $noClass = 0;$noGenre = 0;$noType = 0;
+my $noRecord = 0; $nbDates = 0;
+my $nbPerio = 0;$nbMono = 0;$nbManu = 0;
+my $nbIIIF=0;
 
-# IPTC words network
+# IPTC words network for WW1 topic
 my
 # http://cv.iptc.org/newscodes/mediatopic/01000000
 # themes
@@ -163,8 +176,8 @@ my
 
   "cheval serpent femm homm enfant person rein cardinal princess diplomat consul roi princ ministr
   ambassadeur empereur duc pape maharajah maréchal
-  baigneux  famill épous joueur déput  président " => "08",
-  "portr" => "08p",
+  baigneux  famill épous joueur déput  président animali" => "08",
+  "portr portrait" => "08p",
   #Gens animaux insolite
 
   "manifest défil foul voier usin quais entretien associ grev cheminot
@@ -221,7 +234,17 @@ my
 			 	);
 
 ###############################
-# illustration genre words network
+# document types words network
+%personnes = (
+				"enfant enfants" => "child",
+				"madam  épous femm princess" => "woman",
+				"homm offici général marin  prisonni aviateur pilot monsieur
+				l'aviateur président soldat préfet directeur" => "man",
+				"portrait portraits portr client sportif travailleur camarad personnel" => "person"
+							 	);
+
+###############################
+# illustration genres words network
 %genres = (
 	"musique musical music hymne chanson partition symphonie" => "partition",
 	"carte plan cartes plans" => "carte",
@@ -241,11 +264,10 @@ my
 
 ###############################
 
-# lemmatisation
+# lemmatization
 $stemmer = Lingua::Stem::Any->new(language => 'fr',
          exceptions => {
             fr => {
-
             	basilique => 'basiliq',
             	dettes => 'dette',
             	dette => 'dette',
@@ -281,7 +303,7 @@ $stemmer = Lingua::Stem::Any->new(language => 'fr',
 
 
 ####################################
-# get one record
+# get one OAI record from its ID
 sub getRecordOAI {my $id=shift;
 
 	my $result = $harvester->getRecord(
@@ -294,18 +316,20 @@ sub getRecordOAI {my $id=shift;
 		say "## OAI failed to get $id: ".$oops;
 	  return}
 
-  say "******************************";
+  say "************** get record for $id ****************";
 	my $header = $result->header();
-	my $metadata = $result->metadata();
-	my $type = getType($header,$metadata);
-	if ($type) {
+	my $status = $header->status();
+	say "--> status: $status";
+	if ($status ne "deleted") {
+		my $metadata = $result->metadata();
+		my $type = getType($header,$metadata);
 		my $storedId = getID($header);
-	  if ($storedId) {
+		if ($storedId) {
   	  if (getMD($storedId,$metadata,$type)) {
          exportMD($storedId,$format)
       }
-    }
-	}
+	  }
+  }
 }
 
 
@@ -324,18 +348,21 @@ sub getRecordOAI_page {my $ark=shift;
     );
 
   if ( my $oops = $result->errorCode() ) { say "#### OAI error: ".$oops; die};
-
 	my $header = $result->header();
-	my $metadata = $result->metadata();
-	my $type= getType($header,$metadata);
-  my $tmp = getMD($id,$metadata,$type);
-  if (defined ($tmp)) {
+	my $status = $header->status();
+	say "--> status: $status";
+	if ($status ne "deleted") {
+		my $metadata = $result->metadata();
+  	my $type = getType($header,$metadata);
+  	my $tmp = getMD($id,$metadata,$type);
+  	if (defined ($tmp)) {
        exportMD($ark,$format,$pageExt);   # we add the page number in the file name (in case several pages are asked for the same ID)
       }
     }
+	}
 
 ####################################
-# comput the set size
+# comput the OAI set size
 sub getSizeOAI {my $set=shift;
 
 	  my $r = 0;
@@ -349,19 +376,23 @@ sub getSizeOAI {my $set=shift;
     while ( my $header = $headers->next() ) {  # a Net::OAI::Record::Header object
         $r++;
     }
-    say "Records number: $r";
+    say "_______________________\nRecords: $r\n_______________________";
     }
 
 
 ####################################
-# get the whole set
+# get the whole OAI set
 sub getOAI {my $set=shift;
 
+my $header;
+my $status;
+
 ## list the records set
-my $records = $harvester->listAllRecords( ############  #listAllRecords
-  metadataPrefix    => $MDprefix,
+my $records = $harvester->listAllRecords(
+  metadataPrefix  => $MDprefix,
 	metadataHandler => $MDhandler,
   set => $set
+  #from => "1000"
     );
  say "...";
 
@@ -370,40 +401,65 @@ my $records = $harvester->listAllRecords( ############  #listAllRecords
  #while ( $nbTotDocs !=  $nbMaxDocs) {
 	#print " . ";
 	$nbTotDocs++;
-	say "#$nbTotDocs";
-  if (defined($record)) {
+	say "\n************************ #$nbTotDocs ************************";
+	if ($nbTotDocs < $reprise) {next}
 
-    my $header = $record->header();
-		my $storedId = getID($header);
-		my $type = getID($header);
-		if ($storedId) {
-    	my $metadata = $record->metadata();
+  if (defined($record)) {
+    $header = $record->header();
+		$status = $header->status();
+		say "--> status: $status";
+		if ($status eq "deleted") {
+			next}
+		}
+	else {
+    	say "#### OAI error while extracted record $id! ####".$record->errorCode();
+			return undef
+    	}
+
+	my $storedId = getID($header);
+	if ($storedId) {
+			if (existsID($storedId)) {  # already done?
+			  say "... already done in $OUT!";
+				next
+			}
+		  my $metadata = $record->metadata();
+		  my $type = getType($header,$metadata);
+
 			#say Dumper ($header);
 			#say "********";
 			#say Dumper ($metadata);
     	#my $status = $header->status();
     	if (not (defined ($metadata))) {
-    # (($header->headerStatus() eq "deleted") or ($header->status() eq "deleted"))) {
-    		say "####  OAI: problem on record metadata $storedId!  ";
+        # (($header->headerStatus() eq "deleted") or ($header->status() eq "deleted"))) {
+    		say "####  OAI: problem on record metadata $storedId!  ####";
     	}
-    	else {
-     		my $id = getMD($storedId,$metadata,$type);
-     		if (defined ($id)) {
+      else {
+				#say "before ";
+				#say $hash{"id"};
+     		my $ok = getMD($storedId,$metadata,$type);
+				#say "after ";
+				#say $hash{"id"};
+     		if ($ok) {
       	  #my $fichier = $OUT."/".$id.".".$format;
-       	  exportMD($id,$format);
+       	  exportMD($storedId,$format);
        	  #if (($nbTotDocs % 10)==0) {say " ----- #$nbTotDocs -----";}
-     		}
-     		else
-      		{say "** no record  **";
+     		} else
+      		{say "####  No record!  ####";
        		 $noRecord++}
        }
 		  }
-    else{
-    	say "#### OAI error while extracted record $id! ".$record->errorCode();
-			return undef
-    	}
-  }
- }
+   }
+}
+
+# say if a record file already exists localy
+sub existsID {my $id=shift;
+
+  $tmp = $id;
+  $tmp =~ s/\//-/g; # replace the / with - to avoid issues on filename
+	my $ficOut = $OUT."/$tmp.".$format;
+	if (-e $ficOut) {
+		return 1
+	}
 }
 
 
@@ -429,7 +485,7 @@ switch ($oai) {
 									$MDprefix = $MDeuropeana;
 								  $MDhandler = "EDM"}
 
- else {die " #### OAI name must be: gallica, europeana!\n";}
+ else {die " #### OAI name must be: gallica, europeana ####\n";}
 }
 
 $set=shift @ARGV;
@@ -440,7 +496,7 @@ if(-d $OUT){
 		say "Writing in $OUT...";
 	}
 	else{
-		mkdir ($OUT) || die ("####  Error while creating folder : $OUT\n");
+		mkdir ($OUT) || die ("####  Error while creating folder: $OUT\n");
     say "Creating $OUT...";
 	}
 
@@ -455,7 +511,7 @@ $harvester = Net::OAI::Harvester->new(
 my $identity = $harvester->identify();
 my $OAIname = $identity->repositoryName();
 if ((defined $OAIname ) and (length $OAIname>0))
-  {say "OAI: ".$identity->repositoryName(),"\n";}
+  {say "Harvesting OAI '".$identity->repositoryName(),"'...\n";}
 else {
 	say "#### OAI $urlOAI is not responding! ####";
 	die}
@@ -464,12 +520,19 @@ else {
 #####################################
 $t0 = Benchmark->new;
 
+############################
 ## to get the OAI set size #
 #getSizeOAI($set,$harvester);
-#die;
 
+
+################################
 ### to get the whole OAI set ###
+getOAI($set,$harvester);
+
 # BnF : gallica:corpus:1418
+# BnF : gallica:typedoc:images
+#http://oai.bnf.fr/oai2//OAIHandler?verb=ListRecords&set=gallica:corpus:1418&metadataPrefix=oai_dc
+
 # Europeana :
 # 2020601_Ag_ErsterWeltkrieg_EU (WW1 Eastern Front)
 # 9200579_Ag_UK_WellcomeCollection_IIIF : 92 000
@@ -479,14 +542,21 @@ $t0 = Benchmark->new;
 # 2021719_Ag_CY_Theodosis_Nikolaou : 1 record
 # 9200579_Ag_UK_WellcomeCollection_IIIF : 92,483 records
 
-#getOAI($set,$harvester);
-#die
 
+#######################
 # to get one document #
 #### BnF ####
-#getRecordOAI("ark:/12148/btv1b8432784m"); # image
+#getRecordOAI("ark:/12148/bpt6k6234143v"); # image
+#getRecordOAI("ark:/12148/btv1b530176112"); # image
+
+
+
+#die
 #getRecordOAI("ark:/12148/btv1b53148749t");
+#die
 #getRecordOAI("ark:/12148/btv1b55002885z"); # monographie
+
+#http://oai.bnf.fr/oai2//OAIHandler?verb=GetRecord&identifier=oai:bnf.fr:gallica/ark:/12148/btv1b6907528t&metadataPrefix=oai_dc
 
 #### Europeana ####
 # avec iiif :
@@ -508,11 +578,8 @@ $t0 = Benchmark->new;
 #getRecordOAI_page("ark:/12148/btv1b7100627v/f761.image");
 
 ##################
-# to load a list of arks in a external .pl file:
-require "SRU-guerre-1418.pl";
-
-
-
+# to load a list of arks stored in a external .pl file
+#require "SRU-guerre-1418.pl";
 
 $t1 = Benchmark->new;
 $td = timediff($t1, $t0);
@@ -546,10 +613,11 @@ sub getID {my $header=shift;
     	my $id;
 
 			my $tmp = $header->identifier();
-			say "\n... record ID: $tmp";
+			say "... record ID: $tmp";
 
     	if (defined ($tmp)) {
-    	    $id = extractID($tmp)} # extract the internal ID
+    	    $id = extractID($tmp);
+				  say "ID: $id"} # extract the internal ID
     	else
     	  {say "#### ID unknown in the OAI! ####";
 				 $noRecord++;
@@ -558,8 +626,9 @@ sub getID {my $header=shift;
 
     	# to filter the periodical records
     	if (  $id =~ /date/ ) {
-    		if ($DEBUG) {say "** ID $id is a periodical record --> filtering"}
+    		say "** ID $id is a periodical record --> filtering";
     		$nbPerio++;
+				say Dumper ($header) ;
     		return undef}
 
 			say "... stored ID: $id"; # store the ID
@@ -568,7 +637,7 @@ sub getID {my $header=shift;
 			return $id;
 }
 
-# extract the document type
+# extract the document collection (monographies, periodicals, images)
 sub getType {my $header=shift;
 						 my $metadata=shift;
 
@@ -588,6 +657,7 @@ sub getType {my $header=shift;
 
     	if (@mots) { # array of 'gallica:typedoc:cartes', ...
 				 # confronting the metadata to the words network for illustration genres
+
 				 foreach my $t  (@mots) {
 				 	if ($DEBUG) {print $t." - ";}
 				 	($match) = grep {$_ =~ /\b$t\b/} keys %types;
@@ -634,17 +704,18 @@ sub getMD {my $id=shift;
 
     	my $ark;
     	my $match;
-			my $dcsujet="";
-			my $dcauteur="";
-			my $dctype="";
-			my $dcformat="";
+			my $dcsujets="";
+			my $dcauteurs="";
+			my $dctypes="";
+			my $dcformats="";
 			my $dclang="";
+			my $dcdescriptions="";
 			my @props;
 
     	# Reset the hash
     	%hash = ();
     	undef $couleur;
-    	undef $portrait;
+    	undef $personne;
 
 			if ($oai ne "gallica") { # do we have a IIIF resource?
 			 my $isReferencedBy = $metadata->isReferencedBy();
@@ -659,15 +730,23 @@ sub getMD {my $id=shift;
 			}
 
 			# dc:subjet
-			my @sujets = $metadata->subject();  # sometimes we have multiple subjet fields
+			@sujets = $metadata->subject();  # sometimes we have multiple subject fields
 			#say Dumper @sujets;
 			if ($sujets[0]) {
-				$dcsujet = join (' ',@sujets)  ;
-				$hash{"sujet"} = escapeXML_OAI($dcsujet);
-				say " subject: $dcsujet"}
+				$dcsujets = join (' -- ',@sujets)  ;
+				$hash{"sujet"} = escapeXML_OAI($dcsujets);
+				say " subject: $dcsujets"}
 
+			# dc:description
+			my @descriptions = $metadata->description();  # sometimes we have multiple subjet fields
+			if ($descriptions[0]) {
+					$dcdescriptions = join (' -- ',@descriptions)  ;
+					$hash{"description"} = escapeXML_OAI($dcdescriptions);
+					say " description: $dcdescriptions"}
+
+			# hack for Europeana
 			if ($oai ne "gallica") { # do we have a WW1 resource?
-			 if (index(lc($dcsujet),'war one') == -1) {
+			 if (index(lc($dcsujets),'war one') == -1) {
 					say "### not a WW1 document ###";
 					return undef}
       }
@@ -682,12 +761,26 @@ sub getMD {my $id=shift;
     	   {if ($DEBUG) {say "** Unknown title for ID $id! **";}
     	}
 
+			my @coverages = $metadata->coverage();  # sometimes we have multiple subjet fields
+			if ($coverages[0]) {
+					$dccoverages = join (' -- ',@coverages)  ;
+					$hash{"couverture"} = escapeXML_OAI($dccoverages);
+					say " coverage: $dccoverages"}
+
+			# language
 			if (defined ($dclang = $metadata->language())) { # try on dc:lang
-    		$hash{"lang"} = $dclang;
-    		say " lang: $dclang";
-    	} elsif (defined ($dclang = $metadata->edmLanguage())) { # try on edm:language
-    		$hash{"lang"} = $dclang;
-    		say " lang: $dclang";
+			  say " dc:language: $dclang";
+    	}
+			if ($oai eq "europeana") {
+				if (defined ($dclang = $metadata->edmLanguage())) { # try on edm:language
+			  say " dc:edmLanguage: $dclang";}
+			}
+			if ((defined $dclang) and ($dclang ne "0")) {
+				$hash{"lang"} = $dclang;
+			}
+			else {
+				$hash{"lang"} = "fre"; # default
+			  say " language: fre (default)";
 			}
 
 			if (defined ($dcsource = $metadata->source())) {
@@ -713,12 +806,12 @@ sub getMD {my $id=shift;
     	  return undef}
     	$tmp ||= "inconnu";
     	$hash{"date"} = $tmp;
-    	if ($DEBUG) {say " date: $tmp";}
+    	say " date: $tmp";
 
     	# source of document types : newspapers, image, monographs...
     	if (defined $typeDefaut) {   # if we have a default type
     	    $tmp = $typeDefaut}
-			elsif ($typeOAI ne "unknown") {
+			elsif ($typeOAI and ($typeOAI ne "unknown")) {
 				$tmp = $typeOAI}
 			else {
 				say "### unkwown document type: can't proceed! ###";
@@ -730,90 +823,142 @@ sub getMD {my $id=shift;
     	# dc:author
     	my @auteurs = $metadata->creator();
 			if ($auteurs[0]) {
-    		$dcauteur = join (' ',@auteurs) ;
-				$hash{"auteur"} = escapeXML_OAI($dcauteur);
-				say " creator: $dcauteur" }
+    		$dcauteurs = join (' -- ',@auteurs) ;
+				$hash{"auteur"} = escapeXML_OAI($dcauteurs);
+				say " creator: $dcauteurs" }
+				else {
+					$hash{"auteur"} = "inconnu"}
 
 			# searching for illustrations genre  : photo/gravure/dessin/partition/carte/manuscrit
-    	my @dctypes = $metadata->type();
-			if ($dctypes[0]){
-    	  $dctype = join (' ',reverse @dctypes) ; # reverse because discriminative words are located at the end
+			if (defined $genreDefaut) {   # if we have a default value
+    	    $genre = $genreDefaut}
+			else {
+				say "...looking for genre";
+    	 my @dctypes = $metadata->type();
+			 if ($dctypes[0]){
+    	  $dctypes = join (' -- ',reverse @dctypes) ; # reverse because discriminative words are located at the end
+				$hash{"types"} = escapeXML_OAI($dctypes);
+				say " types: $dctypes"
 				}
-
-    	# dc:format
-    	my @formats = $metadata->format();
-			if ($formats[0]) {
-    		$dcformat = join (' ',@formats) }
-
-    	# we add title because it can contains discriminative words
-    	@mots = split(' ',lc(escapePunct($dcformat." ".$dctitre." ".$dcsujet." ".$dcauteur." ".$dctype)));
-			if ($DEBUG){
-				say "... looking in:";
-				say Dumper @mots;}
-
-    	# confronting the metadata to the words network for illustration genres
-    	foreach my $t  (@mots) {
-				if (length($t) < 4) {next} # don't process stop words, etc.
+    	 # dc:format
+    	 my @formats = $metadata->format();
+			 if ($formats[0]) {
+    		$dcformats = join (' -- ',@formats);
+				$hash{"format"} = escapeXML_OAI($dcformats);
+			  say " format: $dcformats" }
+    	 # we add title because it can contains discriminative words
+    	 @mots = split(' ',lc(escapePunct($dcformats." ".$dctitre." ".$dcsujets." ".$dcauteurs." ".$dctypes)));
+			 if ($DEBUG){
+				say "... looking in:";}
+    	 # confronting the metadata to the words network for illustration genres
+    	 foreach my $t  (@mots) {
+				 #print $t." - ";
+				if ((length($t) < 4) or ($t =~ /^[0-9,.E*°]+$/ ) )
+				   {next} # don't process stop words and numbers
+				$t =~ tr/*{}/ /;
     		if ($DEBUG) {print $t." - ";}
     		($match) = grep {$_ =~ /\b$t\b/} keys %genres;
     	   if ($match) {
     	      $genre = $genres{$match};
-    	      last;
-    	  }
-    	}
-    	if (not (defined $match)) {
+    	      last;}
+    	 }
+    	 if (not (defined $match)) {
     		say "\n** unknown illustration genre: @mots **";
-    	  $genre ="inconnu";
+    	  $genre = "inconnu";
     		$noGenre++;}
-    	else {
-    	    say "\n ... illustration genre --> $genre"}
-
-    	# loooking for illustration color mode on dc:format
-    	if ($genre eq "photo") {
-    	    $couleur = "gris" ;}  # assumption
-    	if ( $dcformat  =~  m/.+coul\..+/) {
-    	   $couleur = "coul";
-    	  }
-			$couleur ||= "inconnu";
-    	if ($DEBUG) {say " ... color mode --> $couleur";}
-
-    	say "...looking for theme";
-    	if (@sujets) {
-    		# searching for theme in the IPTC words network
-    		$theme = extractIPTC($dcsujet);
-    		if (not (defined ($theme))) {
-    			if ($DEBUG) {say " FAIL on dc:subject"};
-    		  $theme = extractIPTC($dctitre);} # next try on dc:title
-    	}
-    	else  # if no dc:subject, let's try on title
-    	  {$theme = extractIPTC($dctitre);}
-
-  	  # last try
-    	if (not (defined ($theme))) {
-    	   if ($DEBUG) {say " FAIL on dc:subject and dc:title... try on person"; }
-    	   # using regexp to find a person name
-         if ( $dctitre  =~  m/.+,\ .+(\d+) ?-(\d+) ?/)  # motif Stroehlin, Henri (1876-1918) ou (1876?-1918)
-              { say " -> person";
-                $theme = "08p";
-                $portrait=1; }
-         elsif (defined($tmp = $metadata->description())) # try on dc:description
-              { say " FAIL on person... try on dc:description";
-								$theme = extractIPTC($tmp);}
 			}
-      # last try on document types
-			if (not (defined ($theme))) {
+    	say "\n illustration genre: $genre";
+			$hash{"genre"} = $genre;
+
+			# color mode
+      if (defined $couleurDefaut) {   # if we have a default type
+			   $couleur = $couleurDefaut}
+			else {
+				say "...looking for color mode";
+    	 # loooking for document color mode on dc:format
+    	 if ($genre eq "photo") {
+    	    $couleur = "gris" ;}  # assumption
+    	 if ( $dcformats  =~  m/.+coul\..+/) {
+    	   $couleur = "coul"}
+			 }
+			$couleur ||= "inconnu";
+    	say " color mode: $couleur";
+
+			# person classification
+			# looking for people in title and subject
+			say "...looking for people in title and subjects";
+			@mots = split(' ',lc(escapePunct($dctitre." ".$dcsujets)));
+			my @motsLem  = $stemmer->stem(@mots);
+			# confronting the metadata to the words network for people
+			foreach my $t  (@motsLem) {
+				if ((length($t) < 4) or ($t =~ /^[0-9,.E*°]+$/ ) )
+					{next} # don't process stop words and numbers
+				$t =~ tr/*{}/ /;
+				{print $t." - ";}
+				($match) = grep {$_ =~ /\b$t\b/} keys %personnes;
+				if ($match) {
+					 if ($DEBUG) {say ""}
+					 $personne = $personnes{$match};
+					 if ($DEBUG) {say " -> $personne"}
+					 last;}
+				 }
+				if ($DEBUG) {say  "\n"}
+
+
+			if (not (defined $personne))  { # using regexp to find a person name in the title
+				if ($DEBUG) {say " ... looking for named entities"; }
+				#$tmp = join(' ',$dctitre." ".$dcsujets); #
+				foreach my $ch (@sujets) {
+					say $ch;
+					if (findPerson($ch)) {
+						if ($DEBUG) {say " -> person in title/subject";}
+						$personne = "person";
+						last;
+							}
+						}
+					}
+
+			# IPTC theme
+      if (defined $IPTCDefaut) { # if we have a default type
+				 $theme = $IPTCDefaut
+			} else {
+    	 say "...looking for theme";
+    	 if (@sujets) {
+    		# searching for theme in the IPTC words network
+    		 $theme = extractIPTC($dcsujets);
+    		 if (not (defined ($theme))) {
+    			 if ($DEBUG) {say " FAIL on dc:subject"};
+    		   $theme = extractIPTC($dctitre);} # next try on dc:title
+    	  }
+    	  else  # if no dc:subject, let's try on title
+    	  {
+					if ($DEBUG) {say " FAIL on dc:subject"};
+					$theme = extractIPTC($dctitre);}
+  	    # last try
+    	  if (not (defined ($theme)) and (defined $dcdescriptions)) { # try on dc:description
+         if ($DEBUG) {say " ... try on dc:description"}
+				 $theme = extractIPTC($dcdescriptions);
+			  }
+        # last try on document types
+			  if (not (defined $theme)) {
          if ($genre eq "partition")
              {$theme="01";}  # "arts"
          elsif ($genre eq "carte")
-             {$theme="13";} # "siences"
+             {$theme="13";} # "sciences"
         }
-      # conclusion
-      if (not (defined ($theme)))
-          {if ($DEBUG) {say "** unknown theme **\n";}
-             	$theme = "inconnu";
-              $noClass++;}
-      else {
-            	if ($DEBUG) {say "  ... IPTC theme --> $theme";}  }
+      }
+
+			# conclusions
+			if ((not (defined $personne)) and (defined $theme) and ($theme eq "08p")) {
+				 $personne = "person"}
+			if ((not (defined $theme)) and (defined $personne)) {
+				$theme = "08p"}
+ 			$theme ||= "inconnu";
+      if (not (defined ($theme))) {
+				$noClass++}
+      say " IPTC theme: $theme";
+			if (defined $personne) {
+				say " person: $personne"}
 
     	# extract dimensions
 			say "... looking for pagination and dimension information";
@@ -847,27 +992,38 @@ sub getMD {my $id=shift;
             $hash{"taille"} = int($hash{"largeur"}*$hash{"hauteur"} / $A8) ; # in termes of A8 size
       }
       else {say "#### document dimensions unknown! ####";
-              return undef;
+            return undef;
               }
 
-    	return $id;
+    	return 1;
 }
+
+sub findPerson {my $chaine=shift;
+  if (
+#($tmp  =~  m/\w,\s.+(\d+) ?-(\d+)/) or  # motif Stroehlin, Henri (1876-1918) ou (1876?-1918)
+		($chaine  =~  m/[A-ZÉ]\w+[\s|,\s]+[A-ZÉ].+(\d+) ?-(\d+)/) or
+		($chaine  =~  m/Mme\s/) or
+		($chaine  =~  m/Miss\s/) or
+		($chaine  =~  m/M\.\s/) ) {
+			return 1
+		}
+	}
 
 ############################
 # extract the IPTC theme from a string
 sub extractIPTC {my $chaine=shift;
 
-      if ($DEBUG) {say "\n  extract IPTC: ".$chaine;}
+      if ($DEBUG) {say " extract IPTC: ".$chaine;}
         $chaine =~ s/ -- / /g;# suppress the --
     	$chaine = escapePunct($chaine); # suppress punctuation
         $chaine =~ s/  / /g;# suppress  double spaces from escapePunct()
-    	#if ($DEBUG) {say " string: ".$chaine;}
+    	if ($DEBUG) {say " string: ".$chaine;}
     	# tokenize on space or '
     	my @mots = split(' |\'|’',$chaine);
     	# lemmatise
     	my @motsLem  = $stemmer->stem(@mots);
-    	#if ($DEBUG) {say "lemmes: ".Dumper(\@motsLem);}
-    	# llok for a match in the IPCT hash
+    	if ($DEBUG) {say "lemmes: ".Dumper(\@motsLem);}
+    	# look for a match in the IPCT hash
     	foreach my $m  (@motsLem) {
     	 	if ((length($m) > 2) && ($m =~ /^[a-zA-Zéèêëàâôïîç-]+$/))  {	# if word > 3 characters and alphanumeric
     	 	 	 #if ($DEBUG) {
@@ -923,7 +1079,8 @@ sub extractGallicaProperties {my $id=shift;
 		my $reponseAPI = `$cmd`;
 		#say "res: ".$res;
 		if ($reponseAPI and index($reponseAPI, "server error") == -1)  {
-		  say "... API is responding: ".substr($reponseAPI,0,100)." ...";
+		  say "... API is responding: ".substr($reponseAPI,0,30)." ...";
+			say "-------------------------------------";
      	# test if ToC
      	(my $toc) = do { local $/; $reponseAPI =~ m/$motifToc/s };
      	$hash{"toc"} = $toc;
@@ -941,12 +1098,12 @@ sub extractGallicaProperties {my $id=shift;
 		 	@pages = do { local $/; $reponseAPI =~ m/$motifOrdre/g };
 		 	$nbPages =  scalar @pages;
 		 	$hash{"pages"} = $nbPages;
-		 	if ($DEBUG) {say "  ... Pages number: ".$nbPages }
+		 	say "  ... Pages number: ".$nbPages ;
       # pages number, dimensions
      	(@numeros ) = do { local $/; $reponseAPI =~ m/$motifNumero/g };
       (@largeurs ) = do { local $/; $reponseAPI =~ m/$motifLargeurBnF/g };
      	(@hauteurs ) = do { local $/; $reponseAPI =~ m/$motifHauteurBnF/g };
-    	if ($DEBUG) {
+    	if ($DEBUG ) {
      					 #say Dumper(\@largeurs);
      					 #say Dumper(\@hauteurs);
      					 #say Dumper(\@numeros);
@@ -961,30 +1118,35 @@ sub extractGallicaProperties {my $id=shift;
      	foreach my $line (@lines) {
      			#say $line;
      			(my $leg ) = $line =~ m/$motifLeg/;
-					if (($DEBUG) and (defined $leg))  {say " caption: ".$leg; $legCourant = $leg;}
+					if (defined $leg)  {
+						$hash{"caption"} = "true";
+						$legCourant = $leg;}
      			(my $num ) = $line =~ m/$motifOrdre/;
      			if (defined $num) {
-     				print "$num ";
+     				if ($DEBUG) {print "$num "}
      			  $numCourant = $num;}
      			if ((defined $legCourant) and  (defined $numCourant)){
-     			  if ($DEBUG) {say "caption on page: ".$numCourant." : ".$legCourant;}
+     			  say "caption on page: ".$numCourant." : ".substr($legCourant,0,30)."...";
      			  $legendes[$numCourant-1]= $legCourant;
      			 undef $legCourant;undef $numCourant}
      		}
 
-      if ($DEBUG) {say "\ncaptions: ".Dumper(\@legendes);}
+      if ($DEBUG) {
+				say "\ncaptions: ".Dumper(\@legendes);
+			}
 
       # common case where we only have one caption (one first page)
      	if (scalar @legendes == 1) {
-     			if ($DEBUG)   {say " one caption";}
+     			if ($DEBUG)   {say "--> one caption";}
      			$legende1 = escapeXML_OAI($legendes[0]);
      		    if ($legende1 eq $hash{"titre"}) { # if caption== title, throw it away
-     		      	 if ($DEBUG) {say " caption == title"; }
+     		       if ($DEBUG)  {say "--> caption == title"};
      			     undef $legende1;
-     				 undef $legendes[0];}
+							 undef $legendes[0];
+						   $hash{"caption"} = "false" }
      		}
      	# for some document types, we only keep the opening page
-     	if (($type eq "PA")  or ($type eq "A")) { # partition, manuscrit
+     	if ($type eq "PA")   { # partition
   	            $hash{$pageOuv."_ill_1_w"} = $largeurs[$pageOuv-1];
   	            $hash{$pageOuv."_ill_1_h"} = $hauteurs[$pageOuv-1];
   	            $hash{$pageOuv."_ill_1_coul"} = getColor($id, $pageOuv);
@@ -1013,8 +1175,8 @@ sub extractGallicaProperties {my $id=shift;
     		  	     $hash{$i."_ill_1_leg"} = escapeXML_OAI($legendes[$i-1]);}
 
     		   if ($ok) {
-     		  	 	# guess the color mode
-    		  	  if (not (defined $couleur))  {
+     		  	 	# guess the color mode for each illustration
+    		  	  if ($couleur eq "inconnu")  {
      		         $hash{$i."_ill_1_coul"} = getColor($id, $i);}
      		      else {$hash{$i."_ill_1_coul"} = $couleur;}
      		    }
@@ -1093,10 +1255,8 @@ sub extractEDMProperties {my $id=shift;
 sub getColor {my $id=shift;
 	            my $page= shift;
 
- #say "getColor: $page";
- if (defined $couleurDefaut) {
-	   return $couleurDefaut}
- else {
+  print "getColor: $page -> ";
+
 	my $file = "/tmp/test.jpg";
 	my $url = $urlGallica.$id.".thumbnail";
 	#say $url;
@@ -1116,13 +1276,13 @@ sub getColor {my $id=shift;
 
 	if ($DEBUG) {say "** color of page $page: ".$color;}
 	 switch ($color) {
-		case "1"		{ return "gris" }
-		case "Gray"		{ return "gris" }
-		case "3"		{ return "coul" }
+		case "1"		{say "gris"; return "gris" }
+		case "Gray"		{say "gris";  return "gris" }
+		case "3"		{say "coul";  return "coul" }
 		else		{ say "#### unknow color mode: $color ####";
 			return undef }
 	}
-	}
+
 }
 
 
@@ -1139,9 +1299,14 @@ sub exportPage {my $id=shift;
 								my $format=shift;   # format : xml
 	            	my $fh=shift;       # file handler
 
-	if (exists $hash{$p."_ill_1_w"})  {  # don't export pages with no illustration
+  if (exists $hash{$p."_filtre"}) {
+		if ($DEBUG) {say "page #$p has been filtered";}
+	}
+	elsif (not exists $hash{$p."_ill_1_w"})  {  # don't export pages with no illustration
+    if ($DEBUG) {say "page #$p: filtered illustration";}
+	}
+	else {
 	  if ($DEBUG) {say "... exporting page #$p"; }
-
 	  $nbTotIlls++;
 	  %atts = ("ordre"=> $p);
   	  writeEltAtts("page",\%atts,$fh);
@@ -1154,31 +1319,51 @@ sub exportPage {my $id=shift;
   	  		"taille"=>$hash{"taille"})}
   	  writeEltAtts("ill",\%atts,$fh);
   	  if (defined $genreDefaut) {
-    		      %atts = ("CS"=> "1", "source"=>"hm");    # confidence value = 1, source= metadata
+    		      %atts = ("CS"=> "1", "source"=>"hm");    # confidence value = 1, source= human
   	  	  	  writeEltAtts("genre",\%atts,$fh);
   	  	  	  print {$fh} $genreDefaut;
   	  	  	  writeEndElt("genre",$fh); }
-  	  if ($genre ne "inconnu") {
+  	  elsif ($genre ne "inconnu") {
   	  	  	  %atts = ("CS"=> "0.95", "source"=>"md");  # confidence = 0.95 (based on the document metadata)
   	  	  	  writeEltAtts("genre",\%atts,$fh);
   	  	  	  print {$fh} $genre;
   	  	  	  writeEndElt("genre",$fh);
   	  	      }
-  	  if (defined($theme)) {
+  	  if (defined ($IPTCDefaut)) {
+				%atts = ("CS"=> "1", "source"=>"md");
+				writeEltAtts("theme",\%atts,$fh);
+				print {$fh} $IPTCDefaut;
+				writeEndElt("theme",$fh)}
+  	  elsif (defined($theme)) {
 		 			%atts = ("CS"=> "0.8", "source"=>"md");  # confidence = 0.8 (based on the IPTC words network)
 					writeEltAtts("theme",\%atts,$fh);
 					print {$fh} $theme;
 					writeEndElt("theme",$fh)}
-  	  elsif (defined ($IPTCDefaut)) {
-  	  	    %atts = ("CS"=> "1", "source"=>"md");
-  	  	  	writeEltAtts("theme",\%atts,$fh);
-  	  	    print {$fh} $IPTCDefaut;
-  	  	  	writeEndElt("theme",$fh)}
-  	 if (defined $portrait) {  	  	# if the illustration is a portrait
-  	  	 %atts = ("CS"=> "1.0", "source"=>"md");
+  	 if (defined $personne) {  	  	# if the illustration is a portrait, we add a classification tag
+  	  	 %atts = ("CS"=>"1.0", "lang"=>"en", "source"=>"md");
   	     writeEltAtts("contenuImg",\%atts,$fh);
   	     print {$fh} "person";
-  	  	 writeEndElt("contenuImg",$fh);}
+  	  	 writeEndElt("contenuImg",$fh);
+			 	 if ($personne ne "person") {
+					 writeEltAtts("contenuImg",\%atts,$fh);
+	  	     print {$fh} $personne;
+	  	  	 writeEndElt("contenuImg",$fh);
+				 }
+			 }
+		 if (@tags) {  	  	# if some tags exist
+		   foreach $t (@tags) {
+		 		 %atts = ("CS"=> "1.0", "lang"=>"en", "source"=>"hm");
+		 		 writeEltAtts("contenuImg",\%atts,$fh);
+		 		 print {$fh} $t;
+		 		 writeEndElt("contenuImg",$fh);}
+			 }
+			if (@sujets) {  	  	# subjects may be considered as tags
+  		   foreach $t (@sujets) {
+  		 		 %atts = ("CS"=> "1.0", "lang"=>"fr", "source"=>"md");
+  		 		 writeEltAtts("contenuImg",\%atts,$fh);
+  		 		 print {$fh} $t;
+  		 		 writeEndElt("contenuImg",$fh);}
+  			 }
   	 # caption
   	 $tmp = $hash{$p."_ill_1_leg"};
   	 if (defined ($tmp) and (length($tmp)>0)) {writeElt("leg",$tmp,$fh);}
@@ -1189,5 +1374,4 @@ sub exportPage {my $id=shift;
   	 writeEndElt("ills",$fh);
   	 writeEndElt("page",$fh);
   	}
-  	else {if ($DEBUG) {say "page #$p: filtered illustration";}}
  }

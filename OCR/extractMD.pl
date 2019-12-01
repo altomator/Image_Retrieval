@@ -126,7 +126,9 @@ require "../bib-XML.pl"; ## importation macros d'export XML ou JSON ##
 	"carte map TAG_map"  => "carte", # map
 	"formula TAG_formula" => "formule" , # math formula
 	"manuscript TAG_manuscript" => "manuscrit", # manuscript
+  "dessin " => "dessin" ,
 	"music musicScore TAG_musicScore" => "partition");  # music score
+
 
 
 ##########################################################
@@ -671,7 +673,7 @@ say " ********************************************";
 print " OK to continue? (Y/N)\n >";
 my $rep = <STDIN>;
 chomp $rep;
-if (not ($rep eq "o" or $rep eq "O")) {die}
+if (not ($rep eq "y" or $rep eq "Y")) {die}
 
 # analyse récursive du dossier
 # recurse analysis of the input folder
@@ -1008,6 +1010,7 @@ foreach my $line (<$fh>) {
    }
  }
 }
+
 sub extraireLegToC3{my $fh=shift;
 
 	my @entrees;

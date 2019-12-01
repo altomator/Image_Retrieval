@@ -11,6 +11,7 @@ https://gallica.bnf.fr/ark:/12148/bpt6k250186x/f1.planchecontact
 Notes :
 - $typeDoc parameter must be set to "P"
 - to compute BNF Ark IDs at document level, newspaper title parameter must be set on the command line and the title's record ID must be known in %hashNotices
+- output: 8 illustrations (actually text blocks)
 
 # with Ark IDs:
 >perl extractMD.pl -LI ocren Humanite OCR-EN-BnF OUT-OCR-EN-BnF xml
@@ -47,6 +48,7 @@ https://gallica.bnf.fr/ark:/12148/bpt6k716604p/f1.planchecontact
 
 Note :
 - $typeDoc parameter must be set to "P"
+- output: 10 illustrations
 
 >perl extractMD.pl -LI olren PJI OLR-EN OUT-OLR-EN xml
 
@@ -65,6 +67,7 @@ https://gallica.bnf.fr/ark:/12148/bpt6k46000341/f1.planchecontact
 Note :
 - $typeDoc parameter must be set to "P"
 - newspaper title parameter must be set with the command line
+- output: 38 illustrations + 18 illustrated ads
 
 >perl extractMD.pl -LI olrbnf Excelsior OLR-BnF OUT-OLR-BnF xml
 
@@ -81,6 +84,7 @@ https://gallica.bnf.fr/ark:/12148/bpt6k65199707/f1.planchecontact
 
 Note :
 - $typeDoc parameter must be set to "R"
+- Output: 120 illustrations
 
 >perl extractMD.pl -LI ocrbnflegacy generic OCR-BnF-magazines-legacy OUT-OCR-BnF-magazines-legacy  xml
 
@@ -98,6 +102,7 @@ https://gallica.bnf.fr/ark:/12148/bpt6k62168707/f1.planchecontact
 Note:
 - the ark IDs must be defined in arks-mono.pl file
 - $typeDoc parameter must be set to "M"
+- output: 1 illustration
 
 >perl extractMD.pl -LI ocrbnflegacy generic OCR-BnF-mono-legacy OUT-OCR-BnF-mono-legacy xml
 
@@ -116,5 +121,6 @@ https://gallica.bnf.fr/ark:/12148/bpt6k9612399b/f1.planchecontact
 Note:
 - the ark IDs must be defined in arks-mono.pl file
 - $typeDoc parameter must be set to "M"
+- output: 21
 
 >perl extractMD.pl -LI ocrbnf generic OCR-BnF-mono OUT-OCR-BnF-mono xml

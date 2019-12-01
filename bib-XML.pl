@@ -18,8 +18,8 @@ use 5.010;
 # ----------------------
 #
 sub exportMD {my $id=shift;
-			      my $format=shift;
-	          my $page=shift;
+			        my $format=shift;
+	            my $page=shift;
 
 	#############
 	my %atts;
@@ -27,14 +27,12 @@ sub exportMD {my $id=shift;
 	my $ficOut;
 
   #say Dumper (%hash);
-
-  say "\n--------------------- Writing MD for: ".$id;
+  #say "id: $id";
+  say "\n\n--------------------- Writing MD for document: ".$id;
 
   if ((keys %hash)==0) {
-  	say "  ## empty HASH  !  ##";
-  	return }
-
-  $nbTotDocs++;
+  	say "  #### empty HASH! can't export MD... ####";
+  	return 0}
 
 	$tmp = $id;
 	$tmp =~ s/\//-/g; # replace the / with - to avoid issues on filename
@@ -55,22 +53,49 @@ sub exportMD {my $id=shift;
    writeOpenElt("analyseAlto",$fh);
    writeOpenElt("metad",$fh);
    writeElt("type",$hash{"type"},$fh);
-   #if ($calculARK == 1) {
-  	#	$tmp = $hash{"id"};
-  		#if ($tmp) {
-  writeElt("ID",$id,$fh);
-	#}
-  #		}
-  writeElt("titre",$hash{"titre"},$fh);
-  writeElt("dateEdition",$hash{"date"},$fh);
+	 if (defined ($hash{"types"})) {writeElt("types",$hash{"types"},$fh)}
+   if ($calculARK == 1) {
+		  say "   ** ark ID is needeed **";
+  	  $tmp = $hash{"id"};
+  		if ($tmp) {
+				say "   ark is $tmp";
+  			writeElt("ID",$tmp,$fh);
+	    } else {
+				say "  #### ID is missing! ####";
+			}
+  } else {
+		say "   document ID is $id";
+		writeElt("ID",$id,$fh);
+	}
+	if ($exportBnF) {
+		if (defined ($hash{"titre"})) {writeElt("titre",$hash{"titre"},$fh)} else {writeElt("titre","inconnu",$fh)}
+		if (defined ($hash{"date"})) {writeElt("dateEdition",$hash{"date"},$fh)} else {writeElt("dateEdition","inconnu",$fh)}
+	}
+	else { # compatibilité GallicaPix
+			writeElt("titre",$hash{"titre"},$fh);
+		  writeElt("date",$hash{"date"},$fh);}
+
 	if (defined ($hash{"auteur"})) {writeElt("auteur",$hash{"auteur"},$fh);}
 	if (defined ($hash{"lang"})) {writeElt("lang",$hash{"lang"},$fh);}
-  if (defined ($hash{"notice"})) {writeElt("notice",$hash{"notice"},$fh);}
+  #if (defined ($hash{"notice"})) {writeElt("notice",$hash{"notice"},$fh);}
 	if (defined ($hash{"source"})) {writeElt("source",$hash{"source"},$fh);}
 	if (defined ($hash{"url"})) {writeElt("url",$hash{"url"},$fh);}
 	if (defined ($hash{"URLbaseIIIF"})) {writeElt("urlIIIF",$hash{"URLbaseIIIF"},$fh);}
-  writeElt("nbPage",$hash{"pages"},$fh);
-  if (defined ($hash{"sujet"})) {writeElt("descr",$hash{"sujet"},$fh);}
+	if ($exportBnF) {
+		if (defined ($hash{"sujet"})) {writeElt("sujet",$hash{"sujet"},$fh)} else {writeElt("sujet","inconnu",$fh)}
+	  if (defined ($hash{"description"})) {writeElt("descr",$hash{"description"},$fh)} else {writeElt("description","inconnu",$fh)}
+		if (defined ($hash{"format"})) {writeElt("format",$hash{"format"},$fh)} else {writeElt("format","inconnu",$fh)}
+		if (defined ($hash{"couverture"})) {writeElt("couverture",$hash{"couverture"},$fh)} else {writeElt("couverture","inconnu",$fh)}
+		writeElt("genre",$hash{"genre"},$fh);
+		writeElt("largeurPx",$hash{"largeurPx"},$fh);
+	  writeElt("hauteurPx",$hash{"hauteurPx"},$fh);
+		writeElt("ocr",$hash{"ocr"},$fh);
+		writeElt("toc",$hash{"toc"},$fh);
+		writeElt("caption",$hash{"caption"},$fh);
+	}
+		else { # compatibilité GallicaPix
+	   if (defined ($hash{"sujet"})) {writeElt("desc",$hash{"sujet"},$fh)}}
+	writeElt("nbPage",$hash{"pages"},$fh);
   writeEndElt("metad",$fh);
   %atts = ("toc"=> $hash{"toc"},"ocr"=> $hash{"ocr"});
   writeEltAtts("contenus",\%atts,$fh);
@@ -110,9 +135,11 @@ sub exportMD {my $id=shift;
   }
   catch {
         warn " ### ERROR while writing: $_";
+				return 0
        };
 
   close $fh;
+	return 1
 }
 
 #################################

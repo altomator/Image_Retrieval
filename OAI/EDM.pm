@@ -109,8 +109,8 @@ sub start_element {
   }
   if ( $element->{ Name } eq 'dcterms:isReferencedBy' ) {
     my %attrs = %{$element->{Attributes}};
-      while ( my ($name, $value) = (each (%attrs))) {
-        foreach my $v (values($value)) {
+      while ( my ($name, @value) = (each (%attrs))) {
+        foreach my $v (values(@value)) {
         if (index($v,'iiif')!=-1) {
           $self->{ isReferencedBy } = $v;
         }
