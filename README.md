@@ -182,6 +182,18 @@ After this extraction step, the metadata can be enriched (see next section, B.) 
 For newspapers and magazines collections, another kind of content should be identified (and eventually filtered), the illustrated ads (reported with a "pub" attribute set to true). 
 
 
+#### External sources
+Raw images files or other digital catalogs can be used as sources to the GallicaPix database.
+For these use cases, the images file are locally stored (no use of IIIF).
+
+This first Perl script takes a folder of TNA images as input and populates a GallicaPix metadata template file, based on the file names and some parameters:
+
+>perl extractMD_TNA_noMD.pl IN_TNA/
+
+If metadata can be extracted first from a catalog (https://discovery.nationalarchives.gov.uk, see the crawl_TNA.py script), this script aggregates metadata from the file names and the metadata:
+
+>perl extractMD_TNA.pl IN_TNA/ MD-BT43.xml
+
 ### B. Transform & Enrich
 
 The toolbox.pl Perl script performs basic operations on the illustrations XML metadata files and the enrichment processing itself. This script supports the enrichment workflow as detailled bellow.
