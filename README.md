@@ -51,6 +51,8 @@ The global workflow is detailled bellow.
 
 The extract step can be performed from the catalog metada (using OAI-PMH and SRU protocols) or directly from the digital documents files (and their OCR). 
 
+External sources may also be used as input: Europeana, The National (UK) Archives (see below).
+
 #### OAI-PMH
 The OAI-PMH Gallica repository ([endpoint](http://oai.bnf.fr/oai2/OAIHandler?verb=Identify)) can be used to extract still image documents (drawings, photos, posters...) The extractMD_OAI.pl script harvests sets of documents or documents. Note: this script needs a Web connection (for Gallica OAI-PMH and Gallica APIs).
 
@@ -180,6 +182,18 @@ Some illustrations are filtered according to their form factor (size, localizati
 After this extraction step, the metadata can be enriched (see next section, B.) or directly be used as the input of BaseX XML databases (see. section C.).
 
 For newspapers and magazines collections, another kind of content should be identified (and eventually filtered), the illustrated ads (reported with a "pub" attribute set to true). 
+
+#### External sources
+Raw images files or other digital catalogs can be used as sources to the GallicaPix database.
+For these use cases, the images file are locally stored (no use of IIIF).
+
+This first Perl script takes a folder of TNA images as input and populates a GallicaPix metadata template file, based on the file names and some parameters:
+
+>perl extractMD_TNA_noMD.pl IN_TNA/
+
+If metadata can be extracted first from a catalog (https://discovery.nationalarchives.gov.uk, see the crawl_TNA.py script), this script aggregates metadata from the file names and the metadata:
+
+>perl extractMD_TNA.pl IN_TNA/ MD-BT43.xml
 
 
 ### B. Transform & Enrich
