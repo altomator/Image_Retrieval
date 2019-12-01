@@ -1,0 +1,36 @@
+<analyseAlto iiif="false">
+  <metad>
+    <type>I</type>
+    <ID>idvalue</ID>
+    <titre>Board of Trade - idvalue - #designnumbervalue</titre>
+    <auteur>authorvalue</auteur>
+    <editeur>publishervalue</editeur>
+    <dateEdition>datevalue</dateEdition>
+    <notice>recordvalue</notice>
+    <parent>parentvalue</parent>
+    <nbPage>1</nbPage>
+    <lang>en</lang>
+    <fichier>filevalue</fichier>
+    <source>TNA</source>
+    <descr>descvalue</descr>
+    <sujet>topicvalue -- subjectvalue</sujet>
+    <format>classvalue</format>
+  </metad>
+  <contenus>
+    <largeurPx>xvalue</largeurPx>
+    <hauteurPx>yvalue</hauteurPx>
+    <pages>
+      <page ordre="foliovalue">
+        <ills>
+          <ill couleur="coul" h="yvalue" n="foliovalue-1" w="xvalue" x="0" y="0">
+            <genre source="final">genrevalue</genre>
+            <contenuImg CS="1.0" lang="en" source="md">subjectvalue</contenuImg>
+            <contenuImg CS="1.0" lang="en" source="md">classvalue</contenuImg>
+            <contenuImg CS="1.0" lang="en" source="md">topicvalue</contenuImg>
+            <titraille>Board of Trade - idvalue - #designnumbervalue</titraille>
+          </ill>
+        </ills>
+      </page>
+    </pages>
+  </contenus>
+</analyseAlto>

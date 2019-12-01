@@ -1,0 +1,29 @@
+<analyseAlto iiif="false">
+  <metad>
+    <type>I</type>
+    <ID>idvalue</ID>
+    <titre>Board of Trade - idvalue</titre>
+    <auteur>authorvalue</auteur>
+    <dateEdition>datevalue</dateEdition>
+    <nbPage>1</nbPage>
+    <lang>en</lang>
+    <fichier>filevalue</fichier>
+    <source>TNA</source>
+    <sujet>topicvalue</sujet>
+  </metad>
+  <contenus>
+    <largeurPx>xvalue</largeurPx>
+    <hauteurPx>yvalue</hauteurPx>
+    <pages>
+      <page ordre="1">
+        <ills>
+          <ill couleur="coul" h="yvalue" n="1-1" w="xvalue" x="0" y="0">
+            <genre source="final">genrevalue</genre>
+            <contenuImg CS="1.0" lang="en" source="md">topicvalue</contenuImg>
+            <titraille>Board of Trade - idvalue</titraille>
+          </ill>
+        </ills>
+      </page>
+    </pages>
+  </contenus>
+</analyseAlto>

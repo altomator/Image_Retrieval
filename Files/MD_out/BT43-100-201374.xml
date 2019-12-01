@@ -1,0 +1,36 @@
+<analyseAlto iiif="false">
+  <metad>
+    <type>I</type>
+    <ID>BT43-100-201374</ID>
+    <titre>Board of Trade - BT43-100-201374 - #201374</titre>
+    
+    <editeur>William Cooke</editeur>
+    <dateEdition>18660918</dateEdition>
+    <notice>C12852289</notice>
+    <parent>C439246</parent>
+    <nbPage>1</nbPage>
+    <lang>en</lang>
+    <fichier>BT43-100-201374</fichier>
+    <source>TNA</source>
+    <descr>Registered design number: 201374. -- Proprietor: William Cooke. -- Address: Grove Works, Leeds, Yorkshire. -- Subject: Paper hanging. -- Class 5: Paper hangings--</descr>
+    <sujet>floral -- Paper hanging</sujet>
+    <format>Paper hangings</format>
+  </metad>
+  <contenus>
+    <largeurPx>1497</largeurPx>
+    <hauteurPx>1356</hauteurPx>
+    <pages>
+      <page ordre="1">
+        <ills>
+          <ill couleur="coul" h="1356" n="1-1" w="1497" x="0" y="0">
+            <genre source="final">gravure</genre>
+            <contenuImg CS="1.0" lang="en" source="md">Paper hanging</contenuImg>
+            <contenuImg CS="1.0" lang="en" source="md">Paper hangings</contenuImg>
+            <contenuImg CS="1.0" lang="en" source="md">floral</contenuImg>
+            <titraille>Board of Trade - BT43-100-201374 - #201374</titraille>
+          </ill>
+        </ills>
+      </page>
+    </pages>
+  </contenus>
+</analyseAlto>
