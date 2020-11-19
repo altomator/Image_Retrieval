@@ -18,8 +18,8 @@ outputImg = "OUT_img"
 nbFaces = 0
 
 # detecting  homothetic contours
-homothetic_threshold = 1.3 # 30%  tolerance
-area_threshold =1.4 # 40%  tolerance
+homotheticThreshold = 1.3 # 30%  tolerance
+areaThreshold =1.4 # 40%  tolerance
 
 
 def intersection(a,b):
@@ -40,7 +40,7 @@ def homothetic(c1,c2,area1,area2):  # (x,y,w,h)
     tmp=max(ratio1,ratio2)/min(ratio1,ratio2)
     print ("ratio area:%f" % (area1/area2))
     print ("ratio w: %f - ratio h : %f - max-min : %f" % (ratio1, ratio2, tmp))
-    if tmp < homothetic_threshold and ((area1/area2) < area_threshold):
+    if tmp < homotheticThreshold and ((area1/area2) < areaThreshold):
         #print ("\thomothetic!")
         return True
     else:
@@ -87,9 +87,9 @@ def process_image(file):
 					cv2.putText(image, text, (startX, startY),cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
 					# build the data
 					if (outText ==""):
-						outText = "face,%d,%d,%d,%d,%.2f" % (startX, startY,(endX-startX), (endY-startY), confidence)
+						outText = "face,%d,%d,%d,%d,%.2f" % (startX, startY,wBox, hBox, confidence)
 					else:
-						outText = "%s face,%d,%d,%d,%d,%.2f" % (outText, startX, startY,(endX-startX), (endY-startY),confidence)
+						outText = "%s face,%d,%d,%d,%d,%.2f" % (outText, startX, startY,wBox,hBox,confidence)
 
 	if outText != "":
 		print (outText)
