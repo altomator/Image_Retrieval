@@ -30,6 +30,7 @@ A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllus
 
 - ["Plongez dans les images de 14-18 avec notre nouveau moteur de recherche iconographique GallicaPix"](http://gallicastudio.bnf.fr/bo%C3%AEte-%C3%A0-outils/plongez-dans-les-images-de-14-18-en-testant-un-nouveau-moteur-de-recherche) (FR blog post)
 - ["Towards new uses of cultural heritage online: Gallica Studio"](http://pro.europeana.eu/post/towards-new-uses-of-cultural-heritage-online-gallica-studio) (EN blog post)
+- [Tutorial on images classification](https://github.com/CENL-Network-Group-AI/Recipes/wiki/Images-Classification-Recipe)
  
 ### Datasets
 The datasets are available as metadata files (one XML file/document) or JsonML dumps of the BaseX database. Images can be extracted from the metadata files thanks to [IIIF Image API](http://iiif.io/api/image/2.0/): 
