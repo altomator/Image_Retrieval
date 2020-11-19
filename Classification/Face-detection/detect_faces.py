@@ -19,20 +19,17 @@ nbFaces = 0
 
 # detecting  homothetic contours
 homothetic_threshold = 1.3 # 30%  tolerance
-area_threshold =1.4 # 40% de tolerance
+area_threshold =1.4 # 40%  tolerance
 
 
 def intersection(a,b):
     x = max(a[0], b[0])
     y = max(a[1], b[1])
     w = min(a[0]+a[2], b[0]+b[2]) - x
-    #print w
     h = min(a[1]+a[3], b[1]+b[3]) - y
-    #print h
     if w<0 or h<0:
         print ("\tno")
-        return False # or (0,0,0,0) ?
-    #print "1"
+        return False
     print ("\tyes")
     return (x, y, w, h)
 
