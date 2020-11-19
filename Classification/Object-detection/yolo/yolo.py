@@ -10,8 +10,9 @@ import cv2
 import os
 from imutils import paths
 
-# folder for the CVS files
+# output folder for the CSV and img files
 output = "OUT_csv"
+outputImg = "OUT_img"
 nbObject = 0
 
 # construct the argument parse and parse the arguments
@@ -26,19 +27,25 @@ ap.add_argument("-t", "--threshold", type=float, default=0.3,
 	help="threshold when applying non-maxima suppression")
 args = vars(ap.parse_args())
 
-output_dir = os.path.realpath(output)
-if not os.path.isdir(output_dir):
-	ap.error("Output directory %s does not exist" % output)
+outputDir = os.path.realpath(output)
+if not os.path.isdir(outputDir):
+	ap.error(f"Output .csv directory {outputDir} does not exist")
 else:
-	print ("Output will be saved to %s" % output_dir)
+	print (f"CSV files will be saved to {outputDir}")
+
+outputImgDir = os.path.realpath(outputImg)
+if not os.path.isdir(outputImgDir):
+	ap.error(f"\nOutput image directory {outputImgDir} does not exist")
+else:
+	print (f"Output images will be saved to {outputImgDir}")
 
 # load the COCO class labels our YOLO model was trained on
 labelsPath = os.path.sep.join([args["yolo"], "coco.names"])
 LABELS = open(labelsPath).read().strip().split("\n")
 
 # initialize a list of colors to represent each possible class label
-#np.random.seed(42)
-#COLORS = np.random.randint(0, 255, size=(len(LABELS), 3), dtype="uint8")
+np.random.seed(42)
+COLORS = np.random.randint(0, 255, size=(len(LABELS), 3), dtype="uint8")
 
 # derive the paths to the YOLO weights and model configuration
 weightsPath = os.path.sep.join([args["yolo"], "yolov3.weights"])
@@ -131,11 +138,11 @@ def process_image(file, outPath):
 			else:
 				outText = "%s %s,%d,%d,%d,%d,%.2f" % (outText, LABELS[classIDs[i]], x, y, w, h, confidences[i])
 			# draw a bounding box rectangle and label on the image
-			#color = [int(c) for c in COLORS[classIDs[i]]]
-			#cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
+			color = [int(c) for c in COLORS[classIDs[i]]]
+			cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
 			text = "{}: {:.4f}".format(LABELS[classIDs[i]], confidences[i])
-			#cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX,0.5, color, 2)
-			#imS = cv2.resize(image, None,fx=0.3, fy=0.3, interpolation = cv2.INTER_CUBIC)
+			cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX,0.5, color, 2)
+			imS = cv2.resize(image, None,fx=0.3, fy=0.3, interpolation = cv2.INTER_CUBIC)
 			# show the output image
 			#cv2.imshow("Image", imS)
 			#cv2.waitKey(0)
@@ -146,15 +153,25 @@ def process_image(file, outPath):
 			outFile = open(outPath,"w")
 			print ("%s\t%s" % (filename, outText), file=outFile) # separator = tab
 			outFile.close()
+			# show the output image
+			#cv2.imshow("Output", image)
+			#cv2.waitKey(0)
+			# save image
+			outPath = os.path.join(outputImgDir, f"{filename}.jpg" )
+			cv2.imwrite(outPath, image)
+		else:
+			print ("\tno detection")
 
+#############################
 # build the images files list
 filePaths = list(paths.list_images(args["dir"]))
 filePaths = [img.replace("\\", "") for img in filePaths]
 
+start = time.time()
 for i in filePaths:
 	print ("...analysing %s" % i)
 	filename = os.path.splitext(os.path.basename(i))[0]
-	outPath = os.path.join(output_dir, "%s.csv" % filename)
+	outPath = os.path.join(outputDir, "%s.csv" % filename)
 	# don't reprocess an existing result
 	if  os.path.isfile(outPath):
 		print(" data file for %s already exists" % filename)
@@ -163,6 +180,11 @@ for i in filePaths:
 			process_image(i,outPath)
 		except AttributeError as exc:
 			print("Unexpected error:", exc)
+end = time.time()
+
+################
+fps_label = "\n   -> time: %.2f (%.2f image/s)" % ((end - start),(end - start)/len(filePaths))
+print (fps_label)
 
 print ("\n ### objects detected: %d ###" % nbObject)
 print (" ### images analysed: %d ###" % len(filePaths))
