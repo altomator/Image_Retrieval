@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<alto ID="alto.6537262" xmlns="http://bibnum.bnf.fr/ns/alto_prod" xmlns:xlink="http://www.w3.org/TR/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bibnum.bnf.fr/ns/alto_prod http://bibnum.bnf.fr/ns/alto_prod.xsd">
+  <Description>
+    <MeasurementUnit>pixel</MeasurementUnit>
+    <sourceImageInformation>
+      <fileName>00000059.tif</fileName>
+    </sourceImageInformation>
+    <OCRProcessing ID="OCR_1">
+      <ocrProcessingStep>
+        <processingDateTime>2013-05-31</processingDateTime>
+        <processingStepDescription>[001_OCR_BRUT]OCR BRUT 100 %</processingStepDescription>
+        <processingStepDescription>[002_TOTAL_CHARS]{106}</processingStepDescription>
+        <processingStepDescription>[003_TOTAL_CHARS_USED]{0}</processingStepDescription>
+        <processingStepDescription>[004_TOTAL_CHARS_SUSPECTS_USED]{0}</processingStepDescription>
+        <processingStepDescription>[005_TOTAL_CHARS_UNUSED]{106}</processingStepDescription>
+        <processingStepDescription>[006_TOTAL_CHARS_SUSPECTS_UNUSED]{0}</processingStepDescription>
+        <processingStepDescription>[007_TOTAL_STRINGS]{25}</processingStepDescription>
+        <processingStepDescription>[011_CHARS_PUNCTUATION]{23}</processingStepDescription>
+        <processingStepDescription>[012_CHARS_DIGITS]{9}</processingStepDescription>
+        <processingStepDescription>[013_CHARS_SUSPECT]{0}</processingStepDescription>
+        <processingStepDescription>[022_CHARS_UNUSED_BY_BLOCK]{0}</processingStepDescription>
+        <processingStepDescription>[111_LIGS_DETECTED_CURV]{0}</processingStepDescription>
+        <processingStepSettings>OCR 100 %</processingStepSettings>
+      </ocrProcessingStep>
+    </OCRProcessing>
+  </Description>
+  <Styles>
+    <TextStyle FONTFAMILY="Times" FONTSIZE="12" ID="TXT_1"/>
+  </Styles>
+  <Layout>
+    <Page HEIGHT="5029" ID="PAG_00000059" PHYSICAL_IMG_NR="1" QUALITY="OK" WIDTH="3633">
+      <PrintSpace HEIGHT="4517" HPOS="162" ID="PAG_00000059_PrintSpace" VPOS="239" WIDTH="3308">
+        <TextBlock HEIGHT="639" HPOS="227" ID="PAG_00000059_TB000001" STYLEREFS="TXT_1" TYPE="advertisement" VPOS="239" WIDTH="3235" language="fr">
+          <TextLine HEIGHT="150" HPOS="227" ID="PAG_00000059_TL000001" STYLEREFS="TXT_1" VPOS="239" WIDTH="3235">
+            <String CONTENT="-_" HEIGHT="18" HPOS="1344" ID="PAG_00000059_ST000001" STYLEREFS="TXT_1" VPOS="260" WC="0.28" WIDTH="14"/>
+            <SP HPOS="1358" ID="PAG_00000059_SP000001" VPOS="266" WIDTH="855"/>
+            <String CONTENT="&#8212;" HEIGHT="5" HPOS="2213" ID="PAG_00000059_ST000002" STYLEREFS="TXT_1" VPOS="266" WC="0.28" WIDTH="53"/>
+            <SP HPOS="2266" ID="PAG_00000059_SP000002" VPOS="252" WIDTH="871"/>
+            <String CONTENT="&#8212;" HEIGHT="8" HPOS="3137" ID="PAG_00000059_ST000003" STYLEREFS="TXT_1" VPOS="252" WC="0.66" WIDTH="116"/>
+            <SP HPOS="3253" ID="PAG_00000059_SP000003" VPOS="239" WIDTH="85"/>
+            <String CONTENT="i," HEIGHT="150" HPOS="3338" ID="PAG_00000059_ST000004" STYLEREFS="TXT_1" VPOS="239" WC="0.56" WIDTH="124"/>
+          </TextLine>
+          <TextLine HEIGHT="218" HPOS="642" ID="PAG_00000059_TL000002" STYLEREFS="TXT_1" VPOS="260" WIDTH="2800">
+            <String CONTENT="1" HEIGHT="218" HPOS="642" ID="PAG_00000059_ST000005" STYLEREFS="TXT_1" VPOS="260" WC="0.31" WIDTH="2800"/>
+          </TextLine>
+          <TextLine HEIGHT="172" HPOS="596" ID="PAG_00000059_TL000003" STYLEREFS="TXT_1" VPOS="390" WIDTH="2853">
+            <String CONTENT="ÇjFnú" HEIGHT="162" HPOS="596" ID="PAG_00000059_ST000006" STYLEREFS="TXT_1" VPOS="400" WC="0.45" WIDTH="1056"/>
+            <SP HPOS="1652" ID="PAG_00000059_SP000004" VPOS="390" WIDTH="52"/>
+            <String CONTENT="il" HEIGHT="163" HPOS="1704" ID="PAG_00000059_ST000007" STYLEREFS="TXT_1" VPOS="390" WC="0.00" WIDTH="1745"/>
+          </TextLine>
+          <TextLine HEIGHT="75" HPOS="668" ID="PAG_00000059_TL000004" STYLEREFS="TXT_1" VPOS="559" WIDTH="2321">
+            <String CONTENT="~r~" HEIGHT="44" HPOS="1803" ID="PAG_00000059_ST000008" STYLEREFS="TXT_1" VPOS="582" WC="0.28" WIDTH="196"/>
+            <SP HPOS="1999" ID="PAG_00000059_SP000005" VPOS="562" WIDTH="577"/>
+            <String CONTENT="~-" HEIGHT="26" HPOS="2911" ID="PAG_00000059_ST000009" STYLEREFS="TXT_1" SUBS_CONTENT="~ck" SUBS_TYPE="HypPart1" VPOS="589" WC="0.28" WIDTH="78"/>
+            <HYP CONTENT="-" HPOS="2989" VPOS="615" WIDTH="30"/>
+          </TextLine>
+          <TextLine HEIGHT="296" HPOS="484" ID="PAG_00000059_TL000005" STYLEREFS="TXT_1" VPOS="582" WIDTH="2664">
+            <String CONTENT="ck" HEIGHT="76" HPOS="484" ID="PAG_00000059_ST000010" STYLEREFS="TXT_1" SUBS_CONTENT="~ck" SUBS_TYPE="HypPart2" VPOS="620" WC="0.61" WIDTH="138"/>
+            <SP HPOS="622" ID="PAG_00000059_SP000006" VPOS="604" WIDTH="88"/>
+            <String CONTENT="iZzs" HEIGHT="92" HPOS="710" ID="PAG_00000059_ST000011" STYLEREFS="TXT_1" VPOS="604" WC="0.50" WIDTH="142"/>
+            <SP HPOS="852" ID="PAG_00000059_SP000007" VPOS="582" WIDTH="46"/>
+            <String CONTENT="ciA^cuSvny" HEIGHT="296" HPOS="898" ID="PAG_00000059_ST000012" STYLEREFS="TXT_1" VPOS="582" WC="0.28" WIDTH="1903"/>
+            <SP HPOS="2801" ID="PAG_00000059_SP000008" VPOS="582" WIDTH="1"/>
+            <String CONTENT="4" HEIGHT="296" HPOS="2801" ID="PAG_00000059_ST000013" STYLEREFS="TXT_1" VPOS="582" WC="0.28" WIDTH="347"/>
+          </TextLine>
+        </TextBlock>
+        <TextBlock HEIGHT="132" HPOS="162" ID="PAG_00000059_TB000002" STYLEREFS="TXT_1" TYPE="advertisement" VPOS="3415" WIDTH="6" language="fr">
+          <TextLine HEIGHT="132" HPOS="162" ID="PAG_00000059_TL000006" STYLEREFS="TXT_1" VPOS="3415" WIDTH="6">
+            <String CONTENT="1" HEIGHT="132" HPOS="162" ID="PAG_00000059_ST000014" STYLEREFS="TXT_1" VPOS="3415" WC="0.82" WIDTH="6"/>
+          </TextLine>
+        </TextBlock>
+        <Illustration HEIGHT="2548" HPOS="737" ID="PAG_00000059_IL000001" VPOS="998" WIDTH="2084"/>
+        <TextBlock HEIGHT="35" HPOS="3464" ID="PAG_00000059_TB000003" STYLEREFS="TXT_1" TYPE="advertisement" VPOS="2608" WIDTH="6" language="fr">
+          <TextLine HEIGHT="35" HPOS="3464" ID="PAG_00000059_TL000007" STYLEREFS="TXT_1" VPOS="2608" WIDTH="6">
+            <String CONTENT="1" HEIGHT="35" HPOS="3464" ID="PAG_00000059_ST000015" STYLEREFS="TXT_1" VPOS="2608" WC="0.82" WIDTH="6"/>
+          </TextLine>
+        </TextBlock>
+        <TextBlock HEIGHT="1082" HPOS="912" ID="PAG_00000059_TB000004" STYLEREFS="TXT_1" TYPE="advertisement" VPOS="3674" WIDTH="2544" language="fr">
+          <TextLine HEIGHT="216" HPOS="912" ID="PAG_00000059_TL000008" STYLEREFS="TXT_1" VPOS="3674" WIDTH="1732">
+            <String CONTENT="(^t/ri/" HEIGHT="216" HPOS="912" ID="PAG_00000059_ST000016" STYLEREFS="TXT_1" VPOS="3674" WC="0.44" WIDTH="444"/>
+            <SP HPOS="1356" ID="PAG_00000059_SP000009" VPOS="3740" WIDTH="76"/>
+            <String CONTENT="coin/" HEIGHT="150" HPOS="1432" ID="PAG_00000059_ST000017" STYLEREFS="TXT_1" VPOS="3740" WC="0.47" WIDTH="346"/>
+            <SP HPOS="1778" ID="PAG_00000059_SP000010" VPOS="3740" WIDTH="1"/>
+            <String CONTENT="&#9632;de;" HEIGHT="150" HPOS="1778" ID="PAG_00000059_ST000018" STYLEREFS="TXT_1" VPOS="3740" WC="0.47" WIDTH="288"/>
+            <SP HPOS="2066" ID="PAG_00000059_SP000011" VPOS="3740" WIDTH="1"/>
+            <String CONTENT="A^z^nSL-J" HEIGHT="150" HPOS="2066" ID="PAG_00000059_ST000019" STYLEREFS="TXT_1" VPOS="3740" WC="0.47" WIDTH="578"/>
+          </TextLine>
+          <TextLine HEIGHT="228" HPOS="1095" ID="PAG_00000059_TL000009" STYLEREFS="TXT_1" VPOS="3936" WIDTH="1319">
+            <String CONTENT="wwt4elw" HEIGHT="140" HPOS="1095" ID="PAG_00000059_ST000020" STYLEREFS="TXT_1" VPOS="3936" WC="0.45" WIDTH="631"/>
+            <SP HPOS="1726" ID="PAG_00000059_SP000012" VPOS="3962" WIDTH="16"/>
+            <String CONTENT="1" HEIGHT="202" HPOS="1742" ID="PAG_00000059_ST000021" STYLEREFS="TXT_1" VPOS="3962" WC="0.00" WIDTH="672"/>
+          </TextLine>
+          <TextLine HEIGHT="123" HPOS="1202" ID="PAG_00000059_TL000010" STYLEREFS="TXT_1" VPOS="4397" WIDTH="1198">
+            <String CONTENT="100" HEIGHT="67" HPOS="1202" ID="PAG_00000059_ST000022" STYLEREFS="TXT_1" VPOS="4423" WC="0.58" WIDTH="157"/>
+            <SP HPOS="1359" ID="PAG_00000059_SP000013" VPOS="4397" WIDTH="23"/>
+            <String CONTENT="Waallour?," HEIGHT="123" HPOS="1382" ID="PAG_00000059_ST000023" STYLEREFS="TXT_1" VPOS="4397" WC="0.39" WIDTH="450"/>
+            <SP HPOS="1832" ID="PAG_00000059_SP000014" VPOS="4401" WIDTH="16"/>
+            <String CONTENT="cW-¡;¡Yakine" HEIGHT="88" HPOS="1848" ID="PAG_00000059_ST000024" STYLEREFS="TXT_1" VPOS="4401" WC="0.45" WIDTH="552"/>
+          </TextLine>
+          <TextLine HEIGHT="222" HPOS="1610" ID="PAG_00000059_TL000011" STYLEREFS="TXT_1" VPOS="4534" WIDTH="1846">
+            <String CONTENT="cÇfêh^lér^" HEIGHT="222" HPOS="1610" ID="PAG_00000059_ST000025" STYLEREFS="TXT_1" VPOS="4534" WC="0.54" WIDTH="1846"/>
+          </TextLine>
+        </TextBlock>
+      </PrintSpace>
+    </Page>
+  </Layout>
+</alto>

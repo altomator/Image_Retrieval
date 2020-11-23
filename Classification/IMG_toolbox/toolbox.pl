@@ -36,10 +36,12 @@ use Lingua::Identify qw/langof set_active_languages/;
 set_active_languages(qw/fr/);
 use List::Util qw(sum);
 use List::Util qw(min max);
+use Algorithm::Combinatorics qw(combinations);
 
 #use Parallel::ForkManager;
 #use IPC::Shareable;
 
+GD::Image->trueColor(1);
 
 binmode(STDOUT, ":utf8");
 
@@ -49,39 +51,90 @@ my $ua = LWP::UserAgent->new(
 );
 
 
-
 ############  Parameters  ###########################
 my $couleur="gris"; # default color mode (to be set if using the -color option): mono, gris, coul
 my $illThemeNew="16";     # default IPTC theme (to be set if using the -setTheme option)
-my $documentType="PA";   # document type to be fixed with the -fixType option : PA = music score, C = map
-my $illGenreOld="filtre";   # illustration genre to be looked ()-fixType and -setGenre options)
-my $illGenreNew="gravure"; # illustration genre to be set with the -setGenre option
-#my $classifSource="hm"; # illustration genre source : TensorFlow, md, hm, cw (-fixSource, -setGenre or -delGenre options)
+my $documentType="P";   # document type to be fixed with the -fixType option : PA = music score, C = map
+my $illTechOld="filtre";   # illustration technique to be looked for (-fixType and -setTech options)
+my $illTechNew="imp photoméca"; # illustration technique to be set (-setTech or -fixNoTech options-
+my $illGenreNew="publicité"; # same for genre
+my $illGenreOld="filtre"; # same for genre
+my $illFonctionNew="repro/photo"; # same for function
+my $classifSource="md"; # illustration genre source : TensorFlow, md, hm, cw (-fixSource, -setGenre or -delGenre options)
+my $classifCC="Frises";
 
 ## Images parameters used for IIIF calls ##
 my $factIIIF = 30;   # size factor for IIIF image exportation (%)
 my $modeIIIF = "linear"; # "linear": export using $factIIIF size factor even for small/big images
 # To avoid small images to be over reduced, set $modeIIIF to any other value
-my $expandIIIF = 0.10 ; # expand/reduce the cropping. The final size will be x by 1 +/- $expandIIIF (%)
+my $expandIIIF = 0.1 ; # expand/reduce the cropping. The final size will be x by 1 +/- $expandIIIF (%)
 # Used for OCR (enlarge), image classification (reduce), faces extraction (enlarge)
 my $reDimMinThreshold = 800;  # threshold (on the smallest dimension) under which the output factor $factIIIF is not applied (in pixels)
 my $reDimMaxThreshold = 1000;
 
 ####################################
 # for Classification APIs
-my $locale = "en";
-my $processIllThreshold = 500;  # max ill to be processed
+my $locale = "fr";
+my $processIllThreshold = 10000;  # max ill to be processed
 my $classifCBIR; # classification service: dnn, ibm, google, yolo, aws (to be used with -CC -DF -fixCBIRsource... commands)
 # must be set by the user on the command line
 my $classifAction;     # CC / DF. Set from the option asked by the user
 my $sizeIllThreshold = 0; # do not classify illustrations if size <
 my $CSthreshold = 0.1 ;   # confidence score threshold for using data classification
 my $classifOnlyIfNoText = 0;
-
+my $duplicates_threshold = 1.5;
 ### comment the next line to classify everything ###
-#my $genreClassif="photog photo gravure textile"; # classify illustrations only if genre is equal to $genreClassif
-my $genreClassif="photog";
+#my $techClassif="photoméca gravure textile"; # classify illustrations only if tech is equal to $techClassif
+my $functionClassif="repro/photo";
+
 #(to be used with extract, classify, unify)
+
+# mapping old genre to technic
+my %genre2tech = (  "gravure" => "estampe/gravure",
+                    "dessin" => "dessin",
+                    "photo" => "photo",
+                    "photog" => "imp photoméca",
+                    "manuscrit" => "texte",
+                    "textile" => "textile"
+                );
+
+## These 2  mappings are called by fixTech2Tech ##
+# mapping old tech to technic
+my %tech2tech = (
+                    "photo" => "imp photoméca",
+                    "photog" => "imp photoméca",
+                    "photo/argentique" => "photo",
+                    "texte" => "imp photoméca",
+
+                    "gravure" => "estampe/gravure"
+                                );
+# mapping tech to function: to be set up depending the context
+my %tech2fonction = (
+                        "photo" => "repro/photo",
+                        "photog" => "repro/photo",
+                        "estampe" => "repro/estampe",
+                        "texte" => "repro/texte"
+
+                                );
+
+## This conversion is called by fixGenre2Fonction ##
+# mapping genre to fonction
+my %genre2fonction = (  "carte" => "carte",
+                        "carte postale" => "carte postale",
+                        "partition" => "partition",
+                        "bd" => "bd",
+                        "couverture" => "couverture",
+                        "affiche" => "affiche",
+                        "ornement" => "ornement",
+                        "graphique" => "graphique",
+
+
+                        "papier-peint"=> "papier-peint",
+                        "illustration de presse/dessin"=> "repro/dessin",
+                        "illustration de presse/graphique"=> "graphique",
+                        "illustration de presse/carte"=> "carte"
+
+                                                );
 
 # IBM Watson : watsoncc6@gmail.com / M---7
 # https://console.bluemix.net/
@@ -89,10 +142,11 @@ my $genreClassif="photog";
 # test
 #curl -X POST -u "apikey:KFGuZ6ont7jLO0IRE2x_546RffziA-Lh0T5GEJQNejo5" --form "images_file=@native.jpg" "https://gateway.watsonplatform.net/visual-recognition/api/v3/classify?version=2018-03-19"
 my $endPointWatson= "https://gateway.watsonplatform.net/visual-recognition/api/v3/";
-my $apiKeyWatson= "cgnEOcXcQL5T5lPGHM0Y1-WmnI6s-enP-zDcz1D41zBs";
+my $apiKeyWatson= "***";
+
 # for Google Vision API : compte jpmoreux@gmail.fr
 $endPointGoogle= "https://vision.googleapis.com/v1/images:annotate?key=";
-$apiKeyGoogle= "AIzaSyBaeV7j-eOv6xb2wmPuk0z7MLHaLTgbfmE";
+$apiKeyGoogle= "***";
 
 # for human faces detection
 my $carreVSG=1 ;     # 1:1 format
@@ -126,7 +180,7 @@ my $motifScoreVisageGoogle = "\"detectionConfidence\": (\\d+\.\\d+)";
 
 ######################
 # for importation of external data (TensorFlow classification data or image hashing)
-my $dataFile = "colors-tna.csv"; # input file name
+my $dataFile = "data-vogue-yv4.csv"; # input file name
 #my $dataFile = "TNA-hash.csv";
 
 ######################
@@ -134,13 +188,15 @@ my $dataFile = "colors-tna.csv"; # input file name
 #my $dataFile; # lexicon file for translation of CBIR tags
 my $googleDict = "_lexiques/dict-google-en2fr.csv";
 my $ibmDict = "_lexiques/dict-ibm-en2fr.csv";
+my $yoloDict = "_lexiques/dict-yolo-en2fr.csv";
+my $hmDict = "_lexiques/dict-hm-en2fr.csv";
 
 # for TensorFlow : parameters
 my $lookForAds=1 ;		# to be unset for OLR newspapers where ads are already recognized
 my $TFthreshold=0.2; 	# threshold for confidence score
 my $classesNumber;		# number of classes in the TensorFlow classification data
-my $forceTFgenreOnMD=0; 		# force TF classifications on metadata classifications (in unify)
-my $forceTFgenreOnHM=0; 		# force TF classifications on human classifications (in unify)
+my $forceTFOnMD=0; 		# force TF classifications on metadata classifications (in unify)
+my $forceTFOnHM=0; 		# force TF classifications on human classifications (in unify)
 my @externalData; # data structure for import
 my @listeDocs ;
 my @listeClasses ;
@@ -214,9 +270,10 @@ my @couleurs =(
 #######################################################
 
 #################
-#  pattern for XML document analysis
+#  patterns for XML document analysis
 # for ARK IDs
 $motifArk = "\<ID\>(.+)\<\/ID\>" ;
+$motifNotice = "\<notice\>(.+)\<\/notice\>" ;
 # for illustrations
 $motifIll = "<ill " ;
 ##################
@@ -224,13 +281,13 @@ $motifIll = "<ill " ;
 # Gallica root IIIF URL
 $urlGallicaIIIF = "https://gallica.bnf.fr/iiif/ark:/12148/";
 $urlGallica = "https://gallica.bnf.fr/ark:/12148/";
-
+# TNA root url
+$urlTNA = "https://images.nationalarchives.gov.uk/assetbank-nationalarchives/action/viewAsset?index=240&total=1000&view=viewSearchItem&id=";
 # data.bnf.fr endpoint
 my $endPointData = "http://data.bnf.fr/sparql";
 
 # ID ark
 my $idArk;
-
 # number of documents analysed
 my $nbDoc=0;
 # number of illustrations
@@ -263,12 +320,11 @@ my $idIll;
 
 # output folder
 my $OUT = "OUT_img";
-#my $OUT = "/Volumes/BNF-demo/GallicaPix/Classification-TensorFlow/imInput/OUT_img";
+#my $OUT = "/Volumes/BNF-dev/Dev/GallicaPix/Gallica/Images_Gallica/Extraction-Vogue-v2_30";
 #my $OUT = "/Volumes/BNF-demo/GallicaPix/Images_Gallica/_extraction-IMG-pour-Classif/FR-ads_1910-1920";
 
 # option set on the command line
 my $OPTION;
-
 
 $msg = "\nUsage : perl toolbox.pl -service IN [options]
 services:
@@ -277,17 +333,27 @@ services:
 -setID : renumber the illustrations ID
 -setFaceID : number the faces ID
 -extr : extract the illustration files
+-extrClasses : list the visual recognition classes
+-extrCC : extract the illustration files of a specific class
 -extrFiltered : extract the filtered illustrations files
 -extrFace : extract the faces files
 -extrGenre : extract the illustration files of a specific genre
 -extrNotClassif: extract the illustration files not yet classified
+-crops : generate the illustration crops as overlays
 -color: identify the color mode
 -setColor : set the color mode
 -importColors : import color values (hex)
+-importTNA : import images ID (The national Archives)
 -setTheme : set the theme
--setGenre : set the genre (drawing, photo, ...)
+-setTech : set the technique (drawing, photo, ...)
+-fixNoTech: set the technique if unknown
+-fixNoGenre: set the genre if unknown
+-fixNoFunction: set the function if unknown
 -setGenreFromCC : set the genre from the classification tags
--fixType : set the document type from the illustration genre
+-fixTech2Tech
+-fixGenre2Tech
+-fixGenre2Function
+-fixType : set the document type from the illustration technique
 -fixSource : set the classification source
 -fixColor : set the color attribute on CBIR tags
 -fixCBIRsource : set the CBIR source (IBM Watson, AWS, Google)
@@ -295,8 +361,10 @@ services:
 -fixCC : update the tags from a dictionary
 -fixLang : set the lang attribute to 'en' on CBIR tags
 -fixGoogleHL
--fixAd : set the ad attribute from article title (for OLR newspapers only)
--unify : compute the final classification (genre, filter, pub)
+-fixPageSize : add the pixels size at the page level
+-fixAd : set the ads attribute
+-unifyFunction : compute the final function (function, filter, pub)
+-unifyTech : compute the final technique (technique, filter, pub)
 -unifyTheme : compute a final theme
 -CC : classify image content with an API
 -DF : detect faces with an API
@@ -304,7 +372,6 @@ services:
 -importCC : import content classification data
 -translateCC : translate content classification data
 -importDF : import face detection data
--extrClasses : list the visual recognition classes
 -addCC : add a new tag
 -delCC : suppress content classification tags
 -delAllCC : suppress the content classification metadata
@@ -313,6 +380,7 @@ services:
 -delEmptyGenre : suppress the empty genre classifications
 -delFilter : suppress the filtering attributes (genre, ad)
 -delNoisyText : delete noisy text
+-delDuplicates : filter duplicates illustrations
 -importTF : process the TensorFlow data to classify the illustration genres
 -TFunFilter : use the TensorFlow data to unfilter false positive filtered illustrations
 -hash : import the hash data for image similarity
@@ -325,7 +393,6 @@ Options:
 -CBIR mode: API or CNN model (values: ibm, google, yolo, dnn, hm, md) to be used with CC or DF options
 -background color importation (values: bckg, no_bckg), to be used with the -importColors command
 	";
-
 
 
 #say findDataBnf("bpt6k70861t","work");
@@ -345,6 +412,8 @@ my %actions = ( del => \&del,
                 setID => "hd_updateID",
                 setFaceID => "hd_updateFaceID",
                 extr => "hd_extract",
+                crops => \&crops,
+                updateCrops => "hd_updateCrops",
 								extrFiltered => "hd_extractFiltered",
 								extrGenre => "hd_extractGenre",
                 extrNotClassif => "hd_extractNotClassif",
@@ -354,8 +423,9 @@ my %actions = ( del => \&del,
 								color => "hd_color",
                 setColor => "hd_updateColor",
                 importColors => "hd_importColors",
+                importTNA => "hd_importTNA",
                 setTheme => "hd_updateTheme",
-								setGenre => "hd_updateGenre",
+								setTech => "hd_updateTech",
                 setGenreFromCC => "hd_setGenreFromCC",
 								fixType => "hd_fixType",
 								fixSource => "hd_fixSource",
@@ -367,10 +437,19 @@ my %actions = ( del => \&del,
                 fixLang => "hd_fixLang",
                 fixGoogleHL => "hd_fixGoogleHL",
                 fixColor => "hd_fixColor",
+                fixPageSize => "hd_fixPageSize",
 								fixAd => "hd_fixAd",
-								fixGenre => "hd_fixGenre",
+								fixNoGenre => "hd_fixNoGenre",
+                fixNoTech => "hd_fixNoTech",
+                fixNoFunction => "hd_fixNoFunction",
+                fixGenre2Tech => "hd_fixGenre2Tech",
+                fixGenre2Function => "hd_fixGenre2Function",
+                fixTech2Tech => "hd_fixTech2Tech",
+                fixGenrePerio => "hd_fixGenrePeriodicals",
+                fixDrawingPerio => "hd_fixDrawingPeriodicals",
 								fixRot => "hd_fixRotation",
-								unify => "hd_unify",
+								unifyFunction => "hd_unifyFunction",
+                unifyTech => "hd_unifyTech",
 								unifyTheme => "hd_unifyTheme",
                 delCC => "hd_delCC",
                 delAllCC => "hd_deleteContent",
@@ -378,16 +457,19 @@ my %actions = ( del => \&del,
                 delColors => "hd_deleteColors",
 								delGenre => "hd_deleteGenre",
 								delEmptyGenre => "hd_deleteEmptyGenre",
+                delDuplicateGenre => "hd_delDuplicateGenre",
 								delEmptyLeg => "hd_deleteEmptyLeg",
 								delFilter => "hd_deleteFilter",
                 delNoisyText => "hd_deleteNoisyText",
+                delDuplicates => "hd_deleteDuplicates",
 								CC => "hd_classifyCC",
 								DF => "hd_classifyDF",
 								OCR => "hd_OCR",
 								importDF => "hd_importCC",
 								importCC => "hd_importCC",
                 translateCC => "hd_translateCC",
-								extrClasses => "hd_extrCC",
+								extrClasses => "hd_extrClasses",
+                extrCC => "hd_extrCC",
                 extrMD => "hd_extrMD",
 								importTF => "hd_TFfilter",
 								TFunFilter => "hd_TFunFilter",
@@ -426,6 +508,8 @@ switch ($SERVICE) {
  case "addCC"  {$classifAction="CC"}
  case "delColors"  {$classifAction="Color"}
  case "translateCC" {$classifAction="CC"}
+ case "extrClasses" {$classifAction="CC"}
+ case "extrCC" {$classifAction="CC"}
  case "info"  {$classifAction="foo"}
  case "extrFace"  {$classifAction="foo"}
  case "filterFace"  {$classifAction="foo"}
@@ -452,11 +536,7 @@ if ($SERVICE eq "addCC") {
       $CCupdate = <STDIN>;
       chomp $CCupdate;
       say " a new '$classifCBIR' tag with value '$CCupdate' is going to be added to all the illustrations";
-      say " ********************************************";
-      print " OK to continue? (Y/N)\n >";
-      my $rep = <STDIN>;
-      chomp $rep;
-      if (($rep eq "N") or ($rep eq "n")) {die}
+      continuer();
     }
 
 if ($SERVICE eq "delCC") {
@@ -465,20 +545,12 @@ if ($SERVICE eq "delCC") {
           $CCupdate = <STDIN>;
           chomp $CCupdate;
           say " all the '$classifCBIR' tags with value '$CCupdate' will be deleted";
-          say " ********************************************";
-          print " OK to continue? (Y/N)\n >";
-          my $rep = <STDIN>;
-          chomp $rep;
-          if (($rep eq "N") or ($rep eq "n")) {die}
+          continuer();
         }
 if ($SERVICE eq "delAllCC") {
           say " ********************************************";
           say " all the '$classifCBIR' tags will be deleted from all the illustrations";
-          say " ********************************************";
-                  print " OK to continue? (Y/N)\n >";
-                  my $rep = <STDIN>;
-                  chomp $rep;
-                  if (($rep eq "N") or ($rep eq "n")) {die}
+          continuer();
                 }
 
 if ($SERVICE eq "fixCC")  {
@@ -488,28 +560,27 @@ if ($SERVICE eq "fixCC")  {
           foreach $key (keys %CCfix) {
             say " $key -> ".$CCfix{$key};
            }
-          say " ********************************************";
-          print " OK to continue? (Y/N)\n >";
-          my $rep = <STDIN>;
-          chomp $rep;
-          if (($rep eq "N") or ($rep eq "n")) {die}
+          continuer();
         }
+
+if (($SERVICE eq "DF") and ($classifCBIR eq "ibm")) {
+   say " ********************************************";
+   die " ### IBM Watson API no longer offers facial detection!\n";
+  }
 
 if (index("CC DF extrFace filterFace extr OCR",$SERVICE) != -1) {
   say " ********************************************";
   if ($classifCBIR) {say " CBIR mode: $classifCBIR "}
-  if ($genreClassif) {say " genres to be processed: $genreClassif"}
-  else {say " all genres will be processed"}
+  if ($techClassif) {say " techniques to be processed: $techClassif"}
+  else {say " all techniques will be processed"}
+  if ($functionClassif) {say " functions to be processed: $functionClassif"}
+  else {say " all functions will be processed"}
   say " image mode (linear: apply the same % on all images; \n  std: apply the % except for small or large images): $modeIIIF ";
   say " image size % (MUST be 100% if we process the original image file): $factIIIF%";
   say " image min size: $reDimMinThreshold px";
   say " image max size: $reDimMaxThreshold px";
   say " image expansion/shrink %: ".100*$expandIIIF."%";
-  say " ********************************************";
-  print " OK to continue? (Y/N)\n >";
-  my $rep = <STDIN>;
-  chomp $rep;
-  if (($rep eq "N") or ($rep eq "n")) {die}
+  continuer();
 }
 
 say  " ...service is '$SERVICE'";
@@ -520,11 +591,7 @@ if ($SERVICE eq "importCC") {
   say " CS: $CSthreshold ";
   say " TensorFlow CS: $TFthreshold";
   say " IIIF factor: $factIIIF%";
-  say " ********************************************";
-  print " OK to continue? (Y/N)\n >";
-  my $rep = <STDIN>;
-  chomp $rep;
-  if (($rep eq "N") or ($rep eq "n")) {die}
+  continuer();
 }
 
 if ( ($SERVICE eq "translateCC") ) {
@@ -532,24 +599,24 @@ if ( ($SERVICE eq "translateCC") ) {
   switch ($classifCBIR) { # translation of CBIR tags
     case "google" {$dataFile = $googleDict}
     case "ibm" {$dataFile = $ibmDict }
+    case "yolo" {$dataFile = $yoloDict }
+    case "hm" {$dataFile = $hmDict }
   }
   say " dictionary: $dataFile ";
-
-  say " ********************************************";
-  print " OK to continue? (Y/N)\n >";
-  my $rep = <STDIN>;
-  chomp $rep;
-  if (($rep eq "N") or ($rep eq "n")) {die}
+  continuer();
 }
 
-if (($SERVICE eq "hash") or ($SERVICE eq "importColors") ) {
+if (($SERVICE eq "hash") or ($SERVICE eq "importColors") or ($SERVICE eq "importTNA") ) {
   say " ********************************************";
   say " file: $dataFile ";
+  continuer();
+}
+
+if ($SERVICE eq "extrCC")  {
   say " ********************************************";
-  print " OK to continue? (Y/N)\n >";
-  my $rep = <STDIN>;
-  chomp $rep;
-  if (($rep eq "N") or ($rep eq "n")) {die}
+  say " class: $classifCC ";
+  say " CBIR mode: $classifCBIR ";
+  continuer();
 }
 
 # folders
@@ -563,13 +630,13 @@ if(-d $OUT){
 		say "Writing in $OUT...";
 	}
 	else{
-		mkdir ($OUT) || die ("###  Can't creat folder $OUT!  ###\n");
+		mkdir ($OUT) || die ("###  Can't create folder $OUT!  ###\n");
     say "Making folder $OUT...";
 	}
 
 
 ##############
-# output the classification data in a txt file for service extrCC
+# output the classification data in a txt file for service extrClasses
 if (($SERVICE eq "extrClasses") or ($SERVICE eq "extrMD")){
 	say "Writing in $OUTFile";
 	open($OUTfh, '>',$OUTFile) || die "### Can't write in $OUTFile file: $!\n";
@@ -601,6 +668,7 @@ if (index($SERVICE, "TF") != -1) {
    #say Dumper @externalData;
 	 #say Dumper @listeDocs;
 }
+continuer();
 
 #isTFclassify("bpt6k6534085k");
 #say isHashed("bpt6k65340845-93-2.jpg");
@@ -608,8 +676,8 @@ if (index($SERVICE, "TF") != -1) {
 
 #say Dumper (@externalData);
 
-# image hashing and face detection
-if (($SERVICE eq "hash") or ($SERVICE eq "importDF") or ($SERVICE eq "importColors") or ($SERVICE eq "importCC") or ($SERVICE eq "translateCC")) {
+# we build a dictionary
+if (($SERVICE eq "hash") or ($SERVICE eq "importDF") or ($SERVICE eq "importColors") or ($SERVICE eq "importTNA")  or ($SERVICE eq "importCC") or ($SERVICE eq "translateCC")) {
    foreach (@externalData) {
      my $key = $_->[0] ;		#  illustration file name
      chop $_->[1];
@@ -618,12 +686,10 @@ if (($SERVICE eq "hash") or ($SERVICE eq "importDF") or ($SERVICE eq "importColo
      $imageData{$key} = $value ; #  value
     }
     say "--- items in $dataFile file: ". keys %imageData;
-    say " ********************************************";
-    print " OK to continue? (Y/N)\n >";
-    my $rep = <STDIN>;
-    chomp $rep;
-    if (($rep eq "N") or ($rep eq "n")) {die}
+    continuer();
 }
+
+#say Dumper %imageData;
 
 ##############
 # for TRANSLATION: dictionary choice
@@ -631,14 +697,10 @@ if ($SERVICE eq "translateCC") {
     ##$dataFile = "dict-".$OPTION.".csv";
     say " all the '$classifCBIR' tags are going to be translated to FR";
     say " ********************************************";
-    print " OK to continue? (Y/N)\n >";
-    my $rep = <STDIN>;
-    chomp $rep;
-    if (($rep eq "N") or ($rep eq "n")) {die}
-  	;
+    continuer();
   }
 
-#say isFD("bpt6k6519900k-33-3");
+#say isHashed("bpt6k6519900k-33-3");
 #die
 
 #say en2fr("pointe d'argent");
@@ -654,7 +716,8 @@ say "--- documents: ".$dir->children(no_hidden => 1);
 $dir->recurse(depthfirst => 1, callback => sub {
 	my $obj = shift;
 
-  if ((($SERVICE eq "CC") or ($SERVICE eq "DF")) and ($classifCBIR eq "ibm") and ($nbTotIll >= $processIllThreshold)) {
+  if ((($SERVICE eq "CC") or ($SERVICE eq "DF")) and ($classifCBIR eq "ibm")
+     and ($nbTotIll >= $processIllThreshold)) {
     say "## $processIllThreshold processed: stop ##";
     last
   }
@@ -729,12 +792,13 @@ pop @listeClasses;
 pop @listeClasses;
 $classesNumber=scalar(@listeClasses);
 if ($classesNumber<2){
-   say "### $classesNumber classes ?! ###";
+   say "### $classesNumber classes ###";
+   say "### something wrong with the CSV separator character? ###";
    die
 }
 else {
   say "-> $classesNumber classification classes found";
-  say @listeClasses;}
+  say Dumper @listeClasses;}
 
 # building the documents list
 shift @externalData; # suppress the first item (headings)
@@ -796,7 +860,7 @@ sub generic {
 
 
 # ----------------------
-# supprimer les fichiers de MD sans images decrites
+# supprimer les fichiers de MD sans images décrites
 sub del {
 	my $fic=shift;
 	my $nomFic=shift;
@@ -823,7 +887,7 @@ sub del {
 # ----------------------
 # extract the faces as image files (non-generic because the XPath is specific)
 # ** obsolete! **
-sub extrFace {
+sub crops {
 	my $fic=shift;
 	my $nomFic=shift;
 
@@ -839,13 +903,10 @@ sub extrFace {
   	   say "### ID unknown! ###";
        return 0}
   say "ark : $idArk";
-  if ($classifCBIR eq "all") {
-    say $handler = '/analyseAlto/contenus/pages/page/ills/ill/contenuImg["face"]';}
-  else {
-    say $handler = '/analyseAlto/contenus/pages/page/ills/ill/contenuImg["face" and @source="'.$classifCBIR.'"]'}
+  say  '..parsing on /analyseAlto/contenus/pages/page';
   my $t = XML::Twig->new(
     twig_handlers => {
-       $handler => \&hd_extractFace, },
+       '/analyseAlto/contenus/pages/page' => \&hd_crops, },
     pretty_print => 'indented',
     );
 
@@ -906,6 +967,8 @@ sub data {
 	my $fic=shift;
 	my $nomFic=shift;
 
+  my $databnf;
+
 	say "**************\nfile : ".$fic;
 	my $fh = $fic->openr;
 	if (not defined $fh) {
@@ -913,20 +976,30 @@ sub data {
 		return 0}
 	my $xml = $fic->slurp;
 
-	($idArk) = do { local $/; $xml =~ m/$motifArk/ }; # ID ark
-	if (not (defined $idArk)) {
-  	   say "### ID unknown! ###";
-       return 0}
-  say "ark : $idArk";
-
-
-  # try the Stories query
-  my $databnf = findDataBnf($idArk,"studie");
-	# try the Works query
-  if (not defined $databnf) {
-		$databnf = findDataBnf($idArk,"work");
+  # periodical
+  if ($documentType eq "P") {
+    ($ark) = do { local $/; $xml =~ m/$motifNotice/ }; # ID ark
+  	if (not (defined $ark)) {
+    	   say "### document's record unknown (<notice>)! ###";
+         return 0}
+    say "ark : $ark";
+    $databnf = findDataBnf($ark."/date","about");
+  }
+  else {
+    ($ark) = do { local $/; $xml =~ m/$motifArk/ }; # ID ark
+  	if (not (defined $ark)) {
+    	   say "### document's ID unknown! ###";
+         return 0}
+    say "ark : $ark";
+    # try the Stories query
+    $databnf = findDataBnf($ark,"studie");
+	  # try the Works query
+    if (not defined $databnf) {
+		  $databnf = findDataBnf($ark,"work");
 	  }
+  }
 
+  # indexing the illustrations
 	if (defined $databnf) {
 	 say " data.bnf.fr: ".$databnf;
    my $t = XML::Twig->new(
@@ -955,9 +1028,22 @@ sub data {
 # Query the data.bnf SPARQL endpoint
 sub findDataBnf {my $ark=shift;
 	             my $req=shift;
-my @tmp;
+ my @tmp;
+ my $url;
 
-say "looking for $req...";
+ say "looking for $req...";
+
+# https://gallica.bnf.fr/ark:/12148/cb327877302/date
+my $query_perio = <<END;
+PREFIX rdarelationships: <http://rdvocab.info/RDARelationshipsWEMI/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+SELECT ?s ?auteur
+WHERE
+{
+ ?s ?p <$urlGallica$ark>;
+    dcterms:contributor ?auteur.
+}
+END
 
 my $query_stories = <<END;
 PREFIX bnfroles: <http://data.bnf.fr/vocabulary/roles/>
@@ -984,14 +1070,17 @@ END
 
 if ($req eq "studie") {$query=$query_stories}
 elsif ($req eq "work") {$query=$query_work}
+elsif ($req eq "about") {$query=$query_perio}
 else {
   say "#### Query $req undefined!";
 	return undef}
 
+#say $query;
+
 my $sparql = sparql->new();
 my $res = $sparql->query($endPointData,$query);
 if (defined $res) {
-	#say " Response: ".$res;
+	say " Response: ".$res;
 	my @rows = split(/\s+/, $res); # split on separators
 	if ($req eq "work")
 	  {shift @rows; # discard the header, which has 3 lines
@@ -1001,17 +1090,19 @@ if (defined $res) {
 	#say Dumper (@rows);
 	if (@rows)  {
 	 while (my $row = shift @rows) {
+     say $row;
 	   #my $row = shift @rows;  # take the first line
  		 #my @urls = split("\"", $row); #the line can contains multiple URLs
  		 @tmp = grep(/$req/i, $row); # find an URL with the keyword
 		 if (@tmp)
-		   {#say "--> hit";
+		   { say "--> hit";
+         $url = $tmp[0];
 	       last}
 		}
-
-	  if (@tmp) {
-			$tmp[0] =~ s/"//g; # suppress the ""
-			return $tmp[0]}
+	  if ($url) {
+			$url =~ s/"//g; # suppress the ""
+      say $url;
+			return $url}
 	  else {
 			 say "#### Can't decode SPARQL response: $res !";
 			 return undef}
@@ -1101,7 +1192,7 @@ sub hd_info {
 }
 
 # extract stats info on classification
-sub hd_extrCC {
+sub hd_extrClasses {
    my ($t, $elt) = @_;
    my $tmp;
 
@@ -1120,6 +1211,34 @@ sub hd_extrCC {
 			foreach my $contenu (@contenus) {
       	print $OUTfh $contenu->text()."\n";
 			}
+    }
+	}
+}
+
+sub hd_extrCC {
+   my ($t, $elt) = @_;
+   my $tmp;
+
+   my $page = $elt->parent->att('ordre');
+   say "\n page: $page";
+
+   my @ills = $elt->children('ill');
+   for my $ill ( @ills ) {
+    $nbTotIll++;
+    my $classif = $ill->att("classif"); # classif attribute
+    say "...looking for $classifAction$classifCBIR tags";
+    if ((defined $classif) ) {
+      #   and (index($classif, $classifAction.$classifCBIR)!= -1)) { # we have CC classification
+			my $nav = "contenuImg[text()='$classifCC' and \@source='$classifCBIR' and \@lang='$locale']";
+			my @contenus= $ill->children($nav);
+			say " CC metadata : ".scalar(@contenus);
+      if (scalar(@contenus) ==0) {
+			#foreach my $contenu (@contenus) {
+      	#say $contenu->text();
+        if (IIIF_get($ill,$idArk,$ill->att('n'),$page)) {
+          $nbTotIll++;}
+		#	}
+    }
     }
 	}
 }
@@ -1239,9 +1358,9 @@ sub hd_translateCC {
     foreach my $contenu (@contenus) {
          my $ct = $contenu->text();
          #my $score = $contenu->att('CS');
-         if ((length $ct < 3) and ($ct ne "ox")) {$contenu->delete;
-           print "  --deleting-- '$ct' \n";
-          } # suppress noise
+         #if ((length $ct < 3) and ($ct ne "ox")) {$contenu->delete;
+           #print "  --deleting-- '$ct' \n";
+         #} # suppress noisy tags
          if ($ct eq "face" ) { next} # don't translate "face" tag
          my $fr = en2fr($ct);
          if ($fr) { # do we already have a FR translation?
@@ -1256,8 +1375,7 @@ sub hd_translateCC {
               $copy->set_text($fr);
               $copy->paste($ill); # paste the translation
               $nbTotTrans++;
-              #$ill->insert_new_elt('contenuImg',$fr)->set_atts("CS"=>$score,"source"=>$classifCBIR,"lang"=>"fr")
-            }
+                }
           }
           else {print " #### NO TRANSLATION for $ct #### \n\n"}
       }
@@ -1305,7 +1423,7 @@ sub hd_addCC {
        }
 }
 
-# fix genre from tags, using a dictionary
+# fix technique from tags, using a dictionary
 sub hd_setGenreFromCC {
    my ($t, $elt) = @_;
 
@@ -1322,16 +1440,16 @@ sub hd_setGenreFromCC {
          my $ct = $contenu->text();
          $fix = $CCfix{$ct};
          if ($fix) {
-             my @genres= $ill->children('genre');
-             foreach my $genre (@genres) {
-              if ($genre->text() eq $illGenreOld) {
+             my @techs= $ill->children('tech');
+             foreach my $tech (@techs) {
+              if ($tech->text() eq $illTechOld) {
                   print " - ";
                   $nbTotIll++;
-                  $genre->delete;}
+                  $tech->delete;}
               }
-              $ill->insert_new_elt("genre","$illGenreNew")->set_atts("source"=>$classifSource, "CS"=>"1");
-              $ill->insert_new_elt("genre","$illGenreNew")->set_atts("source"=>"final");
-              say "$illGenreOld ... fixed to $illGenreNew"
+              $ill->insert_new_elt("tech","$illTechNew")->set_atts("source"=>$classifSource, "CS"=>"1");
+              $ill->insert_new_elt("tech","$illTechNew")->set_atts("source"=>"final");
+              say "$illTechOld ... fixed to $illTechNew"
             }
           }
       }
@@ -1358,6 +1476,29 @@ sub hd_delCC {
               $nbTotTrans++;
               say "  $ct ... deleted"
             }
+          }
+      }
+}
+
+# delete all tags
+sub hd_delAllCC {
+   my ($t, $elt) = @_;
+
+   my $cTag=$classifAction.$classifCBIR;
+   my @ills = $elt->children('ill');
+   for my $ill ( @ills ) {
+    $nill = $ill->att('n');
+    say "\n$nill: ";
+    $nbTotIll++;
+    # handle the  classification elements
+    my $nav = "contenuImg[\@source='".$classifCBIR."' ]";
+    my @contenus= $ill->children($nav);
+    say "CC contents: ".scalar(@contenus);
+    foreach my $contenu (@contenus) {
+              $contenu->delete;
+              $nbTotTrans++;
+              say "  $ct ... deleted"
+
           }
       }
 }
@@ -1458,6 +1599,29 @@ sub hd_deleteGenre {
       }
     }
 
+sub hd_delDuplicateGenre {
+       my ($t, $elt) = @_;
+
+       my @ills = $elt->children('ill');
+       for my $ill ( @ills ) {
+         $nill = $ill->att('n');
+         say "\n$nill ";
+
+         # suppress the  classification element
+         my @genres= $ill->children('genre[@source="final"]');
+         my $nbGenres = scalar @genres;
+         if ( $nbGenres > 1) {
+           say ".. duplicate genres! ($nbGenres)";
+           say "-> we keep ".$genres[0]->text();
+          for (my $i = 1; $i < $nbGenres; $i++){
+           	  say  "   deleting ".$genres[$i]->text();
+    					$nbTotIll++;
+              $genres[$i]->delete;
+          }
+        }
+        }
+    }
+
 sub hd_deleteEmptyGenre {
    my ($t, $elt) = @_;
 
@@ -1477,43 +1641,63 @@ sub hd_deleteEmptyGenre {
     }
 }
 
-# delete noisy tags
-sub hd_deleteNoisyText {
+# delete
+sub hd_deleteDuplicates {
    my ($t, $elt) = @_;
 
-   no warnings 'uninitialized';
+  no warnings 'uninitialized';
+  my $npage = $elt->parent->att('ordre');
+  say "--------------------------\n page: $npage";
 
-   my @ills = $elt->children('ill');
+  # building the combinaisons of illustration pairs
+  my @listeIllus = ();
+  my @ills = $elt->children('ill');
+  if (@ills and scalar(@ills)>1 ) {
+
    for my $ill ( @ills ) {
      $nill = $ill->att('n');
-
-     # suppress the noisy elements
-     my @legs= $ill->children('leg'); # txt / leg
-     foreach my $leg (@legs) {
-      my $tmp = $leg->text();
-      if ($tmp) {
-          my %counts = ();
-          my $count=0;
-       	  #say $tmp;
-          foreach my $char ( split //, lc $tmp )
-             { $counts{$char}++ }
-          # count the letters
-          $count = sum( @counts{ qw(a b c d e f g h i j k l m n o p q r s t u v w x y z ) } );
-          my $ratio = $count/length $tmp;
-
-          #%a = langof( { method => [qw/smallwords ngrams3/] }, $tmp);
-          #say Dumper %a;
-          #if (not(defined $a{"fr"})) {
-           if ($ratio < 0.3) { #  delete if  noise > alpha characters
-            say "$nill: $tmp";
-            say "  % alpha characters: $ratio";
-            $leg->delete;
-            $nbTotIll++;
-            }
+     print " $nill  ";
+     push(@listeIllus, $nill);
           }
-      }
+    say "\n****";
+    my $iter = combinations(\@listeIllus, 2);
+    while (my $c = $iter->next) {
+            say "\n pair: @$c";
+            #say Dumper @$c ;
+            $nillA = @$c[0];
+            #say "illus A: ".$nillA;
+            my @illA = $elt->children('ill[@n="'.$nillA.'"]');
+            #say Dumper $illA[0];
+            my @coordsA = [$illA[0]->att('x'),$illA[0]->att('y'),$illA[0]->att('w'),$illA[0]->att('h')];
+            #say Dumper @coordsA;
+            $nillB = @$c[1];
+            #say "illus B: ".$nillB;
+            my @illB = $elt->children('ill[@n="'.$nillB.'"]');
+            my @coordsB = [$illB[0]->att('x'),$illB[0]->att('y'),$illB[0]->att('w'),$illB[0]->att('h')];
+            @inter = intersection(@coordsA,@coordsB);
+            if (@inter) {
+              say " -->$nillA and $nillB have an intersection: ";
+              say Dumper @inter;
+              say "    looking for duplicates...";
+              $area = ($inter[2] * $inter[3]);
+              say "    intersaction area: $area";
+              $areaA = ($coordsA[0][2] * $coordsA[0][3]);
+              say "    A area: $areaA";
+              $areaB = ($coordsB[0][2] * $coordsB[0][3]);
+              say "    B area: $areaB";
+              $ratio = max($areaA,$areaB)/min($areaA,$areaB);
+              say "    ratio: $ratio";
+              if ($ratio < $duplicates_threshold) {
+                say "  --> candidates!\n filtering the smallest illustration ";
+                $nbTotIll++;
+                if ($areaB > $areaA) {$illA[0]->set_att("filtre","1")}
+                else {$illB[0]->set_att("filtre","1")}
+              }
+            }
+        }
     }
-}
+  }
+
 
 # can be done more effectively in BaseX
 sub hd_deleteEmptyLeg {
@@ -1554,6 +1738,26 @@ sub hd_fixLeg {
     }
 }
 
+# add the pixel size at the page level
+sub hd_fixPageSize {
+   my ($t, $elt) = @_;
+
+   my $page = $elt->parent;
+   my $npage = $page->att('ordre');
+   say " page: $npage";
+
+   my @ills = $elt->children('ill');
+   if (scalar @ills == 1) {
+        my $x = $ills[0]->att('x');
+        my $y = $ills[0]->att('y');
+        if (($x <= 1) and ($y <= 1)) {
+          $page->set_att("largeurPx",$ills[0]->att('w'));
+          $page->set_att("hauteurPx",$ills[0]->att('h'));
+          say  " pixels size fixed on page $npage: $x,$y";
+				  $nbTotIll++;
+        }
+			}
+}
 
 # set a data.bnf.fr URL attribute
 sub hd_data {
@@ -1588,24 +1792,158 @@ sub hd_extract {
     	my $filtre = $ill->att('filtre');
 			my $pub = $ill->att('pub');
       my $coul = $ill->att('couleur');
-      if ($coul eq "coul") {
-    	 if ($filtre or $pub) {	   # do not export filtered illustrations
-				say " $nill : filtered/ad illustration ";
-        next}
-       if (defined $genreClassif) { # a filter on genres exists
+      #my $seg = $ill->att('seg');
+      #if ($coul ne "coul") {
+    	#if ($filtre or $pub) {	   # do not export filtered illustrations
+				#say " $nill : filtered/ad illustration ";
+        #next}
+       if (defined $techClassif) { # a filter on techniques exists
          #say $ill->name;
-         my $genre = getGenre($ill);
-         if (not $genre) {
-              say " # illustration has no genre: use it anyway"}
-         elsif (index($genreClassif,$genre) ==-1) {
-              say " # illustration is not a $genreClassif!";
-              next} # use only if  specific genre
+         my $tech = getTech($ill);
+         if (not $tech) {
+              say " # illustration has no technique: use it anyway"}
+         elsif (index($techClassif,$tech) ==-1) {
+              say " # illustration is not a $techClassif!";
+              next} # use only if  specific tech
         }
 
       if (IIIF_get($ill,$idArk,$nill,$page)) {
         $nbTotIll++;}
-      }
+      #}
+      #else {say " $nill : unsegmented illustration ";}
    }
+}
+
+## output the  illustrations crops as overlays on an image
+sub hd_crops {
+    my ($t, $elt) = @_; # elt is a a <page>
+
+  my $fh;
+  my @results;
+  my $resize = $factIIIF/100;
+  my $crops;
+
+  my $page = $elt;
+  my $nPage = $page->att('ordre');
+  say "\n page: $nPage";
+  my $segPage = $page->first_child('document');
+  my $ills_elt = $page->first_child('ills');
+  my @ills = $ills_elt->children('ill');
+  if (@ills) {
+     say "...parsing illustrations" ;
+     for my $ill ( @ills ) {
+      $nbTot+=1;
+    	$nill = $ill->att('n');
+      say "  $nill";
+    	my $filtre = $ill->att('filtre');
+			my $pub = $ill->att('pub');
+      #my $coul = $ill->att('couleur');
+      my $seg = $ill->att('seg');
+      if (defined $seg) {
+    	 if ($filtre or $pub) {	   # do not export filtered illustrations
+				say " $nill : filtered/ad illustration ";
+        next}
+       if (defined $techClassif) { # a filter on techniques exists
+         #say $ill->name;
+         my $tech = getTech($ill);
+         if (not $tech) {
+              say " .. illustration has no technique!";
+              next}
+         elsif (index($tech,$techClassif) == -1) {
+              say " .. illustration is not a $techClassif!";
+              next} # use only if  specific genre
+         }
+        } else {
+          say " .. $nill: unsegmented illustration ";
+          next}
+        # we have a candidate
+        push @results, $ill
+       }   # loop end
+       if (@results) {
+         say " --> crops to export: ".scalar(@results);
+         # extract the image file (page level)
+         my $ficSrc = IIIF_getImg($idArk,$nPage);
+         if ($ficSrc) {
+          if (open($fh,$ficSrc)) {
+           try {
+              $imgSrc = newFromJpeg GD::Image($fh);  }
+            catch {
+              warn "### error while reading image! ###";
+              say  "########################################";
+              unlink $ficSrc;
+              return
+            }
+          }
+          else {
+            say "## can't open file! ##";
+            return}
+          }
+          else {return}
+        # export $crops
+        binmode STDOUT;
+        open my $out, '>', $ficSrc or die;
+        binmode $out;
+        for my $ill ( @results ) {
+         $nbTotIll++;
+         $x = $ill->att('x')*$resize;
+         $y = $ill->att('y')*$resize;
+         $l = $ill->att('w')*$resize;
+         $h = $ill->att('h')*$resize;
+         say " cropping illustration #$nill";
+         $myCrop = new GD::Image($l,$h);
+         $green = $myCrop->colorAllocate(0,255,0);
+         $frame = $myCrop->colorAllocate(255,255,255);
+         # create the crop
+         $myCrop->filledRectangle(0, 0, $l, $h, $green);
+         $myCrop->setThickness(2);
+         $myCrop->rectangle(0, 0, $l, $h, $frame);
+         # merge with the source image
+         $imgSrc->copyMerge($myCrop,$x,$y,0,0,$l,$h,40); # 50% opacity
+         # text blocks?
+         my @txts = $ill->children('contenuText');
+         for my $txt ( @txts ) {
+          $ntxt = $txt->att('n');
+          if ($txt->att('filtre')) {
+  				  say " $ntxt: filtered text block ";
+            next}
+          $x = $txt->att('x')*$resize;
+          $y = $txt->att('y')*$resize;
+          $l = $txt->att('w')*$resize;
+          $h = $txt->att('h')*$resize;
+          say " cropping text block #$ntxt";
+          $myCrop = new GD::Image($l,$h);
+          $red = $myCrop->colorAllocate(255,0,0);
+          $frame = $myCrop->colorAllocate(255,255,255);
+          # create the crop
+          $myCrop->filledRectangle(0, 0, $l, $h, $red);
+          $myCrop->setThickness(1);
+          $myCrop->rectangle(0, 0, $l, $h, $frame);
+          # merge with the source image
+          $imgSrc->copyMerge($myCrop,$x,$y,0,0,$l,$h,40); # 40% opacity
+         }
+
+     }
+
+     if ($segPage) {
+       say " cropping the illustration at the page level ";
+       $x = $segPage->att('x')*$resize;
+       $y = $segPage->att('y')*$resize;
+       $l = $segPage->att('w')*$resize;
+       $h = $segPage->att('h')*$resize;
+       $myCrop = new GD::Image($l,$h);
+       $blanc = $myCrop->colorAllocate(0,0,0);
+       $myCrop->transparent($blanc);
+       $bleu = $myCrop->colorAllocate(0,0,200);
+       $myCrop->setThickness(8);
+       $myCrop->rectangle(0, 0, $l, $h, $bleu);
+       $imgSrc->copyMerge($myCrop,$x,$y,0,0,$l,$h,90);
+       print $out $imgSrc->jpeg;
+     }
+     # exporting file
+     print $out $imgSrc->jpeg;
+   }
+    else {say ".. no illustration to crop have been detected on this page"}
+ } else {say ".. no illustrations on this page"}
 }
 
 ## extract the faces as image files
@@ -1626,13 +1964,13 @@ for my $ill ( @ills ) {
   if ($filtre or $pub) 	{  # do not export filtered illustrations
      say " # filtered/ad illustration ";
      next }
-  if (defined $genreClassif) { # a filter on genres exists
+  if (defined $techClassif) { # a filter on technique exists
      #say $ill->name;
-     my $genre = getGenre($ill);
-     if (not $genre) {
-        say " # illustration has no genre: use it anyway"}
-     elsif (index($genreClassif,$genre) ==-1) {
-        say " # illustration is not a $genreClassif!";
+     my $tech = getTech($ill);
+     if (not $tech) {
+        say " # illustration has no technique: use it anyway"}
+     elsif (index($techClassif,$tech) ==-1) {
+        say " # illustration is not a $techClassif!";
         next} # use only if  specific genre
   }
 
@@ -1666,7 +2004,7 @@ for my $ill ( @ills ) {
 	 $rotation ||= "0";
 
 	 # dimensions
-	 my $largVSG = $ct->att('l');
+	 my $largVSG = $ct->att('w');
 	 my $hautVSG = $ct->att('h');
    if ((not defined $largVSG) or (not defined $hautVSG) or ($largVSG <= 0) or ($hautVSG <= 0)) {
      say "### w=$largVSG h=$hautVSG :  null dimension! ###";
@@ -1747,7 +2085,7 @@ for my $ill ( @ills ) {
    # compute all the face centers
    for my $ct ( @contenus ) {
     my $nc = $ct->att('n');
-	  my $largVSG = $ct->att('l');
+	  my $largVSG = $ct->att('w');
 	  my $hautVSG = $ct->att('h');
     if ((not defined $largVSG) or (not defined $hautVSG) or ($largVSG <= 0) or ($hautVSG <= 0)) {
      say "### w=$largVSG h=$hautVSG :  null dimension! ###";
@@ -1950,6 +2288,27 @@ sub setIIIFURL {my $ill=shift;
 	return $urlIIIF.$prefix.$postfix;
 }
 
+# compute the IIIF URL
+sub setIIIFImgURL {my $id=shift;
+								   my $page=shift;
+								   my $mode=shift; # std, ocr, zoom
+
+	my $redim;
+  my $prefix = $idArk."/f$page/"; # default
+  my $postfix;
+  my $urlIIIF = $urlGallicaIIIF; # default
+  my $format = "native.jpg"; # default
+
+	#handle the image size
+  $redim = IIIF_setSize($modeIIIF,0,0);
+
+	$postfix = "full".$redim."/0/$format";
+
+	say " --> $urlIIIF$prefix$postfix";
+	return $urlIIIF.$prefix.$postfix;
+}
+
+
 # set the III export size
 sub IIIF_setSize {my $mode=shift;
                   my $w=shift;
@@ -1988,7 +2347,7 @@ else { # avoid too small or too large images
  }
 }
 
-# extract a IIIF file in /tmp/
+# extract a IIIF file
 sub IIIF_get {my $ill=shift;
 							my $id=shift;
 	            my $nill=shift;
@@ -2001,6 +2360,21 @@ sub IIIF_get {my $ill=shift;
 		else {
       my $url = setIIIFURL($ill,$page,"std");
 			say "$nill --> ".$url;
+			return IIIFextract($url,$tmp)
+		}
+}
+
+# extract a IIIF file in /tmp/
+sub IIIF_getImg {my $id=shift;
+							   my $page=shift;
+
+    my $tmpID = $id;
+    $tmpID =~ s/\//-/g; # replace the / with - to avoid issues on filename
+		my $tmp = "$OUT/$tmpID-$page.jpg";
+		if (-e $tmp) {say "$tmp already exists!"}
+		else {
+      my $url = setIIIFImgURL($id,$page,"std");
+			say "$id --> ".$url;
 			return IIIFextract($url,$tmp)
 		}
 }
@@ -2023,7 +2397,7 @@ sub IIIFextract {my $url=shift;
 		     return 0;}
        else {
          say "Writing in $fic";
-		     return 1
+		     return $fic
 			 }
 }
 
@@ -2087,19 +2461,33 @@ sub classifyReady {my $ill=shift;
   }
  }
 
- # filter on genres
- if (defined $genreClassif) { # a filter on genres exists
-   my $genre = getGenre($ill);
-   if (not $genre) {
-     say "$nill  -> illustration has no genre: classify anyway";
+ # filter on techniques
+ if (defined $techClassif) { # a filter on tech exists
+   my $tech = getTech($ill);
+   if (not $tech) {
+     say "$nill  -> illustration has no technique: classify anyway";
      return 1}
-   if (index($genreClassif,$genre) ==-1) {
-			say "$nill  -> illustration is not a $genreClassif!"; # classify only a specific genre
+   if (index($techClassif,$tech) ==-1) {
+			say "$nill  -> illustration is not a $techClassif!"; # classify only a specific tech
 			return 0}
 	 else {return 2}
   }
 	else
-   {return 1} # classify whatever the genre is
+   {return 1} # classify whatever the tech is
+
+  # filter on functions
+  if (defined $functionClassif) { # a filter on function exists
+     my $f = getFunction($ill);
+     if (not $f) {
+       say "$nill  -> illustration has no function: classify anyway";
+       return 1}
+     if (index($functionClassif,$f) ==-1) {
+  			say "$nill  -> illustration is not a $functionClassif!"; # classify only a specific tech
+  			return 0}
+  	 else {return 2}
+    }
+  	else
+     {return 1} # classify whatever the genre is
 }
 
 
@@ -2111,12 +2499,12 @@ sub OCRReady {my $ill=shift;
  	 say "$nill -> filtered";
  	 return 0}
 
- my $genre = getGenre($ill);
+ my $genre = getTech($ill);
  if (not $genre) {
-     say "$nill  -> illustration has no genre";
+     say "$nill  -> illustration has no technique";
      return 0}
- if (index($genreClassif,$genre) ==-1) {
-		 	 say "$nill  -> illustration is not a $genreClassif!"; # classify only a specific genre
+ if (index($techClassif,$genre) ==-1) {
+		 	 say "$nill  -> illustration is not a $techClassif!"; # classify only a specific genre
 		 	 return 0}
 
  #my @titraille = $ill->children('titraille');
@@ -2246,7 +2634,7 @@ sub hd_classifyCC {
           else { say "### unknown CBIR mode: $classifCBIR! ###"}
 				 }
 
-			  if (scalar(@res)>1) { # API call succeed
+			  if (scalar(@res) > 1) { # API call succeed
           say " -->API call: success";
 					$nbTotIll++;
 					updateClassif($ill);
@@ -2268,7 +2656,7 @@ sub hd_classifyCC {
 						 my $CS = sprintf("%.2f",$res[$i+$nbClasses+$nbCouleurs+5]) || 1.0; # float number pattern : to be fixed!
 						 if ($i<=4) { # we crop the first 4 tags
 							say "  $i ... crop on tag $label ($CS)";
-							$ill->insert_new_elt('contenuImg', $label)->set_atts("lang"=>"en","x"=>$x,"y"=>$y,"l"=>$l,"h"=>$h,"CS"=>$CS, "source"=>$classifCBIR);
+							$ill->insert_new_elt('contenuImg', $label)->set_atts("lang"=>"en","x"=>$x,"y"=>$y,"w"=>$l,"h"=>$h,"CS"=>$CS, "source"=>$classifCBIR);
 					 	 } else {
 							say "  $i : $label ($CS)";
 							$ill->insert_new_elt('contenuImg', $label)->set_atts("lang"=>"en","CS"=>$CS,"source"=>$classifCBIR)
@@ -2347,12 +2735,13 @@ sub hd_classifyDF {
          next}
 	     # now call the APIs
 			 switch ($classifCBIR)  {
-	 				case "ibm" {@res = callibmDF($imgFile);}
-					case "google"		{@res = callgoogleDF($imgFile);}
+	 				case "ibm" {@res = callibmDF($tmpFile);}
+					case "google"		{@res = callgoogleDF($tmpFile);}
           else { say "## unknown CBIR mode: $classifCBIR ##";}
 				 }
        #say Dumper (@res);
-			 if (defined($res[0]) and  $res[0] != 0 ) { # the API call succeed
+       if (scalar(@res) > 1) { # API call succeed
+			 #if (defined($res[0]) and  $res[0] != 0 ) { # the API call succeed
           say " --> API call: success!";
 					$nbTotIll++;
           #say Dumper @res;
@@ -2390,10 +2779,10 @@ sub hd_classifyDF {
               my $nv = $nill."-".($visages+$i);
 							if ($age ne 0) {
 							$ill->insert_new_elt( 'contenuImg', "face" )->set_atts("lang"=>"en","n"=>$nv,"sexe"=>$sexe,"CS"=>$score,"age"=>$age,"source"=>$classifCBIR,
-										 "x"=>int($res[$i+$nbVisages*3]*$fact),"y"=>int($res[$i+$nbVisages*4]*$fact),"l"=>int($l*$fact),"h"=>int($h*$fact));}
+										 "x"=>int($res[$i+$nbVisages*3]*$fact),"y"=>int($res[$i+$nbVisages*4]*$fact),"w"=>int($l*$fact),"h"=>int($h*$fact));}
 							else  {
                 $ill->insert_new_elt( 'contenuImg', "face" )->set_atts("lang"=>"en","n"=>$nv,"sexe"=>$sexe,"CS"=>$score,"source"=>$classifCBIR,
-  										 "x"=>int($res[$i+$nbVisages*3]*$fact),"y"=>int($res[$i+$nbVisages*4]*$fact),"l"=>int($l*$fact),"h"=>int($h*$fact));}}
+  										 "x"=>int($res[$i+$nbVisages*3]*$fact),"y"=>int($res[$i+$nbVisages*4]*$fact),"w"=>int($l*$fact),"h"=>int($h*$fact));}}
 							}
 		   } # api call
 	 }
@@ -2585,8 +2974,6 @@ sub callgoogleOCR {my $url=shift;
 	 }
 }
 
-
-
 sub callgoogleDF {my $url=shift;
 
 	my @scores;
@@ -2628,12 +3015,12 @@ sub callgoogleDF {my $url=shift;
         return ($visages,@genres,@vides,@scores,@crop,@vides);}
     else {
       say " ### no vertices in the API result!\n";
-      return 0
+      return undef
     }
 	}
 	else {
 	 	say " ### API error: ".$res;
-	 	return -1
+	 	return undef
 	 }
 }
 
@@ -2660,7 +3047,7 @@ foreach my $v ( @vertices ) {
  if ($count%2 != 0) { # we have to consider on crop every 2 as the API returns 2 crops for each face
 	my $decoded = decode_json("{\"vertices\": [".$v."]}");
 	my @dv = @{ $decoded->{'vertices'} };
- #say Dumper @dv;
+  say Dumper @dv;
 	$x = $dv[0]->{"x"} || 0;
 
 	#if (defined $dv[0]->{"x"})  { # first point: up/left
@@ -2739,20 +3126,7 @@ sub hd_fixFace {
  }
 
  # ---------------------- classification data importation -------------------
- # Say if an illustration is listed in the data
- sub isFD {
- 	my $nomFic=shift;
 
- 	say "--> $nomFic is in data?";
-     my $tmp=$imageData{$nomFic};
-     if ($tmp) {
-       #say Dumper (@faces);
-     	return $tmp;
-     }
-     else {
-       say "### $nomFic not in the data! ###\n";
-       return undef}
- }
 
  # import the classification data (e.g. from OpenCV/dnn, yolo...)
  sub hd_importCC {
@@ -2766,7 +3140,7 @@ sub hd_fixFace {
       say "\nn : $nill";
       $nill = "$idArk-$nill";
 			# do we have some data?
-			my $res = isFD($nill);
+			my $res = isHashed($nill);
      	if ($res) {
       # do we need to classify?
 			my $classify = classifyReady($ill);
@@ -2786,7 +3160,7 @@ sub hd_fixFace {
 								# face detection
 								case "importDF" {
               	$ill->insert_new_elt('contenuImg', $md[0])->set_atts("lang"=>"en","sexe"=>"P","CS"=>$score,"source"=>$classifCBIR,
- 						 "x"=>int($md[1]*$fact),"y"=>int($md[2]*$fact),"l"=>int($md[3]*$fact), "h"=>int($md[4]*$fact));}
+ 						 "x"=>int($md[1]*$fact),"y"=>int($md[2]*$fact),"w"=>int($md[3]*$fact), "h"=>int($md[4]*$fact));}
 						 	  # generic case
 								case "importCC" {
 								my $label = $md[0];
@@ -2794,7 +3168,7 @@ sub hd_fixFace {
                   $label =~ s/_/ /g;# replace the _ with a space
 									}
               	$ill->insert_new_elt('contenuImg', $label)->set_atts("lang"=>"en","CS"=>$score,"source"=>$classifCBIR,
- 						 "x"=>int($md[1]*$fact),"y"=>int($md[2]*$fact),"l"=>int($md[3]*$fact), "h"=>int($md[4]*$fact));
+ 						 "x"=>int($md[1]*$fact),"y"=>int($md[2]*$fact),"w"=>int($md[3]*$fact), "h"=>int($md[4]*$fact));
 					 }
 					 }
             }
@@ -2840,7 +3214,7 @@ sub hd_updateFaceID {
       for my $face( @faces ) {
          my $faceID =  $illID."-".$n;
     	   $face->set_att("n", $faceID);  # IDs has this pattern: n° page-n° illustration
-    	   say " n: ".$faceID;
+    	   say " ID set to: ".$faceID;
     	   $n++;}
     	$nbTotIll++;
     }
@@ -2912,8 +3286,8 @@ sub hd_updateColor {
     }
 }
 
-# reset a specific genre (from a specific source)
-sub hd_updateGenre {
+# reset a specific technique (from a specific source)
+sub hd_updateTech {
     my ($t, $elt) = @_;
 
 		my $page = $elt->parent->att('ordre');
@@ -2921,12 +3295,12 @@ sub hd_updateGenre {
 
     my @ills = $elt->children('ill');
     for my $ill ( @ills ) {
-			my @genres = $ill->children('genre');
-			for my $g ( @genres ) {
-    	 my $tmp = $g->att('source');
-    	 if ((defined $tmp) and ($tmp eq $classifSource) and ($g->text eq $illGenreOld)) {
-				 $g->delete;
-    		 $ill->insert_new_elt("genre","$illGenreNew")->set_atts("source"=>$classifSource);
+			my @techs = $ill->children('tech');
+			for my $t ( @techs ) {
+    	 my $tmp = $t->att('source');
+    	 if ((defined $tmp) and ($tmp eq $classifSource) and ($t->text eq $illTechOld)) {
+				 $t->delete;
+    		 $ill->insert_new_elt("tech","$illTechNew")->set_atts("source"=>$classifSource);
 				 print " +";
 				 $nbTotIll++;
 			}
@@ -2934,8 +3308,8 @@ sub hd_updateGenre {
   }
 }
 
-# fix illustrations with no genre
-sub hd_fixGenre {
+# convert illustrations genre to technique
+sub hd_fixGenre2Tech {
     my ($t, $elt) = @_;
 
 		my $page = $elt->parent->att('ordre');
@@ -2944,9 +3318,177 @@ sub hd_fixGenre {
     my @ills = $elt->children('ill');
     for my $ill ( @ills ) {
 			my @genres = $ill->children('genre');
+    	for my $g ( @genres ) {
+         $genreIll = $g->text;
+    		 $techIll = $genre2tech{$genreIll};
+         if ($techIll) {
+				   say "  fixing genre/$genreIll -> tech/$techIll";
+           $g->set_tag("tech");
+           $g->set_text($techIll);
+           print " +";
+				   $nbTotIll++;}
+			}
+    }
+}
+
+# convert illustrations genre to fonction
+sub hd_fixGenre2Function {
+    my ($t, $elt) = @_;
+
+		my $page = $elt->parent->att('ordre');
+		say " page : $page";
+
+    my @ills = $elt->children('ill');
+    for my $ill ( @ills ) {
+			my @genres = $ill->children('genre');
+      my @fonctions = $ill->children('fonction');
+    	for my $g ( @genres ) {
+         $genreIll = $g->text;
+    		 $fonctionIll = $genre2fonction{$genreIll};
+         if ($fonctionIll) {
+           # delete fonction if exists
+           for my $f ( @fonctions ) { $f->delete}
+				   say "  fixing genre/$genreIll -> fonction/$fonctionIll";
+           $g->set_tag("fonction");
+           $g->set_text($fonctionIll);
+				   $nbTotIll++;}
+			}
+    }
+}
+
+# convert illustrations tech to technique + fonction
+sub hd_fixTech2Tech {
+    my ($t, $elt) = @_;
+
+		my $page = $elt->parent->att('ordre');
+		say " page : $page";
+
+    my @ills = $elt->children('ill');
+    for my $ill ( @ills ) {
+			my @techs = $ill->children('tech');
+    	for my $t ( @techs ) {
+         $techIll = $t->text;
+         $source = $t->att('source');
+    		 $newTechIll = $tech2tech{$techIll};
+         $fonctionIll = $tech2fonction{$techIll};
+         if ($newTechIll) {
+				   say "  fixing tech/$techIll -> tech/$newTechIll";
+           $t->set_text($newTechIll);
+				   $nbTotIll++;}
+         if (($fonctionIll) and $source eq "final") {
+  				   say "  adding function -> fonction/$fonctionIll";
+             $ill->insert_new_elt("fonction",$fonctionIll)->set_atts("source"=>"hm");
+             $ill->insert_new_elt("fonction",$fonctionIll)->set_atts("source"=>"final");
+  				}
+			}
+    }
+}
+
+# convert illustrations genres for periodicals
+sub hd_fixGenrePeriodicals {
+    my ($t, $elt) = @_;
+
+		my $page = $elt->parent->att('ordre');
+		say " page : $page";
+
+    my @ills = $elt->children('ill');
+    for my $ill ( @ills ) {
+			my @genres = $ill->children('genre[@source="final" or @source="hm" or @source="cwd"]');
+      if (@genres) {
+    	 for my $g ( @genres ) {
+         $genreIll = $g->text;
+         say "genre: ".$g->text;
+         if (($genreIll ne "illustration de presse") and ($genreIll ne "filtre") and ($genreIll ne "publicite")) {
+    		     say "  fixing genre: $genreIll -> genre: illustration de presse/$genreIll";
+             $g->set_text("illustration de presse/".$genreIll);
+             $techIll = $genre2tech{$genreIll};
+				     $nbTotIll++;
+           }
+        }
+      } else {
+        say "  creating genre: illustration de presse";
+        $ill->insert_new_elt("genre","illustration de presse")->set_atts("source"=>"hm");
+        $ill->insert_new_elt("genre","illustration de presse")->set_atts("source"=>"final");
+        $nbTotIll++;
+       }
+
+		}
+}
+
+# fix illustrations genres for periodicals
+sub hd_fixDrawingPeriodicals {
+    my ($t, $elt) = @_;
+
+    my $page = $elt->parent->att('ordre');
+		say " page : $page";
+
+    my @ills = $elt->children('ill');
+    for my $ill ( @ills ) {
+			my @genres = $ill->children('genre[@source="final" or @source="hm" or @source="cwd"]');
+      my @techs = $ill->children('tech[@source="final"]');
+
+      if (@techs and ($techs[0]->text() eq "dessin")) {
+          say "  technique: ".$techs[0]->text();
+          for my $g ( @genres ) {
+            $g->set_text("illustration de presse/dessin");
+            $nbTotIll++;}
+    }}
+}
+
+# fix illustrations with no genre
+sub hd_fixNoGenre {
+    my ($t, $elt) = @_;
+
+		my $page = $elt->parent->att('ordre');
+		say " page : $page";
+
+    my @ills = $elt->children('ill');
+    for my $ill ( @ills ) {
+			my @genres = $ill->children('genre[@source="final"]');
+
     	if (not @genres) {
-    		 $ill->insert_new_elt("genre","$illGenreNew")->set_atts("source"=>$classifSource);
-         #$ill->insert_new_elt("genre","$illGenreNew")->set_atts("source"=>"final");
+        my $tmp = $ill->att('pub');
+     	  if ((defined $tmp) and ($tmp eq "1")) {
+    		   $ill->insert_new_elt("genre","$illGenreNew")->set_atts("source"=>$classifSource);
+           $ill->insert_new_elt("genre","$illGenreNew")->set_atts("source"=>"final");
+				   print " +";
+				   $nbTotIll++;}
+			}
+    }
+}
+
+# fix illustrations with no technique
+sub hd_fixNoTech {
+    my ($t, $elt) = @_;
+
+		my $page = $elt->parent->att('ordre');
+		say " page : $page";
+
+    my @ills = $elt->children('ill');
+    for my $ill ( @ills ) {
+			my @techs = $ill->children('tech[@source="final"]');
+    	if (not @techs) {
+    		 $ill->insert_new_elt("tech","$illTechNew")->set_atts("source"=>$classifSource);
+         $ill->insert_new_elt("tech","$illTechNew")->set_atts("source"=>"final");
+				 print " +";
+				 $nbTotIll++;
+			}
+    }
+}
+
+# fix illustrations with no genre
+sub hd_fixNoFunction {
+    my ($t, $elt) = @_;
+
+		my $page = $elt->parent->att('ordre');
+		say " page : $page";
+
+    my @ills = $elt->children('ill');
+    for my $ill ( @ills ) {
+			my @fonctions = $ill->children('fonction[@source="final"]');
+    	if (not @fonctions) {
+    		 $ill->insert_new_elt("fonction","$illFonctionNew")->set_atts("source"=>$classifSource);
+         $ill->insert_new_elt("fonction","$illFonctionNew")->set_atts("source"=>"final");
 				 print " +";
 				 $nbTotIll++;
 			}
@@ -3072,7 +3614,7 @@ sub hd_fixSource {
 # set the pub attribute if title="Publicité"
 # to be used with OLR newspapers
 # unify option needs to be ran after
-sub hd_fixAd {
+sub hd_fixAdOLR {
     my ($t, $elt) = @_;
 
 		my $page = $elt->parent->att('ordre');
@@ -3096,6 +3638,25 @@ sub hd_fixAd {
 			}
 		}
 	}
+
+  sub hd_fixAd {
+      my ($t, $elt) = @_;
+
+  		my $page = $elt->parent->att('ordre');
+  		say " page : $page";
+
+  		my @ills = $elt->children('ill');
+      for my $ill ( @ills ) {
+  			say " n : ".$ill->att("n");
+  			my @tmp = $ill->children('genre[text()="publicité" and @source="final"]');
+  			if (@tmp ) {
+  					$nbTotIll++;
+            print "+";
+  					$ill->set_att("pub"=>"1");
+  				}
+  			}
+  		}
+
 
 	sub hd_fixRotation {
 	    my ($t, $elt) = @_;
@@ -3283,7 +3844,7 @@ sub hd_fixGoogleHL {
 			 for my $c (@cbir) {
          #say $c->text();
          $h = $c->att('h');
-         $l = $c->att('l');
+         $l = $c->att('w');
          if (defined $h and int($h) < 2) {
 						print "+";
 						$c->set_att("h",$hIll);}
@@ -3295,36 +3856,97 @@ sub hd_fixGoogleHL {
 			}
 	}
 
+  # fix croppings after a resegmentation of an illustration
+  # x and y's crop are updated
+  # eventually, w and h are set to illustration dimensions
+  sub hd_updateCrops {
+      my ($t, $elt) = @_;
 
-# get the illustration genre
-sub getGenre {
+  		my $page = $elt->parent->att('ordre');
+  		say " page: $page";
+
+      my @ills = $elt->children('ill[@seg="1"]');
+      if (scalar(@ills) != 1) {
+    	   say "--> we only process one illustration/page case";
+         return}
+
+      for my $ill ( @ills ) {
+        $xIll = int($ill->att('x'));
+        $yIll = int($ill->att('y'));
+        $wIll = int($ill->att('w'));
+        $hIll = int($ill->att('h'));
+        say " illustration : x=$xIll , y=$yIll";
+  			my @cbir = $ill->children('contenuImg[@source="dnn"]');
+  			if (@cbir) {
+  			 $nbTotIll++;
+  			 for my $c (@cbir) {
+           say $c->text();
+           $x = $c->att('x');
+           $y = $c->att('y');
+           $w = $c->att('w');
+           $h = $c->att('h');
+           if (defined $x) {
+              my $newX = int($x) - $xIll;
+              if ($newX < 0) {$newX = 1}
+  						say " x: $x -> $newX";
+  						$c->set_att("x",$newX);}
+           if (defined $y) {
+              my $newY = int($y) - $yIll;
+              if ($newY < 0) {$newY = 1}
+              say " y: $y -> $newY";
+     					$c->set_att("y",$newY)
+            }
+          if ((defined $w) and ($w > $wIll)) {$c->set_att("w",$wIll)}
+          if ((defined $h) and ($h > $hIll)) {$c->set_att("h",$hIll)}
+            }
+  			  }
+  			}
+  	}
+
+# get the illustration technique
+sub getTech {
     my $ill=shift;
 
-	 if ($ill->children('genre')) {
-		 my $genreFinal = $ill->get_xpath('./genre[@source="final"]', 0);
-		 if ($genreFinal) {
-       say "-> genre: ".$genreFinal->text();
-			 return $genreFinal->text();
+	 if ($ill->children('tech')) {
+		 my $techFinal = $ill->get_xpath('./tech[@source="final"]', 0);
+		 if ($techFinal) {
+       say "-> technique: ".$techFinal->text();
+			 return $techFinal->text();
 		 }
    }
   return undef
 }
 
-# set the final genre and the filters
+# get the illustration function
+sub getFunction {
+    my $ill=shift;
+
+	 if ($ill->children('tech')) {
+		 my $functionFinal = $ill->get_xpath('./fonction[@source="final"]', 0);
+		 if ($functionFinal) {
+       say "-> function: ".$functionFinal->text();
+			 return $functionFinal->text();
+		 }
+   }
+  return undef
+}
+
+# set the final function and the filters
 sub setFinal {
 	my $ill=shift;
+  my $element=shift;
 	my $mode=shift;  # "hm"/"md"/"tf"
-  my $genre=shift;
+  my $f=shift;
 
-	say " -> $mode: $genre";
-	$ill->insert_new_elt("genre",$genre)->set_atts("source"=>"final");
-	# ad case?
-	if (index($genre,"publicit")!=-1) { # it's an ad
+	say " -> $element $mode: $f";
+	$ill->insert_new_elt($element,$f)->set_atts("source"=>"final");
+	# ads case?
+	if (index($f,"publicit")!=-1) {
 		$ill->set_att("pub",1)}
   else {
-    my $tmp = $ill->att("pub");
-    if (defined $tmp) {
-      $ill->del_att("pub")}
+    #my $tmp = $ill->att("pub");
+    #if (defined $tmp) {
+    #  $ill->del_att("pub")}
     }
 	# filter case?
   my $tmp = $ill->att("filtre"); # final filter classification
@@ -3332,13 +3954,13 @@ sub setFinal {
     $ill->del_att("filtre");
     print " -"}
 	$tmp = "filtre".$mode;
-	if (index($genre,"filtre") !=-1){
+	if (index($f,"filtre") != -1){
 				$ill->set_att($tmp,1);
 				$ill->set_att("filtre",1)}
 }
 
-# unify the genre in the <genre source=final> element
-sub hd_unify {
+# unify the function in the <function source=final> element
+sub hd_unifyFunction {
     my ($t, $elt) = @_;
 
 		my $page = $elt->parent->att('ordre');
@@ -3351,40 +3973,85 @@ sub hd_unify {
 			 $nbTotIll++;
 			 say " n : ".$ill->att('n');
 			 my $final ;
-			 if ($ill->children('genre')) {
-				@genreFinal = $ill->get_xpath('./genre[@source="final"]');
-				if (@genreFinal) {  # Reset
-				  for my $g ( @genreFinal ) {
-				   $g->delete()}
-				 }
-				$genreMD = $ill->first_child_text('genre[@source="md"]');
-				$genreTF = $ill->first_child_text('genre[@source="TensorFlow"]');
-				$genreHM = $ill->first_child_text('genre[@source="hm"]'); # or 'cwd'
+			 if ($ill->children('fonction')) {
+				@fonctionFinal = $ill->get_xpath('./fonction[@source="final"]');
+				if (@fonctionFinal) {  # Reset
+				  for my $f ( @fonctionFinal ) {
+				   $f->delete()}
+				}
+				$fonctionMD = $ill->first_child_text('fonction[@source="md"]');
+				$fonctionTF = $ill->first_child_text('fonction[@source="TensorFlow"]');
+				$fonctionHM = $ill->first_child_text('fonction[@source="hm"]'); # or 'cwd'
 
 				# process the results
-				if ($genreHM and ((not $forceTFgenreOnHM) or ($forceTFgenreOnHM and not $genreTF))) { # top priority
-				  $final = $genreHM;
-					setFinal($ill,"hm",$final)
+				if ($fonctionHM and ((not $forceTFOnHM) or
+           ($forceTFOnHM and not $fonctionTF))) { # top priority
+				  $final = $fonctionHM;
+					setFinal($ill,"fonction","hm",$final)
 
 				} # priority on metatada except if TF is forced
-				elsif ($genreMD and ($genreMD ne "inconnu") and ($genreMD ne "")
-				    and ((not $forceTFgenreOnMD) or ($forceTFgenreOnMD and not $genreTF)))  {
-					$final = $genreMD;
-					setFinal($ill,"md",$final);
+				elsif ($fonctionMD and ($fonctionMD ne "inconnu") and ($fonctionMD ne "")
+				    and ((not $forceTFOnMD) or ($forceTFOnMD and not $fonctionTF)))  {
+					$final = $fonctionMD;
+					setFinal($ill,"fonction","md",$final);
 					# special case: text ads must be filtered
- 					if (($genreMD eq "publicite") and ($genreTF eq "filtretxt")) {
-						say " -> tf : filtretxt";
-						$ill->set_att("filtretf",1);
-						$ill->set_att("filtre",1)
-					}
+ 					#if (($fonctionMD eq "publicite") and ($fonctionTF eq "filtretxt")) {
+					#	say " -> tf : filtretxt";
+					#	$ill->set_att("filtretf",1);
+					#	$ill->set_att("filtre",1)
+					#}
 				} # use TF classification
-				elsif (defined $genreTF) {
-					$final = $genreTF;
-					setFinal($ill,"tf",$final)
+				elsif (defined $fonctionTF) {
+					$final = $fonctionTF;
+					setFinal($ill,"fonction","tf",$final)
 				}
 			}
 			if (not defined $final)
-				 {say "** no final genre **"}
+				 {say "** no final function! **"}
+			}
+}
+
+sub hd_unifyTech  {
+    my ($t, $elt) = @_;
+
+		my $page = $elt->parent->att('ordre');
+		say " page : $page";
+
+    my @ills = $elt->children('ill');
+    for my $ill ( @ills ) {
+			#my $filtre = $ill->att("filtre"); # filtered illustrations
+	    #if (not defined $filtre) {
+			 $nbTotIll++;
+			 say " n : ".$ill->att('n');
+			 my $final ;
+			 if ($ill->children('tech')) {
+				@techFinal = $ill->get_xpath('./tech[@source="final"]');
+				if (@techFinal) {  # Reset
+				  for my $t ( @techFinal ) {
+				   $t->delete()}
+				 }
+				$techMD = $ill->first_child_text('tech[@source="md"]');
+				$techTF = $ill->first_child_text('tech[@source="TensorFlow"]');
+				$techHM = $ill->first_child_text('tech[@source="hm"]'); # or 'cwd'
+
+				# process the results
+				if ($techHM and ((not $forceTFOnHM) or
+           ($forceTFOnHM and not $techTF))) { # top priority
+				  $final = $techHM;
+          setFinal($ill,"tech","hm",$final)
+				} # priority on metatada except if TF is forced
+				elsif ($techMD and ($techMD ne "inconnu") and ($techMD ne "")
+				    and ((not $forceTFOnMD) or ($forceTFOnMD and not $techTF)))  {
+					$final = $techMD;
+          setFinal($ill,"tech","md",$final)
+				} # use TF classification
+				elsif (defined $techTF) {
+					$final = $techTF;
+          setFinal($ill,"tech","tf",$final)
+				}
+			}
+			if (not defined $final)
+				 {say "** no final technique **"}
 			}
 }
 
@@ -3476,7 +4143,7 @@ sub hd_unifyFilter {
 	}
 }
 
-# reset the document type from a genre classification
+# reset the document type from a tech classification
 sub hd_fixType {
     my ($t, $elt) = @_;
 
@@ -3486,10 +4153,10 @@ sub hd_fixType {
     my $meta = $elt->parent->parent->parent->first_child;
     my @ills = $elt->children('ill');
     for my $ill ( @ills ) {
-    	my $tmp = $ill->first_child('genre');
-    	if ((defined $tmp) and ($tmp->text() eq $illGenreOld)) {
+    	my $tmp = $ill->first_child('tech');
+    	if ((defined $tmp) and ($tmp->text() eq $illTechOld)) {
 				$nbTotIll++;
-				# suppress the genre
+				# suppress
 				# $tmp->delete; # non, on garde pour la facette GENRE
 				# suppress the type
 				$meta->first_child('type')->delete;
@@ -3532,7 +4199,7 @@ sub updatePerson {
 
 # ---------------------- TensorFlow -------------------
 
-# set the image genre from TensorFlow classification data
+# set the image function from TensorFlow classification data
 sub hd_TFfilter {
     my ($t, $elt) = @_;
 
@@ -3541,26 +4208,26 @@ sub hd_TFfilter {
     	my $nill = $ill->att("n");
 			my $page = $elt->parent->att('ordre');
     	$nill = "$idArk-$nill";
-
+      $nbTot++;
     	if (($OPTION) and ($OPTION="news"))
-			 {@genreTF = isTFclassify_news($nill,$page);}
-			 else {@genreTF = isTFclassify($nill);}
+			 {@fonctionTF = isTFclassify_news($nill,$page);}
+			 else {@fonctionTF = isTFclassify($nill);}
 			#say Dumper @genreIll;
-			my $genre = $genreTF[0];
-    	if ($genre ne "-1") { # we have a classification
-        if (defined $genreClassif and index($genreClassif,$genre) ==-1) { # we only want to get some genres
-             say " # illustration is not a $genreClassif!";
+			my $f = $fonctionTF[0];
+    	if ($f ne "-1") { # we have a classification
+        if (defined $fonctionClassif and index($fonctionClassif,$f) ==-1) { # we only want to get some functions
+             say " # illustration is not a $fonctionClassif!";
              return}
-				my $CS = $genreTF[1];
-    	  say " --> illustration genre: $genre (CS: $CS)";
-    	  $ill->insert_new_elt('genre', $genre)->set_atts("CS"=>$CS,"source"=>"TensorFlow");
+				my $CS = $fonctionTF[1];
+    	  say " --> illustration function: $f (CS: $CS)";
+    	  $ill->insert_new_elt('fonction', $f)->set_atts("CS"=>$CS,"source"=>"TensorFlow");
     	  $nbTotIll++;
     	}
     }
 }
 
 # try to detect some false positive filtered illustrations (MD) thanks to the TensorFlow classification data
-# aims a specific genre set by $illGenreNew
+# aims a specific function set by $illFonctionNew
 sub hd_TFunFilter {
     my ($t, $elt) = @_;
 
@@ -3570,26 +4237,26 @@ sub hd_TFunFilter {
 			say $nill;
 			my $page = $elt->parent->att('ordre');
     	$nill = "$idArk-$nill";
-			my $genre = $ill->get_xpath('./genre[@source="final"]', 0); # the final genre
-			my $genreMD = $ill->get_xpath('./genre[@source="md"]', 0); # the MD genre
+			my $genre = $ill->get_xpath('./fonction[@source="final"]', 0); # the final genre
+			my $genreMD = $ill->get_xpath('./fonction[@source="md"]', 0); # the MD genre
 			if (($genre) and ($genreMD)) {
-			 print " genre: ".$genre->text()."\n";
+			 print " function: ".$genre->text()."\n";
 			 if ((index($genre->text(),"filtre") == -1) and ($genreMD->text() ne "filtre")) {
-				say "...not a filtered MD genre!";}
+				say "...not a filtered MD function!";}
 			 else {
 			 @genreIll = isTFclassify($nill);
 			 $genre = $genreIll[0];
     	 if ($genre ne "-1") {
-			  if ($genre eq $illGenreNew) {
+			  if ($genre eq $illFonctionNew) {
 					my $CS = $genreIll[1];
-    	  	say "... unfilter illustration with genre: $genre (CS: $CS)";
-    	  	$ill->insert_new_elt('genre', $genre)->set_atts("CS"=>$CS,"source"=>"TensorFlow");
+    	  	say "... unfilter illustration with function: $genre (CS: $CS)";
+    	  	$ill->insert_new_elt('fonction', $genre)->set_atts("CS"=>$CS,"source"=>"TensorFlow");
 					# delete the filter information
-					my $genreMD = $ill->get_xpath('./genre[@source="md"]', 0);
-					say " ... deleting genre".$genreMD->text();
+					my $genreMD = $ill->get_xpath('./fonction[@source="md"]', 0);
+					say " ... deleting function".$genreMD->text();
 					$genreMD->delete();
     	  	$nbTotIll++; }
-					else {say " the TF genre is not a $illGenreNew: can't be unfiltered"}
+					else {say " the TF function is not a $illFonctionNew: can't be unfiltered"}
     	 }
 		 }
     }
@@ -3628,20 +4295,20 @@ sub isTFclassify_news {
 	 		  $indiceClasse1 = $j}
 			}
 		say "top1: $top1CS";
-		my $genre = $listeClasses[$indiceClasse1];
-		switch ($genre) {
+		my $fonction = $listeClasses[$indiceClasse1];
+		switch ($fonction) {
 				case "filtreornement"		{ # difficult classes: higher confidence score
 					# if the confidence score is > threshold
 		  		if ($top1CS > $TFthreshold*1.2) {
-		     		return ($genre,$top1CS);
-					  say " $top1CS CS for '$genre' is < $TFthreshold*1.2 threshold!";}
+		     		return ($fonction,$top1CS);
+					  say " $top1CS CS for '$fonction' is < $TFthreshold*1.2 threshold!";}
 	 	    }
 				case "publicite"		{
 					say "ad...";
 		  	 if  ($lookForAds) {
 					if (($page != 1) # can't be an ad on cover page (assumption...)
 						and ($top1CS > $TFthreshold*1.1)) # if the confidence score is > threshold
-						{return ($genre,$top1CS);}
+						{return ($fonction,$top1CS);}
 					else {
 						say "... can't be an ad here! Get 2nd choice";
 						foreach my $j (0..$classesNumber-1) { # look for the 2nd highest confidence score
@@ -3657,8 +4324,8 @@ sub isTFclassify_news {
 				}}
 				else {
 					if ($top1CS > $TFthreshold) {
-						return ($genre,$top1CS);}
-					else {say " $top1CS CS for '$genre' is < $TFthreshold threshold!";}
+						return ($fonction,$top1CS);}
+					else {say " $top1CS CS for '$fonction' is < $TFthreshold threshold!";}
 				}
 	   }
 	 	return "-1";
@@ -3693,12 +4360,12 @@ sub isTFclassify {
 	 			$tmpCS = $CS;
 	 		  $indiceClasse = $j}
 	 	}
-		my $genre = $listeClasses[$indiceClasse];
+		my $classif = $listeClasses[$indiceClasse];
 		if ($tmpCS > $TFthreshold) {		# if the confidence score is > threshold
 		     #say " TF genre: $genre";
-		     return ($genre,$tmpCS);} # return the class  and its confidence value
+		     return ($classif,$tmpCS);} # return the class  and its confidence value
 	 	else {
-	 	 		say " $tmpCS CS for '$genre' is < $TFthreshold threshold!";
+	 	 		say " $tmpCS CS for '$classif' is < $TFthreshold threshold!";
 	 	 		return "-1"}
    }
  }
@@ -3722,6 +4389,7 @@ sub isHashed {
     return undef}
 }
 
+
 # set the image hash
 sub hd_hash {
     my ($t, $elt) = @_;
@@ -3744,7 +4412,7 @@ sub hd_hash {
     }
 }
 
-# set the image hash
+# set the image color
 sub hd_importColors {
     my ($t, $elt) = @_;
 
@@ -3782,8 +4450,36 @@ sub hd_importColors {
     }
 }
 
+# look for the TNA image id and set the image library url
+sub hd_importTNA {
+    my ($t, $elt) = @_;
+
+    my @ills = $elt->children('ill');
+    my $meta = $elt->parent->parent->parent->parent->first_child;
+    for my $ill (@ills) {
+      my $counter=1;
+    	my $nill = $ill->att("n");
+      my $tnaRecord = $idArk;
+      $tnaRecord =~ s/-/\//g; # replace the - with /
+      $tnaRecord =~ s/BT/BT /g;
+    	my $hash = isHashed($tnaRecord);
+    	if ($hash) {
+    	  say " illustration TNA id: $hash";
+        $meta->insert_new_elt('url', $urlTNA.$hash);
+    	  $nbTotIll++;
+    	}
+			else {
+				#$ill->set_att("hash"=>""); # no hash
+				say "#### illustration TNA id is missing: $nill";
+				$nbFailIll++;
+			}
+    }
+}
 
 # ---------------------- Misc -------------------
+
+
+
 sub rgb2hex {
     $red=$_[0];
     $green=$_[1];
@@ -3821,6 +4517,23 @@ sub getColorName {$r=shift;$v=shift;$b=shift;
  return undef
 }
 
+sub intersection {
+      my $illA = shift;
+      my $illB = shift;
+
+    my @a = @{$illA}; # get the reference to the array
+    my @b = @{$illB};
+
+    $x = max($a[0], $b[0]);
+    $y = max($a[1], $b[1]);
+    $w = min($a[0]+$a[2], $b[0]+$b[2]) - $x;
+    $h = min($a[1]+$a[3], $b[1]+$b[3]) - $y;
+    if (($w<0) or ($h<0)) {
+        return () }
+    #print "1"
+    return ($x, $y, $w, $h)
+}
+
 # ----------------------
 # not used anymore #
 # changer le filtre
@@ -3830,7 +4543,7 @@ sub TFfilter {
 
 	say "*********************************\nfichier : ".$fic;
 
-  #si le document a ete traite par TF
+  # si le document a ete traite par TF
   if (traiteTF($nomFic) ) {
 
 	my $fh = $fic->openr;
@@ -3858,4 +4571,12 @@ sub TFfilter {
  }
  else {say " -> $nomFic : document unknown in TensorFlow data";
  	return 1}
+}
+
+sub continuer {
+ say " ********************************************";
+ print " OK to continue? (Y/N)\n >";
+ my $rep = <STDIN>;
+ chomp $rep;
+ if (($rep eq "N") or ($rep eq "n")) {die}
 }

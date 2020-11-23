@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<alto ID="alto.6537262" xmlns="http://bibnum.bnf.fr/ns/alto_prod" xmlns:xlink="http://www.w3.org/TR/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bibnum.bnf.fr/ns/alto_prod http://bibnum.bnf.fr/ns/alto_prod.xsd">
+  <Description>
+    <MeasurementUnit>pixel</MeasurementUnit>
+    <sourceImageInformation>
+      <fileName>00000002.tif</fileName>
+    </sourceImageInformation>
+    <OCRProcessing ID="OCR_1">
+      <ocrProcessingStep>
+        <processingDateTime>2013-05-31</processingDateTime>
+        <processingStepDescription>[001_OCR_BRUT]OCR BRUT 87.780 %</processingStepDescription>
+        <processingStepDescription>[002_TOTAL_CHARS]{113}</processingStepDescription>
+        <processingStepDescription>[003_TOTAL_CHARS_USED]{42}</processingStepDescription>
+        <processingStepDescription>[004_TOTAL_CHARS_SUSPECTS_USED]{0}</processingStepDescription>
+        <processingStepDescription>[005_TOTAL_CHARS_UNUSED]{71}</processingStepDescription>
+        <processingStepDescription>[006_TOTAL_CHARS_SUSPECTS_UNUSED]{53}</processingStepDescription>
+        <processingStepDescription>[007_TOTAL_STRINGS]{29}</processingStepDescription>
+        <processingStepDescription>[011_CHARS_PUNCTUATION]{11}</processingStepDescription>
+        <processingStepDescription>[012_CHARS_DIGITS]{11}</processingStepDescription>
+        <processingStepDescription>[013_CHARS_SUSPECT]{53}</processingStepDescription>
+        <processingStepDescription>[022_CHARS_UNUSED_BY_BLOCK]{0}</processingStepDescription>
+        <processingStepDescription>[111_LIGS_DETECTED_CURV]{9}</processingStepDescription>
+        <processingStepSettings>OCR 99.990 %</processingStepSettings>
+      </ocrProcessingStep>
+    </OCRProcessing>
+  </Description>
+  <Styles>
+    <TextStyle FONTFAMILY="Times" FONTSIZE="12" ID="TXT_1"/>
+  </Styles>
+  <Layout>
+    <Page HEIGHT="5081" ID="PAG_00000002" PHYSICAL_IMG_NR="1" QUALITY="OK" WIDTH="3649">
+      <PrintSpace HEIGHT="4652" HPOS="421" ID="PAG_00000002_PrintSpace" VPOS="368" WIDTH="3220">
+        <TextBlock HEIGHT="373" HPOS="448" ID="PAG_00000002_TB000001" STYLEREFS="TXT_1" VPOS="368" WIDTH="3170" language="fr">
+          <TextLine HEIGHT="373" HPOS="448" ID="PAG_00000002_TL000001" STYLEREFS="TXT_1" VPOS="368" WIDTH="3170">
+            <String CONTENT="BARCLAY" HEIGHT="373" HPOS="448" ID="PAG_00000002_ST000001" STYLEREFS="TXT_1" TYPE="illegible" VPOS="368" WC="0.82" WIDTH="3170"/>
+          </TextLine>
+        </TextBlock>
+        <ComposedBlock HEIGHT="3184" HPOS="421" ID="PAG_00000002_CB000001" VPOS="963" WIDTH="3220">
+          <Illustration HEIGHT="3184" HPOS="421" ID="PAG_00000002_IL000001" VPOS="963" WIDTH="3220"/>
+          <TextBlock HEIGHT="85" HPOS="3065" ID="PAG_00000002_TB000002" STYLEREFS="TXT_1" VPOS="3892" WIDTH="551" language="fr">
+            <TextLine HEIGHT="41" HPOS="3212" ID="PAG_00000002_TL000002" STYLEREFS="TXT_1" VPOS="3892" WIDTH="404">
+              <String CONTENT="DESSIN" HEIGHT="38" HPOS="3212" ID="PAG_00000002_ST000002" STYLEREFS="TXT_1" TYPE="illegible" VPOS="3892" WC="1" WIDTH="175"/>
+              <SP HPOS="3387" ID="PAG_00000002_SP000001" VPOS="3892" WIDTH="1"/>
+              <String CONTENT="DE" HEIGHT="38" HPOS="3387" ID="PAG_00000002_ST000003" STYLEREFS="TXT_1" TYPE="illegible" VPOS="3892" WC="1" WIDTH="101"/>
+              <SP HPOS="3488" ID="PAG_00000002_SP000002" VPOS="3907" WIDTH="106"/>
+              <String CONTENT=".," HEIGHT="26" HPOS="3594" ID="PAG_00000002_ST000004" STYLEREFS="TXT_1" TYPE="illegible" VPOS="3907" WC="0.00" WIDTH="22"/>
+            </TextLine>
+            <TextLine HEIGHT="40" HPOS="3065" ID="PAG_00000002_TL000003" STYLEREFS="TXT_1" VPOS="3937" WIDTH="528">
+              <String CONTENT="B" HEIGHT="33" HPOS="3065" ID="PAG_00000002_ST000005" STYLEREFS="TXT_1" TYPE="illegible" VPOS="3938" WC="1" WIDTH="30"/>
+              <SP HPOS="3095" ID="PAG_00000002_SP000003" VPOS="3939" WIDTH="22"/>
+              <String CONTENT="BOUTET" HEIGHT="35" HPOS="3117" ID="PAG_00000002_ST000006" STYLEREFS="TXT_1" TYPE="illegible" VPOS="3939" WC="1" WIDTH="191"/>
+              <SP HPOS="3308" ID="PAG_00000002_SP000004" VPOS="3942" WIDTH="29"/>
+              <String CONTENT="DE" HEIGHT="34" HPOS="3337" ID="PAG_00000002_ST000007" STYLEREFS="TXT_1" TYPE="illegible" VPOS="3942" WC="1" WIDTH="60"/>
+              <SP HPOS="3397" ID="PAG_00000002_SP000005" VPOS="3937" WIDTH="27"/>
+              <String CONTENT="MONVr." HEIGHT="40" HPOS="3424" ID="PAG_00000002_ST000008" STYLEREFS="TXT_1" TYPE="illegible" VPOS="3937" WC="0.86" WIDTH="169"/>
+            </TextLine>
+          </TextBlock>
+          <TextBlock HEIGHT="25" HPOS="3595" ID="PAG_00000002_TB000003" STYLEREFS="TXT_1" VPOS="3977" WIDTH="21" language="fr">
+            <TextLine HEIGHT="25" HPOS="3595" ID="PAG_00000002_TL000004" STYLEREFS="TXT_1" VPOS="3977" WIDTH="21">
+              <String CONTENT="0" HEIGHT="25" HPOS="3595" ID="PAG_00000002_ST000009" STYLEREFS="TXT_1" TYPE="illegible" VPOS="3977" WC="0.00" WIDTH="21"/>
+            </TextLine>
+          </TextBlock>
+        </ComposedBlock>
+        <TextBlock HEIGHT="444" HPOS="428" ID="PAG_00000002_TB000004" STYLEREFS="TXT_1" VPOS="4448" WIDTH="733" language="fr">
+          <TextLine HEIGHT="123" HPOS="430" ID="PAG_00000002_TL000005" STYLEREFS="TXT_1" VPOS="4448" WIDTH="646">
+            <String CONTENT="PARIS" HEIGHT="123" HPOS="430" ID="PAG_00000002_ST000010" STYLEREFS="TXT_1" VPOS="4448" WC="0.87" WIDTH="646"/>
+          </TextLine>
+          <TextLine HEIGHT="90" HPOS="558" ID="PAG_00000002_TL000006" STYLEREFS="TXT_1" VPOS="4592" WIDTH="387">
+            <String CONTENT="I" HEIGHT="90" HPOS="558" ID="PAG_00000002_ST000011" STYLEREFS="TXT_1" VPOS="4592" WC="0.88" WIDTH="86"/>
+            <SP HPOS="644" ID="PAG_00000002_SP000006" VPOS="4592" WIDTH="1"/>
+            <String CONTENT="8" HEIGHT="90" HPOS="644" ID="PAG_00000002_ST000012" STYLEREFS="TXT_1" VPOS="4592" WC="0.88" WIDTH="86"/>
+            <SP HPOS="730" ID="PAG_00000002_SP000007" VPOS="4592" WIDTH="1"/>
+            <String CONTENT="-" HEIGHT="90" HPOS="730" ID="PAG_00000002_ST000013" STYLEREFS="TXT_1" VPOS="4592" WC="0.88" WIDTH="86"/>
+            <SP HPOS="816" ID="PAG_00000002_SP000008" VPOS="4592" WIDTH="1"/>
+            <String CONTENT="20" HEIGHT="90" HPOS="816" ID="PAG_00000002_ST000014" STYLEREFS="TXT_1" VPOS="4592" WC="0.88" WIDTH="129"/>
+          </TextLine>
+          <TextLine HEIGHT="84" HPOS="428" ID="PAG_00000002_TL000007" STYLEREFS="TXT_1" VPOS="4704" WIDTH="733">
+            <String CONTENT="AVENUE" HEIGHT="82" HPOS="428" ID="PAG_00000002_ST000015" STYLEREFS="TXT_1" VPOS="4704" WC="1" WIDTH="455"/>
+            <SP HPOS="883" ID="PAG_00000002_SP000009" VPOS="4708" WIDTH="53"/>
+            <String CONTENT="DE" HEIGHT="80" HPOS="936" ID="PAG_00000002_ST000016" STYLEREFS="TXT_1" VPOS="4708" WC="1" WIDTH="176"/>
+            <SP HPOS="1112" ID="PAG_00000002_SP000010" VPOS="4750" WIDTH="43"/>
+            <String CONTENT="-" HEIGHT="3" HPOS="1155" ID="PAG_00000002_ST000017" STYLEREFS="TXT_1" SUBS_CONTENT="L'OPÉRA" SUBS_TYPE="HypPart1" VPOS="4750" WC="1" WIDTH="6"/>
+            <HYP CONTENT="-" HPOS="1161" VPOS="4753" WIDTH="30"/>
+          </TextLine>
+          <TextLine HEIGHT="86" HPOS="556" ID="PAG_00000002_TL000008" STYLEREFS="TXT_1" VPOS="4806" WIDTH="394">
+            <String CONTENT="L'OPÉRA" HEIGHT="86" HPOS="556" ID="PAG_00000002_ST000018" STYLEREFS="TXT_1" SUBS_CONTENT="L'OPÉRA" SUBS_TYPE="HypPart2" VPOS="4806" WC="1" WIDTH="394"/>
+          </TextLine>
+        </TextBlock>
+        <TextBlock HEIGHT="168" HPOS="1616" ID="PAG_00000002_TB000005" STYLEREFS="TXT_1" VPOS="4308" WIDTH="828" language="fr">
+          <TextLine HEIGHT="168" HPOS="1616" ID="PAG_00000002_TL000009" STYLEREFS="TXT_1" VPOS="4308" WIDTH="828">
+            <String CONTENT="TAILOR" HEIGHT="168" HPOS="1616" ID="PAG_00000002_ST000019" STYLEREFS="TXT_1" VPOS="4308" WC="1" WIDTH="828"/>
+          </TextLine>
+        </TextBlock>
+        <TextBlock HEIGHT="81" HPOS="1630" ID="PAG_00000002_TB000006" STYLEREFS="TXT_1" VPOS="4759" WIDTH="994" language="fr">
+          <TextLine HEIGHT="81" HPOS="1630" ID="PAG_00000002_TL000010" STYLEREFS="TXT_1" VPOS="4759" WIDTH="994">
+            <String CONTENT="TÉLÉPHONE." HEIGHT="81" HPOS="1630" ID="PAG_00000002_ST000020" STYLEREFS="TXT_1" VPOS="4759" WC="0.94" WIDTH="756"/>
+          </TextLine>
+        </TextBlock>
+        <TextBlock HEIGHT="83" HPOS="1542" ID="PAG_00000002_TB000007" STYLEREFS="TXT_1" VPOS="4844" WIDTH="978" language="fr">
+          <TextLine HEIGHT="83" HPOS="1542" ID="PAG_00000002_TL000011" STYLEREFS="TXT_1" VPOS="4844" WIDTH="978">
+            <String CONTENT="CENTRAL," HEIGHT="75" HPOS="1542" ID="PAG_00000002_ST000021" STYLEREFS="TXT_1" VPOS="4844" WC="1" WIDTH="410"/>
+            <SP HPOS="1952" ID="PAG_00000002_SP000011" VPOS="4850" WIDTH="38"/>
+            <String CONTENT="96.16" HEIGHT="77" HPOS="1990" ID="PAG_00000002_ST000022" STYLEREFS="TXT_1" VPOS="4850" WC="0.91" WIDTH="244"/>
+            <SP HPOS="2234" ID="PAG_00000002_SP000012" VPOS="4850" WIDTH="1"/>
+            <String CONTENT="-" HEIGHT="77" HPOS="2234" ID="PAG_00000002_ST000023" STYLEREFS="TXT_1" VPOS="4850" WC="0.91" WIDTH="81"/>
+            <SP HPOS="2315" ID="PAG_00000002_SP000013" VPOS="4850" WIDTH="1"/>
+            <String CONTENT="96.4" HEIGHT="77" HPOS="2315" ID="PAG_00000002_ST000024" STYLEREFS="TXT_1" VPOS="4850" WC="0.91" WIDTH="205"/>
+          </TextLine>
+        </TextBlock>
+        <TextBlock HEIGHT="485" HPOS="2952" ID="PAG_00000002_TB000008" STYLEREFS="TXT_1" VPOS="4460" WIDTH="664" language="fr">
+          <TextLine HEIGHT="148" HPOS="3012" ID="PAG_00000002_TL000012" STYLEREFS="TXT_1" VPOS="4460" WIDTH="600">
+            <String CONTENT="LONDOtf" HEIGHT="148" HPOS="3012" ID="PAG_00000002_ST000025" STYLEREFS="TXT_1" TYPE="illegible" VPOS="4460" WC="0.86" WIDTH="600"/>
+          </TextLine>
+          <TextLine HEIGHT="170" HPOS="2952" ID="PAG_00000002_TL000013" STYLEREFS="TXT_1" VPOS="4628" WIDTH="648">
+            <String CONTENT="CANNES" HEIGHT="170" HPOS="2952" ID="PAG_00000002_ST000026" STYLEREFS="TXT_1" TYPE="illegible" VPOS="4628" WC="1" WIDTH="648"/>
+          </TextLine>
+          <TextLine HEIGHT="169" HPOS="3136" ID="PAG_00000002_TL000014" STYLEREFS="TXT_1" VPOS="4776" WIDTH="480">
+            <String CONTENT="NICE" HEIGHT="169" HPOS="3136" ID="PAG_00000002_ST000027" STYLEREFS="TXT_1" TYPE="illegible" VPOS="4776" WC="0.22" WIDTH="342"/>
+            <SP HPOS="3478" ID="PAG_00000002_SP000014" VPOS="4776" WIDTH="1"/>
+            <String CONTENT="I" HEIGHT="169" HPOS="3478" ID="PAG_00000002_ST000028" STYLEREFS="TXT_1" TYPE="illegible" VPOS="4776" WC="0.22" WIDTH="138"/>
+          </TextLine>
+        </TextBlock>
+        <TextBlock HEIGHT="24" HPOS="3593" ID="PAG_00000002_TB000009" STYLEREFS="TXT_1" VPOS="4996" WIDTH="33" language="fr">
+          <TextLine HEIGHT="24" HPOS="3593" ID="PAG_00000002_TL000015" STYLEREFS="TXT_1" VPOS="4996" WIDTH="33">
+            <String CONTENT="la" HEIGHT="24" HPOS="3593" ID="PAG_00000002_ST000029" STYLEREFS="TXT_1" TYPE="illegible" VPOS="4996" WC="0.00" WIDTH="33"/>
+          </TextLine>
+        </TextBlock>
+      </PrintSpace>
+    </Page>
+  </Layout>
+</alto>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<alto ID="alto.6537262" xmlns="http://bibnum.bnf.fr/ns/alto_prod" xmlns:xlink="http://www.w3.org/TR/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bibnum.bnf.fr/ns/alto_prod http://bibnum.bnf.fr/ns/alto_prod.xsd">
+  <Description>
+    <MeasurementUnit>pixel</MeasurementUnit>
+    <sourceImageInformation>
+      <fileName>00000036.tif</fileName>
+    </sourceImageInformation>
+    <OCRProcessing ID="OCR_1">
+      <ocrProcessingStep>
+        <processingDateTime>2013-05-31</processingDateTime>
+        <processingStepDescription>[001_OCR_BRUT]OCR BRUT 98.880 %</processingStepDescription>
+        <processingStepDescription>[002_TOTAL_CHARS]{119}</processingStepDescription>
+        <processingStepDescription>[003_TOTAL_CHARS_USED]{117}</processingStepDescription>
+        <processingStepDescription>[004_TOTAL_CHARS_SUSPECTS_USED]{0}</processingStepDescription>
+        <processingStepDescription>[005_TOTAL_CHARS_UNUSED]{2}</processingStepDescription>
+        <processingStepDescription>[006_TOTAL_CHARS_SUSPECTS_UNUSED]{0}</processingStepDescription>
+        <processingStepDescription>[007_TOTAL_STRINGS]{26}</processingStepDescription>
+        <processingStepDescription>[011_CHARS_PUNCTUATION]{1}</processingStepDescription>
+        <processingStepDescription>[012_CHARS_DIGITS]{1}</processingStepDescription>
+        <processingStepDescription>[013_CHARS_SUSPECT]{0}</processingStepDescription>
+        <processingStepDescription>[022_CHARS_UNUSED_BY_BLOCK]{0}</processingStepDescription>
+        <processingStepDescription>[111_LIGS_DETECTED_CURV]{0}</processingStepDescription>
+        <processingStepSettings>OCR 99.960 %</processingStepSettings>
+      </ocrProcessingStep>
+    </OCRProcessing>
+  </Description>
+  <Styles>
+    <TextStyle FONTFAMILY="Times" FONTSIZE="12" ID="TXT_1"/>
+  </Styles>
+  <Layout>
+    <Page HEIGHT="5071" ID="PAG_00000036" PHYSICAL_IMG_NR="1" QUALITY="OK" WIDTH="3625">
+      <TopMargin HEIGHT="285" HPOS="0" ID="PAG_00000036_TopMargin" VPOS="0" WIDTH="3625">
+        <TextBlock HEIGHT="56" HPOS="475" ID="PAG_00000036_TB000001" STYLEREFS="TXT_1" VPOS="185" WIDTH="3020" language="fr">
+          <TextLine HEIGHT="56" HPOS="475" ID="PAG_00000036_TL000001" STYLEREFS="TXT_1" VPOS="185" WIDTH="3020">
+            <String CONTENT="3°" HEIGHT="34" HPOS="475" ID="PAG_00000036_ST000001" STYLEREFS="TXT_1" VPOS="201" WC="1" WIDTH="46"/>
+            <SP HPOS="521" ID="PAG_00000036_SP000001" VPOS="185" WIDTH="2738"/>
+            <String CONTENT="rOGUE" HEIGHT="56" HPOS="3259" ID="PAG_00000036_ST000002" STYLEREFS="TXT_1" VPOS="185" WC="0.88" WIDTH="236"/>
+          </TextLine>
+        </TextBlock>
+      </TopMargin>
+      <PrintSpace HEIGHT="4495" HPOS="457" ID="PAG_00000036_PrintSpace" VPOS="285" WIDTH="3002">
+        <Illustration HEIGHT="4290" HPOS="457" ID="PAG_00000036_IL000001" VPOS="285" WIDTH="3002"/>
+        <TextBlock HEIGHT="184" HPOS="742" ID="PAG_00000036_TB000002" STYLEREFS="TXT_1" VPOS="4596" WIDTH="2377" language="fr">
+          <TextLine HEIGHT="86" HPOS="744" ID="PAG_00000036_TL000002" STYLEREFS="TXT_1" VPOS="4596" WIDTH="2375">
+            <String CONTENT="LES" HEIGHT="37" HPOS="744" ID="PAG_00000036_ST000003" STYLEREFS="TXT_1" VPOS="4596" WC="1" WIDTH="88"/>
+            <SP HPOS="832" ID="PAG_00000036_SP000002" VPOS="4600" WIDTH="56"/>
+            <String CONTENT="NEW-YORKAIS" HEIGHT="42" HPOS="888" ID="PAG_00000036_ST000004" STYLEREFS="TXT_1" VPOS="4600" WC="1" WIDTH="357"/>
+            <SP HPOS="1245" ID="PAG_00000036_SP000003" VPOS="4610" WIDTH="65"/>
+            <String CONTENT="ONT" HEIGHT="38" HPOS="1310" ID="PAG_00000036_ST000005" STYLEREFS="TXT_1" VPOS="4610" WC="1" WIDTH="105"/>
+            <SP HPOS="1415" ID="PAG_00000036_SP000004" VPOS="4616" WIDTH="63"/>
+            <String CONTENT="LA" HEIGHT="35" HPOS="1478" ID="PAG_00000036_ST000006" STYLEREFS="TXT_1" VPOS="4616" WC="1" WIDTH="60"/>
+            <SP HPOS="1538" ID="PAG_00000036_SP000005" VPOS="4620" WIDTH="62"/>
+            <String CONTENT="JOIE" HEIGHT="35" HPOS="1600" ID="PAG_00000036_ST000007" STYLEREFS="TXT_1" VPOS="4620" WC="1" WIDTH="112"/>
+            <SP HPOS="1712" ID="PAG_00000036_SP000006" VPOS="4622" WIDTH="60"/>
+            <String CONTENT="DE" HEIGHT="35" HPOS="1772" ID="PAG_00000036_ST000008" STYLEREFS="TXT_1" VPOS="4622" WC="1" WIDTH="68"/>
+            <SP HPOS="1840" ID="PAG_00000036_SP000007" VPOS="4624" WIDTH="62"/>
+            <String CONTENT="VOIR" HEIGHT="38" HPOS="1902" ID="PAG_00000036_ST000009" STYLEREFS="TXT_1" VPOS="4624" WC="1" WIDTH="120"/>
+            <SP HPOS="2022" ID="PAG_00000036_SP000008" VPOS="4628" WIDTH="62"/>
+            <String CONTENT="DANSER" HEIGHT="41" HPOS="2084" ID="PAG_00000036_ST000010" STYLEREFS="TXT_1" VPOS="4628" WC="1" WIDTH="204"/>
+            <SP HPOS="2288" ID="PAG_00000036_SP000009" VPOS="4636" WIDTH="58"/>
+            <String CONTENT="DANS" HEIGHT="40" HPOS="2346" ID="PAG_00000036_ST000011" STYLEREFS="TXT_1" VPOS="4636" WC="1" WIDTH="139"/>
+            <SP HPOS="2485" ID="PAG_00000036_SP000010" VPOS="4642" WIDTH="59"/>
+            <String CONTENT="LEUR" HEIGHT="36" HPOS="2544" ID="PAG_00000036_ST000012" STYLEREFS="TXT_1" VPOS="4642" WC="1" WIDTH="130"/>
+            <SP HPOS="2674" ID="PAG_00000036_SP000011" VPOS="4644" WIDTH="54"/>
+            <String CONTENT="PALAIS" HEIGHT="37" HPOS="2728" ID="PAG_00000036_ST000013" STYLEREFS="TXT_1" VPOS="4644" WC="1" WIDTH="171"/>
+            <SP HPOS="2899" ID="PAG_00000036_SP000012" VPOS="4646" WIDTH="55"/>
+            <String CONTENT="ROYAL" HEIGHT="36" HPOS="2954" ID="PAG_00000036_ST000014" STYLEREFS="TXT_1" VPOS="4646" WC="1" WIDTH="165"/>
+          </TextLine>
+          <TextLine HEIGHT="90" HPOS="742" ID="PAG_00000036_TL000003" STYLEREFS="TXT_1" VPOS="4690" WIDTH="2376">
+            <String CONTENT="DOROTHY" HEIGHT="40" HPOS="742" ID="PAG_00000036_ST000015" STYLEREFS="TXT_1" VPOS="4690" WC="1" WIDTH="248"/>
+            <SP HPOS="990" ID="PAG_00000036_SP000013" VPOS="4696" WIDTH="44"/>
+            <String CONTENT="DICKSON" HEIGHT="41" HPOS="1034" ID="PAG_00000036_ST000016" STYLEREFS="TXT_1" VPOS="4696" WC="1" WIDTH="228"/>
+            <SP HPOS="1262" ID="PAG_00000036_SP000014" VPOS="4704" WIDTH="46"/>
+            <String CONTENT="QUI" HEIGHT="42" HPOS="1308" ID="PAG_00000036_ST000017" STYLEREFS="TXT_1" VPOS="4704" WC="1" WIDTH="92"/>
+            <SP HPOS="1400" ID="PAG_00000036_SP000015" VPOS="4710" WIDTH="46"/>
+            <String CONTENT="EST" HEIGHT="36" HPOS="1446" ID="PAG_00000036_ST000018" STYLEREFS="TXT_1" VPOS="4710" WC="1" WIDTH="92"/>
+            <SP HPOS="1538" ID="PAG_00000036_SP000016" VPOS="4714" WIDTH="46"/>
+            <String CONTENT="BIEN" HEIGHT="36" HPOS="1584" ID="PAG_00000036_ST000019" STYLEREFS="TXT_1" VPOS="4714" WC="1" WIDTH="120"/>
+            <SP HPOS="1704" ID="PAG_00000036_SP000017" VPOS="4718" WIDTH="46"/>
+            <String CONTENT="JOLIE" HEIGHT="36" HPOS="1750" ID="PAG_00000036_ST000020" STYLEREFS="TXT_1" VPOS="4718" WC="1" WIDTH="140"/>
+            <SP HPOS="1890" ID="PAG_00000036_SP000018" VPOS="4720" WIDTH="46"/>
+            <String CONTENT="ET" HEIGHT="36" HPOS="1936" ID="PAG_00000036_ST000021" STYLEREFS="TXT_1" VPOS="4720" WC="1" WIDTH="63"/>
+            <SP HPOS="1999" ID="PAG_00000036_SP000019" VPOS="4724" WIDTH="47"/>
+            <String CONTENT="QUI" HEIGHT="40" HPOS="2046" ID="PAG_00000036_ST000022" STYLEREFS="TXT_1" VPOS="4724" WC="1" WIDTH="90"/>
+            <SP HPOS="2136" ID="PAG_00000036_SP000020" VPOS="4728" WIDTH="44"/>
+            <String CONTENT="PORTE" HEIGHT="38" HPOS="2180" ID="PAG_00000036_ST000023" STYLEREFS="TXT_1" VPOS="4728" WC="1" WIDTH="173"/>
+            <SP HPOS="2353" ID="PAG_00000036_SP000021" VPOS="4734" WIDTH="47"/>
+            <String CONTENT="UNE" HEIGHT="38" HPOS="2400" ID="PAG_00000036_ST000024" STYLEREFS="TXT_1" VPOS="4734" WC="1" WIDTH="105"/>
+            <SP HPOS="2505" ID="PAG_00000036_SP000022" VPOS="4738" WIDTH="47"/>
+            <String CONTENT="AMUSANTE" HEIGHT="38" HPOS="2552" ID="PAG_00000036_ST000025" STYLEREFS="TXT_1" VPOS="4738" WC="1" WIDTH="272"/>
+            <SP HPOS="2824" ID="PAG_00000036_SP000023" VPOS="4742" WIDTH="52"/>
+            <String CONTENT="TOILETTE" HEIGHT="38" HPOS="2876" ID="PAG_00000036_ST000026" STYLEREFS="TXT_1" VPOS="4742" WC="1" WIDTH="242"/>
+          </TextLine>
+        </TextBlock>
+      </PrintSpace>
+    </Page>
+  </Layout>
+</alto>

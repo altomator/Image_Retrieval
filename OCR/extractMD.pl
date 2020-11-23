@@ -26,7 +26,7 @@ use XML::Twig;
 use Path::Class;
 use Path::Class::Entity;
 use Benchmark qw(:all) ;
-#use utf8::all;
+use utf8::all 'NO-GLOBAL';
 use Date::Simple qw(date);
 use Try::Tiny;
 use Switch;
@@ -57,19 +57,21 @@ $DEBUG = 1;
 # The collection SOURCE
 $sourceDefault = "BnF";
 # The collection type
-$typeDoc="M"; # documents type :  P (newspapers) /  R (magazine) / M (monograph) / I (image)
+$typeDoc="R"; # documents type :  P (newspapers) /  R (magazine) / M (monograph) / I (image)
 # UNCOMMENT this line to set a default IPTC theme
 #$themeDefaut = "13"; #  IPTC theme
 ### uncomment the following parameters to defined classification tags
 #@tags = ("animal", "fish", "verterbrate");
-# UNCOMMENT this line to se a default image type (picture, drawing, map...)
-#$genreDefaut="gravure"; # photo, gravure, dessin...
-
-####### parameter TO BE DEFINED ##########
+# UNCOMMENT this line to se a default  technique (picture, drawing, map...)
+$techDefaut="imp photoméca"; # photo, estampe, dessin, imp photoméca, textile
+# UNCOMMENT this line to se a default function (map, ad...)
+#fonctionDefaut="carte";
+# ALTO version
+$altoBnf = "v2";
 # max length of OCR texts to be extrated (in characters)
 $maxTxt=2500; # longueur max des textes OCR extraits (en caracteres)
 # nb of txtBlocks
-$maxTxtBlock=3; #
+$maxTxtBlock=4; #
 $unknown = "inconnu";  # to be localized
 
 
@@ -78,7 +80,7 @@ $unknown = "inconnu";  # to be localized
 # ------
 ####### parameter TO BE DEFINED ##########
 # COMMENT this line to look for the DPI (resolution) in the manisfeste
-$DPIdefaut=400;	#  placer en commentaire pour analyser la résolution dans le manifeste
+$DPIdefaut=600;	#  placer en commentaire pour analyser la résolution dans le manifeste
 
 ####### parameter TO BE DEFINED ##########
 # COMMENT this line to analyse the color mode in the manifest
@@ -99,13 +101,13 @@ $A8 = 3848; # surface d'un A8 en mm2 (= format d'une carte de jeu). La taille de
 #$seuilHauteur=200;
 ####### parameter TO BE DEFINED ##########
 # minimum ratio size of the illustration (% of the page surface, 0.01=1%))
-$seuilTaille = 0.001; # ratio de taille minimum de l'illustration en % de la page (0,01=1%)
+$seuilTaille = 0.004; # ratio de taille minimum de l'illustration en % de la page (0,01=1%)
 ####### parameter TO BE DEFINED ##########
 # for newspapers, upper margin of the front page to be excluded
-$ratioOurs = 5; # pour filtrer les illustrations de la zone supérieure (1/5 a 1/8) de la page de une
+$ratioOurs = 8; # pour filtrer les illustrations de la zone supérieure (1/5 a 1/8) de la page de une
 ####### parameter TO BE DEFINED ##########
 # maximum width/height ratio to filter ribon-like illustrations
-$ratioBandeau = 8; # ratio L/H, pour filtrer les illustrations étroites (bandeau, cul-de-lampe)
+$ratioBandeau = 6; # ratio L/H, pour filtrer les illustrations étroites (bandeau, cul-de-lampe)
 ######################################
 
 #######################################
@@ -120,13 +122,13 @@ $hash{"lpages"}=" "; # ALTO pages analysed
 ## including the library to output XML or JSON ##
 require "../bib-XML.pl"; ## importation macros d'export XML ou JSON ##
 
-## classification of illustrations genres from the OCR types
-%genres = (  ## classification des genres des illustrations en fonction des typages présents dans l'OCR
+## classification of illustrations function from the OCR types
+%fonctions = (  ## classification de la fonction des illustrations en fonction des typages présents dans l'OCR
   "stamp  TAG_stamp"  => "filtretimbre",
 	"carte map TAG_map"  => "carte", # map
 	"formula TAG_formula" => "formule" , # math formula
-	"manuscript TAG_manuscript" => "manuscrit", # manuscript
-  "dessin " => "dessin" ,
+	"manuscript TAG_manuscript" => "repro/texte", # manuscript
+  "dessin " => "repro/dessin" ,
 	"music musicScore TAG_musicScore" => "partition");  # music score
 
 
@@ -350,6 +352,7 @@ my $codeErreur = 0;
 my $id; # id du document en cours
 # total number of analysed documents
 $nbDoc=0; # nbre de documents analysés
+$nbMD=0;
 # total number of metadata exported
 $nbDocExport=0; # nbre de metadonnées produites
 # total number of illustrations
@@ -378,6 +381,7 @@ $numPageALTO=1; # page ALTO en cours
 #$numIllDecrites=0;
 # ID of the ALTO block currently analysed
 $idBlocAlto =""; # ID du bloc ALTO en cours
+$typeBlocAlto =""; # type du bloc ALTO en cours
 # IDs of the ALTO text blocks which are related to the illustrations
 # this structure is a table (page level) of table (illustration level)
 @listeIDsTxt = (); # ID des blocs ALTO de texte a associer aux illustrations : # tableau (page) de tableaux (illustration)
@@ -408,8 +412,7 @@ sub getALTO {my ($t, $elt) = @_;
 	  #say Dumper \@listeIDsTxt ;
 
 	  if ($DEBUG) {say "getALTO / elt: ".$elt->name();}
-	  # $numPageALTO : var globale, page en cours
-		# $numPageALTO : globale var, #page under processing
+	  # $numPageALTO : var globale, page en cours / globale var, page under processing
 	  if (defined ($listeIDsTxt[$numPageALTO])) {
 	  # liste des blocs à chercher pour cette page
 		# list of blocks to be looked for
@@ -448,7 +451,7 @@ sub getALTO {my ($t, $elt) = @_;
 				 }
 				 if ($DEBUG) {say "caption:  $scal"}
 	  	   $hash{$numPageALTO."_ill_".$i."leg"} = subTxt($scal);
-	  	   }
+	  	  }
 	  } # for
 	 }
 }
@@ -531,7 +534,7 @@ if ($MODE eq "ocren"){ # OCR projet Europeana Newspapers
 
 	#$motifIDill = $motifIDBlockOCREN;
 
-} elsif ($MODE eq "ocrbnflegacy") {
+} elsif ($MODE eq "ocrbnflegacy") { # refnum + ALTO bnf v1
 	$repALTO=$paramRepALTO_OCRBNF;
   $suffixeManif =$paramSuffixe_OCRBNF;
   $prefixeManif =$paramPrefixe_OCRBNF;
@@ -555,7 +558,7 @@ if ($MODE eq "ocren"){ # OCR projet Europeana Newspapers
   $motifIDTxtBlock = $paramMotifIDTxtBlockOCRBNF;
   #$motifIDIllBlock = $motifIDIllBlockOCRBNF;
 
-} elsif (($MODE eq "ocrbnf") or ($MODE eq "olrbnf"))  {
+} elsif (($MODE eq "ocrbnf") or ($MODE eq "olrbnf"))  { # METS + ALTO bnf v1 ou v2
 	$repALTO=$paramRepALTO_OLRBNF;
 	$repTOC=$paramRepTOC_OLRBNF;
   $suffixeManif =$paramSuffixe_OCRBNF;
@@ -577,16 +580,27 @@ if ($MODE eq "ocren"){ # OCR projet Europeana Newspapers
 	$motifItemTdM = $paramMotifItem_TdMBNF ;
 	$motifEntreeTdM = $paramMotifEntree_TdMBNF;
 	$motifEntreeVueTdM = $paramMotifEntreeVue_TdMBNF;
-	# structure logique
-  #$motifParagraphe = $motifParagraphe_OLRBNF;
-  $motifNumAlto = $motifNumAlto_OLRBNF ;
-  #$motifTable =$paramMotifTable_OCR;
-  $motifIDTxtBlock = $paramMotifIDTxtBlockOCRBNF;
-  #$motifIDIllBlock = $motifIDIllBlockOCRBNF;
-  # OCR
-  $motifPubALTO=$paramMotifPubALTO_OLRBNF;
-  $motifTypeIllALTO=$paramMotifTypeIllALTO_OLRBNF;
-
+  if ($altoBnf eq "v2") {
+	   # structure logique
+     #$motifParagraphe = $motifParagraphe_OLRBNF;
+     $motifNumAlto = $motifNumAlto_OLRBNF ;
+     #$motifTable =$paramMotifTable_OCR;
+     $motifIDTxtBlock = $paramMotifIDTxtBlockOCRBNF;
+     #$motifIDIllBlock = $motifIDIllBlockOCRBNF;
+     # OCR
+     $motifIllustrationALTO=$paramMotifIllustrationALTO_OLRBNF;
+     $motifPubALTO=$paramMotifPubALTO_OLRBNF;
+     $motifTypeIllALTO=$paramMotifTypeIllALTO_OLRBNF;}
+  else {
+    # structure logique
+    #$motifNumAlto = $motifNumAlto_OLRBNF ;
+    #$motifTable =$paramMotifTable_OCR;
+    $motifIDTxtBlock = $paramMotifIDTxtBlockOCRBNF;
+    #$motifIDIllBlock = $motifIDIllBlockOCRBNF;
+    # OCR
+    #$motifPubALTO=$paramMotifPubALTO_OLRBNF;
+    #$motifTypeIllALTO=$paramMotifTypeIllALTO_OLRBNF;
+  }
 
   }
 else {
@@ -599,7 +613,7 @@ if ($calculARK==1) {
 	#################################################
 	## for BnF monographies : ark IDs importation  / set a %arksMono hash ##
 	if ($typeDoc eq "M")
-	   {require "arks-mono.pl"}	## pour les BnF monographies, il faut fournir une liste d'ark ID --> %arksMono ##
+	   {require "arks-mono.pl"}	## pour les monographies BNF, il faut fournir une liste d'ark ID --> %arksMono ##
 
   # for Europeana corpus, we need to find the ID in the hash
   if (index($MODE, "en") != -1) {  # il faut trouver l'ID de notice dans le hash : cas des corpus EN
@@ -664,10 +678,11 @@ if ($couleurDefaut) {
  say " a default color mode is set to: $couleurDefaut -> it will overwrite the documents local values";}
 if ($themeDefaut) {
 	say " a default theme is set to: $themeDefaut -> it will overwrite the documents local values";}
-if ($genreDefaut) {
-say " a genre is set to: $genreDefaut -> it will overwrite the documents local values";}
-
-
+if ($techDefaut) {
+ say " a technique is set to: $techDefaut -> it will overwrite the documents local values";}
+if ($fonctionDefaut) {
+ say " a function is set to: $fonctionDefaut -> it will overwrite the documents local values";}
+say " ALTO version is set to: $altoBnf";
 
 say " ********************************************";
 print " OK to continue? (Y/N)\n >";
@@ -883,8 +898,12 @@ sub lireMD {
          { $nbPages = scalar (@pages);}
    	else {say "## unknown pages number (pattern: $motifNbPagesALTO ) ##"; }
   }
-  # if the title is not in the manifest...
-  $titre ||= $titreDefaut;
+  # if the title is not in the manifest, we use the line command parameter
+  if (not $titre) {$titre = $titreDefaut}
+  else { # if a title is in the manifest but not the real title (newspapers)
+    if (($MODE eq "ocrbnf")  and (($typeDoc eq "P") or ($typeDoc eq "R")))
+       {$titre = $titreDefaut." ".$titre}
+     }
   $hash{"titre"} = $titre;
 
   $notice ||= $unknown;
@@ -1322,17 +1341,15 @@ sub genererMDALTO {
 
   my $nbrePagesALTO = 0;
 
-  #say "genererMDALTO: $rep";
+  say "genererMDALTO: $rep";
   #say Dumper(@listeDMDIDs);
   #say Dumper(@listeIDsTxt);
 
   opendir (my $DIR, $rep) || die "Error while opening $rep: $!\n";
-
   foreach my $fichier(sort readdir $DIR)  # sorting files in the folder
   {
         next if $fichier eq '.' or $fichier eq '..';
         $chemin = $rep."/".$fichier;
-        #print("fileName: $chemin \n");
   #while (my $fichier = $rep->next) {
 			if ((substr $chemin, -4) eq ".xml") {
 		    #$numPageALTO = int(substr $fichier,-6,3); # SBB
@@ -1346,7 +1363,7 @@ sub genererMDALTO {
 						$hash{"lpages"} = $hash{"lpages"}.$numPageALTO.","}  # liste des num de pages ALTO
 					else {$hash{"lpages"} = $numPageALTO.","}
 			}
-		 }
+    } else {say "## can't find .xml files here! ##"}
     }
    say "\n $nbrePagesALTO ALTO pages analysed";
    say "-------------------------- ALTO: END";
@@ -1383,6 +1400,7 @@ sub lireMDALTO {
   print "--------------\nALTO analyse #page ".$numPageALTO.": $fichier \n";
 
   open my $fh, '<', $fichier or die "Can't open: $fichier !";
+  binmode $fh; ## avoid the utf8::all side effects
 
   #say Dumper (%hash);
 
@@ -1506,6 +1524,7 @@ sub lireMDALTO {
     	#if ($MODE ne "olrbnf") { # si OLR BnF on ne filtre pas les illustrations par leur taille
     	 if (($ratio < $seuilTaille) # filtrer les illustrations de petites tailles
     	  or ($largeur/$hauteur > $ratioBandeau) #  pour filtrer les images étroites (filets, bandeaux)
+        or ($hauteur/$largeur > $ratioBandeau)
     		or (($typeDoc ne "M") and ($numPageALTO==1) and (($y+$hauteur)<($hauteurPage/$ratioOurs))) # pour filtrer les ours de presse et revue
     		)
     	      {$filtre="1";$nbTotIllFiltrees++;
@@ -1526,8 +1545,8 @@ sub lireMDALTO {
     	$hash{$numPageALTO."_ill_".$numIllEnCours."w"} = int($largeur);
     	$hash{$numPageALTO."_ill_".$numIllEnCours."h"} = int($hauteur);
     	$hash{$numPageALTO."_ill_".$numIllEnCours."id"} = $idBlocAlto;
-    	if (defined $typeIll) {  # genre lu dans l'OCR
-    	 	  $hash{$numPageALTO."_ill_".$numIllEnCours."genre"} = $typeIll ;}
+    	if (defined $typeIll) {  # fonction lue dans l'OCR
+    	 	  $hash{$numPageALTO."_ill_".$numIllEnCours."fonction"} = $typeIll ;}
 
     	 # mode OCR : on cherche du texte dans l'OCR
     	 if ( index($MODE,"ocr") !=  -1) {
@@ -1571,10 +1590,16 @@ sub lireMDALTO {
    } # fin while
 
    # il y a p-e des blocs de texte a extraire de l'OCR ALTO
+   # $typeBlocAlto : var globale, type du bloc en cours
+   undef $typeBlocAlto;
    if (defined($listeIDsTxt[$numPageALTO]) or
       ((index($MODE,"ocr")!=-1) && defined($listeIDsLeg[$numPageALTO]))) {   # cas  OCR
      lireTexteALTO($fichier);}
 
+  if ($typeBlocAlto) {
+    say "   type txt bloc: $typeBlocAlto";
+    $hash{$numPageALTO."_ill_".$numIllEnCours."pub"} = "1";
+  }
   $hash{$numPageALTO."_mots"} = $mots;
   $hash{$numPageALTO."_blocsTexte"} = $textes;
   $hash{$numPageALTO."_blocsPub"} = $pubs;
@@ -1657,6 +1682,11 @@ sub getALTOtxt {
 	  	    { if ($DEBUG) {say "** bloc $id absent ou non texte ! **";}
 	  	    	return ""}
 	  	   else {
+           my $typeBloc = $bloc[0] -> att('TYPE');
+           if ($typeBloc) {
+             say "    type: $typeBloc";
+             $typeBlocAlto = $typeBloc;
+           }
 	  	     my @array = map { $_ -> att('CONTENT') } $bloc[0] -> get_xpath('TextLine/String');
 	         my $scal = join(" ", @array);
 	         # supprimer les - de cesure (a la hache...)
@@ -1787,21 +1817,27 @@ sub exportPage {my $id=shift; # id document
   	       writeEltAtts("ill",\%atts,$fh);
 					 undef $filtre;
 
-       	   # genre classification
-       	   my $tmp =  $hash{$p."_ill_".$i."genre"};  # types extrait de l'OCR
-       	   $tmp = definirGenre($tmp);
+           # technique
+           if (defined $techDefaut) {
+       	   	%atts = ("CS"=>1,,"source"=>"md"); # source = metadata
+       	   	writeEltAtts("tech",\%atts,$fh,$techDefaut);
+       	   	}
+
+       	   # function classification
+       	   my $tmp =  $hash{$p."_ill_".$i."fonction"};  # types extrait de l'OCR
+       	   $tmp = definirFonction($tmp);
        	   if ($tmp) {
-       	   	 if ($DEBUG) {say "     genre extracted from the OCR: ".$tmp;}
+       	   	 if ($DEBUG) {say "     function extracted from the OCR: ".$tmp;}
        	   	 	$CS = 1 # CS = 1
        	      }
-       	   if ((not $tmp) and (defined $genreDefaut)) { # genre par défaut
-       	   	  if ($DEBUG) {say "     default genre is used: ".$genreDefaut; }
+       	   if ((not $tmp) and (defined $fonctionDefaut)) { # default function
+       	   	  if ($DEBUG) {say "     default function is used: ".$fonctionDefaut; }
        	   	  $CS = 0.9;
-       	   	  $tmp = $genreDefaut;
+       	   	  $tmp = $fonctionDefaut;
        	      }
        	   if ($tmp) {
        	     %atts = ("CS"=>$CS,"source"=>"md");  # source = metadata
-       	     writeEltAtts("genre",\%atts,$fh,$tmp);
+       	     writeEltAtts("fonction",\%atts,$fh,$tmp);
 					 }
 
        	   if (defined $themeDefaut) {
@@ -1809,6 +1845,7 @@ sub exportPage {my $id=shift; # id document
        	   	%atts = ("CS"=>0.9,,"source"=>"md"); # source = metadata
        	   	writeEltAtts("theme",\%atts,$fh,$themeDefaut);  # sujet IPTC
        	   	}
+
 					 if (@tags) {  	  	# default content tags
 			 		   foreach $t (@tags) {
 			 		 		 %atts = ("CS"=> "1.0", "lang"=>"en", "source"=>"hm");
@@ -1857,27 +1894,13 @@ sub exportPage {my $id=shift; # id document
 # -----------------
 # mapping du genre
 # genre mapping
-sub definirGenreold {my $genre=shift;
+sub definirFonction {my $f=shift;
 
-   switch ($genre) {
-			case "map"		{return "carte"}
-			case "carte"		{return "carte" }
-			case "advertisement"		{ return "pub" }
-			case "musicScore"		{return "partition" }
-			case "dessin" 	{return "dessin" }
-			case "Illustration" {return undef}
-		else  { if ($DEBUG) {say "############ unknown genre: $genre  ################";}
-			      return undef}
-    }
-}
-
-sub definirGenre {my $genre=shift;
-
-	 if (defined $genre) {
-     my ($match) = grep {$_ =~ /$genre/} keys %genres;
+	 if (defined $f) {
+     my ($match) = grep {$_ =~ /$f/} keys %fonctions;
      if ($match) {
-   	   return $genres{$match}; }
-     else { if ($DEBUG) {say "############ unknown genre: $genre! ";}
+   	   return $fonctions{$match}; }
+     else { if ($DEBUG) {say "############ unknown function: $f ";}
 			      return undef
          }
       }
