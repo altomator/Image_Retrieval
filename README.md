@@ -10,7 +10,7 @@ A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllus
 
 
 
-![GallicaPix](http://gallicastudio.bnf.fr/sites/default/files/clemenceau_gallicastudio.JPG)
+![GallicaPix](https://github.com/altomator/Image_Retrieval/blob/master/Images/gp.jpg)
 *Looking for [Georges Clemenceau](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&similarity=&corpus=1418-v2&keyword=clemenceau&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=00&classif=&operator=and&colName=00&illType=&size=31&density=26) iconography in GallicaPix*
 
 
@@ -46,7 +46,7 @@ Some Perl or Python packages may need to be installed first. Sample documents ar
 ### A. Extract
 The global workflow is detailled bellow.
 
-![Workflow: extract](http://www.euklides.fr/blog/altomator/Image_Retrieval/wf1.png)
+![Workflow: extract](https://github.com/altomator/Image_Retrieval/blob/master/Images/workflow.jpg)
 
 The extract step can be performed from the catalog metada (using OAI-PMH and SRU protocols) or directly from the digital documents files (and their OCR). 
 
@@ -197,7 +197,7 @@ If metadata can be extracted first from a catalog (https://discovery.nationalarc
 
 The toolbox.pl Perl script performs basic operations on the illustrations XML metadata files and the enrichment processing itself. This script supports the enrichment workflow as detailled bellow.
 
-![Workflow: extract](http://www.euklides.fr/blog/altomator/Image_Retrieval/wf2.png)
+![Workflow: extract](https://github.com/altomator/Image_Retrieval/blob/master/Images/workflow2.jpg)
 
 All the treatments described in the following sections enrich the  metadata illustrations and set some attributes on these new metadata: 
 - `classif`: the treatment applied (CC: content classification, DF: face detection)
@@ -369,7 +369,7 @@ or
 
 Note: to have consistent bounding boxes, mind to keep the same size factor in $factIIIF.
 
-![faces](http://www.euklides.fr/blog/altomator/Image_Retrieval/faces.png)
+![faces](https://github.com/altomator/Image_Retrieval/blob/master/Images/faces.jpg)
 
 An object_detection.py script performs in a similar way to make content classification, thanks to a GoogLeNet network (see this [post](https://www.pyimagesearch.com/2017/08/21/deep-learning-with-opencv/) for details). It can handle a dozen of classes (person, boat, aeroplane...):
 
