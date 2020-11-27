@@ -16,7 +16,7 @@ Notes :
 # with Ark IDs:
 >perl extractMD.pl -LI ocren Humanite OCR-EN-BnF OUT-OCR-EN-BnF xml
 # without Ark IDs:
->perl extractMD.pl -L ocren generic OCR-EN-BnF OUT-OCR-EN-BnF xml
+>perl extractMD.pl -L ocren foo OCR-EN-BnF OUT-OCR-EN-BnF xml
 
 
 
@@ -33,7 +33,7 @@ Notes :
 $numFicALTOdebut = -6 # default: -8
 $numFicALTOlong = 3; # default: 4
 
->perl extractMD.pl -L ocren generic OCR-EN-SBB OUT-OCR-EN-SBB xml
+>perl extractMD.pl -L ocren foo OCR-EN-SBB OUT-OCR-EN-SBB xml
 
 
 Folder: OLR-EN
@@ -86,7 +86,7 @@ Note :
 - $typeDoc parameter must be set to "R"
 - Output: 120 illustrations
 
->perl extractMD.pl -LI ocrbnflegacy generic OCR-BnF-magazines-legacy OUT-OCR-BnF-magazines-legacy  xml
+>perl extractMD.pl -LI ocrbnflegacy foo OCR-BnF-magazines-legacy OUT-OCR-BnF-magazines-legacy  xml
 
 
 
@@ -104,23 +104,43 @@ Note:
 - $typeDoc parameter must be set to "M"
 - output: 1 illustration
 
->perl extractMD.pl -LI ocrbnflegacy generic OCR-BnF-mono-legacy OUT-OCR-BnF-mono-legacy xml
+>perl extractMD.pl -LI ocrbnflegacy foo OCR-BnF-mono-legacy OUT-OCR-BnF-mono-legacy xml
 
 
 
-Folder: OCR-BnF-mono
+Folder: OCR-BnF-mono 
 --------------------
 Content: monographs
 Producer: BnF
 Manifest format: METS (BnF)
-OCR FORMAT: ALTO BnF (http://bibnum.bnf.fr/ns/alto_prod)
+OCR FORMAT: ALTO BnF v2.0 (http://bibnum.bnf.fr/ns/alto_prod)
 Sample: Faune entomologique française
 https://gallica.bnf.fr/ark:/12148/bpt6k9612399b/f1.planchecontact
 
 
 Note:
 - the ark IDs must be defined in arks-mono.pl file
-- $typeDoc parameter must be set to "M"
+- $typeDoc parameter must be set to "M" 
+- $dpi must be set to 400
 - output: 21
 
->perl extractMD.pl -LI ocrbnf generic OCR-BnF-mono OUT-OCR-BnF-mono xml
+>perl extractMD.pl -LI ocrbnf foo OCR-BnF-mono OUT-OCR-BnF-mono xml
+
+
+Folder: OCR-BnF-magazines 
+--------------------
+Content: magazines
+Producer: BnF
+Manifest format: METS (BnF)
+OCR FORMAT: ALTO BnF v1 or v2 (http://bibnum.bnf.fr/ns/alto_prod)
+Sample: Vogue
+
+
+Note:
+- the title must be defined on the line command
+- $typeDoc parameter must be set to "R" 
+- $dpi must be set to 600
+- $altoBnf must be set to v1 or v2
+- output: 155
+
+>perl extractMD.pl -LI ocrbnf Vogue OCR-BnF-magazines OUT-OCR-BnF-magazines xml
