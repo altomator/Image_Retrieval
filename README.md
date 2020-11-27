@@ -10,7 +10,7 @@ A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllus
 
 
 
-![GallicaPix](https://github.com/altomator/Image_Retrieval/blob/master/Images/gp.jpg)
+![GallicaPix](https://github.com/altomator/Image_Retrieval/blob/master/Images/gpix.jpg)
 *Looking for [Georges Clemenceau](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&similarity=&corpus=1418-v2&keyword=clemenceau&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=00&classif=&operator=and&colName=00&illType=&size=31&density=26) iconography in GallicaPix*
 
 
