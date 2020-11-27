@@ -11,6 +11,7 @@ A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllus
 
 
 ![GallicaPix](https://github.com/altomator/Image_Retrieval/blob/master/Images/gpix.jpg)
+
 *Looking for [Georges Clemenceau](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&similarity=&corpus=1418-v2&keyword=clemenceau&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=00&classif=&operator=and&colName=00&illType=&size=31&density=26) iconography in GallicaPix*
 
 
@@ -46,7 +47,7 @@ Some Perl or Python packages may need to be installed first. Sample documents ar
 ### A. Extract
 The global workflow is detailled bellow.
 
-![Workflow: extract](https://github.com/altomator/Image_Retrieval/blob/master/Images/workflow.jpg)
+![Workflow: extract](https://github.com/altomator/Image_Retrieval/blob/master/Images/worflow.jpg)
 
 The extract step can be performed from the catalog metada (using OAI-PMH and SRU protocols) or directly from the digital documents files (and their OCR). 
 
