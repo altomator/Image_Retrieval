@@ -42,6 +42,7 @@ More thematic datasets have been produced:
 - Zoology samples (8.7k illustrations): [XML](https://github.com/altomator/Image_Retrieval/blob/master/zoology-data.zip)
 - Wallpapers and fabric designs, BnF and [TNA](https://www.nationalarchives.gov.uk/) collections (3.7k illustrations): [XML](https://github.com/altomator/Image_Retrieval/blob/master/designs.zip)
 
+![GallicaPix](https://github.com/altomator/Image_Retrieval/blob/master/Images/vogue.jpg)
 
 ### Installation & misc.
 <b>Note</b>: All the scripts have been written by an amateur developer. They have been designed for the Gallica digital documents and repositories but could be adapted to other contexts.
