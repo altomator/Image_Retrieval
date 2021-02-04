@@ -45,7 +45,16 @@ More thematic datasets have been produced:
 ![GallicaPix](https://github.com/altomator/Image_Retrieval/blob/master/Images/vogue.jpg)
 *Vogue magazine (1920-1940)* 
 
+***
+
 ### Installation & misc.
+
+#####ToC####
+A. Extract
+B. Transform & Enrich
+C. Load
+
+
 <b>Note</b>: All the scripts have been written by an amateur developer. They have been designed for the Gallica digital documents and repositories but could be adapted to other contexts.
 
 Some Perl or Python packages may need to be installed first. Sample documents are generally stored in a "DOCS" folder and output samples in a "OUT" folder.
