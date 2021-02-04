@@ -33,14 +33,14 @@ A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllus
  
 ### Datasets
 The datasets are available as metadata files (one XML file/document) or JsonML dumps of the BaseX database. Images can be extracted from the metadata files thanks to [IIIF Image API](http://iiif.io/api/image/2.0/): 
-- Complete WW1 dataset (200k illustrations): [XML](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418_xml.zip), [JSON](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418_json.zip)
-- Illustrated WW1 ads dataset (63k illustrations): [XML](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418-Ads_xml.zip), [JSON](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418-Ads_json.zip)
+- Complete WW1 dataset (222k illustrations): [XML](ftp://ftp.bnf.fr/api/jeux_docs_num/Images/GallicaPix/1418-data.zip)
+- Illustrated WW1 ads dataset (65k illustrations): [XML](ftp://ftp.bnf.fr/api/jeux_docs_num/Images/GallicaPix/1418ads-data.zip)
 - Persons ground truth (4k illustrations): [XML](http://www.euklides.fr/blog/altomator/Image_Retrieval/GT-Persons_xml.zip), [JSON](http://www.euklides.fr/blog/altomator/Image_Retrieval/GT-Persons_json.zip)
 
-More datasets have been produced:
-- Vogue magazine, French edition, 1920-1940 (35k illustrations): [XML](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418-Ads_xml.zip)
-- Zoology samples (8k illustrations): [XML](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418-Ads_xml.zip)
-- Wallpapers and fabric designs, BnF and TNA collections (3k illustrations): [XML](http://www.euklides.fr/blog/altomator/Image_Retrieval/1418-Ads_xml.zip)
+More thematic datasets have been produced:
+- Vogue magazine, French edition, 1920-1940 (35k illustrations): [XML](https://github.com/altomator/Image_Retrieval/blob/master/vogue-data.zip)
+- Zoology samples (8.7k illustrations): [XML](https://github.com/altomator/Image_Retrieval/blob/master/zoology-data.zip)
+- Wallpapers and fabric designs, BnF and TNA collections (3.7k illustrations): [XML](https://github.com/altomator/Image_Retrieval/blob/master/designs.zip)
 
 
 ### Installation & misc.
