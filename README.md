@@ -33,7 +33,7 @@ A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllus
  
 ### Datasets
 The datasets are available as metadata files (one XML file/document) or JsonML dumps of the BaseX database. Images can be extracted from the metadata files thanks to [IIIF Image API](http://iiif.io/api/image/2.0/): 
-- Complete WW1 dataset (222k illustrations): [XML](ftp://ftp.bnf.fr/api/jeux_docs_num/Images/GallicaPix/1418-data.zip)
+- Complete WW1 dataset (222k illustrations): ftp://ftp.bnf.fr/api/jeux_docs_num/Images/GallicaPix/1418-data.zip
 - Illustrated WW1 ads dataset (65k illustrations): [XML](ftp://ftp.bnf.fr/api/jeux_docs_num/Images/GallicaPix/1418ads-data.zip)
 - Persons ground truth (4k illustrations): [XML](http://www.euklides.fr/blog/altomator/Image_Retrieval/GT-Persons_xml.zip), [JSON](http://www.euklides.fr/blog/altomator/Image_Retrieval/GT-Persons_json.zip)
 
@@ -43,6 +43,7 @@ More thematic datasets have been produced:
 - Wallpapers and fabric designs, BnF and [TNA](https://www.nationalarchives.gov.uk/) collections (3.7k illustrations): [XML](https://github.com/altomator/Image_Retrieval/blob/master/designs.zip)
 
 ![GallicaPix](https://github.com/altomator/Image_Retrieval/blob/master/Images/vogue.jpg)
+*Vogue magazine (1920-1940)* 
 
 ### Installation & misc.
 <b>Note</b>: All the scripts have been written by an amateur developer. They have been designed for the Gallica digital documents and repositories but could be adapted to other contexts.
