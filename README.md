@@ -34,7 +34,7 @@ A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllus
 ### Datasets
 The datasets are available as metadata files (one XML file/document) or JsonML dumps of the BaseX database. Images can be extracted from the metadata files thanks to [IIIF Image API](http://iiif.io/api/image/2.0/): 
 - Complete WW1 dataset (222k illustrations): ftp://ftp.bnf.fr/api/jeux_docs_num/Images/GallicaPix/1418-data.zip
-- Illustrated WW1 ads dataset (65k illustrations): [XML](ftp://ftp.bnf.fr/api/jeux_docs_num/Images/GallicaPix/1418ads-data.zip)
+- Illustrated WW1 ads dataset (65k illustrations): ftp://ftp.bnf.fr/api/jeux_docs_num/Images/GallicaPix/1418ads-data.zip
 - Persons ground truth (4k illustrations): [XML](http://www.euklides.fr/blog/altomator/Image_Retrieval/GT-Persons_xml.zip), [JSON](http://www.euklides.fr/blog/altomator/Image_Retrieval/GT-Persons_json.zip)
 
 More thematic datasets have been produced:
