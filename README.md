@@ -51,10 +51,12 @@ More thematic datasets have been produced:
 
 #### ToC ####
 
-<small>A. Extract
-B. Transform & Enrich
-C. Load
-</small>
+*A. Extract
+
+*B. Transform & Enrich
+
+*C. Load
+
 
 
 <b>Note</b>: All the scripts have been written by an amateur developer. They have been designed for the Gallica digital documents and repositories but could be adapted to other contexts.
@@ -156,8 +158,8 @@ Printed collections (with OCR) can be analysed using extractMD.pl script.
 It can handle various types of digital documents (books, newspapers) produced by BnF digitization programs or during the Europeana Newspapers project. Samples are available (see readme.txt).
 
 Regarding the newspapers type, the script can handle raw ALTO OCR mode or OLR mode (articles recognition described with a METS/ALTO format):
-- <b>ocrbnf</b>: to be used with BnF documents (monographies, serials) described with a METS manifest
-- <b>ocrbnflegacy</b>: to be used with BnF documents (monographies, serials) described with a refNum manifest
+- <b>ocrbnf</b>: to be used with BnF documents (monographs, serials) described with a METS manifest
+- <b>ocrbnflegacy</b>: to be used with BnF documents (monographs, serials) described with a refNum manifest
 - <b>olrbnf</b>: to be used with BnF serials described with a METS manifest and an OLR mode (BnF METS profil) 
 - <b>ocren</b>: to be used with Europeana Newspapers serials described with a METS manifest
 - <b>olren</b>: to be used with Europeana Newspapers serials described with a METS manifest and an OLR mode (&copy;CCS METS profil)
@@ -200,10 +202,11 @@ For newspapers and magazines collections, another kind of content should be iden
 
 
 #### External sources
-Raw images files or other digital catalogs can be used as sources to the GallicaPix database.
-For these use cases, the images file are locally stored (no use of IIIF).
+Raw images files or other digital catalogs can be used as sources to the GallicaPix database. For these use cases, the images file are locally stored (no use of IIIF).
 
-This first Perl script takes a folder of TNA images as input and populates a GallicaPix metadata template file, based on the file names and some parameters:
+* Example: The National Archives 
+
+This first Perl script takes a folder of TNA images as input and populates a GallicaPix metadata template XML file, based on the file names and some parameters:
 
 >perl extractMD_TNA_noMD.pl IN_TNA/
 
@@ -335,7 +338,7 @@ Usage for face detection:
 
 Note: the image content is sent to Watson as a IIIF URL.
 
-The face detection Watson API also outputs cropping and genre detection:
+The face detection Watson API (2020 update: this API has been dismissed by IBM) also outputs cropping and genre detection:
 ```xml
 <contenuImg CS="0.96" h="2055" l="1232" sexe="M" source="ibm" x="1900" y="1785">face</contenuImg>
 ```
@@ -393,7 +396,7 @@ An object_detection.py script performs in a similar way to make content classifi
 
 >python object_detection.py --prototxt MobileNetSSD_deploy.prototxt.txt --model MobileNetSSD_deploy.caffemodel --dir IN_img
 
-###### Yolo v3 model
+###### Yolo v3 and v4 models
 The yolo.py Python script performs object detection on a 80 classes model (see this [post](https://www.pyimagesearch.com/2018/11/12/yolo-object-detection-with-opencv/) for details).
 
 >python3 yolo.py --dir images --yolo yolo-coco
@@ -428,9 +431,25 @@ The GallicaPix Web app offers 2 languages (FR, EN). Classification tags from the
 
 
 ### C. Load
-An XML database (BaseX.org) is the back-end. Querying the metadata is done with XQuery (setting up the HTTP BaseX server is detailled [here](https://github.com/altomator/EN-data_mining)). All the XQuery files and the other support files (.css, .jpg) must be stored in a `$RESTPATH` folder.
+An XML database (BaseX.org) is the back-end. Querying the metadata is done with XQuery. 
+Note: the web app is minimalist and BaseX is not an effective choice for searching in very large databases.
 
-Note: the web app is minimalist and BaseX is not an effective choice for searching in large databases.
+*Setup
+
+1. Install BaseX: download the complete package from basex.org and unzip the archive in your Applications folder
+
+2. Launch the GUI: e.g.
+> /Applications/basex924/bin/basexgui
+
+3. In the GUI, create the WW1 database from the dataset (e.g. 1418-data.zip) 
+The XML content should be displayed in the BaseX Results window.
+
+4. Setup the HTTP BaseX server: setting up the HTTP server is detailled [here](https://github.com/altomator/EN-data_mining))
+
+5. Copy all the [WebApp](https://github.com/altomator/Image_Retrieval/tree/master/WebApp) repo (XQuery files and the other support files:.css, .jpg) in your `$RESTPATH/webapp` folder.
+
+6. Test the WW1 dataset in the local web app : http://localhost:8984/rest?run=findIllustrations-form.xq&locale=en
+
 
 The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](https://masonry.desandro.com/) grid layout JavaScript library for image display. The web app is builded around 2 files, a HTML form and a results list page. The business logic is implemented with JavaScript and XQuery FLOWR.
 
