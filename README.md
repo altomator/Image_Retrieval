@@ -49,10 +49,12 @@ More thematic datasets have been produced:
 
 ### Installation & misc.
 
-#####ToC####
-A. Extract
+#### ToC ####
+
+<small>A. Extract
 B. Transform & Enrich
 C. Load
+</small>
 
 
 <b>Note</b>: All the scripts have been written by an amateur developer. They have been designed for the Gallica digital documents and repositories but could be adapted to other contexts.
