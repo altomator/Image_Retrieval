@@ -204,7 +204,7 @@ For newspapers and magazines collections, another kind of content should be iden
 #### External sources
 Raw images files or other digital catalogs can be used as sources to the GallicaPix database. For these use cases, the images file are locally stored (no use of IIIF).
 
-* Example: The National Archives 
+*Example: The National Archives* 
 
 This first Perl script takes a folder of TNA images as input and populates a GallicaPix metadata template XML file, based on the file names and some parameters:
 
@@ -439,16 +439,18 @@ Note: the web app is minimalist and BaseX is not an effective choice for searchi
 1. Install BaseX: download the complete package from basex.org and unzip the archive in your Applications folder
 
 2. Launch the GUI: e.g.
+
+```
 > /Applications/basex924/bin/basexgui
+```
 
-3. In the GUI, create the WW1 database from the dataset (e.g. 1418-data.zip) 
-The XML content should be displayed in the BaseX Results window.
+3. In the GUI, create the WW1 database from the dataset (e.g. 1418-data.zip). The XML content should be displayed in the BaseX Results window.
 
-4. Setup the HTTP BaseX server: setting up the HTTP server is detailled [here](https://github.com/altomator/EN-data_mining))
+4. Setup the HTTP BaseX server: setting up the HTTP server is detailled [here](https://github.com/altomator/EN-data_mining).
 
-5. Copy all the [WebApp](https://github.com/altomator/Image_Retrieval/tree/master/WebApp) repo (XQuery files and the other support files:.css, .jpg) in your `$RESTPATH/webapp` folder.
+5. Copy all the [WebApp](https://github.com/altomator/Image_Retrieval/tree/master/WebApp) repo (XQuery files and the other support files: .css, .jpg) in your `$RESTPATH/webapp` folder.
 
-6. Test the WW1 dataset in the local web app : http://localhost:8984/rest?run=findIllustrations-form.xq&locale=en
+6. Test the WW1 dataset in the local web app: http://localhost:8984/rest?run=findIllustrations-form.xq&locale=en
 
 
 The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](https://masonry.desandro.com/) grid layout JavaScript library for image display. The web app is builded around 2 files, a HTML form and a results list page. The business logic is implemented with JavaScript and XQuery FLOWR.
