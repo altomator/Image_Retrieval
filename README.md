@@ -38,9 +38,9 @@ The datasets are available as metadata files (one XML file/document) or JsonML d
 - Persons ground truth (4k illustrations): [XML](http://www.euklides.fr/blog/altomator/Image_Retrieval/GT-Persons_xml.zip), [JSON](http://www.euklides.fr/blog/altomator/Image_Retrieval/GT-Persons_json.zip)
 
 More thematic datasets have been produced:
-- Vogue magazine, French edition, 1920-1940 (35k illustrations): [XML](https://github.com/altomator/Image_Retrieval/blob/master/vogue-data.zip)
+- [Vogue magazine](https://gallica.bnf.fr/ark:/12148/cb343833568/date), French edition, 1920-1940 (35k illustrations): [XML](https://github.com/altomator/Image_Retrieval/blob/master/vogue-data.zip)
 - Zoology samples (8.7k illustrations): [XML](https://github.com/altomator/Image_Retrieval/blob/master/zoology-data.zip)
-- Wallpapers and fabric designs, BnF and TNA collections (3.7k illustrations): [XML](https://github.com/altomator/Image_Retrieval/blob/master/designs.zip)
+- Wallpapers and fabric designs, BnF and [TNA](https://www.nationalarchives.gov.uk/) collections (3.7k illustrations): [XML](https://github.com/altomator/Image_Retrieval/blob/master/designs.zip)
 
 
 ### Installation & misc.
