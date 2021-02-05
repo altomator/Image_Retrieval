@@ -59,34 +59,34 @@ my $illTechOld="filtre";   # illustration technique to be looked for (-fixType a
 my $illTechNew="imp photoméca"; # illustration technique to be set (-setTech or -fixNoTech options-
 my $illGenreNew="publicité"; # same for genre
 my $illGenreOld="filtre"; # same for genre
-my $illFonctionNew="repro/photo"; # same for function
+my $illFonctionNew="repro/dessin"; # same for function
 my $classifSource="md"; # illustration genre source : TensorFlow, md, hm, cw (-fixSource, -setGenre or -delGenre options)
-my $classifCC="Frises";
+my $classifCC="Frises"; # classe to be set/look
 
 ## Images parameters used for IIIF calls ##
 my $factIIIF = 30;   # size factor for IIIF image exportation (%)
 my $modeIIIF = "linear"; # "linear": export using $factIIIF size factor even for small/big images
 # To avoid small images to be over reduced, set $modeIIIF to any other value
-my $expandIIIF = 0.1 ; # expand/reduce the cropping. The final size will be x by 1 +/- $expandIIIF (%)
+my $expandIIIF = 0.0 ; # expand/reduce the cropping. The final size will be x by 1 +/- $expandIIIF (%)
 # Used for OCR (enlarge), image classification (reduce), faces extraction (enlarge)
 my $reDimMinThreshold = 800;  # threshold (on the smallest dimension) under which the output factor $factIIIF is not applied (in pixels)
 my $reDimMaxThreshold = 1000;
 
 ####################################
 # for Classification APIs
-my $locale = "fr";
-my $processIllThreshold = 10000;  # max ill to be processed
+my $locale = "en";
+my $processIllThreshold = 20000;  # max ill to be processed
 my $classifCBIR; # classification service: dnn, ibm, google, yolo, aws (to be used with -CC -DF -fixCBIRsource... commands)
 # must be set by the user on the command line
 my $classifAction;     # CC / DF. Set from the option asked by the user
 my $sizeIllThreshold = 0; # do not classify illustrations if size <
 my $CSthreshold = 0.1 ;   # confidence score threshold for using data classification
 my $classifOnlyIfNoText = 0;
+my $classifOnlyIfSeg = 0;
 my $duplicates_threshold = 1.5;
 ### comment the next line to classify everything ###
 #my $techClassif="photoméca gravure textile"; # classify illustrations only if tech is equal to $techClassif
-my $functionClassif="repro/photo";
-
+my $functionClassif="repro/dessin"; # same for function
 #(to be used with extract, classify, unify)
 
 # mapping old genre to technic
@@ -142,11 +142,16 @@ my %genre2fonction = (  "carte" => "carte",
 # test
 #curl -X POST -u "apikey:KFGuZ6ont7jLO0IRE2x_546RffziA-Lh0T5GEJQNejo5" --form "images_file=@native.jpg" "https://gateway.watsonplatform.net/visual-recognition/api/v3/classify?version=2018-03-19"
 my $endPointWatson= "https://gateway.watsonplatform.net/visual-recognition/api/v3/";
-my $apiKeyWatson= "***";
+my $apiKeyWatson= "cgnEOcXcQL5T5lPGHM0Y1-WmnI6s-enP-zDcz1D41zBs";
+my $apiKeyWatson= "RMPVXEYFQ4ow1ZYoaJdOJQjJfmX6cHn1e0vgq2eajgI7"; #jpmoreux@free.fr
+my $apiKeyWatson= "2DZdFVOxmhJnQIq3MOQsUOg-7RqARAWa35q-Gh31NnSK";
+my $apiKeyWatson= "2NkaUHfpKuV1zbZiKHe3i6GA0JYM74xwRCWKKY8mwsmg"; # V. Perrin
 
 # for Google Vision API : compte jpmoreux@gmail.fr
 $endPointGoogle= "https://vision.googleapis.com/v1/images:annotate?key=";
-$apiKeyGoogle= "***";
+$apiKeyGoogle= "AIzaSyCeFd3R_b5GsK95uM7gGJaXXt8H0pAR9UM";
+# max words kept for OCR
+$OCRlength = 200;
 
 # for human faces detection
 my $carreVSG=1 ;     # 1:1 format
@@ -180,7 +185,7 @@ my $motifScoreVisageGoogle = "\"detectionConfidence\": (\\d+\.\\d+)";
 
 ######################
 # for importation of external data (TensorFlow classification data or image hashing)
-my $dataFile = "data-vogue-yv4.csv"; # input file name
+my $dataFile = "data.csv"; # input file name
 #my $dataFile = "TNA-hash.csv";
 
 ######################
@@ -368,7 +373,7 @@ services:
 -unifyTheme : compute a final theme
 -CC : classify image content with an API
 -DF : detect faces with an API
--OCR : extract texts with OCR
+-OCR : extract texts from illustrations
 -importCC : import content classification data
 -translateCC : translate content classification data
 -importDF : import face detection data
@@ -412,7 +417,7 @@ my %actions = ( del => \&del,
                 setID => "hd_updateID",
                 setFaceID => "hd_updateFaceID",
                 extr => "hd_extract",
-                crops => \&crops,
+                crops =>  \&crops,
                 updateCrops => "hd_updateCrops",
 								extrFiltered => "hd_extractFiltered",
 								extrGenre => "hd_extractGenre",
@@ -510,6 +515,7 @@ switch ($SERVICE) {
  case "translateCC" {$classifAction="CC"}
  case "extrClasses" {$classifAction="CC"}
  case "extrCC" {$classifAction="CC"}
+ case "extrNotClassif" {$classifAction="CC"}
  case "info"  {$classifAction="foo"}
  case "extrFace"  {$classifAction="foo"}
  case "filterFace"  {$classifAction="foo"}
@@ -568,7 +574,7 @@ if (($SERVICE eq "DF") and ($classifCBIR eq "ibm")) {
    die " ### IBM Watson API no longer offers facial detection!\n";
   }
 
-if (index("CC DF extrFace filterFace extr OCR",$SERVICE) != -1) {
+if (index("CC DF extrFace filterFace extr extrNotClassif OCR",$SERVICE) != -1) {
   say " ********************************************";
   if ($classifCBIR) {say " CBIR mode: $classifCBIR "}
   if ($techClassif) {say " techniques to be processed: $techClassif"}
@@ -602,9 +608,17 @@ if ( ($SERVICE eq "translateCC") ) {
     case "yolo" {$dataFile = $yoloDict }
     case "hm" {$dataFile = $hmDict }
   }
+  say "language: $locale";
   say " dictionary: $dataFile ";
   continuer();
 }
+
+if ($SERVICE eq "OCR") {
+  say " ********************************************";
+  say " max words: $OCRlength ";
+  continuer();
+}
+
 
 if (($SERVICE eq "hash") or ($SERVICE eq "importColors") or ($SERVICE eq "importTNA") ) {
   say " ********************************************";
@@ -614,7 +628,16 @@ if (($SERVICE eq "hash") or ($SERVICE eq "importColors") or ($SERVICE eq "import
 
 if ($SERVICE eq "extrCC")  {
   say " ********************************************";
+
   say " class: $classifCC ";
+  say " CBIR mode: $classifCBIR ";
+  continuer();
+}
+
+
+if  ($SERVICE eq "extrClasses") {
+  say " ********************************************";
+  say " language: $locale";
   say " CBIR mode: $classifCBIR ";
   continuer();
 }
@@ -637,7 +660,7 @@ if(-d $OUT){
 
 ##############
 # output the classification data in a txt file for service extrClasses
-if (($SERVICE eq "extrClasses") or ($SERVICE eq "extrMD")){
+if (($SERVICE eq "extrClasses") or ($SERVICE eq "extrMD") or ($SERVICE eq "translateCC")){
 	say "Writing in $OUTFile";
 	open($OUTfh, '>',$OUTFile) || die "### Can't write in $OUTFile file: $!\n";
 }
@@ -677,7 +700,8 @@ continuer();
 #say Dumper (@externalData);
 
 # we build a dictionary
-if (($SERVICE eq "hash") or ($SERVICE eq "importDF") or ($SERVICE eq "importColors") or ($SERVICE eq "importTNA")  or ($SERVICE eq "importCC") or ($SERVICE eq "translateCC")) {
+if (($SERVICE eq "hash") or ($SERVICE eq "importDF") or ($SERVICE eq "importColors")
+  or ($SERVICE eq "importTNA")  or ($SERVICE eq "importCC") or ($SERVICE eq "translateCC")) {
    foreach (@externalData) {
      my $key = $_->[0] ;		#  illustration file name
      chop $_->[1];
@@ -740,7 +764,7 @@ $dir->recurse(depthfirst => 1, callback => sub {
 #$pm->wait_all_children;
 
 say "\n\n=============================";
-say "$nbDoc documents analysed on ".$dir->children(no_hidden => 1);
+say "$nbDoc documents analysed in ".$dir->children(no_hidden => 1)." folders";
 if ($nbTot != 0) {say " $nbTot illustrations analysed";}
 if ($nbFailIll != 0) {say " $nbFailIll failed illustrations";}
 if ($SERVICE eq "del") {
@@ -766,8 +790,9 @@ elsif ($SERVICE eq "info") {
   say " * $nbTotCC illustrations with $classifCBIR image content indexing";
   say " * $nbTotDF illustrations with $classifCBIR face detections";
 }
-elsif (($SERVICE eq "translateCC") or ($SERVICE eq "fixLang") or ($SERVICE eq "fixColor")) {
-  say " * $nbTotTrans tags processed"
+elsif (($SERVICE eq "translateCC") or ($SERVICE eq "delCC") or ($SERVICE eq "delAllCC") or ($SERVICE eq "fixLang") or ($SERVICE eq "fixColor")) {
+  say " * $nbTotIll illustrations with $classifCBIR image content indexing";
+  say " * $nbTotTrans tags processed";
 }
 else {
   say " $nbTotIll illustrations processed ";
@@ -776,7 +801,7 @@ else {
 
 say "=============================";
 
-if ($SERVICE eq "extrClasses") {
+if (($SERVICE eq "extrClasses") or ($SERVICE eq "extrMD") or ($SERVICE eq "translateCC")){
 	close($OUTfh);}
 ########### end MAIN ##################
 #######################################
@@ -1287,6 +1312,7 @@ sub hd_deleteContent {
    for my $ill ( @ills ) {
     $nill = $ill->att('n');
     print "\n$nill: ";
+    # if ($ill->att('seg')) {
     # suppress the  classif attribute
     my $tmp = $ill->att("classif");
     if ((defined $tmp) and (index($tmp,$cTag) != -1)) { # we have classification
@@ -1301,19 +1327,22 @@ sub hd_deleteContent {
        #say "nbre de MD CC : ".scalar(@contenus);
        foreach my $contenu (@contenus) {
          my $ct = $contenu->text();
-     	   say "..content: ".$ct;
+     	   print "..content: ".$ct;
          if (index($cTag,"DF") != -1) {  # face detection case
            if ($ct eq "face" ) {
-             print " - ";
+             print " - \n";
+             $nbTotTrans++;
              $contenu->delete;}
          }
          else {  # content classification case
           if ($ct ne "face" ) {
-            print " - ";
+            print " - \n";
+            $nbTotTrans++;
             $contenu->delete;}
          }
       }
     }
+  #}
     else {print " no $cTag classification"}
    }
 }
@@ -1377,7 +1406,10 @@ sub hd_translateCC {
               $nbTotTrans++;
                 }
           }
-          else {print " #### NO TRANSLATION for $ct #### \n\n"}
+          else {
+            print " #### NO TRANSLATION for $ct #### \n\n";
+            print $OUTfh "$ct\n";
+        }
       }
    }
  }
@@ -1455,7 +1487,7 @@ sub hd_setGenreFromCC {
       }
 }
 
-# fix tags
+# del tags
 sub hd_delCC {
    my ($t, $elt) = @_;
 
@@ -1465,6 +1497,7 @@ sub hd_delCC {
     $nill = $ill->att('n');
     say "\n$nill: ";
     $nbTotIll++;
+
     # handle the  classification elements
     my $nav = "contenuImg[\@source='".$classifCBIR."' ]";
     my @contenus= $ill->children($nav);
@@ -1478,29 +1511,7 @@ sub hd_delCC {
             }
           }
       }
-}
 
-# delete all tags
-sub hd_delAllCC {
-   my ($t, $elt) = @_;
-
-   my $cTag=$classifAction.$classifCBIR;
-   my @ills = $elt->children('ill');
-   for my $ill ( @ills ) {
-    $nill = $ill->att('n');
-    say "\n$nill: ";
-    $nbTotIll++;
-    # handle the  classification elements
-    my $nav = "contenuImg[\@source='".$classifCBIR."' ]";
-    my @contenus= $ill->children($nav);
-    say "CC contents: ".scalar(@contenus);
-    foreach my $contenu (@contenus) {
-              $contenu->delete;
-              $nbTotTrans++;
-              say "  $ct ... deleted"
-
-          }
-      }
 }
 
 
@@ -1793,11 +1804,11 @@ sub hd_extract {
 			my $pub = $ill->att('pub');
       my $coul = $ill->att('couleur');
       #my $seg = $ill->att('seg');
-      #if ($coul ne "coul") {
-    	#if ($filtre or $pub) {	   # do not export filtered illustrations
-				#say " $nill : filtered/ad illustration ";
-        #next}
-       if (defined $techClassif) { # a filter on techniques exists
+      #if (($coul eq "coul")) {
+    	if ($filtre or ($coul ne "coul")) {	  #or $pub # do not export filtered illustrations
+				say " $nill : filtered/ad illustration ";
+        next}
+      if (defined $techClassif) { # a filter on techniques exists
          #say $ill->name;
          my $tech = getTech($ill);
          if (not $tech) {
@@ -1806,15 +1817,15 @@ sub hd_extract {
               say " # illustration is not a $techClassif!";
               next} # use only if  specific tech
         }
-
       if (IIIF_get($ill,$idArk,$nill,$page)) {
         $nbTotIll++;}
-      #}
+    #}
       #else {say " $nill : unsegmented illustration ";}
    }
 }
 
-## output the  illustrations crops as overlays on an image
+## output the illustrations crops as overlays on an image
+## and export the xywh coordinates as text files
 sub hd_crops {
     my ($t, $elt) = @_; # elt is a a <page>
 
@@ -1823,13 +1834,22 @@ sub hd_crops {
   my $resize = $factIIIF/100;
   my $crops;
 
+  my $CS =0.7;
+
   my $page = $elt;
   my $nPage = $page->att('ordre');
   say "\n page: $nPage";
+
+  $ficTxt = "$OUT/$idArk-$nPage.txt";
+  $ficCSV = "$OUT/$idArk-$nPage.csv";
+  open($OUTtxt, '>',$ficTxt) || die "### Can't write in $ficTxt file: $!\n";
+  open($OUTcsv, '>',$ficCSV) || die "### Can't write in $ficCSV file: $!\n";
+
+  # segmentation exists at the page level
   my $segPage = $page->first_child('document');
   my $ills_elt = $page->first_child('ills');
-  my @ills = $ills_elt->children('ill');
-  if (@ills) {
+  if ($ills_elt) {
+     my @ills = $ills_elt->children('ill');
      say "...parsing illustrations" ;
      for my $ill ( @ills ) {
       $nbTot+=1;
@@ -1839,11 +1859,13 @@ sub hd_crops {
 			my $pub = $ill->att('pub');
       #my $coul = $ill->att('couleur');
       my $seg = $ill->att('seg');
-      if (defined $seg) {
-    	 if ($filtre or $pub) {	   # do not export filtered illustrations
+      if ($classifOnlyIfSeg and defined $seg) {
+          say " .. $nill: unsegmented illustration ";
+          next}
+    	if ($filtre ) {	 # or $pub  # do not export filtered illustrations
 				say " $nill : filtered/ad illustration ";
         next}
-       if (defined $techClassif) { # a filter on techniques exists
+      if (defined $techClassif) { # a filter on techniques exists
          #say $ill->name;
          my $tech = getTech($ill);
          if (not $tech) {
@@ -1853,12 +1875,10 @@ sub hd_crops {
               say " .. illustration is not a $techClassif!";
               next} # use only if  specific genre
          }
-        } else {
-          say " .. $nill: unsegmented illustration ";
-          next}
-        # we have a candidate
-        push @results, $ill
+       # we have a candidate
+       push @results, $ill
        }   # loop end
+       # processing the illustrations
        if (@results) {
          say " --> crops to export: ".scalar(@results);
          # extract the image file (page level)
@@ -1889,16 +1909,22 @@ sub hd_crops {
          $y = $ill->att('y')*$resize;
          $l = $ill->att('w')*$resize;
          $h = $ill->att('h')*$resize;
+         $nIll = $ill->att('n');
          say " cropping illustration #$nill";
          $myCrop = new GD::Image($l,$h);
          $green = $myCrop->colorAllocate(0,255,0);
-         $frame = $myCrop->colorAllocate(255,255,255);
+         $frame = $myCrop->colorAllocate(0,0,0);
          # create the crop
          $myCrop->filledRectangle(0, 0, $l, $h, $green);
-         $myCrop->setThickness(2);
+         $myCrop->setThickness(3);
          $myCrop->rectangle(0, 0, $l, $h, $frame);
+         $myCrop->string(gdLargeFont, 10, 10, $nIll, $frame);
          # merge with the source image
          $imgSrc->copyMerge($myCrop,$x,$y,0,0,$l,$h,40); # 50% opacity
+         # export the coordinates as text
+         say " writing coordinates in $ficTxt";
+         print $OUTtxt "illustration $x $y $l $h\n"; # $CS
+         print $OUTcsv "$idArk-$nIll;$x;$y;$l;$h;illustration\n";
          # text blocks?
          my @txts = $ill->children('contenuText');
          for my $txt ( @txts ) {
@@ -1920,8 +1946,9 @@ sub hd_crops {
           $myCrop->rectangle(0, 0, $l, $h, $frame);
           # merge with the source image
           $imgSrc->copyMerge($myCrop,$x,$y,0,0,$l,$h,40); # 40% opacity
+          print $OUTtxt "text $x $y $l $h\n"; # $CS
+          print $OUTcsv "$idArk-$ntxt;$x;$y;$l;$h;text\n";
          }
-
      }
 
      if ($segPage) {
@@ -1944,6 +1971,9 @@ sub hd_crops {
    }
     else {say ".. no illustration to crop have been detected on this page"}
  } else {say ".. no illustrations on this page"}
+
+ close $OUTtxt;
+ close $OUTcsv;
 }
 
 ## extract the faces as image files
@@ -2495,17 +2525,25 @@ sub OCRReady {my $ill=shift;
 
  my $nill = $ill->att('n');
  my $filtre = $ill->att('filtre');
- if (defined $filtre) {	# do not classify the filtered illustrations
+ my $seg = $ill->att('seg');
+
+ if (defined $filtre) {	# do not process the filtered illustrations
  	 say "$nill -> filtered";
  	 return 0}
 
- my $genre = getTech($ill);
- if (not $genre) {
-     say "$nill  -> illustration has no technique";
+if (not defined $seg) {	## only process the segmented illustrations
+   	 say "$nill -> not segmented";
+   	 return 0}
+
+ if (defined $functionClassif) {
+  my $f = getFunction($ill);
+  if (not $f) {
+     say "$nill -> illustration has no function";
      return 0}
- if (index($techClassif,$genre) ==-1) {
-		 	 say "$nill  -> illustration is not a $techClassif!"; # classify only a specific genre
-		 	 return 0}
+  if (index($functionClassif,$f) ==-1) {
+		 say "$nill -> illustration is not a $functionClassif!"; # classify only a specific genre
+		 return 0}
+ }
 
  #my @titraille = $ill->children('titraille');
  my @leg = $ill->children('leg');
@@ -2514,7 +2552,7 @@ sub OCRReady {my $ill=shift;
 	return 1
  }
  else {
-	 say "$nill  -> illustration has some text!";
+	 say "$nill -> illustration has some text!";
 	 return 0}
 }
 
@@ -2545,11 +2583,14 @@ sub hd_OCR {
 		my @res;
 
     my $page = $elt->parent->att('ordre');
-    say " page: $page";
+    say "\n page: $page";
 		# get the pages number
 		my $tmp = $elt->parent->parent->parent->parent;
 		my $pages = $tmp->get_xpath('metad/nbPage', 0);
 		#say $pages->text();
+
+    my $doc = $elt->parent->parent->parent->parent; # document level
+    my $tmpFile = "/tmp/image.jpg";
 
 	  #if ($pages->text()	<= 1) {  # only ocr multipage documents (monog, series)
 	 	# say " ### pages=1 ###";
@@ -2559,26 +2600,39 @@ sub hd_OCR {
     for my $ill ( @ills ) {
     	$nill = $ill->att('n');
 			if (OCRReady($ill)) {
-    	 # tmp image file
-       my $iiifFile = "$OUT/$idArk-$nill.jpg";
-			 my $url = setIIIFURL($ill,$page,"ocr");
-	     # call the APIs
-			$res = callgoogleOCR($url);
-
+       # extract the file
+       if (IIIFcompliant($doc)) {  # IIIF case
+            my $url = setIIIFURL($ill,$page,"ocr");
+            $extracted = IIIFextract($url,$tmpFile)}
+       else { # the file is local
+           my $localFile = $doc->get_xpath('metad/fichier', 0);
+           if ($localFile) {
+             say "...local ID file: ".$localFile->text();
+             my $localFileName = $localFile->text()."-".$nill.".jpg"; # last -1 is the illustration number (no multi-illustration without iiif)
+             $extracted = localExtract($localFileName,$tmpFile)}
+           else {
+            say "### can't find file info! ###";
+            next}
+          }
+      if ($extracted) { # call the API
+	    # call the API
+			$res = callgoogleOCR($tmpFile);
 			if ($res and ($res ne "") ) { # API call succeed
 					$nbTotIll++;
 					#updateClassif($ill);
 					$res =~ s/\\n/ - /g; # suppress the \n
-					if (length($res) > 50) {
-						say "\n OCR -> ".substr($res,50);
+					if (length($res) > $OCRlength) {
+						say "\n OCR -> ".substr($res,$OCRlength);
 					} else {say "\n OCR -> ".$res;}
 					 # write the new metadata in the XML
           $ill->insert_new_elt('txt', $res)->set_atts("source"=>"google");
+
 					}
 			else {
 					say " ** no OCR output **"
 					}
 	     }
+     }
    } #for
 }
 
@@ -2815,6 +2869,7 @@ sub callibmCC {my $fic=shift;
 	 }
 }
 
+
 sub writeGoogleJSON {my $tmpFile=shift;
 										 my $JSONfile=shift;
 										 my $mode=shift; # face detection/ocr/visual recognition
@@ -2950,16 +3005,17 @@ sub callgoogleCC {my $tmpFile=shift;
 }
 
 
-sub callgoogleOCR {my $url=shift;
+sub callgoogleOCR {my $tmpFile=shift;
+
 	my @classes;
   my $res;
   my $json = "/tmp/request.json";
 
   #say $urlIIIF.$url;
-	say "Writing in $json";
-	writeGoogleJSON($url, $json, "OCR");
+	say "Writing $tmpFile in $json";
+	writeGoogleJSON($tmpFile, $json, "OCR");
 
-	my $cmd=  "curl --insecure --max-time 50 -v -s -H \"Content-Type: application/json\" $endPointGoogle$apiKeyGoogle --data-binary \@$json";
+	my $cmd=  "curl --insecure --max-time 20 -v -s -H \"Content-Type: application/json\" $endPointGoogle$apiKeyGoogle --data-binary \@$json";
 	say "cmd : ".$cmd;
 	$res = `$cmd`;
 	#say "res : ".$res;
@@ -3149,7 +3205,7 @@ sub hd_fixFace {
 				 say " threshold: ".$threshold;
          $nbTotIll++;
          updateClassif($ill);
-         my @data = split(/\ +/, $res); # split on space character
+         my @data = split(/_+/, $res); # split multiple detections on _ character
          for my $d (@data) {
      	     say " data: $d"; # returns label,x,y,w,h,confidence score
             my @md = split(/\,+/, $d);
@@ -3279,10 +3335,12 @@ sub hd_updateColor {
 
     my @ills = $elt->children('ill');
     for my $ill ( @ills ) {
+      if (not($ill->att("couleur"))) {
       #if ($ill->att("couleur") eq "mono") {
     	  $ill->set_att("couleur",$couleur);
+        print " +";
     	  $nbTotIll++;
-      #}
+      }
     }
 }
 
@@ -3713,7 +3771,7 @@ sub hd_fixLang {
     }
   }
 
-# fix the @coul attribute
+# fix the @coul attribute on ContentImg
 sub hd_fixColor {
       my ($t, $elt) = @_;
 
@@ -4418,6 +4476,12 @@ sub hd_importColors {
 
     my @ills = $elt->children('ill');
     for my $ill (@ills) {
+      my $nav = "contenuImg[\@source='colorific']";
+			my @contenus= $ill->children($nav);
+      if (@contenus) {
+        say ".. illustration is already color indexed";
+        next
+      }
       my $counter=1;
     	$nill = $ill->att("n");
     	$nill = "$idArk-$nill.jpg";
