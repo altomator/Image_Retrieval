@@ -470,6 +470,6 @@ Faceting and basic dataviz functionalities are also available.
 ##### IIIF dissemination
 The GallicaPix database also acts as a IIIF annotations server. Document metadata can be exported from GallicaPix as a IIIF list of annotations (JsonML), and then be displayed in any IIIF viewer.
 
-![Mirador](https://github.com/altomator/Image_Retrieval/blob/master/Images/vogue-gallicapix-mirador.jpg
+![Mirador](https://github.com/altomator/Image_Retrieval/blob/master/Images/vogue-gallicapix-mirador.jpg)
 *A Vogue issue in GallicaPix (left) and in Mirador (right), with the GallicaPix annotations* 
 
