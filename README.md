@@ -467,9 +467,11 @@ Faceting and basic dataviz functionalities are also available.
 
 ![faceting](https://github.com/altomator/Image_Retrieval/blob/master/Images/facettes.png) ![dataviz](https://github.com/altomator/Image_Retrieval/blob/master/Images/graph.jpg)
 
-##### IIIF dissemination
+##### Exporting data 
 The GallicaPix database also acts as a IIIF annotations server. Document metadata can be exported from GallicaPix as a IIIF list of annotations (JsonML), and then be displayed in any IIIF viewer (like [Mirador](https://manuscrits-france-angleterre.org/view3if/?target=https://gallica.bnf.fr/iiif/ark:/12148/bpt6k9604123v/manifest.json&page=64) in this example).
 
 ![Mirador](https://github.com/altomator/Image_Retrieval/blob/master/Images/vogue-gallicapix-mirador.jpg)
 *A Vogue issue in GallicaPix (left) and in Mirador (right), with the GallicaPix annotations* 
+
+JsonML exports can also be asked to the web app (in the list results or at the document level).
 
