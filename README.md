@@ -60,7 +60,7 @@ More thematic datasets have been produced:
 
 4. Setup the HTTP BaseX server: setting up the server is detailled [here](https://github.com/altomator/EN-data_mining).
 
-5. Copy all the [WebApp](https://github.com/altomator/Image_Retrieval/tree/master/WebApp) repo (XQuery files and the other support files: .css, .jpg) in your `$RESTPATH/webapp` folder.
+5. Copy all the [WebApp](https://github.com/altomator/Image_Retrieval/tree/master/WebAppBaseX) repo (XQuery files and the other support files: .css, .jpg) in your `$RESTPATH/webapp` folder.
 
 6. Test the local web app: http://localhost:8984/rest?run=findIllustrations-form.xq&locale=en
 
