@@ -456,16 +456,16 @@ The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](h
 
 The form (`findIllustrations-form.xq`) exposes databases to users. It can be switch in DEBUG mode to access more databases and to add filtering features, which can be helpful when a complete database is implemented (mixing illustrations and illustrated ads).
 
-![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/formv3.png)
+![gallicaPix](https://github.com/altomator/Image_Retrieval/blob/master/Images/formv3.jpg)
 
 The results list (`findIllustrations-app.xq`) has a DEBUG mode which implements a filtering functionality (for ads and filtered illustrations) and  more admin tools (display, edit, annotate).  These functions call XQuery scripts which perform updates on the database (thanks to the XQuery Update facility). These functionalities may be usefull for crowdsourcing experimentations.
 
 ![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/boats.png)
 *Looking for [boats](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=0.5&similarity=&corpus=1418-v2&keyword=&kwTarget=&kwMode=&title=&fromDate=&toDate=&iptc=00&persType=00&classif=boat&operator=and&colName=00&size=31&density=26)*
 
-A faceting functionality is also available.
+Faceting and basic dataviz functionalities are also available.
 
-![gallicaPix](http://www.euklides.fr/blog/altomator/Image_Retrieval/facettes.png)
+![faceting](https://github.com/altomator/Image_Retrieval/blob/master/Images/facettes.png) ![dataviz](https://github.com/altomator/Image_Retrieval/blob/master/Images/graph.jpg)
 
 
 
