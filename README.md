@@ -1,13 +1,12 @@
 ### Synopsis
-This work uses an ETL (extract-transform-load) approach and deep learning technics to implement image retrieval functionalities in digital librairies.
+This work uses an ETL (extract-transform-load) approach and deep learning approaches to implement image retrieval functionalities in digital librairies.
 
 Specs are: 
 1. Identify and extract iconography wherever it may be found, in the still images collection but also in printed materials (newspapers, magazines, books).
 2. Transform, harmonize and enrich the image descriptive metadata (in particular with deep learning classification tools: IBM Watson for visual recognition, Google TensorFlow Inception-V3 for image types classification).
-3. Load all the medatada into a web app dedicated to image retrieval. 
+3. Load all the medatada into a web app dedicated to hybrid image retrieval. 
 
-A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-form.xq) has been implemented on the World War 1 theme. All the contents have been harvested from the BnF (Bibliotheque national de France) digital collections [Gallica](gallica.bnf.fr) of heritage materials (photos, drawings, engravings, maps, posters, etc.). This PoC is referenced on [Gallica Studio](http://gallicastudio.bnf.fr/), the Gallica online participative platform dedicated to the creative uses that can be made from Gallica. 
-
+A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllustrations-form.xq) has been implemented on the World War 1 theme. All the heritage materials (photos, drawings, engravings, maps, posters, etc.) have been mainly harvested from the BnF (Bibliotheque national de France) digital collections [Gallica](gallica.bnf.fr). The [Welcome Collection](https://wellcomecollection.org/) has been leveraged too, through the Europeana aggregator. This PoC is referenced on [Gallica Studio](http://gallicastudio.bnf.fr/), the Gallica online participative platform dedicated to the creative uses that can be made from Gallica. 
 
 
 ![GallicaPix](https://github.com/altomator/Image_Retrieval/blob/master/Images/gpix.jpg)
@@ -47,9 +46,30 @@ More thematic datasets have been produced:
 
 ***
 
-### Installation & misc.
+### Installation 
 
-#### ToC ####
+*Setup
+
+1. Install BaseX: download the complete package from basex.org and unzip the archive in your Applications folder
+
+2. Launch the GUI: e.g.
+
+```
+> /Applications/basex924/bin/basexgui
+```
+
+3. In the GUI, create the WW1 database from the dataset (e.g. 1418-data.zip). The XML content should be displayed in the BaseX Results window.
+
+4. Setup the HTTP BaseX server: setting up the HTTP server is detailled [here](https://github.com/altomator/EN-data_mining).
+
+5. Copy all the [WebApp](https://github.com/altomator/Image_Retrieval/tree/master/WebApp) repo (XQuery files and the other support files: .css, .jpg) in your `$RESTPATH/webapp` folder.
+
+6. Test the WW1 dataset in the local web app: http://localhost:8984/rest?run=findIllustrations-form.xq&locale=en
+
+
+***
+
+### Workflow ####
 
 *A. Extract
 
@@ -433,25 +453,6 @@ The GallicaPix Web app offers 2 languages (FR, EN). Classification tags from the
 ### C. Load
 An XML database (BaseX.org) is the back-end. Querying the metadata is done with XQuery. 
 Note: the web app is minimalist and BaseX is not an effective choice for searching in very large databases.
-
-*Setup
-
-1. Install BaseX: download the complete package from basex.org and unzip the archive in your Applications folder
-
-2. Launch the GUI: e.g.
-
-```
-> /Applications/basex924/bin/basexgui
-```
-
-3. In the GUI, create the WW1 database from the dataset (e.g. 1418-data.zip). The XML content should be displayed in the BaseX Results window.
-
-4. Setup the HTTP BaseX server: setting up the HTTP server is detailled [here](https://github.com/altomator/EN-data_mining).
-
-5. Copy all the [WebApp](https://github.com/altomator/Image_Retrieval/tree/master/WebApp) repo (XQuery files and the other support files: .css, .jpg) in your `$RESTPATH/webapp` folder.
-
-6. Test the WW1 dataset in the local web app: http://localhost:8984/rest?run=findIllustrations-form.xq&locale=en
-
 
 The web app uses [IIIF Image API](http://iiif.io/api/image/2.0/) and [Mansory](https://masonry.desandro.com/) grid layout JavaScript library for image display. The web app is builded around 2 files, a HTML form and a results list page. The business logic is implemented with JavaScript and XQuery FLOWR.
 
