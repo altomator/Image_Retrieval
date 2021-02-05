@@ -102,7 +102,7 @@ div.info {
  }
 
 .buttonPages {
-  font-size: 12px;
+  
   background-color: rgba(0, 0, 0, 0.0);
   padding:2px;
   border:0
@@ -171,7 +171,6 @@ div.champ  {
 
 input.button  {
     margin-left:2px;
-    padding-top:-2px;
     height: 1.5em;
     font-size: 1em;
     font-weight: normal;
@@ -182,18 +181,7 @@ input.button  {
   width: 50px;
   font-size: 8pt;
 }
-#selectGenre {
-  width: 80px;
-}
-#selectCouleur {
-  width: 80px;
-}
-#persType {
-  width: 100px;
-}
-#selectOrdre {
-  width: 90px;
-}
+
 
 /*  textes */
 .titre {
@@ -258,7 +246,6 @@ input.button  {
   display: none;
 	position: relative;
   z-index: 2;
-  align: left;
 	top: 5px;
 	right: -10px;
   margin-bottom: -20px;
@@ -322,7 +309,7 @@ input.button  {
 	content:'';
 	position: absolute;
 	top:-40px;
-	left:10;
+	left:10px;
 }
 
 
@@ -352,7 +339,7 @@ figure img:hover {
 }
 
 /* menu flottant bandeau */
-.menu-tip, .menu-tipv{
+.menu-tip, .menu-tipv, .menu-tipSeg{
   display: none;
 	position: relative;
   align: left;
@@ -365,6 +352,7 @@ figure img:hover {
 	cursor: default;
   z-index:10
 }
+
 
 /* décaler le menu vers le haut pour Chrome */
 @media screen and (-webkit-min-device-pixel-ratio:0){
@@ -402,6 +390,8 @@ figure img:hover {
 	animation: fadeIn 0.3s ease-in-out;
 }
 
+
+
 .img:hover .help-tip{
 	display:block;
   z-index: 7;
@@ -430,7 +420,7 @@ ul li {
   display: block;
   position: relative;
   float: left;
-  background: #inherit;
+  background: inherit;
 }
 
 

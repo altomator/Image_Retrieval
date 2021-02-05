@@ -2,6 +2,7 @@
  
 :)
 
+import module namespace gp = "http:/gallicapix.bnf.fr/" at "../webapp/utils.xqm";
 
 declare namespace functx = "http://www.functx.com";
 declare option output:method 'text';
@@ -20,7 +21,18 @@ declare  function local:exportIllJSON($ill as element()) {
       
 };
 
-let $res := "foo"  
+try{
+let $url := $corpus  
 return 
-local:exportIllJSON(collection($corpus)//analyseAlto[(metad/ID=$id)]) 
-
+if (not(gp:isAlphaNum($corpus))) then (
+  (: do nothing :)  
+  let $msg := concat("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
+       <message> Erreur corpus [ ", $corpus," ]</message>")
+  return $msg
+) else ( 
+ local:exportIllJSON(collection($corpus)//analyseAlto[(metad/ID=$id)]) 
+)}
+ catch * {  
+    let $msg := concat("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?><message> Erreur exécution [ ", $err:code, " ]</message>")
+    return $msg
+   }

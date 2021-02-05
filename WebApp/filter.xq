@@ -2,6 +2,7 @@
  
 :)
 
+import module namespace gp = "http:/gallicapix.bnf.fr/" at "../webapp/utils.xqm";
 
 declare namespace functx = "http://www.functx.com";
 (:declare option output:method 'html';
@@ -13,6 +14,7 @@ declare variable $corpus as xs:string external   ;
 declare variable $id as xs:string external   ;
 declare variable $n as xs:string external   ;  (: illustration number :)
 declare variable $source as xs:string external   ;
+
 
 (: we may have multiple illustrations with same id :)
 declare %updating function local:updateIll($elements as element()*) { 
@@ -36,15 +38,17 @@ declare %updating function local:updateIll($elements as element()*) {
       
 };
 
-(:declare %updating function local:replaceCouleur($ill as element()) {
-  if (($color != "undef") and ($ill/@couleur != $color)) then (
-  db:output("Update successful."), replace value of node $ill/@couleur with $color
-  )
-  else ()
-}; 
-:)
-
-let $res := "foo"  
+try{
+let $url := $corpus  
 return 
-local:updateIll(collection($corpus)//analyseAlto[(metad/ID =$id)]//ill[@n=$n]) 
-
+if (not(gp:isAlphaNum($corpus))) then (
+  (: do nothing :)
+  update:output(concat("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
+       <message> Erreur corpus [ ", $corpus," ]</message>"))
+) else ( 
+ local:updateIll(collection($corpus)//analyseAlto[(metad/ID =$id)]//ill[@n=$n]) 
+)}
+ catch * {  
+        update:output(concat("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
+       <message> Erreur exécution [ ", $err:code, " ]</message>"))
+   }

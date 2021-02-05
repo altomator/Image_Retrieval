@@ -2,6 +2,7 @@
  change the segmentation
 :)
 
+import module namespace gp = "http:/gallicapix.bnf.fr/" at "../webapp/utils.xqm";
 
 declare namespace functx = "http://www.functx.com";
 (:declare option output:method 'html';
@@ -13,17 +14,17 @@ declare variable $corpus as xs:string external    ;
 declare variable $id as xs:string external   ;    (: document ID :)
 declare variable $idIll as xs:string external   ;  (: illustration number :)
 declare variable $source as xs:string external    ;
-declare variable $x as xs:integer external  ;
+declare variable $x as xs:integer external  ; (: new coordinates :)
 declare variable $y as xs:integer external  ;
 declare variable $l as xs:integer external  ;
 declare variable $h as xs:integer external  ;
 
-declare %updating function local:updateIll($ill as element()) { 
-   
+
+declare %updating function local:updateIll($ill as element()) {   
       try {    
        update:output("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
        <message>      
-       <p>Demande de segmentation sur l'illustration </p>
+       <p>Nouvelle segmentation de l'illustration </p>
         </message>"
        ) ,
       insert node (if ($ill/@edit) then () else (attribute edit { "true" })) into $ill,
@@ -43,15 +44,18 @@ declare %updating function local:updateIll($ill as element()) {
       
 };
 
-(:declare %updating function local:replaceCouleur($ill as element()) {
-  if (($color != "undef") and ($ill/@couleur != $color)) then (
-  db:output("Update successful."), replace value of node $ill/@couleur with $color
-  )
-  else ()
-}; 
-:)
 
-let $res := "foo"  
+try{
+let $url := $corpus  
 return 
-local:updateIll(collection($corpus)//analyseAlto[(metad/ID =$id)]//ill[@n=$idIll and not(@filtre)]) 
-
+if (not(gp:isAlphaNum($corpus))) then (
+  (: do nothing :)
+  update:output(concat("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
+       <message> Erreur corpus [ ", $corpus," ]</message>"))
+) else ( 
+ local:updateIll(collection($corpus)//analyseAlto[(metad/ID =$id)]//ill[@n=$idIll and not(@filtre)]) 
+)}
+ catch * {  
+        update:output(concat("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
+       <message> Erreur exécution [ ", $err:code, " ]</message>"))
+   }

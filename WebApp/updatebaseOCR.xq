@@ -2,6 +2,7 @@
  
 :)
 
+import module namespace gp = "http:/gallicapix.bnf.fr/" at "../webapp/utils.xqm";
 
 declare namespace functx = "http://www.functx.com";
 (: declare option output:method 'html';
@@ -17,12 +18,10 @@ declare variable $caption as xs:string external  ;
 declare variable $txt as xs:string external  ; 
 declare variable $source as xs:string external   ; 
 
-
-declare %updating function local:replaceIll($ill as element()) { 
-    
+declare %updating function local:replaceIll($ill as element()) {    
     if (($subtitle != "") or  ($caption != "") or ($txt != ""))  then (
        try {
-      db:output(concat ("<?xml version=""1.0"" encoding=""UTF-8""?>
+      update:output(concat ("<?xml version=""1.0"" encoding=""UTF-8""?>
       <?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
       
        <message>
@@ -39,24 +38,27 @@ declare %updating function local:replaceIll($ill as element()) {
       (if (($txt != "")  and ($ill/txt)) then (rename node $ill/txt as "txt_sav") else ()),
       insert node (if ($txt != "") then (<txt source='{data($source)}' time="{fn:current-dateTime()}">{data($txt)}</txt>) else ()) into $ill
       } catch * {
-        db:output('Erreur [' || $err:code || ']: ' || $err:description)
+        update:output('Erreur [' || $err:code || ']: ' || $err:description)
       }
    
     )           
-   else (db:output("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
+   else (update:output("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
        <message><p>Aucune mise à jour</p></message>"))
       
 };
 
-(:declare %updating function local:replaceCouleur($ill as element()) {
-  if (($color != "undef") and ($ill/@couleur != $color)) then (
-  db:output("Update successful."), replace value of node $ill/@couleur with $color
-  )
-  else ()
-}; 
-:)
 
-let $res := "foo"  
+try{
+let $url := $corpus  
 return 
-local:replaceIll(collection($corpus)//analyseAlto[(metad/ID =$id)]//ill[@n=$n]) 
-
+if (not(gp:isAlphaNum($corpus))) then (
+  (: do nothing :)
+  update:output(concat("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
+       <message> Erreur corpus [ ", $corpus," ]</message>"))
+) else (
+ local:replaceIll(collection($corpus)//analyseAlto[(metad/ID =$id)]//ill[@n=$n]) 
+)}
+ catch * {  
+        update:output(concat("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
+       <message> Erreur exécution [ ", $err:code, " ]</message>"))
+   }

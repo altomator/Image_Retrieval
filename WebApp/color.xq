@@ -2,6 +2,7 @@
  
 :)
 
+import module namespace gp = "http:/gallicapix.bnf.fr/" at "../webapp/utils.xqm";
 
 declare namespace functx = "http://www.functx.com";
 (:declare option output:method 'html';
@@ -14,6 +15,11 @@ declare variable $id as xs:string external   ;
 declare variable $n as xs:string external   ;  (: illustration number :)
 declare variable $source as xs:string external   ;
 declare variable $mode as xs:string external   ;
+
+(: avoiding Server-side request forgery :)
+declare  function local:isUrl($string as xs:string) as xs:boolean { 
+   matches($string,'ftp') or matches($string,'http')
+};
 
 declare %updating function local:updateIll($ill as element()) {    
       try {    
@@ -38,7 +44,17 @@ declare %updating function local:updateIll($ill as element()) {
 }; 
 :)
 
-let $res := "foo"  
+try{
+let $url := $corpus  
 return 
-local:updateIll(collection($corpus)//analyseAlto[(metad/ID =$id)]//ill[@n=$n]) 
-
+if (not(gp:isAlphaNum($corpus))) then (
+  (: do nothing :)
+  update:output(concat("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
+       <message> Erreur corpus [ ", $corpus," ]</message>"))
+) else (
+ local:updateIll(collection($corpus)//analyseAlto[(metad/ID =$id)]//ill[@n=$n]) 
+)}
+ catch * {  
+        update:output(concat("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
+       <message> Erreur exécution [ ", $err:code, " ]</message>"))
+   }

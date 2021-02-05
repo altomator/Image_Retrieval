@@ -48,7 +48,7 @@ titre {
 .form {
     margin-left:0px;
     margin-top:0px;
-    width: 900px;
+    width: 1000px;
     line-height: 20pt;
     /* bordure */
     padding: 1em;
@@ -58,12 +58,22 @@ titre {
  }
 
 /* pour Firefox */
+select.techFoncGen {
+  width: 170px;
+}
+
+select.corpus {
+  width: 200px;
+}
+
+select.source {
+  width: 200px;
+}
+
 select.kwTarget {
   width: 150px;
 }
-select.source {
-  width: 150px;
-}
+
 select.kwMode {
   width: 100px;
 }
@@ -97,7 +107,7 @@ select.CBIR  {
   width: 100px;
   }
 
-  
+
 /* pour les sliders */
 input[type="range"] {
     position: relative;
@@ -113,7 +123,7 @@ input[type="range"]:before {
 input[type="range"]:before {
     left:0em;
     content: attr(min);
-    
+
 }
 input[type="range"]:after {
     right: 0em;
@@ -125,9 +135,8 @@ input[type="range"]:after {
 	position: relative;
 	top: 0.6em;
 	right: -95%;
-	align: right;
 	text-align: center;
-	background-color: #B1CAF6 /* #6495ED */
+	background-color: #B1CAF6; /* #6495ED */
 	border-radius: 50%;
 	width: 24px;
 	height: 24px;
@@ -149,7 +158,7 @@ input[type="range"]:after {
 	transform-origin: 100% 0%;
 	-webkit-animation: fadeIn 0.3s ease-in-out;
 	animation: fadeIn 0.3s ease-in-out;
- 
+
 }
 
 .help-tip p{	/* The tooltip */
@@ -166,7 +175,7 @@ input[type="range"]:after {
   top: 25px;
 	color: #FFF;
 	font-size: 12px;
-	line-height: 1.4; 
+	line-height: 1.4;
   z-index: 5;
 
 }
@@ -189,8 +198,5 @@ input[type="range"]:after {
 	position: absolute;
 	top:-40px;
 	left:0;
-  
+
 }
-
-
-

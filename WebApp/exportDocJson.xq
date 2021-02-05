@@ -2,6 +2,7 @@
  
 :)
 
+import module namespace gp = "http:/gallicapix.bnf.fr/" at "../webapp/utils.xqm";
 
 declare namespace functx = "http://www.functx.com";
 declare option output:method 'text';
@@ -13,14 +14,26 @@ declare variable $corpus as xs:string external    ;
 declare variable $id as xs:string external   ;
 
 
-declare  function local:exportIllJSON($ill as element()) {    
+declare  function local:exportIllJSON($doc as element()) {    
    
-   let $tmp := json:serialize($ill,map { 'format': 'jsonml','indent': 'yes' } )
+   let $tmp := json:serialize($doc,map { 'format': 'jsonml','indent': 'yes' } )
    return  concat("[""metadata"", {""id"":""",$id,"""},", $tmp,"]" )      
       
 };
 
-let $res := "foo"  
+try{
+let $url := $corpus  
 return 
-local:exportIllJSON(collection($corpus)//analyseAlto[(metad/ID=$id)]) 
+if (not(gp:isAlphaNum($corpus))) then (
+  (: do nothing :)
+  let $msg := concat("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
+       <message> Erreur corpus [ ", $corpus," ]</message>")
+  return $msg
+) else (
+ local:exportIllJSON(collection($corpus)//analyseAlto[(metad/ID=$id)]) 
+)}
+ catch * {  
+        let $msg := concat("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?><message> Erreur exécution [ ", $err:code, " ]</message>")
+    return $msg
+   }
 

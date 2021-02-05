@@ -3,6 +3,7 @@
  supprimer un visage
 :)
 
+import module namespace gp = "http:/gallicapix.bnf.fr/" at "../webapp/utils.xqm";
 
 declare namespace functx = "http://www.functx.com";
 (: declare option output:method 'html';
@@ -58,6 +59,7 @@ declare %updating function local:replaceContent($ci as element()) {
        update:output("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
        <message>      
        <p>Visage filtre</p></message>"),  
+      delete node $ci/@filtre,
       insert node  (attribute filtre { "true" })  into  $ci,
       delete node $ci/@sexe,
       insert node  (attribute sexe { "FT" })  into  $ci,
@@ -72,8 +74,18 @@ declare %updating function local:replaceContent($ci as element()) {
        <message><p>Aucune mise à jour</p></message>"))      
 };
 
-
-for $visage in collection($corpus)//analyseAlto[(metad/ID=$id)]//ill[@n=$idIll]//contenuImg[@n=$idVsg and text()="face"]
-let $res :="ff"  
-return local:replaceContent($visage)
-
+try{
+let $url := $corpus  
+return 
+if (not(gp:isAlphaNum($corpus))) then (
+  (: do nothing :)
+  update:output(concat("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
+       <message> Erreur corpus [ ", $corpus," ]</message>"))
+) else (
+ for $visage in collection($corpus)//analyseAlto[(metad/ID=$id)]//ill[@n=$idIll]//contenuImg[@n=$idVsg and text()="face"] 
+ return local:replaceContent($visage)
+)}
+ catch * {  
+        update:output(concat("<?xml version=""1.0"" encoding=""UTF-8""?><?xml-stylesheet href=""/static/common.css"" type=""text/css""?>
+       <message> Erreur exécution [ ", $err:code, " ]</message>"))
+   }

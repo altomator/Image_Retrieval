@@ -1,0 +1,15 @@
+.cropper {
+    position: relative;
+    cursor: crosshair;
+}
+.cropper-area-handle {
+    width: 4px;
+    height: 4px;
+    background: yellow;
+}
+.cropper-overlay {
+    background: black;
+    opacity: 0.25;
+    filter: alpha(opacity = 25);
+}
+
