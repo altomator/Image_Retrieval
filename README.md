@@ -39,7 +39,7 @@ The datasets are available as metadata files (one XML file/document) or JsonML d
 More thematic datasets have been produced:
 - [Vogue magazine](https://gallica.bnf.fr/ark:/12148/cb343833568/date), French edition, 1920-1940 (35k illustrations): [XML](https://github.com/altomator/Image_Retrieval/blob/master/vogue-data.zip)
 - Zoology samples (8.7k illustrations): [XML](https://github.com/altomator/Image_Retrieval/blob/master/zoology-data.zip)
-- Wallpapers and fabric designs, BnF and [TNA](https://www.nationalarchives.gov.uk/) collections (3.7k illustrations): [XML](https://github.com/altomator/Image_Retrieval/blob/master/designs.zip)
+- Wallpapers and fabric designs, BnF and [TNA](https://www.nationalarchives.gov.uk/) collections (3.7k illustrations): [XML](https://github.com/altomator/Image_Retrieval/blob/master/designs-data.zip)
 
 ![GallicaPix](https://github.com/altomator/Image_Retrieval/blob/master/Images/vogue.jpg)
 *Vogue magazine (1920-1940)* 
