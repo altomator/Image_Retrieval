@@ -140,16 +140,14 @@ my %genre2fonction = (  "carte" => "carte",
 # https://console.bluemix.net/
 # https://console.bluemix.net/dashboard/apps
 # test
-#curl -X POST -u "apikey:KFGuZ6ont7jLO0IRE2x_546RffziA-Lh0T5GEJQNejo5" --form "images_file=@native.jpg" "https://gateway.watsonplatform.net/visual-recognition/api/v3/classify?version=2018-03-19"
+#curl -X POST -u "apikey:" --form "images_file=@native.jpg" "https://gateway.watsonplatform.net/visual-recognition/api/v3/classify?version=2018-03-19"
 my $endPointWatson= "https://gateway.watsonplatform.net/visual-recognition/api/v3/";
-my $apiKeyWatson= "cgnEOcXcQL5T5lPGHM0Y1-WmnI6s-enP-zDcz1D41zBs";
-my $apiKeyWatson= "RMPVXEYFQ4ow1ZYoaJdOJQjJfmX6cHn1e0vgq2eajgI7"; #jpmoreux@free.fr
-my $apiKeyWatson= "2DZdFVOxmhJnQIq3MOQsUOg-7RqARAWa35q-Gh31NnSK";
-my $apiKeyWatson= "2NkaUHfpKuV1zbZiKHe3i6GA0JYM74xwRCWKKY8mwsmg"; # V. Perrin
+my $apiKeyWatson= "";
+
 
 # for Google Vision API : compte jpmoreux@gmail.fr
 $endPointGoogle= "https://vision.googleapis.com/v1/images:annotate?key=";
-$apiKeyGoogle= "AIzaSyCeFd3R_b5GsK95uM7gGJaXXt8H0pAR9UM";
+$apiKeyGoogle= "";
 # max words kept for OCR
 $OCRlength = 200;
 
