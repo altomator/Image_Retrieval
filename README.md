@@ -1,5 +1,5 @@
 ### Synopsis
-This work uses an ETL (extract-transform-load) approach and deep learning approaches to implement image retrieval functionalities in digital librairies.
+This work uses an ETL (extract-transform-load) approach and deep learning techniques to implement image retrieval functionalities in digital librairies.
 
 Specs are: 
 1. Identify and extract iconography wherever it may be found, in the still images collection but also in printed materials (newspapers, magazines, books).
@@ -48,34 +48,32 @@ More thematic datasets have been produced:
 
 ### Installation 
 
-*Setup
+1. Install BaseX: download the complete package from [basex.org](https://basex.org/download/) and unzip the archive in your Applications folder
 
-1. Install BaseX: download the complete package from basex.org and unzip the archive in your Applications folder
-
-2. Launch the GUI: e.g.
+2. Launch the BaseX GUI: e.g.
 
 ```
 > /Applications/basex924/bin/basexgui
 ```
 
-3. In the GUI, create the WW1 database from the dataset (e.g. 1418-data.zip). The XML content should be displayed in the BaseX Results window.
+3. With the GUI, create the WW1 database from the dataset (1418-data.zip). The XML content should be displayed in BaseX.
 
-4. Setup the HTTP BaseX server: setting up the HTTP server is detailled [here](https://github.com/altomator/EN-data_mining).
+4. Setup the HTTP BaseX server: setting up the server is detailled [here](https://github.com/altomator/EN-data_mining).
 
 5. Copy all the [WebApp](https://github.com/altomator/Image_Retrieval/tree/master/WebApp) repo (XQuery files and the other support files: .css, .jpg) in your `$RESTPATH/webapp` folder.
 
-6. Test the WW1 dataset in the local web app: http://localhost:8984/rest?run=findIllustrations-form.xq&locale=en
+6. Test the local web app: http://localhost:8984/rest?run=findIllustrations-form.xq&locale=en
 
 
 ***
 
 ### Workflow ####
 
-*A. Extract
+*A. Extract*
 
-*B. Transform & Enrich
+*B. Transform & Enrich*
 
-*C. Load
+*C. Load*
 
 
 
