@@ -73,7 +73,7 @@ sub exportMD {my $id=shift;
 	}
 	else { # compatibilité GallicaPix
 			writeElt("titre",$hash{"titre"},$fh);
-		  writeElt("date",$hash{"date"},$fh);}
+		  writeElt("dateEdition",$hash{"date"},$fh);}
 
 	if (defined ($hash{"auteur"})) {writeElt("auteur",$hash{"auteur"},$fh);}
 	if (defined ($hash{"lang"})) {writeElt("lang",$hash{"lang"},$fh);}

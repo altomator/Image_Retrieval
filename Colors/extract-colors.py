@@ -1,13 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#
-#  palette.py
-#  palette_detect
-#
 
-# ls IMG/* | python3 extract_colors.py
 
-# /Users/bnf/Documents/BnF/Dev/GallicaPix/Classification/Couleurs/RoyGBiv/colorific-sandbox/lib/python3.6/site-packages/colorific
+# ls IMG/* | python3 extract-colors.py
+
 
 """
 Detect the main colors used in an image.
@@ -28,12 +24,12 @@ from colormath.color_objects import sRGBColor, LabColor
 
 from colorific import config
 
-PALETTE = 20;   # palette height (pixels)
+PALETTE = 20;   # colors palette height (pixels)
 config.MIN_PROMINENCE = 0.0001        # ignore if less than this proportion of image
 #config.MIN_PROMINENCE = 0.08        PP18
 
 config.MIN_SATURATION = 0.00005     # ignore if not saturated enough
-config.BACKGROUND_PROMINENCE = 0.5  # level of prominence indicating a bg color
+config.BACKGROUND_PROMINENCE = 0.4  # level of prominence indicating a bg color
 config.MIN_DISTANCE = 10.0          # min distance to consider two colors different
 #config.MIN_DISTANCE = 12.0          # min distance to consider two colors different
 config.N_QUANTIZED = 250
@@ -217,6 +213,9 @@ def norm_color(c):
 
 
 def detect_background(im, colors, to_canonical):
+
+    #print("color 0 :%f",colors[0].prominence)
+    #print("colors :",colors)
     # more then half the image means background
     if colors[0].prominence >= config.BACKGROUND_PROMINENCE:
         return colors[1:], colors[0]
@@ -229,7 +228,7 @@ def detect_background(im, colors, to_canonical):
     edge_dist = Counter(im.getpixel(p) for p in points)
 
     (majority_col, majority_count), = edge_dist.most_common(1)
-    if majority_count >= 3:
+    if majority_count >= 4:
         # we have a background color
         canonical_bg = to_canonical[majority_col]
         bg_color, = [c for c in colors if c.value == canonical_bg]
@@ -242,8 +241,9 @@ def detect_background(im, colors, to_canonical):
 
 
 def print_colors(filename, palette):
+    file = filename.split("/")
     colors = '%s;%s\t%s' % (
-        filename, ','.join(rgb_to_hex(c.value) for c in palette.colors),
+        file[1], ','.join(rgb_to_hex(c.value) for c in palette.colors),
         palette.bgcolor and rgb_to_hex(palette.bgcolor.value) or '')
     print(colors)
     sys.stdout.flush()

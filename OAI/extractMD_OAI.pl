@@ -38,10 +38,10 @@ use EDM qw( /Users/bnf/Documents/BnF/Dev/GallicaPix/OAI ); # path must be set fo
 %hash = ();	   	# hash table of metadata/value  pairs
 $calculARK = 0; #  ark IDs must be exported? (used in bib-XML.pl)
 my $couleur;  	# color mode
-my $genre;    	# illustration genre: photo, drawing, map... (similar to dc:type)
+my $genre;    	# illustration's genre: photo, drawing, map... (similar to dc:type)
 my $type;    	  # document type: monograph, newspaper...
-my @sujets;			# illustration subjects (dc:subject)
-my $theme;    	# illustration IPTC theme
+my @sujets;			# illustration's subjects (dc:subject)
+my $theme;    	# illustration's IPTC theme
 my $personne; 	# the illustration is a person portrait?
 my $pageExt;  	# page number to be extracted  -> see getRecordOAI_page()
 my $harvester ;
@@ -56,13 +56,14 @@ $facteur_photo = 25.4/$DPI_photo;
 $A8 = 3848; # A8 surface (mm2)
 
 ### uncomment the following parameters to override a default value
-#my $genreDefaut = "gravure";    #  illustrations default genre
+my $genreDefaut = "partition";    #  illustrations default genre
 my $typeDefaut = "I";  # default collection type  :  newspapers : P, magazine : R, monograph = M, image = I, manuscript = A, music scores = PA, maps: M
 #my $IPTCDefaut = "0";   # default IPTC theme
 my $couleurDefaut = "coul";  # default color mode: coul / gris / monochrome
 
 ### uncomment the following parameters to defined image classification tags applied to all illustrations
-#my @tags = ("animal", "bird", "verterbrate");
+#my @tags = ("animal", "bird", "verterbrate"); # populate this list to create tags (English)
+#my $sujets2tags = 1; # define this flag to use all dc:subjects as classification tags
 
 # debugging mode
 $DEBUG = 1;
@@ -527,7 +528,7 @@ $t0 = Benchmark->new;
 
 ################################
 ### to get the whole OAI set ###
-getOAI($set,$harvester);
+#getOAI($set,$harvester);
 
 # BnF : gallica:corpus:1418
 # BnF : gallica:typedoc:images
@@ -548,7 +549,7 @@ getOAI($set,$harvester);
 #### BnF ####
 #getRecordOAI("ark:/12148/bpt6k6234143v"); # image
 #getRecordOAI("ark:/12148/btv1b530176112"); # image
-
+getRecordOAI("ark:/12148/btv1b55002566f"); # partition
 
 
 #die
@@ -906,7 +907,7 @@ sub getMD {my $id=shift;
 
 
 			if (not (defined $personne))  { # using regexp to find a person name in the title
-				if ($DEBUG) {say " ... looking for named entities"; }
+				if ($DEBUG) {say " ... looking for named entities in subjects"; }
 				#$tmp = join(' ',$dctitre." ".$dcsujets); #
 				foreach my $ch (@sujets) {
 					say $ch;
@@ -1357,7 +1358,7 @@ sub exportPage {my $id=shift;
 		 		 print {$fh} $t;
 		 		 writeEndElt("contenuImg",$fh);}
 			 }
-			if (@sujets) {  	  	# subjects may be considered as tags
+			if (@sujets and $sujets2tags) {  	  	# subjects may be considered as tags
   		   foreach $t (@sujets) {
   		 		 %atts = ("CS"=> "1.0", "lang"=>"fr", "source"=>"md");
   		 		 writeEltAtts("contenuImg",\%atts,$fh);

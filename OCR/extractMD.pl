@@ -1746,7 +1746,7 @@ sub exportPage {my $id=shift; # id document
 			my $h =  $hash{$p."hauteurPx"};
 
 			if (defined $l && defined $h) {
-				%atts = ("ordre"=> $p,"l"=>$l,"h"=>$h);
+				%atts = ("ordre"=> $p,"largeurPx"=>$l,"hauteurPx"=>$h);
 			} else {
         %atts = ("ordre"=> $p)}
   	  writeEltAtts("page",\%atts,$fh);
