@@ -1,11 +1,19 @@
-###Object detection:
+Object detection:
 
 >python3 yolo_v4.py --dir images --yolo yolo_v4 
 
-###CSV file:
+Creating the CSV file:
 
 >cat OUT_csv/*.csv > data.csv 
 or
 >find . -name "OUT/*.csv" -maxdepth 1  -exec cat {} > ./data.csv  \;
+
+Importing the data in GallicaPix:
+
+1. Copy the .csv in the Perl working folder 
+2. In toolbox.pl, setup the IIIF export factor accordingly to the way the images have been exported (30%, 50%...)
+3. In toolbox.pl, setup the confident score threshold ($CSthreshold) under which the Yolo detections will not be imported.
+
+>perl toolbox.pl -importCC dossier yolo
 
 
