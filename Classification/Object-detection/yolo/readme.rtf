@@ -2,10 +2,10 @@ Object detection:
 
 >python3 yolo_v4.py --dir images --yolo yolo_v4 
 
-Cd OUT_csv
-cat *.csv > ../data.csv 
-Ou :
-find . -name "*.csv" -maxdepth 1  -exec cat {} > ../data.csv  \;
-find . -name "*.xml" -maxdepth 1  -exec grep "<couverture" {}  \; > ../data.csv 
+CSV file:
+
+>cat OUT_csv/*.csv > data.csv 
+or
+>find . -name "OUT/*.csv" -maxdepth 1  -exec cat {} > ./data.csv  \;
 
 
