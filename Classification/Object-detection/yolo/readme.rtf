@@ -11,9 +11,9 @@ or
 Importing the data in GallicaPix:
 
 1. Copy the .csv in the Perl working folder 
-2. In toolbox.pl, setup the IIIF export factor accordingly to the way the images have been exported (30%, 50%...)
+2. In toolbox.pl, setup the IIIF export factor accordingly to the way the images have been exported and infered by Yolo (30%, 50%...)
 3. In toolbox.pl, setup the confident score threshold ($CSthreshold) under which the Yolo detections will not be imported.
 
->perl toolbox.pl -importCC dossier yolo
+>perl toolbox.pl -importCC gallicapix_data_folder yolo
 
 
