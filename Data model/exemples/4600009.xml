@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analyseAlto xmlns="https://altomator.github.io/Image_Retrieval/analyseAlto#"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://altomator.github.io/Image_Retrieval/analyseAlto# ../analyseAlto.xsd">
+
+  <metad>
+    <type>P</type>
+    <ID>bpt6k4600009z</ID>
+    <titre>Excelsior</titre>
+    <dateEdition>1910-11-25</dateEdition>
+    <notice>cb32771891w</notice>
+    <nbPage>12</nbPage>
+  </metad>
+  <contenus>
+    <largeur>6314</largeur>
+    <hauteur>8650</hauteur>
+    <nbArticle>194</nbArticle>
+    <pages>
+      <page ordre="1">
+        <nbMot>176</nbMot>
+        <blocTexte>16</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>2</blocIll>
+        <ills>
+          <ill classif="CCibm DFgoogle DFgoogle" couleur="mono" h="2125" n="1-1"
+            taille="11.7772769701793" une="true" w="5289" x="474" y="1747">
+            <contenuImg CS="0.52" h="593" w="510" n="1-1-2" sexe="P" source="google" x="2400"
+              y="246">face</contenuImg>
+            <contenuImg CS="0.52" h="580" w="500" n="1-1-1" sexe="P" source="google" x="2420"
+              y="250">face</contenuImg>
+            <genre source="final">photog</genre>
+            <genre CS="0.96" source="TensorFlow">photog</genre>
+            <contenuImg CS="0.985" source="ibm">gray color</contenuImg>
+            <contenuImg CS="0.89" source="ibm">Museum (Indoor)</contenuImg>
+            <titraille>La Commission d'enquête sur l'Affaire Rochette</titraille>
+            <leg>M. SAUERWEIN M. ALBERT CLEMENCEAU M. SAUERWEIN, QUI A ÉTÉ ENTENDU HIER M. POCHETTE. CONVOQUE POUR AUJOURD'HUI M. ALBERT CLEMENCEAU, HIER, A SA SORTIE</leg>
+          </ill>
+          <ill classif="CCibm DFgoogle DFgoogle" couleur="mono" h="3292" n="1-2"
+            taille="18.2312818594075" une="true" w="5285" x="470" y="4484">
+            <contenuImg CS="0.52" h="403" w="350" n="1-2-3" sexe="P" source="google" x="2913"
+              y="1020">face</contenuImg>
+            <contenuImg CS="0.67" h="396" w="340" n="1-2-2" sexe="P" source="google" x="2100"
+              y="853">face</contenuImg>
+            <contenuImg CS="0.69" h="400" w="340" n="1-2-1" sexe="P" source="google" x="2095"
+              y="860">face</contenuImg>
+            <genre source="final">photog</genre>
+            <genre CS="0.92" source="TensorFlow">photog</genre>
+            <contenuImg CS="0.86" source="ibm">gray color</contenuImg>
+            <contenuImg CS="0.5" source="ibm">silverpoint</contenuImg>
+            <contenuImg CS="0.527" source="ibm">frieze (of building)</contenuImg>
+            <contenuImg CS="0.944" source="ibm">Museum (Indoor)</contenuImg>
+            <titraille>% La Sainte-Catherine rue de la Paix. - Le Bonnet classique</titraille>
+            <leg>* - L'ESSAYAGE DU BONNET DANS -UN ATELIER DE COUTURE</leg>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="2">
+        <nbMot>4434</nbMot>
+        <blocTexte>155</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="3">
+        <nbMot>3544</nbMot>
+        <blocTexte>97</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>2</blocPub>
+        <blocIll>1</blocIll>
+        <ills>
+          <ill classif="CCibm DFgoogle" couleur="mono" h="2507" n="3-1" taille="8.23839811642412"
+            w="3136" x="1439" y="5525">
+            <genre source="final">photog</genre>
+            <genre source="hm">photog</genre>
+            <contenuImg CS="0.965" source="ibm">gray color</contenuImg>
+            <contenuImg CS="0.5" source="ibm">school newspaper</contenuImg>
+            <contenuImg CS="0.788" source="ibm">medium</contenuImg>
+            <contenuImg CS="0.9" source="ibm">newspaper</contenuImg>
+            <contenuImg CS="0.605" source="ibm">written document</contenuImg>
+            <contenuImg CS="0.605" source="ibm">paper based (stamps/currency)</contenuImg>
+            <titraille>LE BOURREAU PERRUQUIER</titraille>
+            <leg>MR JOHN ELLIS, EXÉCUTEUR DES HAUTES- OH UVRES, LONDRES. PHOTOGRAPHIÉ SUR LA PORTE DE SA BOUTIQUE DE COIFFEUR</leg>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="4">
+        <nbMot>4317</nbMot>
+        <blocTexte>163</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>25</blocPub>
+        <blocIll>2</blocIll>
+        <ills>
+          <ill classif="CCibm DFdnn DFgoogle DFgoogle" couleur="mono" h="1505" n="4-1"
+            taille="1.64960730704262" w="1046" x="1679" y="1988">
+            <contenuImg CS="1.00" h="257" w="190" n="4-1-1" sexe="P" source="dnn" x="377" y="147"
+              >face</contenuImg>
+            <genre source="final">photog</genre>
+            <genre CS="0.80" source="TensorFlow">photog</genre>
+            <contenuImg CS="0.574" source="ibm">gray color</contenuImg>
+            <contenuImg CS="0.858" source="ibm">sage green color</contenuImg>
+            <contenuImg CS="0.5" source="ibm">marshal</contenuImg>
+            <contenuImg CS="0.691" source="ibm">commissioned military officer</contenuImg>
+            <contenuImg CS="0.549" source="ibm">general</contenuImg>
+            <contenuImg CS="0.841" source="ibm">person</contenuImg>
+            <contenuImg CS="0.841" source="ibm">serviceman</contenuImg>
+            <contenuImg CS="0.654" source="ibm">military officer</contenuImg>
+            <contenuImg CS="0.79" source="ibm">Museum (Indoor)</contenuImg>
+            <titraille>La Révolution mexicaine : Ec Président Porfirio Diaz aurait été tué.</titraille>
+            <leg>LE MARÉCHAL PORFIRIO DIAZ Président de la République du Mexique</leg>
+          </ill>
+          <ill classif="CCibm" couleur="mono" edit="true" h="1014" n="4-2" taille="1.06892767905405"
+            w="1006" x="3839" y="1722">
+            <contenuImg CS="0.948" source="ibm">gray color</contenuImg>
+            <contenuImg CS="0.5" source="ibm">planchet</contenuImg>
+            <contenuImg CS="0.527" source="ibm">tetraskelion</contenuImg>
+            <contenuImg CS="0.577" source="ibm">written document</contenuImg>
+            <contenuImg CS="0.577" source="ibm">paper based (stamps/currency)</contenuImg>
+            <contenuImg CS="0.802" source="ibm">circle</contenuImg>
+            <contenuImg CS="0.697" source="ibm">token</contenuImg>
+            <contenuImg CS="0.736" source="ibm">beer mat</contenuImg>
+            <titraille>INFORMATIONS : Une visite dans les Bureaux de la Compagnie d'Assurances Générales sur la Vie</titraille>
+            <leg>Ancien Hôtel de Roquelaure, où la Compagnie d'Assurances Générales sur la Vie, fondée en 1819, transporta ses bureaux en '1822, et sur l'emplacement duquel fut édifié,, en 1860, son siège social actuel, 87, rue de Richelieu.</leg>
+            <genre source="hm" time="2018-11-19T20:29:53.34+01:00">dessin</genre>
+            <genre source="final">dessin</genre>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="5">
+        <nbMot>200</nbMot>
+        <blocTexte>9</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>3</blocIll>
+        <ills>
+          <ill classif="CCibm" couleur="mono" edit="true" h="3425" n="5-1" taille="19.4272348443997"
+            w="5413" x="476" y="653">
+            <genre source="final">graphique</genre>
+            <contenuImg CS="0.753" source="ibm">gray color</contenuImg>
+            <contenuImg CS="0.781" source="ibm">olive green color</contenuImg>
+            <contenuImg CS="0.505" source="ibm">fabric</contenuImg>
+            <contenuImg CS="0.5" source="ibm">cotton</contenuImg>
+            <contenuImg CS="0.604" source="ibm">paper</contenuImg>
+            <contenuImg CS="0.624" source="ibm">written document</contenuImg>
+            <contenuImg CS="0.621" source="ibm">paper based (stamps/currency)</contenuImg>
+            <contenuImg CS="0.651" source="ibm">study</contenuImg>
+            <titraille>L'Echelle des impôts de la France de 1870 à 1910</titraille>
+            <leg>Voici un tableau significatif de la progression des budgets au cours des quarante dernières années. On y peut voir que les dépenses, qui étaient de 2 milliards 543 millions en 1870, se sont élevées de près du double, puisqu'elles atteignent, en 1910, le chiffre de 4 milliards 185 millions. Il est bon d'ajouter que les budgets de tous les pays d'Europe ont subi Î'1  ”,' ” * â . ,. upe progression analogue. Nous joignons à cet exposé graphique les portraits des administrateurs les plus récente de nosf finances. [ ^ M ; ÏX ■* ià .. « * .. - t:r  ” ■■■■■-.</leg>
+            <genre source="hm" time="2018-02-25T16:25:09.793+01:00">graphique</genre>
+          </ill>
+          <ill classif="CCibm DFgoogle DFgoogle" couleur="mono" h="3231" n="5-2"
+            taille="8.73173782620842" w="2579" x="476" y="4651">
+            <genre source="final">photog</genre>
+            <genre CS="0.78" source="TensorFlow">photog</genre>
+            <contenuImg CS="0.853" source="ibm">gray color</contenuImg>
+            <contenuImg CS="0.958" source="ibm">black color</contenuImg>
+            <contenuImg CS="0.5" source="ibm">Museum (Indoor)</contenuImg>
+            <contenuImg CS="0.559" source="ibm">school</contenuImg>
+            <contenuImg CS="0.617" source="ibm">medium</contenuImg>
+            <contenuImg CS="0.617" source="ibm">newspaper</contenuImg>
+            <contenuImg CS="0.59" source="ibm">school newspaper</contenuImg>
+            <contenuImg CS="0.772" source="ibm">building</contenuImg>
+            <contenuImg CS="0.639" source="ibm">institution</contenuImg>
+            <contenuImg CS="0.638" source="ibm">death camp</contenuImg>
+            <titraille>Le Tapis sacré de La Mecque</titraille>
+            <leg>LE CORTÈGE DU TAPIS DANS LES RUES D'ALEXANDRIE</leg>
+          </ill>
+          <ill classif="CCibm DFgoogle DFgoogle" couleur="mono" h="3230" n="5-3"
+            taille="9.26381144685551" w="2737" x="3152" y="4643">
+            <genre source="final">photog</genre>
+            <genre CS="0.94" source="TensorFlow">photog</genre>
+            <contenuImg CS="0.93" source="ibm">gray color</contenuImg>
+            <contenuImg CS="0.505" source="ibm">barrier</contenuImg>
+            <contenuImg CS="0.505" source="ibm">door</contenuImg>
+            <contenuImg CS="0.5" source="ibm">screen door</contenuImg>
+            <contenuImg CS="0.518" source="ibm">anteroom</contenuImg>
+            <contenuImg CS="0.675" source="ibm">room</contenuImg>
+            <contenuImg CS="0.553" source="ibm">clean room</contenuImg>
+            <contenuImg CS="0.831" source="ibm">Staircase</contenuImg>
+            <titraille>Un grand Mariage parisien</titraille>
+            <leg>M. PIERRE DUPUY, DÉPUTÉ, ET M ”° JEANNE MESTREAU</leg>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="6">
+        <nbMot>4456</nbMot>
+        <blocTexte>195</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="7">
+        <nbMot>3948</nbMot>
+        <blocTexte>157</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>1</blocIll>
+        <ills>
+          <ill classif="CCibm DFgoogle" couleur="mono" h="1615" n="7-1" taille="5.39345397901507"
+            w="3187" x="362" y="6267">
+            <genre source="final">photog</genre>
+            <genre CS="0.93" source="TensorFlow">photog</genre>
+            <contenuImg CS="0.717" source="ibm">black color</contenuImg>
+            <contenuImg CS="0.945" source="ibm">gray color</contenuImg>
+            <contenuImg CS="0.632" source="ibm">Museum (Indoor)</contenuImg>
+            <contenuImg CS="0.805" source="ibm">building</contenuImg>
+            <contenuImg CS="0.805" source="ibm">school</contenuImg>
+            <leg>(Phot. Bert) M. PciriEL .. MLLE POLAIRE M. FRONDAIE UNE RÉPÉTITION DE « MONTMARTRE » AU VAUDEVILLE Les dernières exl)licalions du directeur) de l'auteur et de leurs amis k</leg>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="8">
+        <nbMot>4861</nbMot>
+        <blocTexte>172</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>5</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="9">
+        <nbMot>167</nbMot>
+        <blocTexte>9</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>2</blocIll>
+        <ills>
+          <ill classif="CCibm DFgoogle" couleur="mono" h="3230" n="9-1" taille="18.4396217619543"
+            w="5448" x="423" y="759">
+            <contenuImg CS="0.58" h="355" w="305" n="9-1-1" sexe="P" source="google" x="2615"
+              y="205">face</contenuImg>
+            <genre source="final">photog</genre>
+            <genre source="hm">photog</genre>
+            <contenuImg CS="0.669" source="ibm">alabaster color</contenuImg>
+            <contenuImg CS="0.946" source="ibm">gray color</contenuImg>
+            <contenuImg CS="0.5" source="ibm">frieze (of building)</contenuImg>
+            <contenuImg CS="0.628" source="ibm">silverpoint</contenuImg>
+            <contenuImg CS="0.886" source="ibm">Museum (Indoor)</contenuImg>
+            <titraille>Les Transformations de Polaire à la Scène</titraille>
+            <leg>(Phot. Bert, Stébbing, Paul Berger) M116 POLAIRE DANS SES PRINCIPALES INTERPRÉTATIONS Mlle Polaire a fait hier sa rentrée dans  ” Montmartre au Vaudeville. Elle y a créé un nouveau rôle non moins pittoresque que les précédents, dont voici les plus originaux : , 1. Maisdn d e Danses ” : 2.  ” Claudine ” ; 3. Au Café-Concert: Polaire à ses débuts; 4.  ” Ma Gosse ; 5.  ”Montmartre ” ; 6.  ”Les Hannetons 7.  ” Le Petit Jeune Homme  ” ; 8. f lt;'Clauditfé*,t</leg>
+          </ill>
+          <ill classif="CCibm" couleur="mono" edit="true" h="3183" n="9-2" taille="17.3474593949454"
+            w="5201" x="547" y="4716">
+            <contenuImg CS="0.8" source="ibm">gray color</contenuImg>
+            <contenuImg CS="0.816" source="ibm">alabaster color</contenuImg>
+            <contenuImg CS="0.723" source="ibm">silverpoint</contenuImg>
+            <contenuImg CS="0.9" source="ibm">Museum (Indoor)</contenuImg>
+            <titraille>La Mode au Théâtre. -- Les Toilettes de  ”Montmartre ” au Vaudeville</titraille>
+            <leg>Dessin de Mlle Marcelle Bert. 1. Robe de tulle blanc, sur fourreau de satin blanc, broderies de perles irisées. 2. Robe en velours souple vieux rose brodé de, soie vieil or ; toque de fourrure avec fond de soie brodée d'or. 3. Manteau en satin violet garni de bandes d'hermine. -- 4. Robe de mousseline vert émeraude brodée d'or mat ;chaveau satin noir garni de paradis . N</leg>
+            <genre source="hm" time="2018-11-19T20:31:18.642+01:00">dessin</genre>
+            <genre source="final">dessin</genre>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="10">
+        <nbMot>4813</nbMot>
+        <blocTexte>204</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>2</blocPub>
+        <blocIll>3</blocIll>
+        <ills>
+          <ill classif="CCibm DFdnn DFgoogle DFgoogle" couleur="mono" h="1144" n="10-1"
+            taille="1.21436112837838" w="1013" x="2662" y="1170">
+            <contenuImg CS="0.57" h="515" w="443" n="10-1-1" sexe="P" source="google" x="401" y="95"
+              >face</contenuImg>
+            <contenuImg CS="0.98" h="402" w="307" n="10-1-2" sexe="P" source="dnn" x="475" y="167"
+              >face</contenuImg>
+            <genre source="final">photog</genre>
+            <genre CS="0.95" source="TensorFlow">photog</genre>
+            <contenuImg CS="0.735" source="ibm">olive green color</contenuImg>
+            <contenuImg CS="0.977" source="ibm">sage green color</contenuImg>
+            <contenuImg CS="0.517" source="ibm">commissioned military officer</contenuImg>
+            <contenuImg CS="0.5" source="ibm">marshal</contenuImg>
+            <contenuImg CS="0.511" source="ibm">photogravure (print)</contenuImg>
+            <contenuImg CS="0.533" source="ibm">military attache</contenuImg>
+            <contenuImg CS="0.851" source="ibm">person</contenuImg>
+            <contenuImg CS="0.813" source="ibm">serviceman</contenuImg>
+            <contenuImg CS="0.77" source="ibm">military officer</contenuImg>
+            <titraille>DREXEL AURAIT BATTU LE RECORD D'ALTITUDE</titraille>
+            <leg>L'AVIATEUR DREXEL</leg>
+          </ill>
+          <ill classif="CCibm DFdnn" couleur="mono" h="1355" n="10-2" pub="1"
+            taille="1.52921090274168" w="1077" x="4798" y="3678">
+            <contenuImg CS="0.51" h="137" w="117" n="10-2-1" sexe="P" source="dnn" x="430" y="12"
+              >face</contenuImg>
+            <genre source="final">publicite</genre>
+            <genre source="md">publicite</genre>
+            <contenuImg CS="0.829" source="ibm">beige color</contenuImg>
+            <contenuImg CS="0.5" source="ibm">floor cover</contenuImg>
+            <contenuImg CS="0.5" source="ibm">doormat</contenuImg>
+            <contenuImg CS="0.739" source="ibm">beer mat</contenuImg>
+            <contenuImg CS="0.78" source="ibm">fabric</contenuImg>
+            <contenuImg CS="0.78" source="ibm">shoulder patch</contenuImg>
+            <titraille>Publicité</titraille>
+          </ill>
+          <ill classif="CCibm" couleur="mono" filtre="1" filtremd="1" h="136" n="10-3"
+            taille="0.0367680841995842" w="258" x="5572" y="7818">
+            <genre source="final">filtre</genre>
+            <genre source="md">filtre</genre>
+            <contenuImg CS="0.504" source="ibm">greenishness color</contenuImg>
+            <contenuImg CS="0.782" source="ibm">beige color</contenuImg>
+            <contenuImg CS="0.501" source="ibm">medium</contenuImg>
+            <contenuImg CS="0.501" source="ibm">newspaper</contenuImg>
+            <contenuImg CS="0.5" source="ibm">gazette</contenuImg>
+            <contenuImg CS="0.639" source="ibm">breviary (book)</contenuImg>
+            <contenuImg CS="0.84" source="ibm">written document</contenuImg>
+            <contenuImg CS="0.839" source="ibm">paper based (stamps/currency)</contenuImg>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="11">
+        <nbMot>5644</nbMot>
+        <blocTexte>199</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>16</blocPub>
+        <blocIll>2</blocIll>
+        <ills>
+          <ill classif="CCibm" couleur="mono" h="722" n="11-1" taille="0.866273584329522" w="1145"
+            x="300" y="3742">
+            <genre source="final">graphique</genre>
+            <genre CS="0.63" source="TensorFlow">graphique</genre>
+            <contenuImg CS="0.632" source="ibm">greenishness color</contenuImg>
+            <contenuImg CS="0.632" source="ibm">pale yellow color</contenuImg>
+            <contenuImg CS="0.528" source="ibm">thermometer</contenuImg>
+            <contenuImg CS="0.5" source="ibm">oven thermometer</contenuImg>
+            <contenuImg CS="0.734" source="ibm">measuring instrument</contenuImg>
+            <contenuImg CS="0.566" source="ibm">barometer</contenuImg>
+            <contenuImg CS="0.577" source="ibm">drafting instrument</contenuImg>
+            <contenuImg CS="0.576" source="ibm">protractor</contenuImg>
+            <contenuImg CS="0.646" source="ibm">navigational instrument</contenuImg>
+            <contenuImg CS="0.643" source="ibm">compass</contenuImg>
+            <contenuImg CS="0.776" source="ibm">machine</contenuImg>
+            <contenuImg CS="0.776" source="ibm">computer</contenuImg>
+            <contenuImg CS="0.776" source="ibm">slide rule</contenuImg>
+            <titraille>A PARIS</titraille>
+          </ill>
+          <ill classif="CCibm" couleur="mono" h="749" n="11-2" pub="1" taille="0.809979266632017"
+            w="1032" x="1465" y="7261">
+            <genre source="final">publicite</genre>
+            <genre source="md">publicite</genre>
+            <contenuImg CS="0.962" source="ibm">beige color</contenuImg>
+            <contenuImg CS="0.5" source="ibm">floor cover</contenuImg>
+            <contenuImg CS="0.5" source="ibm">doormat</contenuImg>
+            <contenuImg CS="0.506" source="ibm">beer mat</contenuImg>
+            <contenuImg CS="0.572" source="ibm">wrapping</contenuImg>
+            <contenuImg CS="0.572" source="ibm">book jacket</contenuImg>
+            <contenuImg CS="0.608" source="ibm">fabric</contenuImg>
+            <contenuImg CS="0.608" source="ibm">patch</contenuImg>
+            <contenuImg CS="0.66" source="ibm">tetraskelion decoration</contenuImg>
+            <titraille>Publicité</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="12">
+        <nbMot>1674</nbMot>
+        <blocTexte>88</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>71</blocPub>
+        <blocIll>5</blocIll>
+        <ills>
+          <ill classif="CCibm DFdnn" couleur="mono" derniere="true" h="920" n="12-1" pub="1"
+            taille="1.34388772869023" w="1394" x="940" y="3871">
+            <contenuImg CS="0.21" h="552" w="847" n="12-1-1" sexe="P" source="dnn" x="265" y="230"
+              >face</contenuImg>
+            <genre source="final">publicite</genre>
+            <genre source="md">publicite</genre>
+            <contenuImg CS="0.864" source="ibm">gray color</contenuImg>
+            <contenuImg CS="0.5" source="ibm">flatworm</contenuImg>
+            <contenuImg CS="0.5" source="ibm">tapeworm</contenuImg>
+            <contenuImg CS="0.505" source="ibm">concertina (wire)</contenuImg>
+            <contenuImg CS="0.518" source="ibm">whip</contenuImg>
+            <contenuImg CS="0.527" source="ibm">mechanical device</contenuImg>
+            <contenuImg CS="0.527" source="ibm">machine</contenuImg>
+            <contenuImg CS="0.527" source="ibm">wheel</contenuImg>
+            <contenuImg CS="0.526" source="ibm">sprocket wheel</contenuImg>
+            <contenuImg CS="0.594" source="ibm">animal</contenuImg>
+            <contenuImg CS="0.594" source="ibm">invertebrate</contenuImg>
+            <contenuImg CS="0.594" source="ibm">worm</contenuImg>
+            <contenuImg CS="0.529" source="ibm">pinworm</contenuImg>
+            <contenuImg CS="0.559" source="ibm">restraint (chains)</contenuImg>
+            <contenuImg CS="0.559" source="ibm">fastener</contenuImg>
+            <contenuImg CS="0.559" source="ibm">knot</contenuImg>
+            <contenuImg CS="0.555" source="ibm">bowline</contenuImg>
+            <titraille>Publicité</titraille>
+          </ill>
+          <ill classif="CCibm" couleur="mono" derniere="true" h="1470" n="12-2" pub="1"
+            taille="3.13468665865385" w="2035" x="3834" y="2538">
+            <genre source="final">publicite</genre>
+            <genre CS="0.79" source="TensorFlow">photog</genre>
+            <genre source="md">publicite</genre>
+            <contenuImg CS="0.83" source="ibm">black color</contenuImg>
+            <contenuImg CS="0.891" source="ibm">gray color</contenuImg>
+            <contenuImg CS="0.5" source="ibm">living room</contenuImg>
+            <contenuImg CS="0.725" source="ibm">room</contenuImg>
+            <contenuImg CS="0.62" source="ibm">dining room</contenuImg>
+            <contenuImg CS="0.551" source="ibm">dining-hall</contenuImg>
+            <contenuImg CS="0.882" source="ibm">library</contenuImg>
+            <titraille>Publicité</titraille>
+          </ill>
+          <ill classif="CCibm" couleur="mono" derniere="true" edit="true" h="247" n="12-3" pub="1"
+            taille="0.0864481706081081" w="334" x="5226" y="4478">
+            <genre source="final">publicite</genre>
+            <contenuImg CS="0.593" source="ibm">charcoal color</contenuImg>
+            <contenuImg CS="0.619" source="ibm">olive green color</contenuImg>
+            <contenuImg CS="0.634" source="ibm">person</contenuImg>
+            <contenuImg CS="0.5" source="ibm">Elamite (persian carvings/artifacts)</contenuImg>
+            <contenuImg CS="0.503" source="ibm">stele (stone slab with markings)</contenuImg>
+            <contenuImg CS="0.527" source="ibm">cigarette case</contenuImg>
+            <contenuImg CS="0.834" source="ibm">written document</contenuImg>
+            <contenuImg CS="0.834" source="ibm">paper based (stamps/currency)</contenuImg>
+            <genre source="hm" time="2018-02-23T09:04:23.715+01:00">publicite</genre>
+          </ill>
+          <ill classif="CCibm" couleur="mono" derniere="true" filtre="1" filtretf="1" h="149"
+            n="12-4" taille="0.155978286057692" w="999" x="4889" y="4905">
+            <genre source="final">filtretxt</genre>
+            <genre CS="0.61" source="TensorFlow">filtretxt</genre>
+            <contenuImg CS="0.635" source="ibm">light brown color</contenuImg>
+            <contenuImg CS="0.903" source="ibm">beige color</contenuImg>
+            <contenuImg CS="0.94" source="ibm">measuring instrument</contenuImg>
+            <contenuImg CS="0.94" source="ibm">measuring stick</contenuImg>
+            <contenuImg CS="0.938" source="ibm">foot rule</contenuImg>
+          </ill>
+          <ill classif="CCibm" couleur="mono" derniere="true" h="3011" n="12-5" pub="1"
+            taille="6.62901795211798" w="2101" x="3818" y="5156">
+            <genre source="final">publicite</genre>
+            <genre CS="0.48" source="TensorFlow">photog</genre>
+            <genre source="md">publicite</genre>
+            <contenuImg CS="0.98" source="ibm">gray color</contenuImg>
+            <contenuImg CS="0.5" source="ibm">beer mat</contenuImg>
+            <contenuImg CS="0.7" source="ibm">written document</contenuImg>
+            <contenuImg CS="0.698" source="ibm">paper based (stamps/currency)</contenuImg>
+            <contenuImg CS="0.864" source="ibm">wrapping</contenuImg>
+            <contenuImg CS="0.864" source="ibm">book jacket</contenuImg>
+            <titraille>Publicité</titraille>
+          </ill>
+        </ills>
+      </page>
+    </pages>
+  </contenus>
+</analyseAlto>

@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analyseAlto xmlns="https://altomator.github.io/Image_Retrieval/analyseAlto#"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://altomator.github.io/Image_Retrieval/analyseAlto# ../analyseAlto.xsd">
+  <metad>
+    <type>M</type>
+    <ID>bpt6k6252687p</ID>
+    <notice>cb33962787w</notice>
+    <titre>Administration et comptabilité des corps de troupe. Service du chauffage et de l'éclairage dans les corps de troupe à la mobilisation et en temps de guerre. Volume mis à jour à la date du 12 juillet 1915</titre>
+    <dateEdition>1915</dateEdition>
+    <nbPage>86</nbPage>
+    <suppl>FALSE</suppl>
+  </metad>
+  <contenus>
+    <largeur>179</largeur>
+    <hauteur>286</hauteur>
+    <pages>
+      <page ordre="1">
+        <nbMot>65</nbMot>
+        <blocTexte>7</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="2">
+        <nbMot>0</nbMot>
+        <blocTexte>0</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="3">
+        <nbMot>0</nbMot>
+        <blocTexte>0</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="4">
+        <nbMot>0</nbMot>
+        <blocTexte>0</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="5">
+        <nbMot>65</nbMot>
+        <blocTexte>7</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="6">
+        <nbMot>0</nbMot>
+        <blocTexte>0</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="7">
+        <nbMot>144</nbMot>
+        <blocTexte>12</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="8">
+        <nbMot>394</nbMot>
+        <blocTexte>10</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="9">
+        <nbMot>334</nbMot>
+        <blocTexte>13</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="10">
+        <nbMot>389</nbMot>
+        <blocTexte>10</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="11">
+        <nbMot>352</nbMot>
+        <blocTexte>12</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="12">
+        <nbMot>298</nbMot>
+        <blocTexte>13</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="13">
+        <nbMot>345</nbMot>
+        <blocTexte>13</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="14">
+        <nbMot>395</nbMot>
+        <blocTexte>9</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="15">
+        <nbMot>349</nbMot>
+        <blocTexte>10</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="16">
+        <nbMot>316</nbMot>
+        <blocTexte>12</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="17">
+        <nbMot>372</nbMot>
+        <blocTexte>9</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="18">
+        <nbMot>374</nbMot>
+        <blocTexte>6</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="19">
+        <nbMot>311</nbMot>
+        <blocTexte>14</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="20">
+        <nbMot>352</nbMot>
+        <blocTexte>10</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="21">
+        <nbMot>349</nbMot>
+        <blocTexte>12</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="22">
+        <nbMot>325</nbMot>
+        <blocTexte>13</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="23">
+        <nbMot>258</nbMot>
+        <blocTexte>9</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="24">
+        <nbMot>260</nbMot>
+        <blocTexte>12</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="25">
+        <nbMot>337</nbMot>
+        <blocTexte>13</blocTexte>
+        <blocTab>2</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="26">
+        <nbMot>325</nbMot>
+        <blocTexte>11</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="27">
+        <nbMot>282</nbMot>
+        <blocTexte>16</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="28">
+        <nbMot>390</nbMot>
+        <blocTexte>13</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="29">
+        <nbMot>336</nbMot>
+        <blocTexte>11</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="30">
+        <nbMot>386</nbMot>
+        <blocTexte>9</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="31">
+        <nbMot>253</nbMot>
+        <blocTexte>12</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="32">
+        <nbMot>74</nbMot>
+        <blocTexte>2</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="33">
+        <nbMot>24</nbMot>
+        <blocTexte>5</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>7</blocIll>
+        <ills>
+          <ill classif="DFibm CCibm CCgoogle" couleur="coul" edit="true" h="562" n="33-6" taille="1" w="1239" x="245" y="2169">
+            <contenuImg CS="0.89012474" source="google">newtan</contenuImg>
+            <contenuImg CS="0.5474712" source="google">pattern</contenuImg>
+            <contenuImg CS="0.5636788" source="google">angle</contenuImg>
+            <contenuImg CS="0.57307005" source="google">paper</contenuImg>
+            <contenuImg CS="0.6035197" source="google">product</contenuImg>
+            <contenuImg CS="0.6538885" source="google">plan</contenuImg>
+            <contenuImg CS="0.65799403" source="google">floor plan</contenuImg>
+            <contenuImg CS="0.6720096" source="google">area</contenuImg>
+            <contenuImg CS="0.7087483" h="427" w="1007" source="google" x="170" y="103">design</contenuImg>
+            <contenuImg CS="0.7257352" h="427" w="1007" source="google" x="170" y="103">line</contenuImg>
+            <contenuImg CS="0.85274154" h="427" w="1007" source="google" x="170" y="103">text</contenuImg>
+            <contenuImg CS="0.59" source="ibm">pale yellow color</contenuImg>
+            <contenuImg CS="0.825" source="ibm">beige color</contenuImg>
+            <contenuImg CS="0.5" source="ibm">jotter (notebook)</contenuImg>
+            <contenuImg CS="0.522" source="ibm">protective covering</contenuImg>
+            <contenuImg CS="0.522" source="ibm">ring-binder</contenuImg>
+            <contenuImg CS="0.796" source="ibm">machine</contenuImg>
+            <contenuImg CS="0.796" source="ibm">computer</contenuImg>
+            <contenuImg CS="0.796" source="ibm">digital computer</contenuImg>
+            <contenuImg CS="0.796" source="ibm">personal computer</contenuImg>
+            <contenuImg CS="0.796" source="ibm">portable computer</contenuImg>
+            <contenuImg CS="0.796" source="ibm">planner (notebook)</contenuImg>
+            <genre CS="0.34" source="TensorFlow">manuscrit</genre>
+            <theme source="final">16</theme>
+            <theme source="md">16</theme>
+            <leg/>
+            <txt>PLANCHETTE SUPPORT oc CAGE-APPLIQUE A SERRURE FERMETURE os LA CAGE VITREE</txt>
+            <genre source="hm" time="2018-03-25T14:30:21.774+02:00">graphique</genre>
+            <genre source="final">graphique</genre>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="34">
+        <nbMot>33</nbMot>
+        <blocTexte>6</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>6</blocIll>
+        <ills/>
+      </page>
+      <page ordre="35">
+        <nbMot>23</nbMot>
+        <blocTexte>5</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>5</blocIll>
+        <ills/>
+      </page>
+      <page ordre="36">
+        <nbMot>347</nbMot>
+        <blocTexte>11</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="37">
+        <nbMot>323</nbMot>
+        <blocTexte>11</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="38">
+        <nbMot>367</nbMot>
+        <blocTexte>9</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="39">
+        <nbMot>404</nbMot>
+        <blocTexte>8</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="40">
+        <nbMot>350</nbMot>
+        <blocTexte>10</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="41">
+        <nbMot>300</nbMot>
+        <blocTexte>15</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="42">
+        <nbMot>85</nbMot>
+        <blocTexte>4</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>8</blocIll>
+        <ills/>
+      </page>
+      <page ordre="43">
+        <nbMot>341</nbMot>
+        <blocTexte>16</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="44">
+        <nbMot>336</nbMot>
+        <blocTexte>15</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="45">
+        <nbMot>82</nbMot>
+        <blocTexte>11</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>8</blocIll>
+        <ills/>
+      </page>
+      <page ordre="46">
+        <nbMot>353</nbMot>
+        <blocTexte>14</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="47">
+        <nbMot>123</nbMot>
+        <blocTexte>3</blocTexte>
+        <blocTab>1</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>5</blocIll>
+        <ills/>
+      </page>
+      <page ordre="48">
+        <nbMot>76</nbMot>
+        <blocTexte>4</blocTexte>
+        <blocTab>1</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>2</blocIll>
+        <ills/>
+      </page>
+      <page ordre="49">
+        <nbMot>291</nbMot>
+        <blocTexte>11</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="50">
+        <nbMot>334</nbMot>
+        <blocTexte>14</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="51">
+        <nbMot>300</nbMot>
+        <blocTexte>8</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="52">
+        <nbMot>301</nbMot>
+        <blocTexte>7</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="53">
+        <nbMot>264</nbMot>
+        <blocTexte>10</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="54">
+        <nbMot>401</nbMot>
+        <blocTexte>9</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="55">
+        <nbMot>398</nbMot>
+        <blocTexte>9</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="56">
+        <nbMot>392</nbMot>
+        <blocTexte>16</blocTexte>
+        <blocTab>7</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="57">
+        <nbMot>176</nbMot>
+        <blocTexte>7</blocTexte>
+        <blocTab>1</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="58">
+        <nbMot>0</nbMot>
+        <blocTexte>0</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="59">
+        <nbMot>469</nbMot>
+        <blocTexte>29</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="60">
+        <nbMot>151</nbMot>
+        <blocTexte>10</blocTexte>
+        <blocTab>7</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="61">
+        <nbMot>154</nbMot>
+        <blocTexte>7</blocTexte>
+        <blocTab>4</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="62">
+        <nbMot>216</nbMot>
+        <blocTexte>13</blocTexte>
+        <blocTab>9</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="63">
+        <nbMot>148</nbMot>
+        <blocTexte>16</blocTexte>
+        <blocTab>9</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="64">
+        <nbMot>368</nbMot>
+        <blocTexte>12</blocTexte>
+        <blocTab>6</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="65">
+        <nbMot>157</nbMot>
+        <blocTexte>11</blocTexte>
+        <blocTab>7</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="66">
+        <nbMot>156</nbMot>
+        <blocTexte>6</blocTexte>
+        <blocTab>3</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="67">
+        <nbMot>145</nbMot>
+        <blocTexte>10</blocTexte>
+        <blocTab>5</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="68">
+        <nbMot>175</nbMot>
+        <blocTexte>15</blocTexte>
+        <blocTab>11</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="69">
+        <nbMot>66</nbMot>
+        <blocTexte>8</blocTexte>
+        <blocTab>4</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="70">
+        <nbMot>108</nbMot>
+        <blocTexte>13</blocTexte>
+        <blocTab>7</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="71">
+        <nbMot>13</nbMot>
+        <blocTexte>4</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="72">
+        <nbMot>0</nbMot>
+        <blocTexte>0</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="73">
+        <nbMot>167</nbMot>
+        <blocTexte>9</blocTexte>
+        <blocTab>7</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="74">
+        <nbMot>80</nbMot>
+        <blocTexte>7</blocTexte>
+        <blocTab>6</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="75">
+        <nbMot>148</nbMot>
+        <blocTexte>11</blocTexte>
+        <blocTab>10</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="76">
+        <nbMot>49</nbMot>
+        <blocTexte>8</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="77">
+        <nbMot>4</nbMot>
+        <blocTexte>2</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="78">
+        <nbMot>0</nbMot>
+        <blocTexte>0</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="79">
+        <nbMot>270</nbMot>
+        <blocTexte>13</blocTexte>
+        <blocTab>9</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="80">
+        <nbMot>284</nbMot>
+        <blocTexte>13</blocTexte>
+        <blocTab>12</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="81">
+        <nbMot>173</nbMot>
+        <blocTexte>15</blocTexte>
+        <blocTab>13</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="82">
+        <nbMot>72</nbMot>
+        <blocTexte>9</blocTexte>
+        <blocTab>7</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="83">
+        <nbMot>0</nbMot>
+        <blocTexte>0</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="84">
+        <nbMot>0</nbMot>
+        <blocTexte>0</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="85">
+        <nbMot>0</nbMot>
+        <blocTexte>0</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="86">
+        <nbMot>7</nbMot>
+        <blocTexte>1</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+    </pages>
+  </contenus>
+</analyseAlto>

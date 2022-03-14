@@ -26,6 +26,16 @@
 						<xs:documentation>ID du document/document ID</xs:documentation>
 					</xs:annotation>
 				</xs:element>
+				<xs:element ref="IDsuiv" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>notice bibliographique du document suivant (périodique)/next record (periodical)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="notice" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>notice bibliographique du document/record ID</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 				<xs:element ref="titre">
 					<xs:annotation>
 						<xs:documentation>titre du document/document title</xs:documentation>
@@ -51,6 +61,31 @@
 						<xs:documentation>source du document/document source</xs:documentation>
 					</xs:annotation>
 				</xs:element>
+				<xs:element ref="sujet" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>sujet du document/subject of the document</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="descr" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>description du document/description of the document</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="format" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>format du document/format of the document</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="couverture" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>couverture du document/coverage of the document</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="technique" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>technique du document/technique of the document</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 				<xs:element ref="notice" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>ID de la notice catalogue du document/bibliographical record ID of the document</xs:documentation>
@@ -66,25 +101,27 @@
 						<xs:documentation>Est-un supplément ? (pour de la presse) / is a supplement (for newspapers)</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element ref="descr" minOccurs="0">
-					<xs:annotation>
-						<xs:documentation>description du document/description of the document</xs:documentation>
-					</xs:annotation>
-				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="type" type="xs:NCName"/>
 	<xs:element name="ID" type="xs:NCName"/>
+	<xs:element name="IDsuiv" type="xs:NCName"/>
 	<xs:element name="titre" type="xs:string"/>
 	<xs:element name="dateEdition" type="xs:string"/>
-	<xs:element name="auteur" type="xs:string" />
-	<xs:element name="lang" type="xs:string" />
-	<xs:element name="source" type="xs:string" />
-	<xs:element name="notice" type="xs:string" />
+	<xs:element name="auteur" type="xs:string"/>
+	<xs:element name="lang" type="xs:string"/>
+	<xs:element name="source" type="xs:string"/>
+	<xs:element name="notice" type="xs:string"/>
 	<xs:element name="nbPage" type="xs:integer"/>
 	<xs:element name="suppl" type="xs:NCName"/>
 	<xs:element name="descr" type="xs:string"/>
+	<xs:element name="sujet" type="xs:string"/>
+	<xs:element name="format" type="xs:string"/>
+	<xs:element name="couverture" type="xs:string"/>
+	<xs:element name="technique" type="xs:string"/>
+	<xs:element name="ocr" type="xs:boolean"/>
+	<xs:element name="toc" type="xs:boolean"/>
 	<xs:element name="contenus">
 		<xs:annotation>
 			<xs:documentation>contenus du document/document contents</xs:documentation>
@@ -103,20 +140,19 @@
 				</xs:element>
 				<xs:element name="largeurPx" type="xs:integer" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation>largeur du document (pixels)</xs:documentation>
+						<xs:documentation>largeur de la premmière page du document (pixels)</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="hauteurPx" type="xs:integer" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation>hauteur du document (pixels)</xs:documentation>
+						<xs:documentation>hauteur de la première page du document (pixels)</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="nbArticle" type="xs:integer" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation>nombre d'articles (pour de la presse) / number of articles (for newspapers)</xs:documentation>
+						<xs:documentation>nombre d'articles (pour de la presse) / number of articles (for periodical)</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-
 				<xs:element ref="pages">
 					<xs:annotation>
 						<xs:documentation>liste des pages/pages list</xs:documentation>
@@ -165,10 +201,21 @@
 						<xs:documentation>#blocs de publicité dans la page/#advertisement blocks in page</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="blocIll" type="xs:integer" minOccurs="0">
+				<xs:element name="blocIll" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>#illustrations dans la page/#illustrations in page</xs:documentation>
 					</xs:annotation>
+					<xs:complexType>
+						<xs:annotation>
+							<xs:documentation>#illustrations océrisées/#ocerized illustrations</xs:documentation>
+						</xs:annotation>
+						<xs:simpleContent>
+							<xs:extension base="xs:integer">
+								<xs:attribute name="ocr" type="xs:integer" use="optional"/>
+								
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
 				</xs:element>
 				<xs:element ref="ills" minOccurs="0">
 					<xs:annotation>
@@ -179,6 +226,16 @@
 			<xs:attribute name="ordre" type="xs:integer" use="required">
 				<xs:annotation>
 					<xs:documentation>numéro de page/page number</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="hauteurPx" type="xs:integer" use="optional">
+				<xs:annotation>
+					<xs:documentation>hauteur de la page</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="largeurPx" type="xs:integer" use="optional">
+				<xs:annotation>
+					<xs:documentation>largeur de la page</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
@@ -225,7 +282,7 @@
 					<xs:documentation>ID de l'illustration/illustration ID</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
-			<xs:attribute name="taille" type="xs:decimal" use="required">
+			<xs:attribute name="taille" type="xs:decimal" use="optional">
 				<xs:annotation>
 					<xs:documentation>taille relative de l'illustration/relative size of the illustration</xs:documentation>
 				</xs:annotation>
@@ -247,9 +304,20 @@
 			</xs:attribute>
 			<xs:attribute name="edit" type="xs:boolean">
 				<xs:annotation>
-					<xs:documentation>l'illustration a été éditée (par un humain) ? / illustration has been edited (by a human)</xs:documentation>
+					<xs:documentation>l'illustration a été éditée ? / illustration has been edited?</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
+			<xs:attribute name="seg" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>l'illustration a été segmentée ? / illustration has been segmented?</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="source" type="xs:NCName">
+				<xs:annotation>
+					<xs:documentation>source de la modification (edit/seg) / modification source (edit/seg)</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="time" type="xs:string"/>
 			<xs:attribute name="pub" type="xs:integer">
 				<xs:annotation>
 					<xs:documentation>l'illustration est une publicité ? / the illustration is an ad ?</xs:documentation>
@@ -279,12 +347,32 @@
 					<xs:documentation>classes de reconnaissance visuelle/visual recognition classes</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="genre" type="genreType">
+			<xs:element name="contenuText" type="contenuTextType">
 				<xs:annotation>
-					<xs:documentation>genre de l'illustration (photo, gravure, carte, etc.)/illustration genre (picture, engraving, map...)</xs:documentation>
+					<xs:documentation>texte inclus dans l'illustration/included text</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="theme" type="themeType">
+			<xs:element name="tech" type="mdType">
+				<xs:annotation>
+					<xs:documentation>technique de l'illustration (photo, dessin, photogravure...)/illustration technique (picture, drawing, photoengraving...)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="contenuTxt" type="contenuTextType">
+				<xs:annotation>
+					<xs:documentation>textes inclus/included text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fonction" type="mdType">
+				<xs:annotation>
+					<xs:documentation>fonction de l'illustration (couverture, carte, dessin technique...)/illustration function (cover, map, technical drawing...)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="genre" type="mdType">
+				<xs:annotation>
+					<xs:documentation>genre de l'illustration (paysage, portrait, vue aérienne...)/illustration genre (landscape, portrait, aerial vue...)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="theme" type="mdIntType">
 				<xs:annotation>
 					<xs:documentation>theme de l'illustration/illustration topic</xs:documentation>
 				</xs:annotation>
@@ -307,6 +395,11 @@
 		</xs:choice>
 	</xs:group>
 	<xs:complexType name="contenuImgType" mixed="true">
+		<xs:attribute name="lang" type="xs:language">
+			<xs:annotation>
+				<xs:documentation>langue de l'annotation/annotation language</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 		<xs:attribute name="n">
 			<xs:annotation>
 				<xs:documentation>ID de l'annotation/annotation ID</xs:documentation>
@@ -317,29 +410,34 @@
 				<xs:documentation>indice de confiance de l'annotation/confidence score for the annotation</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="l">
+		<xs:attribute name="w" type="xs:integer">
 			<xs:annotation>
 				<xs:documentation>largeur de l'annotation dans l'illustration (pixels)/annotation width (pixels) in the illustration </xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="h">
+		<xs:attribute name="h" type="xs:integer">
 			<xs:annotation>
 				<xs:documentation>hauteur de l'annotation dans l'illustration (pixels)/annotation height (pixels) in the illustration </xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="source">
+		<xs:attribute name="source" type="xs:NCName">
 			<xs:annotation>
-				<xs:documentation>source de l'annotation (humanie, machine, etc.)/annotation source (human, machine...)</xs:documentation>
+				<xs:documentation>source de l'annotation (humaine, machine, etc.)/annotation source (human, machine...)</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="x">
+		<xs:attribute name="x" type="xs:integer">
 			<xs:annotation>
 				<xs:documentation>abcisse de l'annotation dans l'illustration (pixels)/annotation x-offset (pixels) in the illustration</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="y">
+		<xs:attribute name="y" type="xs:integer">
 			<xs:annotation>
 				<xs:documentation>ordonnée de l'annotation dans l'illustration (pixels)/annotation y-offset (pixels) in the illustration</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="coul" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>annotation de type couleur ? / annotation is a color?</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 		<xs:attribute name="sexe">
@@ -347,13 +445,97 @@
 				<xs:documentation>genre (pour les visages)/ gender (for the faces)</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+		<xs:attribute name="r" type="xs:integer">
+			<xs:annotation>
+				<xs:documentation>valeur "rouge" pour une annotation de couleur / "red" value for a color annotation</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="g" type="xs:integer">
+			<xs:annotation>
+				<xs:documentation>valeur "vert" pour une annotation de couleur / "green" value for a color annotation</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="b" type="xs:integer">
+			<xs:annotation>
+				<xs:documentation>valeur "bleu" pour une annotation de couleur / "blue" value for a color annotation</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ordre" type="xs:integer">
+			<xs:annotation>
+				<xs:documentation>ordre des annotations / annotations order</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" type="xs:NCName">
+			<xs:annotation>
+				<xs:documentation>couleur d'arrière-plan, premier plan... / foreground color?</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="edit" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>l'annotation a été éditée ? / annotation has been edited?</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="time" type="xs:string"/>
 	</xs:complexType>
-	<xs:complexType name="genreType">
+	<xs:complexType name="contenuTextType" mixed="true">
+		<xs:attribute name="lang" type="xs:language">
+			<xs:annotation>
+				<xs:documentation>langue de l'annotation/annotation language</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="n">
+			<xs:annotation>
+				<xs:documentation>ID de l'annotation/annotation ID</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CS" type="xs:decimal">
+			<xs:annotation>
+				<xs:documentation>indice de confiance de l'annotation/confidence score for the annotation</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="w" type="xs:integer">
+			<xs:annotation>
+				<xs:documentation>largeur de l'annotation dans l'illustration (pixels)/annotation width (pixels) in the illustration </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="h" type="xs:integer">
+			<xs:annotation>
+				<xs:documentation>hauteur de l'annotation dans l'illustration (pixels)/annotation height (pixels) in the illustration </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="source" type="xs:NCName">
+			<xs:annotation>
+				<xs:documentation>source de l'annotation (humaine, machine, etc.)/annotation source (human, machine...)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="x" type="xs:integer">
+			<xs:annotation>
+				<xs:documentation>abcisse de l'annotation dans l'illustration (pixels)/annotation x-offset (pixels) in the illustration</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="y" type="xs:integer">
+			<xs:annotation>
+				<xs:documentation>ordonnée de l'annotation dans l'illustration (pixels)/annotation y-offset (pixels) in the illustration</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" type="xs:NCName">
+			<xs:annotation>
+				<xs:documentation>couleur d'arrière-plan, premier plan... / foreground color?</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="edit" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>l'annotation a été éditée ? / annotation has been edited?</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		<xs:attribute name="time" type="xs:string"/>
+	</xs:complexType>
+	<xs:complexType name="mdType">
 		<xs:simpleContent>
-			<xs:extension base="xs:NCName">
+			<xs:extension base="xs:string">
 				<xs:attribute name="source">
 					<xs:annotation>
-						<xs:documentation>source de l'annotation (humanie, machine, etc.)/annotation source (human, machine...)</xs:documentation>
+						<xs:documentation>source de l'annotation (humaine, machine, etc.)/annotation source (human, machine...)</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 				<xs:attribute name="CS" type="xs:decimal">
@@ -365,9 +547,9 @@
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
-	<xs:complexType name="themeType">
+	<xs:complexType name="mdIntType">
 		<xs:simpleContent>
-			<xs:extension base="xs:string">
+			<xs:extension base="xs:integer">
 				<xs:attribute name="CS" type="xs:decimal">
 					<xs:annotation>
 						<xs:documentation>indice de confiance de l'annotation/confidence score for the annotation</xs:documentation>
@@ -375,7 +557,7 @@
 				</xs:attribute>
 				<xs:attribute name="source">
 					<xs:annotation>
-						<xs:documentation>source de l'annotation (humanie, machine, etc.)/annotation source (human, machine...)</xs:documentation>
+						<xs:documentation>source de l'annotation (humaine, machine, etc.)/annotation source (human, machine...)</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>

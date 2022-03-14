@@ -1,0 +1,50 @@
+<analyseAlto xmlns="https://altomator.github.io/Image_Retrieval/analyseAlto#"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://altomator.github.io/Image_Retrieval/analyseAlto# ../analyseAlto.xsd">
+  <metad>
+    <type>PA</type>
+    <ID>bpt6k383183j</ID>
+    <titre>Les Américains sont là, Chanson. marche.... Paroles de Eugène Dédé, Calselli. Musique de Eugène Dédé</titre>
+    <dateEdition>1919</dateEdition>
+    <nbPage>6</nbPage>
+  </metad>
+  <contenus ocr="false" toc="false">
+    <largeur>135</largeur>
+    <hauteur>174</hauteur>
+    <pages>
+      <page hauteurPx="4120" largeurPx="3196" ordre="1">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill classif="CCibm DFdnn" couleur="gris" h="4120"  n="1-1" taille="6" w="3196" x="1" y="1">
+            <contenuImg CS="0.661" lang="fr" source="ibm">couverture de livre</contenuImg>
+            <contenuImg CS="0.661" lang="fr" source="ibm">emballage</contenuImg>
+            <contenuImg CS="0.634" lang="fr" source="ibm">presse écrite</contenuImg>
+            <contenuImg CS="0.872" lang="fr" source="ibm">média</contenuImg>
+            <contenuImg CS="0.735" lang="fr" source="ibm">journal</contenuImg>
+            <contenuImg CS="0.554" lang="fr" source="ibm">journal de classe</contenuImg>
+            <contenuImg CS="0.53" lang="fr" source="ibm">presse libre</contenuImg>
+            <contenuImg CS="0.952" coul="1" lang="fr" source="ibm">gris</contenuImg>
+            <contenuImg CS="0.74" coul="1" lang="fr" source="ibm">vert olive</contenuImg>
+            <contenuImg CS="0.24" h="702" w="417" sexe="P" source="dnn" x="792" y="1417">face</contenuImg>
+            <contenuImg CS="0.99" h="390" w="280" sexe="P" source="dnn" x="747" y="2630">face</contenuImg>
+            <genre source="final">partition</genre>
+            <theme source="final">01</theme>
+            <genre CS="0.74" source="TensorFlow">dessin</genre>
+            <contenuImg CS="0.74" coul="1" lang="en" source="ibm">olive green color</contenuImg>
+            <contenuImg CS="0.952" coul="1" lang="en" source="ibm">gray color</contenuImg>
+            <contenuImg CS="0.53" lang="en" source="ibm">free press</contenuImg>
+            <contenuImg CS="0.554" lang="en" source="ibm">school newspaper</contenuImg>
+            <contenuImg CS="0.735" lang="en" source="ibm">newspaper</contenuImg>
+            <contenuImg CS="0.872" lang="en" source="ibm">medium</contenuImg>
+            <contenuImg CS="0.634" lang="en" source="ibm">print media</contenuImg>
+            <contenuImg CS="0.661" lang="en" source="ibm">wrapping</contenuImg>
+            <contenuImg CS="0.661" lang="en" source="ibm">book jacket</contenuImg>
+            <genre CS="0.95" source="md">partition</genre>
+            <theme CS="0.95" source="md">01</theme>
+            <titraille>Les Américains sont là, Chanson. marche.... Paroles de Eugène Dédé, Calselli. Musique de Eugène Dédé</titraille>
+          </ill>
+        </ills>
+      </page>
+    </pages>
+  </contenus>
+</analyseAlto>

@@ -1,0 +1,37 @@
+<analyseAlto xmlns="https://altomator.github.io/Image_Retrieval/analyseAlto#"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://altomator.github.io/Image_Retrieval/analyseAlto# ../analyseAlto.xsd">
+  <metad>
+    <type>PA</type>
+    <ID>bpt6k383898z</ID>
+    <titre>Le célèbre hymne à la liberté, composé... pour la réception... des ambassadeurs... à l’Hotel de Ville de Paris, le 14 juillet 1918.... Parole et musique de Théophile Dronchat</titre>
+    <dateEdition>1918</dateEdition>
+    <nbPage>8</nbPage>
+  </metad>
+  <contenus ocr="false" toc="false">
+    <largeur>134</largeur>
+    <hauteur>171</hauteur>
+    <pages>
+      <page ordre="1">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill classif="CCibm DFdnn" couleur="coul" h="4046"  n="1-1" taille="5" w="3181" x="1" y="1">
+            <contenuImg CS="0.644" lang="fr" source="ibm">enveloppe</contenuImg>
+            <contenuImg CS="0.644" lang="fr" source="ibm">sac</contenuImg>
+            <contenuImg CS="0.826" coul="1" lang="fr" source="ibm">vert olive</contenuImg>
+            <contenuImg CS="0.93" h="397" w="340" sexe="P" source="dnn" x="1377" y="2275">face</contenuImg>
+            <genre source="final">partition</genre>
+            <theme source="final">01</theme>
+            <genre CS="0.46" source="TensorFlow">dessin</genre>
+            <contenuImg CS="0.826" coul="1" lang="en" source="ibm">olive green color</contenuImg>
+            <contenuImg CS="0.644" lang="en" source="ibm">bag</contenuImg>
+            <contenuImg CS="0.644" lang="en" source="ibm">envelope</contenuImg>
+            <genre CS="0.95" source="md">partition</genre>
+            <theme CS="0.95" source="md">01</theme>
+            <titraille>Le célèbre hymne à la liberté, composé... pour la réception... des ambassadeurs... à l’Hotel de Ville de Paris, le 14 juillet 1918.... Parole et musique de Théophile Dronchat</titraille>
+          </ill>
+        </ills>
+      </page>
+    </pages>
+  </contenus>
+</analyseAlto>

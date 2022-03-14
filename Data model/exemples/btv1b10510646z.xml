@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analyseAlto xmlns="https://altomator.github.io/Image_Retrieval/analyseAlto#"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://altomator.github.io/Image_Retrieval/analyseAlto# ../analyseAlto.xsd">
+	<metad>
+		<type>I</type>
+		<ID>btv1b10510646z</ID>
+		<titre>Ah ! Jeunesse ! : estampe / Steinlen</titre>
+		<dateEdition>1916</dateEdition>
+		<auteur>Steinlen, Théophile Alexandre (1859-1923). Lithographe</auteur>
+		<lang>fre</lang>
+		<source>Bibliothèque nationale de France, département Estampes et photographie, FT 5-DC-385 (G, 1)</source>	
+		<descr>Guerre mondiale (1914-1918) -- Guerre de tranchées Guerre mondiale (1914-1918) -- Champs de bataille Poilus (Guerre mondiale, 1914-1918) Barbelé Scènes -- 1914-1945</descr>
+		<nbPage>1</nbPage>
+	</metad>
+	<contenus ocr="false" toc="false">
+		<largeur>464</largeur>
+		<hauteur>367</hauteur>
+		<largeurPx>10973</largeurPx>
+		<hauteurPx>8670</hauteurPx>
+		<pages>
+			<page ordre="1">
+				<blocIll>1</blocIll>
+				<ills>
+					<ill h="8670" w="10973" y="1" n="1-1" x="1" taille="44" couleur="inconnu">
+						<genre source="hm" CS="1">carte</genre>
+						<genre source="md" CS="0.95">gravure</genre>
+						<theme CS="0.8" source="md">16</theme>
+						<titraille>Ah ! Jeunesse ! : estampe / Steinlen</titraille>
+					</ill>
+				</ills>
+			</page>
+		</pages>
+	</contenus>
+</analyseAlto>

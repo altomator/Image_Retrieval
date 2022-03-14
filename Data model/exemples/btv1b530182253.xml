@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analyseAlto  xmlns="https://altomator.github.io/Image_Retrieval/analyseAlto#"  
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://altomator.github.io/Image_Retrieval/analyseAlto# ../analyseAlto.xsd">
+
+  <metad>
+    <type>I</type>
+    <ID>btv1b530182253</ID>
+    <titre>Fête de la Victoire à Bruxelles, le roi des Belges et le maréchal Foch à cheval, 21 juillet 1919 : photographie de presse / Agence Rol</titre>
+    <dateEdition>1919</dateEdition>
+    <descr>Albert Ier (roi des Belges ; 1875-1934) Foch, Ferdinand (1851-1929) Rites et cérémonies militaires -- Belgique -- Bruxelles (Belgique) Bruxelles (Belgique)</descr>
+    <nbPage>1</nbPage>
+    
+  </metad>
+  <contenus ocr="false" toc="false">
+    <largeur>185</largeur>
+    <hauteur>136</hauteur>
+    <pages>
+      <page ordre="1">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill classif="CCibm DFibm DFdnn CCdnn" couleur="gris" h="3228" n="1-1" taille="6" w="4386" x="1" y="1">
+            <contenuImg CS="0.72" h="1362" w="617" source="dnn" x="2607" y="1237">person</contenuImg>
+            <contenuImg CS="0.65" h="1570" w="745" source="dnn" x="2520" y="1217">horse</contenuImg>
+            <contenuImg CS="0.65" source="dnn">animal</contenuImg>     
+            <contenuImg CS="0.151716" sexe="M" source="ibm">faceCA</contenuImg>
+            <contenuImg CS="0.265362" sexe="F" source="ibm">faceCA</contenuImg>
+            <contenuImg CS="0.902" source="ibm">black color</contenuImg>
+            <contenuImg CS="0.949" source="ibm">coal black color</contenuImg>
+            <contenuImg CS="0.881" source="ibm">animal</contenuImg>
+            <contenuImg CS="0.88" source="ibm">mammal</contenuImg>
+            <contenuImg CS="0.88" source="ibm">cavalry horse</contenuImg>
+            <genre CS="0.95" source="md">photo</genre>
+            <theme CS="0.95" source="md">08</theme>
+            <titraille>Fête de la Victoire à Bruxelles, le roi des Belges et le maréchal Foch à cheval, 21 juillet 1919 : photographie de presse / Agence Rol</titraille>
+          </ill>
+        </ills>
+      </page>
+    </pages>
+  </contenus>
+</analyseAlto>

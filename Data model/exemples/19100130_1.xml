@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analyseAlto xmlns="https://altomator.github.io/Image_Retrieval/analyseAlto#"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://altomator.github.io/Image_Retrieval/analyseAlto# ../analyseAlto.xsd">
+
+  <metad>
+    <type>P</type>
+    <ID>bpt6k716889z</ID>
+    <titre>Le Petit Journal illustré Supplément du dimanche</titre>
+    <dateEdition>1910-01-30</dateEdition>
+    <nbPage>8</nbPage>
+    <suppl>FALSE</suppl>
+  </metad>
+  <contenus>  
+    <largeur>289</largeur>
+    <hauteur>420</hauteur>
+    <nbArticle>24</nbArticle>
+    <pages>
+      <page ordre="1">
+        <nbMot>85</nbMot>
+        <blocTexte>9</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>1</blocIll>
+        <ills/>
+      </page>
+      <page ordre="2">
+        <nbMot>3101</nbMot>
+        <blocTexte>17</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="3">
+        <nbMot>2568</nbMot>
+        <blocTexte>18</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>1</blocPub>
+        <blocIll>4</blocIll>
+        <ills/>
+      </page>
+      <page ordre="4">
+        <nbMot>3050</nbMot>
+        <blocTexte>20</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>1</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="5">
+        <nbMot>3051</nbMot>
+        <blocTexte>15</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="6">
+        <nbMot>3529</nbMot>
+        <blocTexte>17</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>1</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="7">
+        <nbMot>1417</nbMot>
+        <blocTexte>16</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>7</blocPub>
+        <blocIll>0</blocIll>
+      </page>
+      <page ordre="8">
+        <nbMot>13</nbMot>
+        <blocTexte>4</blocTexte>
+        <blocTab>0</blocTab>
+        <blocPub>0</blocPub>
+        <blocIll>1</blocIll>
+        <ills>
+          <ill classif="CCibm DFibm CCgoogle" couleur="coul" derniere="true" h="4387" n="8-1" taille="26" w="3208" x="107" y="247">
+            <contenuImg CS="0.52632725" source="google">beak</contenuImg>
+            <contenuImg CS="0.5270664" source="google">painting</contenuImg>
+            <contenuImg CS="0.6496759" source="google">organism</contenuImg>
+            <contenuImg CS="0.6901109" source="google">tree</contenuImg>
+            <contenuImg CS="0.8124094" source="google">bird of prey</contenuImg>
+            <contenuImg CS="0.90582293" source="google">ecosystem</contenuImg>
+            <contenuImg CS="0.9184317" h="3695" w="2688" source="google" x="367" y="485">bird</contenuImg>
+            <contenuImg CS="0.9455806" h="3695" w="2688" source="google" x="367" y="485">fauna</contenuImg>
+            <contenuImg CS="0.9706677" h="3695" w="2688" source="google" x="367" y="485">owl</contenuImg>
+            <genre source="final">gravure</genre>
+            <contenuImg CS="0.066388" sexe="M" source="ibm">faceCA</contenuImg>
+            <contenuImg CS="0.0940232" sexe="F" source="ibm">faceCA</contenuImg>
+            <contenuImg CS="0.994" source="ibm">olive green color</contenuImg>
+            <contenuImg CS="0.53" source="ibm">artwork</contenuImg>
+            <contenuImg CS="0.704" source="ibm">animal</contenuImg>
+            <contenuImg CS="0.692" source="ibm">mammal</contenuImg>
+            <contenuImg CS="0.677" source="ibm">monkey</contenuImg>
+            <contenuImg CS="0.579" source="ibm">rhesus monkey</contenuImg>
+            <contenuImg CS="0.648" source="ibm">coating</contenuImg>
+            <contenuImg CS="0.648" source="ibm">paint</contenuImg>
+            <contenuImg CS="0.648" source="ibm">oil paint</contenuImg>
+            <genre source="md">gravure</genre>
+            <titraille>CHANTECLER</titraille>
+            <txt>La scène des oiseaux de nuit</txt>
+          </ill>
+        </ills>
+      </page>
+    </pages>
+  </contenus>
+</analyseAlto>

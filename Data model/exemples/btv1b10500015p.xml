@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analyseAlto xmlns="https://altomator.github.io/Image_Retrieval/analyseAlto#"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://altomator.github.io/Image_Retrieval/analyseAlto# ../analyseAlto.xsd">
+  <metad>
+    <type>A</type>
+    <ID>btv1b10500015p</ID>
+    <titre>Adachi ga hara   Itoguruma / Komparu Zenkichu</titre>
+    <dateEdition>inconnu</dateEdition>
+    <auteur>Konparu, Zenchiku (1405-1470 ?). Auteur du texte</auteur>
+    <lang>jpn</lang>
+    <source>Bibliothèque nationale de France. Département des Manuscrits. Japonais 146</source>
+    <sujet>inconnu</sujet>
+    <descr>Numérisation effectuée à partir d_un document original. -- Appartient à l'ensemble documentaire : FranceJp0 -- Numérisation effectuée à partir d'un document de substitution : R 204983. -- Deux pièces de théâtre Nô. -- Provenance : Couvent des Jacobins de la rue Saint-Honoré.</descr>
+    <format>Livre imprimé hanpon 版本. - 1 vol. 一冊. - 15,4 x 22,0 cm. - Reliure occidentale 洋装, cartonnage recouvert de papier marbré. Note manuscrite :  Jacobins St Honoré</format>
+    <couverture>inconnu</couverture>
+    <technique>estampe</technique>
+    <nbPage>44</nbPage>
+  </metad>
+  <contenus ocr="false" toc="false">
+    <largeur>103</largeur>
+    <hauteur>147</hauteur>
+    <largeurPx>2453</largeurPx>
+    <hauteurPx>3490</hauteurPx>
+    <pages>
+      <page ordre="5">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3400" n="5-1" taille="3" w="2264" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="6">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3378" n="6-1" taille="3" w="2253" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="7">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3379" n="7-1" taille="3" w="2273" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="8">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3390" n="8-1" taille="3" w="2250" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="9">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3388" n="9-1" taille="3" w="2276" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="10">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3399" n="10-1" taille="3" w="2250" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="11">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3388" n="11-1" taille="3" w="2276" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="12">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3399" n="12-1" taille="3" w="2250" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="13">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3382" n="13-1" taille="3" w="2279" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="14">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3390" n="14-1" taille="3" w="2268" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="15">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3385" n="15-1" taille="3" w="2282" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="16">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3390" n="16-1" taille="3" w="2262" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="17">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3394" n="17-1" taille="3" w="2276" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="18">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3387" n="18-1" taille="3" w="2262" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="19">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3394" n="19-1" taille="3" w="2273" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="20">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3387" n="20-1" taille="3" w="2271" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="21">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3394" n="21-1" taille="3" w="2273" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="22">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3390" n="22-1" taille="3" w="2271" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="23">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3391" n="23-1" taille="3" w="2291" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="24">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3378" n="24-1" taille="3" w="2280" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="25">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3382" n="25-1" taille="3" w="2297" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="26">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3375" n="26-1" taille="3" w="2289" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="27">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3394" n="27-1" taille="3" w="2297" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="28">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3393" n="28-1" taille="3" w="2295" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="29">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3391" n="29-1" taille="3" w="2297" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="30">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3393" n="30-1" taille="3" w="2295" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="31">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3382" n="31-1" taille="3" w="2291" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="32">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3381" n="32-1" taille="3" w="2292" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="33">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3394" n="33-1" taille="3" w="2291" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="34">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3390" n="34-1" taille="3" w="2304" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="35">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3391" n="35-1" taille="3" w="2291" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+      <page ordre="36">
+        <blocIll>1</blocIll>
+        <ills>
+          <ill couleur="coul" filtre="1" filtretf="1" h="3378" n="36-1" taille="3" w="2289" x="1" y="1">
+            <fonction source="final">filtre</fonction>
+            <fonction CS="1" source="TensorFlow">filtre</fonction>
+            <theme source="final">01</theme>
+            <tech source="final">estampe</tech>
+            <tech CS="1" source="hm">estampe</tech>
+            <theme CS="1" source="md">01</theme>
+            <titraille>Adachi ga hara ; Itoguruma / Komparu Zenkichu</titraille>
+          </ill>
+        </ills>
+      </page>
+    </pages>
+  </contenus>
+</analyseAlto>
