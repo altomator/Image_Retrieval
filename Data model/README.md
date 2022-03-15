@@ -8,3 +8,11 @@ The model is document driven:
 - a visual content is related to an object, a concept or a color present in the illustration
 - a textual content describes the texts present in the illustration or arranged around the illustration and related to it
 - some of these elements may have a geometric positioning in relation to the page or the illustration.
+
+Bibliographical metadata are extracted from the Gallica OAI are stored at the document level. The generally are Dublin Core like metadata.
+
+Illustration related metadata are either deduced or infered and stored at the illustration level:
+- technique used to produce the illustration (Intermarc: zone 285)
+- function of the illustration (Intermarc: zone 646)
+- genre of the illustration (Intermarc: zone 641)
+[Reference](https://www.bnf.fr/fr/referentiels-intermarc) 
