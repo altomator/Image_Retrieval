@@ -15,5 +15,5 @@ Illustration related metadata are either surfaced by the BnF catalog, infered fr
 - technique used to produce the illustration (Intermarc: zone 285)
 - function of the illustration (Intermarc: zone 646)
 - genre of the illustration (Intermarc: zone 641)
-- 
+
 [Intermarc reference](https://www.bnf.fr/fr/referentiels-intermarc) 
