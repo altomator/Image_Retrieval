@@ -11,7 +11,7 @@ The model is document driven:
 
 Bibliographical metadata are extracted from the Gallica OAI are stored at the document level. The generally are Dublin Core like metadata.
 
-Illustration related metadata are either deduced or infered and stored at the illustration level:
+Illustration related metadata are either surfaced by the BnF catalog, infered from other metadata or infered with trained ML models. They are stored at the illustration level:
 - technique used to produce the illustration (Intermarc: zone 285)
 - function of the illustration (Intermarc: zone 646)
 - genre of the illustration (Intermarc: zone 641)
