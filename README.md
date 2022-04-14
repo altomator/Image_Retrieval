@@ -26,6 +26,8 @@ A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllus
 
 - ["Intelligence artificielle et fouille de contenus iconographiques patrimoniaux"](https://adbu.fr/retour-sur-la-journee-detude-du-congres-adbu2019-tous-bibl-ia-thecaires-lintelligence-artificielle-vers-un-nouveau-service-public/), [video & presentation], Congrès ADBU 2019 (Bordeaux, septembre 2019). 
 
+- ["Recherche d’images dans les bibliothèques numériques patrimoniales et expérimentation de techniques d’apprentissage profond"](https://www.erudit.org/en/journals/documentation/1900-v1-n1-documentation04848/1063786ar/),  *Documentation et bibliothèques*, Volume 65, Number 2, April–June 2019, p. 5–27
+
 - ["Plongez dans les images de 14-18 avec notre nouveau moteur de recherche iconographique GallicaPix"](http://gallicastudio.bnf.fr/bo%C3%AEte-%C3%A0-outils/plongez-dans-les-images-de-14-18-en-testant-un-nouveau-moteur-de-recherche) (FR blog post)
 - ["Towards new uses of cultural heritage online: Gallica Studio"](http://pro.europeana.eu/post/towards-new-uses-of-cultural-heritage-online-gallica-studio) (EN blog post)
 - [Tutorial on images classification](https://github.com/CENL-Network-Group-AI/Recipes/wiki/Images-Classification-Recipe)
