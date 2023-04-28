@@ -15,7 +15,7 @@ A proof of concept, [GallicaPix](http://demo14-18.bnf.fr:8984/rest?run=findIllus
 
 
 ### Articles, blogs, conferences
-- ["Image Retrieval in Digital Libraries"](https://docs.google.com/document/d/1-wRlvuJG30oZw69Xp1jCe8p5MwagTM6WxGTPrELiwK0/edit) (EN article, [FR article](https://docs.google.com/document/d/1hKU-UOy5fg6AXVVYRrgM9SH-fMYYPfTR0RpaFU6QCb4))), IFLA News Media section 2017 (Dresden, August 2017). 
+- ["Image Retrieval in Digital Libraries"](https://docs.google.com/document/d/1-wRlvuJG30oZw69Xp1jCe8p5MwagTM6WxGTPrELiwK0/edit) (EN article, [FR article](https://docs.google.com/document/d/1hKU-UOy5fg6AXVVYRrgM9SH-fMYYPfTR0RpaFU6QCb4)), IFLA News Media section 2017 (Dresden, August 2017). 
 - ["Hybrid Image Retrieval in Digital Libraries"](https://fr.slideshare.net/Europeana/hybrid-image-retrieval-in-digital-libraries-by-jeanphilippe-moreux-europeanatech-conference-2018), EuropeanaTech 2018 (Rotterdam). Poster, TPDL 2018 (Porto)
 
 - ["HYBRID IMAGE RETRIEVAL IN DIGITAL LIBRARIES: EXPERIMENTATION OF DEEP LEARNING TECHNIQUES"](https://pro.europeana.eu/page/issue-10-innovation-agenda), EuropeanaTech Insight, Issue 10, 2018
